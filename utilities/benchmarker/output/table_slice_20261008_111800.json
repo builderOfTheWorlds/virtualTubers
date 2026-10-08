@@ -1,0 +1,11688 @@
+{
+ "wall_s": 1500.0,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-1",
+     "order": 0,
+     "canon_goal": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-begene-program",
+      "moonwells"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 13.95,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 13.95,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 13.95,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 21.36,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 21.36,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 23.32,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "*draws his sword* This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 23.32,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "stage_direction: *asterisk action*; spoken lines only",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 27.96,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "",
+    "took": false,
+    "reason": "llm_error: LLMError"
+   }
+  },
+  {
+   "t": 27.96,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "no_take: llm_error: LLMError",
+    "retry": 2,
+    "max": 2
+   }
+  },
+  {
+   "t": 29.84,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 29.84,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 34.22,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick asserts direction with his characteristic bluntness. The scene contract mandates a sudden attack interrupting the arrival. Chadwick's line aligns perfectly with the 'party-attack' beat.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 54.74,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines, funded and\ndirected by the house of Leto. Duke Sorensen Leto III fathered all four players; they are\nhalf-siblings. Placements: Chadwick raised to a real oath; Leena born Leena, taken at birth,\nraised in a pocket-universe village she believes is centuries old; Vigil placed with\nelf-slavers and taken by the wood elves of Nafsari,",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 54.74,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines,",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 54.74,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines, funded and\ndirected by the house of Leto. Duke Sorensen Leto III fathered all four players; they are\nhalf-siblings. Placements: Chadwick raised to a real oath; Leena born Leena, taken at birth,\nraised in a pocket-universe village she believes is centuries old; Vigil placed with\nelf-slavers and taken by the wood elves of Nafsari,",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 62.44,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 62.44,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines, funded and\ndirected by the house of Leto. Duke Sorensen Leto III fathered all four players; they are\nhalf-siblings. Placements: Chadwick raised to a real oath; Leena born Leena, taken at birth,\nraised in a pocket-universe village she believes is centuries old; Vigil placed with\nelf-slavers and taken by the wood elves of Nafsari,",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 64.51,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "I see what you are.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 64.51,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "I see what you are.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 68.05,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick declares the direction. The attack has begun.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 81.12,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does not get up.\n\nThe Duke stands on the balcony above, wine in one hand, a dagger in the other. He screams something about heresy.\n\nLeena:\n(You don't know how you know his name, but you do.)",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 81.12,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does not get up.\n\nThe Duke stands on the balcony above, wine in one hand, a dagger in the other. He screams something about heresy.\n\nLeena:\n(You don't know how you know his name, but you do.)",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 81.12,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines, funded and\ndirected by the house of Leto. Duke Sorensen Leto III fathered all four players; they are\nhalf-siblings. Placements: Chadwick raised to a real oath; Leena born Leena, taken at birth,\nraised in a pocket-universe village she believes is centuries old; Vigil placed with\nelf-slavers and taken by the wood elves of Nafsari,",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I see what you are.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does not get up.\n\nThe Duke stands on the balcony above, wine in one hand, a dagger in the other. He screams something about heresy.\n\nLeena:\n(You don't know how you know his name, but you do.)",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 88.62,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 88.62,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines, funded and\ndirected by the house of Leto. Duke Sorensen Leto III fathered all four players; they are\nhalf-siblings. Placements: Chadwick raised to a real oath; Leena born Leena, taken at birth,\nraised in a pocket-universe village she believes is centuries old; Vigil placed with\nelf-slavers and taken by the wood elves of Nafsari,",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I see what you are.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does not get up.\n\nThe Duke stands on the balcony above, wine in one hand, a dagger in the other. He screams something about heresy.\n\nLeena:\n(You don't know how you know his name, but you do.)",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 90.74,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "I keep my word. You are not it.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 90.74,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "I keep my word. You are not it.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 97.24,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick's line 'I see what you are' is a good opening threat, aligning with his Vengeance oath and blunt nature. It sets the stage for combat immediately. The round ends on a cliffhanger where Chadwick declares the enemy is not him.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "current_scene": "party-attack",
+     "characters_present": [
+      "tuber_1",
+      "tuber_2",
+      "tuber_3",
+      "tuber_4"
+     ],
+     "environment": "letos-manor",
+     "threat_level": "high"
+    }
+   }
+  },
+  {
+   "t": 110.44,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The shards of stained glass crunch under boots. More figures pour through the breach, their faces hidden by hoods. They do not speak. They draw swords from beneath their cloaks. Themultitude of guests screams and scatters into the hall. Chadwick, the pale man at your feet twitches. His eyes snap open. They are entirely white. He stands up, his body jerking as if pulled by strings.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 110.44,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The shards of stained glass crunch under boots. More figures pour through the breach, their faces hidden by hoods. They do not speak. They draw swords from beneath their cloaks. Themultitude of guests screams and scatters into the hall. Chadwick, the pale man at your feet twitches. His eyes snap open. They are entirely white. He stands up, his body jerking as if pulled by strings.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 110.44,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines, funded and\ndirected by the house of Leto. Duke Sorensen Leto III fathered all four players; they are\nhalf-siblings. Placements: Chadwick raised to a real oath; Leena born Leena, taken at birth,\nraised in a pocket-universe village she believes is centuries old; Vigil placed with\nelf-slavers and taken by the wood elves of Nafsari,",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I see what you are.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does not get up.\n\nThe Duke stands on the balcony above, wine in one hand, a dagger in the other. He screams something about heresy.\n\nLeena:\n(You don't know how you know his name, but you do.)",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I keep my word. You are not it.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shards of stained glass crunch under boots. More figures pour through the breach, their faces hidden by hoods. They do not speak. They draw swords from beneath their cloaks. Themultitude of guests screams and scatters into the hall. Chadwick, the pale man at your feet twitches. His eyes snap open. They are entirely white. He stands up, his body jerking as if pulled by strings.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 117.91,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 117.91,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates groan open. Chadwick steps onto the stone path. Three others stand near the portico; they are strangers, but a sudden, sharp tug pulls at their chests. The heavy oak doors stand wide. Inside, guests laugh and pour wine.\n\nA scream shatters the music. A servant drops a crystal goblet. It shatters on the cobblestones. Then, something crashes through the stained-glass window above the entrance. Glass rains down.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "GM block: truth\nTen thousand years ago the Age of War burned the world's magic as fuel; the moonwells drained\nand went grey one by one. A small group went to the last well to close it. That day is the\nEvent. Everyone present, Bahadur included, came out of it immortal.\nThe Bahadur are from Ord, a future world that has already lost all its magic. Their leadership\ncrossed into Ashiorid at the Event and were trapped when the crossing closed. For ten thousand\nyears they have bred creatures that open microfractures in spacetime and people who can absorb\nand store raw energy to force those fractures wider; that harvest, not natural scarcity, is why\nmagic is rare. Their Sultan,             \nMuad'Malik, took a head wound at the Event that curdled; he now cares more for necromancy and\nbreeding than for Ord. His leadership is split.\nUnder Leto's manor, behind a wall that opens only to a spoken word, the house of Leto has held\na thing (the worm) since the Event; it is the only reason the eighty-sixth dimension is out\nthere and not in here. The last well is not unrelated to it (never give a straight answer this\narc).\nThe Begene Sisters ran a hundred-year breeding program across four bloodlines, funded and\ndirected by the house of Leto. Duke Sorensen Leto III fathered all four players; they are\nhalf-siblings. Placements: Chadwick raised to a real oath; Leena born Leena, taken at birth,\nraised in a pocket-universe village she believes is centuries old; Vigil placed with\nelf-slavers and taken by the wood elves of Nafsari,",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I see what you are.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A figure drops from the shattered glass, landing amidst the shards. It wears the uniform of the night watch, but its face is pale and slack. It does not get up.\n\nThe Duke stands on the balcony above, wine in one hand, a dagger in the other. He screams something about heresy.\n\nLeena:\n(You don't know how you know his name, but you do.)",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I keep my word. You are not it.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shards of stained glass crunch under boots. More figures pour through the breach, their faces hidden by hoods. They do not speak. They draw swords from beneath their cloaks. Themultitude of guests screams and scatters into the hall. Chadwick, the pale man at your feet twitches. His eyes snap open. They are entirely white. He stands up, his body jerking as if pulled by strings.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 120.02,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "The strings are cut; it is time.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 120.02,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "The strings are cut; it is time.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 125.14,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "The scene has reached a critical juncture with the attack on the manor and the reveal of the 'pale men' as corrupted guests. The party is engaged in combat. Round 4 was executed by Chadwick.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "current_scene": "party-attack",
+     "round": 5
+    }
+   }
+  },
+  {
+   "t": 125.14,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "resolved": false,
+    "state_delta": {
+     "current_scene": "party-attack",
+     "round": 5
+    },
+    "record_id": null
+   }
+  },
+  {
+   "t": 125.19,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-2",
+     "order": 1,
+     "canon_goal": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-bahadur",
+      "amulet-of-wonder"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 139.11,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The gates of Leto\u2019s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind you. Four doors open onto this hall. You stand there, the four of you, the air thick with dust and silence.\n\nA chandelier swings slowly overhead, catching the light from a single sconce. The floor is cold marble. Your footsteps echo in the vast empty space.\n\nYou feel a pull toward the center of the room, a hum beneath your skin that has nothing to do with the architecture. What do you do?",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 139.11,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The gates of Leto\u2019s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind you. Four doors open onto this hall. You stand there, the four of you, the air thick with dust and silence.\n\nA chandelier swings slowly overhead, catching the light from a single sconce. The floor is cold marble. Your footsteps echo in the vast empty space.\n\nYou feel a pull toward the center of the room, a hum beneath your skin that has nothing to do with the architecture. What do you do?",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 139.11,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The gates of Leto\u2019s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind you. Four doors open onto this hall. You stand there, the four of you, the air thick with dust and silence.\n\nA chandelier swings slowly overhead, catching the light from a single sconce. The floor is cold marble. Your footsteps echo in the vast empty space.\n\nYou feel a pull toward the center of the room, a hum beneath your skin that has nothing to do with the architecture. What do you do?",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 146.67,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 146.67,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The gates of Leto\u2019s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind you. Four doors open onto this hall. You stand there, the four of you, the air thick with dust and silence.\n\nA chandelier swings slowly overhead, catching the light from a single sconce. The floor is cold marble. Your footsteps echo in the vast empty space.\n\nYou feel a pull toward the center of the room, a hum beneath your skin that has nothing to do with the architecture. What do you do?",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 148.8,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "I am taking the middle door. This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 148.8,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "I am taking the middle door. This is the way.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 152.32,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick takes the middle door. The others follow suit.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 165.38,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "The heavy oak swings inward to reveal a long corridor of dark stone. Portraits line the walls; eyes track your movement. Through an archway, a grand dining hall opens up. Dust motes drift in shafts of light from high windows. The air tastes of stale wine and aging wood. The other doors open simultaneously. You step out into the hall, and the four of you face one another across the empty expanse.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 165.38,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The heavy oak swings inward to reveal a long corridor of dark stone. Portraits line the walls; eyes track your movement. Through an archway, a grand dining hall opens up. Dust motes drift in shafts of light from high windows. The air tastes of stale wine and aging wood. The other doors open simultaneously. You step out into the hall, and the four of you face one another across the empty expanse.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 165.38,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The gates of Leto\u2019s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind you. Four doors open onto this hall. You stand there, the four of you, the air thick with dust and silence.\n\nA chandelier swings slowly overhead, catching the light from a single sconce. The floor is cold marble. Your footsteps echo in the vast empty space.\n\nYou feel a pull toward the center of the room, a hum beneath your skin that has nothing to do with the architecture. What do you do?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I am taking the middle door. This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The heavy oak swings inward to reveal a long corridor of dark stone. Portraits line the walls; eyes track your movement. Through an archway, a grand dining hall opens up. Dust motes drift in shafts of light from high windows. The air tastes of stale wine and aging wood. The other doors open simultaneously. You step out into the hall, and the four of you face one another across the empty expanse.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 175.81,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 175.81,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The gates of Leto\u2019s manor loom high against the sky. You step across the threshold into a foyer lined with mirrors that do not reflect the room behind you. Four doors open onto this hall. You stand there, the four of you, the air thick with dust and silence.\n\nA chandelier swings slowly overhead, catching the light from a single sconce. The floor is cold marble. Your footsteps echo in the vast empty space.\n\nYou feel a pull toward the center of the room, a hum beneath your skin that has nothing to do with the architecture. What do you do?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I am taking the middle door. This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The heavy oak swings inward to reveal a long corridor of dark stone. Portraits line the walls; eyes track your movement. Through an archway, a grand dining hall opens up. Dust motes drift in shafts of light from high windows. The air tastes of stale wine and aging wood. The other doors open simultaneously. You step out into the hall, and the four of you face one another across the empty expanse.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 178.29,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "Chadwick: The Duke does not usually play games. Someone is watching. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 178.29,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "reason": "name_label: line starts with own name label 'Chadwick'",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 182.54,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "",
+    "took": false,
+    "reason": "llm_error: LLMError"
+   }
+  },
+  {
+   "t": 182.54,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "reason": "no_take: llm_error: LLMError",
+    "retry": 2,
+    "max": 2
+   }
+  },
+  {
+   "t": 186.78,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "",
+    "took": false,
+    "reason": "llm_error: LLMError"
+   }
+  },
+  {
+   "t": 189.52,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "I am Chadwick. I do not know any of you. I keep my word, and I do not talk unless I have to.",
+    "kind": "overrule",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 189.52,
+   "type": "gm_overrule",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "committed_text": "I am Chadwick. I do not know any of you. I keep my word, and I do not talk unless I have to.",
+    "note": "no_take: llm_error: LLMError"
+   }
+  },
+  {
+   "t": 203.49,
+   "type": "scene_stuck",
+   "from": "tuber_0",
+   "to": "operator",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "reason": "gm adjudicate failed 2x: vLLM stream ended with empty content (finish_reason='length', reasoning_chars=256)",
+    "state": {
+     "phase": "adjudicating",
+     "round": 2,
+     "speaker": null,
+     "transcript_len": 4,
+     "max_rounds": 4
+    }
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 13.95
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.41
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.96
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 4.63
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.89
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 24.89
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.71
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 2.06
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 16.61
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.5
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 2.12
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 19.7
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.46
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 2.12
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 5.12
+  },
+  {
+   "what": "gm_tick",
+   "s": 13.92
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.56
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 2.13
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 16.58
+  },
+  {
+   "what": "seat:think_request",
+   "s": 10.43
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 2.48
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 4.26
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 4.23
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 9.73
+  },
+  {
+   "what": "gm_tick",
+   "s": 6.93
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  }
+ ]
+}

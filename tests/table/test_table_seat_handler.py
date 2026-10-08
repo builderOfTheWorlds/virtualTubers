@@ -233,3 +233,21 @@ def test_memory_order_never_reuses_a_live_order_after_pruning(tmp_path):
     for i in range(seat.MEMORY_MAX_SCENES + 5):
         mem.set_intent(f"s{i}", 1, "x")
         assert mem.intent(f"s{i}", 1) == "x", f"newest scene s{i} was pruned"
+
+
+
+def test_brief_for_adds_common_lore_to_unlocked(monkeypatch, tmp_path):
+    # office pack: profiles carry no lore stems; table.common_lore gives every seat the shared lore
+    seen = {}
+
+    def fake_build(conn, slug, *, lore, unlocked=(), max_chars=6000):
+        seen["unlocked"] = list(unlocked)
+        return "brief"
+
+    import table.seat_brief as sb
+    monkeypatch.setattr(sb, "build_table_brief", fake_build)
+    monkeypatch.setitem(seat._CONN_CACHE, "conn", type("C", (), {"closed": 0, "rollback": lambda self: None})())
+    cfg = {"role": "table_seat", "table": {"character_slug": "tester", "pack_dir": str(tmp_path),
+                                           "common_lore": ["company", "product"]}}
+    seat._real_brief_for(cfg, "tuber_4", ("rumours",))      # the autouse fixture patches brief_for
+    assert seen["unlocked"] == ["rumours", "company", "product"]

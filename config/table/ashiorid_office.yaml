@@ -1,0 +1,75 @@
+# Live agent table: ashiorid_office — build plan P5.3 ("the pack-agnostic claim": the office
+# runs on the SAME table code as the D&D pack; only this file differs).
+#
+#   .venv/bin/python scripts/build_table_configs.py config/table/ashiorid_office.yaml \
+#       --out config/workers/table/ashiorid_office
+#   docker compose -f docker-compose.yml -f docker-compose.office.yml \
+#       -f docker-compose.table-office.yml up -d
+#
+# The CEO is the table's GM (tuber_0). The Party Member (tuber_7) is seated (its channel
+# and tile stay up) but never in active_players: it never speaks (U1, silent observer).
+pack: ashiorid_office
+pack_dir: /data/campaigns/ashiorid_office
+gm_slug: ceo
+gm_seat: tuber_0
+
+seats:     # service <-> seat <-> persona: docker-compose.office.yml header
+  - {seat: tuber_0, slug: ceo,            base: config/workers/office/ceo.yaml,            service: worker-gm}
+  - {seat: tuber_1, slug: tech_lead,      base: config/workers/office/tech_lead.yaml,      service: worker-manager}
+  - {seat: tuber_2, slug: analyst,        base: config/workers/office/analyst.yaml,        service: worker-coder-native}
+  - {seat: tuber_3, slug: engineer,       base: config/workers/office/engineer.yaml,       service: worker-coder-aider}
+  - {seat: tuber_4, slug: tester,         base: config/workers/office/tester.yaml,         service: worker-tester}
+  - {seat: tuber_5, slug: marketing,      base: config/workers/office/marketing.yaml,      service: worker-coder-opencode}
+  - {seat: tuber_6, slug: office_manager, base: config/workers/office/office_manager.yaml, service: worker-coder}
+  - {seat: tuber_7, slug: party_member,   base: config/workers/office/party_member.yaml,   service: worker-observer}
+
+active_players: [tuber_1, tuber_2, tuber_3, tuber_4, tuber_5, tuber_6]
+silent_seats: [tuber_7]
+
+# The office profiles carry no lore stems; every seat knows the company basics.
+common_lore: [company, office, org_chart, product, rituals]
+
+tick_rate_ms: 500
+run_id: ashiorid_office_20260929_135927_9c1b
+contracts_fixture: /data/table/fixtures/ashiorid_office_20260929_135927_9c1b.json
+only_with_active_players: true
+start_index: 0
+max_scenes: 1
+
+think_s: 60
+speak_s: 45
+gm_blocks_order: [truth, secrets, unlocks, table_rules, style]
+# Loop mechanics are never character knowledge (office BANNED_WORDS); never in the CEO's narration.
+gm_forbidden_phrases: [time loop, the loop, simulation, simulated]
+
+think:      {max_tokens: 1024, reasoning_budget: 256}
+speak:      {max_tokens: 160,  reasoning_budget: 48}
+direct:     {max_tokens: 768,  reasoning_budget: 384}
+adjudicate: {max_tokens: 256,  reasoning_budget: 64}
+overrule:   {max_tokens: 160,  reasoning_budget: 48}
+
+roundtable:
+  base: config/workers/office/roundtable.yaml      # office voices + speaker names already set
+  service: worker-roundtable
+  live:
+    enabled: true
+    table_arbiter: tuber_0
+    observer_slot: tuber_7
+    max_age_s: 120
+    consume_timeout_s: 20
+    line_gap_s: 0.5
+    spool_max: 200
+  voices: {}
+
+compose_base: [docker-compose.office.yml]
+compose_overlay: docker-compose.table-office.yml
+
+llm:
+  provider: vllm
+  model: table-agents
+  base_url: http://host.docker.internal:8092
+  api_key_env: VLLM_API_KEY
+  temperature: 0.7
+  max_tokens: 1024
+  extra_body:
+    presence_penalty: 1.0

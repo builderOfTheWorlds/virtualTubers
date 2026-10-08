@@ -71,6 +71,9 @@ def main():
     ap.add_argument("--retake-once", action="store_true",
                     help="corrupt the seat's first reply with an *action* to force one retake")
     ap.add_argument("--base-url", default="http://localhost:8092")
+    ap.add_argument("--configs", default="config/workers/table",
+                    help="generated table worker configs dir (e.g. config/workers/table/ashiorid_office)")
+    ap.add_argument("--gm", default="gm", help="the GM's config file stem in --configs (office: ceo)")
     ap.add_argument("--extra-body", default="", help="JSON merged into llm.extra_body (model-specific)")
     args = ap.parse_args()
 
@@ -85,20 +88,26 @@ def main():
     from agent_handlers import table as seat_mod, table_gm
     from agent_handlers import MESSAGE_HANDLERS
 
-    gm_doc = yaml.safe_load((REPO / "config/workers/table/gm.yaml").read_text())
-    seat_doc = yaml.safe_load((REPO / "config/workers/table/chadwick.yaml").read_text())
-    gm_cfg, seat_cfg = gm_doc["agent"], seat_doc["agent"]
-    pack = REPO / "campaigns" / "ashiorid"
-    for cfg in (gm_cfg, seat_cfg):                       # host paths instead of container mounts
+    cfg_dir = REPO / args.configs
+    gm_doc = yaml.safe_load((cfg_dir / f"{args.gm}.yaml").read_text())
+    gm_cfg = gm_doc["agent"]
+    pack_name = pathlib.Path(gm_cfg["table"]["pack_dir"]).name
+    pack = REPO / "campaigns" / pack_name
+    seat_cfgs = {}                                      # seat id -> agent config (active seats only)
+    for seat_id in gm_cfg["table"]["seats"]:
+        slug = gm_cfg["table"]["seat_slugs"][seat_id]
+        seat_cfgs[seat_id] = yaml.safe_load((cfg_dir / f"{slug}.yaml").read_text())["agent"]
+    for cfg in [gm_cfg, *seat_cfgs.values()]:           # host paths instead of container mounts
         cfg["table"]["pack_dir"] = str(pack)
     gm_cfg["table"]["contracts_fixture"] = str(REPO / "tests/table/fixtures" /
                                                pathlib.Path(gm_cfg["table"]["contracts_fixture"]).name)
     gm_cfg["table"]["max_scenes"] = args.scenes
-    seat_cfg["table"]["memory_dir"] = str(REPO / ".qwen_staging" / "slice_seat_memory")
+    for cfg in seat_cfgs.values():
+        cfg["table"]["memory_dir"] = str(REPO / ".qwen_staging" / "slice_seat_memory")
 
     conn = char_db.connect(char_config.load())
     applied = char_db.migrate(conn)
-    report = pack_profiles.load_pack(conn, pack / "profiles", pack / "cast", campaign="ashiorid")
+    report = pack_profiles.load_pack(conn, pack / "profiles", pack / "cast", campaign=pack_name)
     conn.commit()
     conn.close()
     print(f"[slice] migrations applied={applied} profiles={dict(report.actions)}")
@@ -144,8 +153,9 @@ def main():
             handler = MESSAGE_HANDLERS.get(msg["type"])
             if not handler:
                 continue
-            if delivered_to(msg, "tuber_1"):
-                timed(f"seat:{msg['type']}", handler, "tuber_1", seat_cfg, seat_client, bus, msg, None)
+            for seat_id, seat_cfg in seat_cfgs.items():
+                if delivered_to(msg, seat_id):
+                    timed(f"seat:{msg['type']}", handler, seat_id, seat_cfg, seat_client, bus, msg, None)
             if delivered_to(msg, "tuber_0"):
                 timed(f"gm:{msg['type']}", handler, "tuber_0", gm_cfg, gm_llm, bus, msg, None)
         rt = table_gm.runtime_for("tuber_0")

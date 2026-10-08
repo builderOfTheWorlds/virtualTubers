@@ -1,0 +1,4031 @@
+{
+ "wall_s": 1500.1,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-1",
+     "order": 0,
+     "canon_goal": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-begene-program",
+      "moonwells"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 72.38,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 72.38,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 72.38,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 114.93,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 114.93,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 126.55,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "*draws his sword* \n\nThis is the way. Sorensen Leto. Now.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 126.56,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "stage_direction: *asterisk action*; spoken lines only",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 137.82,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "Where is Sorensen Leto? Speak plainly, or I will make you.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 137.82,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "Where is Sorensen Leto? Speak plainly, or I will make you.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 160.02,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick's line is in character, first person, and does not decide outcomes. The steward can answer plainly.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "round": 1,
+     "last_speaker": "chadwick",
+     "party_state": "arrived at Leto's Manor",
+     "pending_question": "Where is Sorensen Leto?"
+    }
+   }
+  },
+  {
+   "t": 230.95,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 230.95,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 230.95,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Where is Sorensen Leto? Speak plainly, or I will make you.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 272.47,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 272.47,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Where is Sorensen Leto? Speak plainly, or I will make you.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 284.37,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "East hall. You lead. If the manor decides anything else, I decide first.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 284.37,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "East hall. You lead. If the manor decides anything else, I decide first.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 348.47,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick stays in character and advances the arrival beat without deciding outcomes for other players.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "round": 2,
+     "current_seat": "tuber_2",
+     "canon_progress": [
+      "four_strangers_arrived_at_manoor",
+      "steward_directs_them_to_east_hall",
+      "ominous_signs_present"
+     ],
+     "must_resolve_remaining": [
+      "party_interruption_by_sudden_attack"
+     ],
+     "branch_canon": "not_yet_set"
+    }
+   }
+  },
+  {
+   "t": 425.45,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand\u2019s width as he passes. No hinges move.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs tightens. The candles ahead burn blue at the edge. A chair scrapes in the east hall, though the hall is closed.\n\nThe steward stops at a double door of oak and iron. He sets the tray on a side table. The tray hums.\n\n\u201cHis Grace will see you,\u201d he says. \u201cBut something else has asked to be seen first.\u201d",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 425.45,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand\u2019s width as he passes. No hinges move.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs tightens. The candles ahead burn blue at the edge. A chair scrapes in the east hall, though the hall is closed.\n\nThe steward stops at a double door of oak and iron. He sets the tray on a side table. The tray hums.\n\n\u201cHis Grace will see you,\u201d he says. \u201cBut something else has asked to be seen first.\u201d",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 425.45,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Where is Sorensen Leto? Speak plainly, or I will make you.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "East hall. You lead. If the manor decides anything else, I decide first.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand\u2019s width as he passes. No hinges move.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs tightens. The candles ahead burn blue at the edge. A chair scrapes in the east hall, though the hall is closed.\n\nThe steward stops at a double door of oak and iron. He sets the tray on a side table. The tray hums.\n\n\u201cHis Grace will see you,\u201d he says. \u201cBut something else has asked to be seen first.\u201d",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 467.38,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 467.38,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Where is Sorensen Leto? Speak plainly, or I will make you.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "East hall. You lead. If the manor decides anything else, I decide first.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand\u2019s width as he passes. No hinges move.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs tightens. The candles ahead burn blue at the edge. A chair scrapes in the east hall, though the hall is closed.\n\nThe steward stops at a double door of oak and iron. He sets the tray on a side table. The tray hums.\n\n\u201cHis Grace will see you,\u201d he says. \u201cBut something else has asked to be seen first.\u201d",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 480.21,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "East hall, then. Let it come through that door, or not. But it will not make me kneel.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 480.21,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "East hall, then. Let it come through that door, or not. But it will not make me kneel.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 501.75,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick's line is in character and does not decide outcomes for other characters. The scene can continue toward the attack interruption.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 579.09,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The double doors open.\n\nThe east hall is a great hall. Three hundred guests stand around long tables. Candles fill the ceiling. Music starts, then stops.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs turns sharp.\n\nA crack runs up the nearest wall. Dust falls from the beams. Three black-cloaked figures step through the side arches. Iron pikes catch candlelight. Their faces are hidden.\n\nThe steward falls back. His silver tray tips.\n\n\u201cHis Grace is not ready,\u201d he says. \u201cThey came early.\u201d\n\nThe nearest pike points at the four of you.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 579.09,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The double doors open.\n\nThe east hall is a great hall. Three hundred guests stand around long tables. Candles fill the ceiling. Music starts, then stops.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs turns sharp.\n\nA crack runs up the nearest wall. Dust falls from the beams. Three black-cloaked figures step through the side arches. Iron pikes catch candlelight. Their faces are hidden.\n\nThe steward falls back. His silver tray tips.\n\n\u201cHis Grace is not ready,\u201d he says. \u201cThey came early.\u201d\n\nThe nearest pike points at the four of you.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 579.09,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Where is Sorensen Leto? Speak plainly, or I will make you.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "East hall. You lead. If the manor decides anything else, I decide first.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand\u2019s width as he passes. No hinges move.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs tightens. The candles ahead burn blue at the edge. A chair scrapes in the east hall, though the hall is closed.\n\nThe steward stops at a double door of oak and iron. He sets the tray on a side table. The tray hums.\n\n\u201cHis Grace will see you,\u201d he says. \u201cBut something else has asked to be seen first.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "East hall, then. Let it come through that door, or not. But it will not make me kneel.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The double doors open.\n\nThe east hall is a great hall. Three hundred guests stand around long tables. Candles fill the ceiling. Music starts, then stops.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs turns sharp.\n\nA crack runs up the nearest wall. Dust falls from the beams. Three black-cloaked figures step through the side arches. Iron pikes catch candlelight. Their faces are hidden.\n\nThe steward falls back. His silver tray tips.\n\n\u201cHis Grace is not ready,\u201d he says. \u201cThey came early.\u201d\n\nThe nearest pike points at the four of you.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 620.37,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 620.37,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "Rain beads on the black gravel before Leto's Manor. The great door stands open, brass handles worn bright. Four cloaks glisten under it.\n\nChadwick, Leena, Vigil, and Sodacan Bob stop on the same stone step. Each feels the others, a thin pull behind the ribs, like a bell struck in another room.\n\nCandles burn in the hall, tall and steady. A steward waits with a silver tray, his eyes moving from one to the other. He bows low.\n\n\"You are early. All four. Please.\"",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Where is Sorensen Leto? Speak plainly, or I will make you.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward\u2019s bow does not break.\n\n\u201cHis Grace is in the east hall. He has been expecting you.\u201d His thumb rests on the tray\u2019s edge. \u201cThe doors will close at the ninth bell.\u201d\n\nA low chord rolls from somewhere behind the wall. Glass in the hallway shivers.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs sharpens. Four candles lean at once, though no air moves.\n\nThe steward\u2019s face goes tight.\n\n\u201cCome in, please. Before the manor finishes deciding.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "East hall. You lead. If the manor decides anything else, I decide first.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward turns first. His boots make no sound on wet stone. He leads you down a corridor lined with black doors. Each door opens a hand\u2019s width as he passes. No hinges move.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs tightens. The candles ahead burn blue at the edge. A chair scrapes in the east hall, though the hall is closed.\n\nThe steward stops at a double door of oak and iron. He sets the tray on a side table. The tray hums.\n\n\u201cHis Grace will see you,\u201d he says. \u201cBut something else has asked to be seen first.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "East hall, then. Let it come through that door, or not. But it will not make me kneel.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The double doors open.\n\nThe east hall is a great hall. Three hundred guests stand around long tables. Candles fill the ceiling. Music starts, then stops.\n\nChadwick, Leena, Vigil, Sodacan Bob, the pull behind your ribs turns sharp.\n\nA crack runs up the nearest wall. Dust falls from the beams. Three black-cloaked figures step through the side arches. Iron pikes catch candlelight. Their faces are hidden.\n\nThe steward falls back. His silver tray tips.\n\n\u201cHis Grace is not ready,\u201d he says. \u201cThey came early.\u201d\n\nThe nearest pike points at the four of you.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 631.87,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "Who sent you? Say it plain, or I will make you.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 631.87,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "Who sent you? Say it plain, or I will make you.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 659.2,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Round 4 advances the spine: the four arrive, meet under the pull, the party begins, and an attack interrupts them. Chadwick is in character and speaks only for himself.",
+    "retake_seat": null,
+    "resolved": true,
+    "state_delta": {
+     "scene_progress": "attack-interrupted",
+     "party_location": "east hall at Leto's Manor",
+     "threats": "three black-cloaked pike-bearers",
+     "steward_status": "fallen back",
+     "doors": "side arches breached",
+     "pull": "sharp behind ribs"
+    }
+   }
+  },
+  {
+   "t": 659.2,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "resolved": true,
+    "state_delta": {
+     "scene_progress": "attack-interrupted",
+     "party_location": "east hall at Leto's Manor",
+     "threats": "three black-cloaked pike-bearers",
+     "steward_status": "fallen back",
+     "doors": "side arches breached",
+     "pull": "sharp behind ribs"
+    },
+    "record_id": null
+   }
+  },
+  {
+   "t": 659.25,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-2",
+     "order": 1,
+     "canon_goal": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-bahadur",
+      "amulet-of-wonder"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 738.3,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 738.3,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 738.3,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 779.09,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 779.09,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 789.78,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "Guests behind me. You\u2019ll burn nothing.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 789.78,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "Guests behind me. You\u2019ll burn nothing.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 821.51,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick\u2019s line is in-character and does not decide the outcome. The attack has begun; the scene can continue.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "current_beat": "party-attack begins",
+     "active_threats": [
+      "armed men in grey",
+      "hostile leader threatening the Duke"
+     ],
+     "party_position": "near the entrance",
+     "scene_progress": 1,
+     "round": 1
+    }
+   }
+  },
+  {
+   "t": 893.63,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "The blade stops an inch from the Duke\u2019s throat.\n\nThe Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The leader spits.\n\n\u201cGuests first.\u201d\n\nHe nods to his men. Three turn toward Chadwick. Two cut off the stair. One blocks the hall door.\n\nThe harp string snaps. A candle gutters out.\n\nChadwick, Leena, Vigil, Bob: the Duke\u2019s eyes find you.\n\n\u201cDo not let them reach the east wing,\u201d he says.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 893.63,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The blade stops an inch from the Duke\u2019s throat.\n\nThe Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The leader spits.\n\n\u201cGuests first.\u201d\n\nHe nods to his men. Three turn toward Chadwick. Two cut off the stair. One blocks the hall door.\n\nThe harp string snaps. A candle gutters out.\n\nChadwick, Leena, Vigil, Bob: the Duke\u2019s eyes find you.\n\n\u201cDo not let them reach the east wing,\u201d he says.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 893.63,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Guests behind me. You\u2019ll burn nothing.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The blade stops an inch from the Duke\u2019s throat.\n\nThe Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The leader spits.\n\n\u201cGuests first.\u201d\n\nHe nods to his men. Three turn toward Chadwick. Two cut off the stair. One blocks the hall door.\n\nThe harp string snaps. A candle gutters out.\n\nChadwick, Leena, Vigil, Bob: the Duke\u2019s eyes find you.\n\n\u201cDo not let them reach the east wing,\u201d he says.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 933.49,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 933.49,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Guests behind me. You\u2019ll burn nothing.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The blade stops an inch from the Duke\u2019s throat.\n\nThe Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The leader spits.\n\n\u201cGuests first.\u201d\n\nHe nods to his men. Three turn toward Chadwick. Two cut off the stair. One blocks the hall door.\n\nThe harp string snaps. A candle gutters out.\n\nChadwick, Leena, Vigil, Bob: the Duke\u2019s eyes find you.\n\n\u201cDo not let them reach the east wing,\u201d he says.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 944.95,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "Stair, door, east wing. Three jobs. No one dies until they try me.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 944.95,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "Stair, door, east wing. Three jobs. No one dies until they try me.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 977.47,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "The attack is underway. The Duke has ordered the party to protect the east wing. Chadwick has taken a defensive position and issued a warning.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "scene_state": "party-attack",
+     "threats": [
+      "three grey men approaching Chadwick",
+      "two grey men cutting off the stair",
+      "one grey man blocking the hall door"
+     ],
+     "objective": "Do not let them reach the east wing",
+     "current_focus": "Chadwick holding the entrance"
+    }
+   }
+  },
+  {
+   "t": 1049.56,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "Black light holds the grey men still. Their boots stop. Their blades stay up.\n\nA hairline crack opens in the east wing wall. Dust drops. An old hum rises under the floor, low as a struck bell. The candles lean toward it.\n\nThe Duke\u2019s hand trembles once. \u201cThat room must not open,\u201d he says.\n\nAt the stair, the two grey men snap free. At the hall door, the third turns and swings. Chadwick, Leena, Vigil, Bob: three doors, one crash, one humming wall. Which of you moves first?",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 1049.56,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "Black light holds the grey men still. Their boots stop. Their blades stay up.\n\nA hairline crack opens in the east wing wall. Dust drops. An old hum rises under the floor, low as a struck bell. The candles lean toward it.\n\nThe Duke\u2019s hand trembles once. \u201cThat room must not open,\u201d he says.\n\nAt the stair, the two grey men snap free. At the hall door, the third turns and swings. Chadwick, Leena, Vigil, Bob: three doors, one crash, one humming wall. Which of you moves first?",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 1049.56,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Guests behind me. You\u2019ll burn nothing.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The blade stops an inch from the Duke\u2019s throat.\n\nThe Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The leader spits.\n\n\u201cGuests first.\u201d\n\nHe nods to his men. Three turn toward Chadwick. Two cut off the stair. One blocks the hall door.\n\nThe harp string snaps. A candle gutters out.\n\nChadwick, Leena, Vigil, Bob: the Duke\u2019s eyes find you.\n\n\u201cDo not let them reach the east wing,\u201d he says.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Stair, door, east wing. Three jobs. No one dies until they try me.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Black light holds the grey men still. Their boots stop. Their blades stay up.\n\nA hairline crack opens in the east wing wall. Dust drops. An old hum rises under the floor, low as a struck bell. The candles lean toward it.\n\nThe Duke\u2019s hand trembles once. \u201cThat room must not open,\u201d he says.\n\nAt the stair, the two grey men snap free. At the hall door, the third turns and swings. Chadwick, Leena, Vigil, Bob: three doors, one crash, one humming wall. Which of you moves first?",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 1092.18,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 1092.18,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The manor doors open onto a long hall. Candles burn low. A harp plays by the stair.\n\nChadwick, Leena, Vigil, and Bob stand near the entrance. Each holds a heavy card. Leto\u2019s seal is pressed deep in black wax.\n\nThe four look at one another. No one knows the others\u2019 names. Something old presses against the back of their throats.\n\nA serving girl drops a tray. Glass cuts the floor. The harp stops.\n\nFrom the east wing comes a crash, then a scream. Doors fly open. Armed men in grey run into the hall. Their leader points a blade at the Duke.\n\n\u201cTake the guests,\u201d he says. \u201cBurn it down.\u201d",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Guests behind me. You\u2019ll burn nothing.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The blade stops an inch from the Duke\u2019s throat.\n\nThe Duke does not flinch. His hand rises. Black light rings the floor. Grey men freeze mid-step. The leader spits.\n\n\u201cGuests first.\u201d\n\nHe nods to his men. Three turn toward Chadwick. Two cut off the stair. One blocks the hall door.\n\nThe harp string snaps. A candle gutters out.\n\nChadwick, Leena, Vigil, Bob: the Duke\u2019s eyes find you.\n\n\u201cDo not let them reach the east wing,\u201d he says.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Stair, door, east wing. Three jobs. No one dies until they try me.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Black light holds the grey men still. Their boots stop. Their blades stay up.\n\nA hairline crack opens in the east wing wall. Dust drops. An old hum rises under the floor, low as a struck bell. The candles lean toward it.\n\nThe Duke\u2019s hand trembles once. \u201cThat room must not open,\u201d he says.\n\nAt the stair, the two grey men snap free. At the hall door, the third turns and swings. Chadwick, Leena, Vigil, Bob: three doors, one crash, one humming wall. Which of you moves first?",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 1104.91,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "Vigil, the stair. Bob, the door. I take the east wing. This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 1104.91,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "Vigil, the stair. Bob, the door. I take the east wing. This is the way.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 1179.14,
+   "type": "scene_stuck",
+   "from": "tuber_0",
+   "to": "operator",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "reason": "gm adjudicate failed 2x: adjudicate: invalid verdict None",
+    "state": {
+     "phase": "adjudicating",
+     "round": 3,
+     "speaker": null,
+     "transcript_len": 6,
+     "max_rounds": 4
+    }
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 72.38
+  },
+  {
+   "what": "seat:think_request",
+   "s": 42.55
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 11.62
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 11.26
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 93.13
+  },
+  {
+   "what": "seat:think_request",
+   "s": 41.52
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 11.9
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 37.12
+  },
+  {
+   "what": "gm_tick",
+   "s": 103.92
+  },
+  {
+   "what": "seat:think_request",
+   "s": 41.93
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 12.82
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 98.89
+  },
+  {
+   "what": "seat:think_request",
+   "s": 41.28
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 11.49
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 27.33
+  },
+  {
+   "what": "gm_tick",
+   "s": 79.05
+  },
+  {
+   "what": "seat:think_request",
+   "s": 40.79
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 10.69
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 103.85
+  },
+  {
+   "what": "seat:think_request",
+   "s": 39.86
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 11.46
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 104.6
+  },
+  {
+   "what": "seat:think_request",
+   "s": 42.62
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 12.73
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 37.39
+  },
+  {
+   "what": "gm_tick",
+   "s": 36.79
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  },
+  {
+   "what": "gm_tick",
+   "s": 0.0
+  }
+ ]
+}

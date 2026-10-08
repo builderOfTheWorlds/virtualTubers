@@ -94,3 +94,23 @@ def test_gm_does_not_publish_its_reasoning(tmp_path):
     _, cfgs = _built(tmp_path)
     assert cfgs["gm"]["agent"]["publish_thinking"] is False      # truth lives in the GM context
     assert cfgs["chadwick"]["agent"].get("publish_thinking", True) is True   # U4: seats stream theirs
+
+
+
+def test_office_configs_match_a_fresh_build(tmp_path):
+    """P5.3: the office table is config only; its generated files must not drift either."""
+    mod = _mod()
+    office = REPO / "config" / "table" / "ashiorid_office.yaml"
+    written = mod.build(office, tmp_path)
+    assert {p.stem for p in written} == {"ceo", "tech_lead", "analyst", "engineer", "tester",
+                                         "marketing", "office_manager", "party_member", "roundtable"}
+    for fresh in written:
+        committed = OUT / "ashiorid_office" / fresh.name
+        assert committed.read_text() == fresh.read_text(), f"{fresh.name} drifted; rebuild"
+    overlay = (tmp_path / "docker-compose.table-office.yml").read_text()
+    assert overlay == (REPO / "docker-compose.table-office.yml").read_text(), "overlay drifted"
+    ceo = yaml.safe_load((tmp_path / "ceo.yaml").read_text())["agent"]
+    assert ceo["role"] == "table_gm" and ceo["publish_thinking"] is False
+    assert "tuber_7" not in ceo["table"]["seats"] and ceo["table"]["silent_seats"] == ["tuber_7"]
+    observer = yaml.safe_load((tmp_path / "party_member.yaml").read_text())["agent"]
+    assert observer["role"] == "table_seat"           # seated, never assigned a turn

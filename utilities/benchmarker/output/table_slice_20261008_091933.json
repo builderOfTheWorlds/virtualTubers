@@ -1,0 +1,1685 @@
+{
+ "wall_s": 193.9,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-1",
+     "order": 0,
+     "canon_goal": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-begene-program",
+      "moonwells"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 11.56,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 11.56,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 11.56,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 18.11,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 18.11,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 19.95,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "*draws his sword* \n\nThis is the way. Stand behind me and speak only when I ask.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 19.95,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "stage_direction: *asterisk action*; spoken lines only",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 21.73,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "This is the way. Stand fast, I'll handle it.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 21.73,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Stand fast, I'll handle it.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 25.15,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Scene established. All four players present at threshold. Doors close behind them.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "current_scene": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "round": 1
+    }
+   }
+  },
+  {
+   "t": 36.22,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 36.22,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 36.22,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Stand fast, I'll handle it.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 42.49,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 42.49,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Stand fast, I'll handle it.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 44.36,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "Keep your cups. This wine smells like iron and bad faith. Stand ready.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 44.36,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "Keep your cups. This wine smells like iron and bad faith. Stand ready.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 47.53,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick's line fits his blunt, oath-driven persona and rejects the wine naturally. The scene continues smoothly into the next beat.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "scene_progress": 2
+    }
+   }
+  },
+  {
+   "t": 59.64,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels suddenly colder. You notice the other guests stop talking. They turn their heads toward you in unison. Their eyes are flat. They do not breathe. A heavy silence falls over the foyer. Three hundred pairs of eyes lock onto your group. The crystal chandeliers dim. The hum in the floor grows louder. It sounds like grinding stone. The steward raises a hand. He points toward the center of the room. A path clears through the crowd. It leads to a raised dais. No one moves to stop you. The air tastes like ozone. A sharp crack echoes from the kitchen doors. Wood splinters.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 59.64,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels suddenly colder. You notice the other guests stop talking. They turn their heads toward you in unison. Their eyes are flat. They do not breathe. A heavy silence falls over the foyer. Three hundred pairs of eyes lock onto your group. The crystal chandeliers dim. The hum in the floor grows louder. It sounds like grinding stone. The steward raises a hand. He points toward the center of the room. A path clears through the crowd. It leads to a raised dais. No one moves to stop you. The air tastes like ozone. A sharp crack echoes from the kitchen doors. Wood splinters.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 59.64,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Stand fast, I'll handle it.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Keep your cups. This wine smells like iron and bad faith. Stand ready.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels suddenly colder. You notice the other guests stop talking. They turn their heads toward you in unison. Their eyes are flat. They do not breathe. A heavy silence falls over the foyer. Three hundred pairs of eyes lock onto your group. The crystal chandeliers dim. The hum in the floor grows louder. It sounds like grinding stone. The steward raises a hand. He points toward the center of the room. A path clears through the crowd. It leads to a raised dais. No one moves to stop you. The air tastes like ozone. A sharp crack echoes from the kitchen doors. Wood splinters.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 65.73,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 65.73,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Stand fast, I'll handle it.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Keep your cups. This wine smells like iron and bad faith. Stand ready.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels suddenly colder. You notice the other guests stop talking. They turn their heads toward you in unison. Their eyes are flat. They do not breathe. A heavy silence falls over the foyer. Three hundred pairs of eyes lock onto your group. The crystal chandeliers dim. The hum in the floor grows louder. It sounds like grinding stone. The steward raises a hand. He points toward the center of the room. A path clears through the crowd. It leads to a raised dais. No one moves to stop you. The air tastes like ozone. A sharp crack echoes from the kitchen doors. Wood splinters.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 67.56,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This is the way. Draw steel and hold the line.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 67.56,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Draw steel and hold the line.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 72.01,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick's line fits his character and advances the scene. The GM has set up the next beat: an ominous attack/shift in the room. The scene contract requires the party to be interrupted by a sudden attack. The GM will now narrate the attack sequence.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "scene_progress": 3,
+     "next_beat": "party_attack"
+    }
+   }
+  },
+  {
+   "t": 83.1,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The kitchen doors blow inward. Smoke rolls across the flagstones. Three figures drop from the rafters. They wear grey cloaks. They carry curved blades. The first slash takes the nearest guest. Blood sprays the marble. The crowd screams. The four of you stand between the attackers and the dais. Steel waits in your hands. The second attacker lunges at Vigil. The third swings toward Chadwick. Sodacan Bob and Leena face the last two. What do you do?",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 83.1,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The kitchen doors blow inward. Smoke rolls across the flagstones. Three figures drop from the rafters. They wear grey cloaks. They carry curved blades. The first slash takes the nearest guest. Blood sprays the marble. The crowd screams. The four of you stand between the attackers and the dais. Steel waits in your hands. The second attacker lunges at Vigil. The third swings toward Chadwick. Sodacan Bob and Leena face the last two. What do you do?",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 83.1,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Stand fast, I'll handle it.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Keep your cups. This wine smells like iron and bad faith. Stand ready.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels suddenly colder. You notice the other guests stop talking. They turn their heads toward you in unison. Their eyes are flat. They do not breathe. A heavy silence falls over the foyer. Three hundred pairs of eyes lock onto your group. The crystal chandeliers dim. The hum in the floor grows louder. It sounds like grinding stone. The steward raises a hand. He points toward the center of the room. A path clears through the crowd. It leads to a raised dais. No one moves to stop you. The air tastes like ozone. A sharp crack echoes from the kitchen doors. Wood splinters.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Draw steel and hold the line.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The kitchen doors blow inward. Smoke rolls across the flagstones. Three figures drop from the rafters. They wear grey cloaks. They carry curved blades. The first slash takes the nearest guest. Blood sprays the marble. The crowd screams. The four of you stand between the attackers and the dais. Steel waits in your hands. The second attacker lunges at Vigil. The third swings toward Chadwick. Sodacan Bob and Leena face the last two. What do you do?",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 89.56,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 89.56,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron gates loom ahead. They bear the seal of House Leto. The heavy doors stand open. A host in grey livery bows low. He holds a list. He checks your names against the cards. The air smells of beeswax and roasted meat. Inside, three hundred guests mingle in the foyer. Crystal chandeliers cast sharp light on silk and steel. You see Chadwick, Leena, Vigil, and Sodacan Bob step across the threshold together. The doors groan shut behind you.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Stand fast, I'll handle it.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The foyer stretches wide beneath the crystal lights. Three hundred guests wear silk and steel. A steward in grey livery approaches you. He holds a silver tray with wine cups. His eyes track each of you in turn. He stops before Chadwick. He nods to Leena, Vigil, and Sodacan Bob. He offers a cup to the group. The wine is dark red. It smells faintly of iron. A low hum vibrates through the stone floor. It matches the rhythm of your own heart. The steward waits for you to take a cup.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Keep your cups. This wine smells like iron and bad faith. Stand ready.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward does not blink. He lowers the tray slowly. The wine cups stay full. He steps back into the shadow of a marble pillar. The room feels suddenly colder. You notice the other guests stop talking. They turn their heads toward you in unison. Their eyes are flat. They do not breathe. A heavy silence falls over the foyer. Three hundred pairs of eyes lock onto your group. The crystal chandeliers dim. The hum in the floor grows louder. It sounds like grinding stone. The steward raises a hand. He points toward the center of the room. A path clears through the crowd. It leads to a raised dais. No one moves to stop you. The air tastes like ozone. A sharp crack echoes from the kitchen doors. Wood splinters.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Draw steel and hold the line.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The kitchen doors blow inward. Smoke rolls across the flagstones. Three figures drop from the rafters. They wear grey cloaks. They carry curved blades. The first slash takes the nearest guest. Blood sprays the marble. The crowd screams. The four of you stand between the attackers and the dais. Steel waits in your hands. The second attacker lunges at Vigil. The third swings toward Chadwick. Sodacan Bob and Leena face the last two. What do you do?",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 91.73,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way. I step forward and break his wrist before he finishes that swing. Hold your ground.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 91.73,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. I step forward and break his wrist before he finishes that swing. Hold your ground.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 96.12,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Chadwick moves first. He steps in, intercepts the curved blade, and drives his shoulder into the attacker's arm. Bone cracks. The wrist snaps. The blade falls. Chadwick holds the line.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "chadwick_wrist_broken": true,
+     "attacker_1_disabled": true,
+     "combat_active": true
+    }
+   }
+  },
+  {
+   "t": 96.12,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "resolved": false,
+    "state_delta": {
+     "chadwick_wrist_broken": true,
+     "attacker_1_disabled": true,
+     "combat_active": true
+    },
+    "record_id": null
+   }
+  },
+  {
+   "t": 96.17,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-2",
+     "order": 1,
+     "canon_goal": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-bahadur",
+      "amulet-of-wonder"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 107.94,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 107.94,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 107.94,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 114.31,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 114.31,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 116.24,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "I do not drink from strangers. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 116.24,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "I do not drink from strangers. Ask them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 121.9,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick rejects the drink. The velvet-coated man does not flinch. He sets the glass down on the fountain's stone rim. The water flows over it, but never touches the liquid inside. The man bows slightly and steps back into the crowd. The four of you stand near the fountain. The masked guests continue their quiet rustle. A heavy silence settles behind you as the main doors close.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "chadwick_drink_rejected": true,
+     "fountain_glass_placed": true,
+     "doors_closed": true,
+     "scene_progress": "grovley_approaches"
+    }
+   }
+  },
+  {
+   "t": 133.59,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 133.59,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 133.59,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I do not drink from strangers. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 139.7,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 139.7,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I do not drink from strangers. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 141.43,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "This is the way. Move back. Now.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 141.43,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Move back. Now.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 145.87,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick's line fits his blunt, oath-bound nature and matches the scene's escalating tension. The GM has advanced the scene correctly with atmospheric beats and NPC action. No rules violations detected.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "scene_round": 2,
+     "last_player": "tuber_1",
+     "pending_action": "Awaiting next player response or GM continuation."
+    }
+   }
+  },
+  {
+   "t": 157.45,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face. Only grey ash. The fountain shatters. Water sprays upward. It hangs in the air like jagged ice. Three hundred guests draw weapons. Their blades hum with cold fire. Chadwick, Leena, Vigil, Sodacan Bob, you feel the pressure drop. Your ears pop. A voice speaks from the balcony above. It sounds like grinding stone. \"Burn it down.\" The crowd surges forward. They do not look at you. They look at the Duke's empty throne.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 157.45,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face. Only grey ash. The fountain shatters. Water sprays upward. It hangs in the air like jagged ice. Three hundred guests draw weapons. Their blades hum with cold fire. Chadwick, Leena, Vigil, Sodacan Bob, you feel the pressure drop. Your ears pop. A voice speaks from the balcony above. It sounds like grinding stone. \"Burn it down.\" The crowd surges forward. They do not look at you. They look at the Duke's empty throne.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 157.45,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I do not drink from strangers. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Move back. Now.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face. Only grey ash. The fountain shatters. Water sprays upward. It hangs in the air like jagged ice. Three hundred guests draw weapons. Their blades hum with cold fire. Chadwick, Leena, Vigil, Sodacan Bob, you feel the pressure drop. Your ears pop. A voice speaks from the balcony above. It sounds like grinding stone. \"Burn it down.\" The crowd surges forward. They do not look at you. They look at the Duke's empty throne.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 163.65,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 163.65,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I do not drink from strangers. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Move back. Now.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face. Only grey ash. The fountain shatters. Water sprays upward. It hangs in the air like jagged ice. Three hundred guests draw weapons. Their blades hum with cold fire. Chadwick, Leena, Vigil, Sodacan Bob, you feel the pressure drop. Your ears pop. A voice speaks from the balcony above. It sounds like grinding stone. \"Burn it down.\" The crowd surges forward. They do not look at you. They look at the Duke's empty throne.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 165.46,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "Hold the line. Shield wall. Let them break on us.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 165.46,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "Hold the line. Shield wall. Let them break on us.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 168.73,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Scene advances correctly. Chadwick's line fits character and contract. GM narration maintains concrete style, ends on attack beat. No lore violations detected. Proceed.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "scene_progress": "attack-ongoing",
+     "round": 3
+    }
+   }
+  },
+  {
+   "t": 180.85,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The crowd hits your front rank. Blades ring against steel. The impact jars your teeth. Chadwick, you brace. Your boots slide back on the stone. The pressure builds. Dust rises from the floor. A wave of force washes over you. It is not wind. It is magic. The air thickens. You feel a hand pressing against your chest from the other side. Not a person. A spell. It holds you there. The front line stops dead. The guests behind them push forward. You are pinned. Chadwick, Leena, Vigil, Sodacan Bob, the spell locks your joints. The ash-masked figures close the distance. Their cold-fire blades raise high. The thrumming grows loud. The vault door beneath the manor begins to vibrate.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 180.85,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The crowd hits your front rank. Blades ring against steel. The impact jars your teeth. Chadwick, you brace. Your boots slide back on the stone. The pressure builds. Dust rises from the floor. A wave of force washes over you. It is not wind. It is magic. The air thickens. You feel a hand pressing against your chest from the other side. Not a person. A spell. It holds you there. The front line stops dead. The guests behind them push forward. You are pinned. Chadwick, Leena, Vigil, Sodacan Bob, the spell locks your joints. The ash-masked figures close the distance. Their cold-fire blades raise high. The thrumming grows loud. The vault door beneath the manor begins to vibrate.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 180.85,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I do not drink from strangers. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Move back. Now.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face. Only grey ash. The fountain shatters. Water sprays upward. It hangs in the air like jagged ice. Three hundred guests draw weapons. Their blades hum with cold fire. Chadwick, Leena, Vigil, Sodacan Bob, you feel the pressure drop. Your ears pop. A voice speaks from the balcony above. It sounds like grinding stone. \"Burn it down.\" The crowd surges forward. They do not look at you. They look at the Duke's empty throne.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Hold the line. Shield wall. Let them break on us.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The crowd hits your front rank. Blades ring against steel. The impact jars your teeth. Chadwick, you brace. Your boots slide back on the stone. The pressure builds. Dust rises from the floor. A wave of force washes over you. It is not wind. It is magic. The air thickens. You feel a hand pressing against your chest from the other side. Not a person. A spell. It holds you there. The front line stops dead. The guests behind them push forward. You are pinned. Chadwick, Leena, Vigil, Sodacan Bob, the spell locks your joints. The ash-masked figures close the distance. Their cold-fire blades raise high. The thrumming grows loud. The vault door beneath the manor begins to vibrate.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 187.46,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 187.46,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The iron-bound doors swing inward. Cold air hits your faces. The hall stretches long and dark above you. Tapestles hang heavy on the stone walls. They show no figures. Only grey shapes that shift when you look away. Hundreds of guests fill the room. They wear masks. Their voices sound like dry leaves rubbing together. You stand near the central fountain. The water moves in reverse. Chadwick, Leena, Vigil, Sodacan Bob, you feel the same pull. The air tastes like copper and old ash. A man in a velvet coat approaches you. He carries a silver tray. He holds out a glass. His eyes do not blink.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "I do not drink from strangers. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The velvet man lowers the tray. He does not blink. He turns to Leena and offers the glass. She takes it. Her fingers brush the rim. Frost blooms on her knuckles. Vigil steps to the left wall. His hand finds a seam in the stone. It is warm. Sodacan Bob watches the fountain. The water climbs the basin. It hangs there like a glass sphere. You all look at each other. The masks tilt. Three hundred heads turn toward the doorway behind you. The copper taste sharpens. A low thrum vibrates through the floorboards. Glass cracks somewhere in the crowd. The velvet man drops the silver tray. It hits the stone. The sound stops.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Move back. Now.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A blade flashes in the dark. It passes through the velvet man's neck. He does not bleed. His mask splits down the center. Underneath, there is no face. Only grey ash. The fountain shatters. Water sprays upward. It hangs in the air like jagged ice. Three hundred guests draw weapons. Their blades hum with cold fire. Chadwick, Leena, Vigil, Sodacan Bob, you feel the pressure drop. Your ears pop. A voice speaks from the balcony above. It sounds like grinding stone. \"Burn it down.\" The crowd surges forward. They do not look at you. They look at the Duke's empty throne.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Hold the line. Shield wall. Let them break on us.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The crowd hits your front rank. Blades ring against steel. The impact jars your teeth. Chadwick, you brace. Your boots slide back on the stone. The pressure builds. Dust rises from the floor. A wave of force washes over you. It is not wind. It is magic. The air thickens. You feel a hand pressing against your chest from the other side. Not a person. A spell. It holds you there. The front line stops dead. The guests behind them push forward. You are pinned. Chadwick, Leena, Vigil, Sodacan Bob, the spell locks your joints. The ash-masked figures close the distance. Their cold-fire blades raise high. The thrumming grows loud. The vault door beneath the manor begins to vibrate.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 189.67,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way. Break it or die standing.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 189.67,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Break it or die standing.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 193.9,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Chadwick accepts the hold spell as a physical force and commits to breaking it. The party is pinned but holds for one more beat.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {
+     "scene_phase": "party-attack-hold",
+     "next_scene": "grovley-revelation",
+     "unlocked_lore": [],
+     "secrets_revealed": {}
+    }
+   }
+  },
+  {
+   "t": 193.9,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "resolved": false,
+    "state_delta": {
+     "scene_phase": "party-attack-hold",
+     "next_scene": "grovley-revelation",
+     "unlocked_lore": [],
+     "secrets_revealed": {}
+    },
+    "record_id": null
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 11.56
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.56
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.84
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.78
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 14.49
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.27
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.87
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 15.28
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.1
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.82
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 15.54
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.46
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 2.17
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 4.4
+  },
+  {
+   "what": "gm_tick",
+   "s": 11.76
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.37
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.93
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 17.35
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.11
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.73
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 16.02
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.2
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.82
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 15.39
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.61
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 2.2
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 4.24
+  }
+ ]
+}

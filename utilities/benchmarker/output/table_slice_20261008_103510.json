@@ -1,0 +1,747 @@
+{
+ "wall_s": 82.0,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-1",
+     "order": 0,
+     "canon_goal": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-begene-program",
+      "moonwells"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 13.07,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The four of you stand at the iron gates of Leto's Manor, candles flickering in the high archways, the scent of old stone and lavender heavy in the air. A servant in livery of deep green opens the doors without a word, gesturing you inside toward a grand foyer where three other figures already pause, waiting. You each feel it then\u2014a faint, shared pull in your chests, as if the house itself remembers you. Chadwick, you notice the half-orc beside you gripping his sword hilt; Leena is already smiling, eyes bright; Vigil counts the doorways; sodacan_bob leans back, amused. The manor's heart beats somewhere deeper, and the invitation in your hands grows warm. What do you do as you take your first steps into the estate?",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 13.07,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The four of you stand at the iron gates of Leto's Manor, candles flickering in the high archways, the scent of old stone and lavender heavy in the air. A servant in livery of deep green opens the doors without a word, gesturing you inside toward a grand foyer where three other figures already pause, waiting. You each feel it then\u2014a faint, shared pull in your chests, as if the house itself remembers you. Chadwick, you notice the half-orc beside you gripping his sword hilt; Leena is already smiling, eyes bright; Vigil counts the doorways; sodacan_bob leans back, amused. The manor's heart beats somewhere deeper, and the invitation in your hands grows warm. What do you do as you take your first steps into the estate?",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 13.07,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The four of you stand at the iron gates of Leto's Manor, candles flickering in the high archways, the scent of old stone and lavender heavy in the air. A servant in livery of deep green opens the doors without a word, gesturing you inside toward a grand foyer where three other figures already pause, waiting. You each feel it then\u2014a faint, shared pull in your chests, as if the house itself remembers you. Chadwick, you notice the half-orc beside you gripping his sword hilt; Leena is already smiling, eyes bright; Vigil counts the doorways; sodacan_bob leans back, amused. The manor's heart beats somewhere deeper, and the invitation in your hands grows warm. What do you do as you take your first steps into the estate?",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 19.44,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 19.44,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The four of you stand at the iron gates of Leto's Manor, candles flickering in the high archways, the scent of old stone and lavender heavy in the air. A servant in livery of deep green opens the doors without a word, gesturing you inside toward a grand foyer where three other figures already pause, waiting. You each feel it then\u2014a faint, shared pull in your chests, as if the house itself remembers you. Chadwick, you notice the half-orc beside you gripping his sword hilt; Leena is already smiling, eyes bright; Vigil counts the doorways; sodacan_bob leans back, amused. The manor's heart beats somewhere deeper, and the invitation in your hands grows warm. What do you do as you take your first steps into the estate?",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 21.22,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "*draws his sword* this is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 21.23,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "stage_direction: *asterisk action*; spoken lines only",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 22.99,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "this is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 22.99,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "this is the way.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 26.92,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick's line 'this is the way' fits his character and the scene's contract. The party has arrived at Leto's Manor and the first beat is resolved. Moving to the next round.",
+    "retake_seat": null,
+    "resolved": true,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 26.92,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "resolved": true,
+    "state_delta": {},
+    "record_id": null
+   }
+  },
+  {
+   "t": 26.97,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-2",
+     "order": 1,
+     "canon_goal": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-bahadur",
+      "amulet-of-wonder"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 39.46,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sealed card\u2014heavy vellum, the Leto seal pressed deep into the wax. He gestures toward the manor house, its windows dark save for a single lantern in the highest tower.\n\nBeyond the courtyard, a long avenue of oaks leads to the doors. The air is cool, scented with pine and something metallic, faint. Somewhere inside, a door creaks. The four of you stand at the edge of the drive, invitations in hand, the estate silent around you.\n\nWhat do you do?",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 39.46,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sealed card\u2014heavy vellum, the Leto seal pressed deep into the wax. He gestures toward the manor house, its windows dark save for a single lantern in the highest tower.\n\nBeyond the courtyard, a long avenue of oaks leads to the doors. The air is cool, scented with pine and something metallic, faint. Somewhere inside, a door creaks. The four of you stand at the edge of the drive, invitations in hand, the estate silent around you.\n\nWhat do you do?",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 39.46,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sealed card\u2014heavy vellum, the Leto seal pressed deep into the wax. He gestures toward the manor house, its windows dark save for a single lantern in the highest tower.\n\nBeyond the courtyard, a long avenue of oaks leads to the doors. The air is cool, scented with pine and something metallic, faint. Somewhere inside, a door creaks. The four of you stand at the edge of the drive, invitations in hand, the estate silent around you.\n\nWhat do you do?",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 45.76,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 45.76,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sealed card\u2014heavy vellum, the Leto seal pressed deep into the wax. He gestures toward the manor house, its windows dark save for a single lantern in the highest tower.\n\nBeyond the courtyard, a long avenue of oaks leads to the doors. The air is cool, scented with pine and something metallic, faint. Somewhere inside, a door creaks. The four of you stand at the edge of the drive, invitations in hand, the estate silent around you.\n\nWhat do you do?",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 47.59,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 47.6,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "Ask them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 51.33,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick's line establishes his character bluntly and opens the interaction. The party is at the manor gate as contracted. Ready for Round 1 responses.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 63.65,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "The steward inclines his head and moves toward the oak-lined avenue, leaving the four of you standing at the drive's edge. Chadwick tucks the heavy card into his belt, his hand resting on the hilt of his sword. Leena's eyes flicker between the sealed wax and the dark manor windows; she smiles, already stepping forward. Vigil counts the oaks, noting the uneven spacing, while sodacan_bob chuckles, already imagining the feast inside. A distant door creaks somewhere above, though no one moves to answer it.\n\nThe four of you begin up the avenue. What do you notice as you walk?",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 63.65,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The steward inclines his head and moves toward the oak-lined avenue, leaving the four of you standing at the drive's edge. Chadwick tucks the heavy card into his belt, his hand resting on the hilt of his sword. Leena's eyes flicker between the sealed wax and the dark manor windows; she smiles, already stepping forward. Vigil counts the oaks, noting the uneven spacing, while sodacan_bob chuckles, already imagining the feast inside. A distant door creaks somewhere above, though no one moves to answer it.\n\nThe four of you begin up the avenue. What do you notice as you walk?",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 63.65,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sealed card\u2014heavy vellum, the Leto seal pressed deep into the wax. He gestures toward the manor house, its windows dark save for a single lantern in the highest tower.\n\nBeyond the courtyard, a long avenue of oaks leads to the doors. The air is cool, scented with pine and something metallic, faint. Somewhere inside, a door creaks. The four of you stand at the edge of the drive, invitations in hand, the estate silent around you.\n\nWhat do you do?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward inclines his head and moves toward the oak-lined avenue, leaving the four of you standing at the drive's edge. Chadwick tucks the heavy card into his belt, his hand resting on the hilt of his sword. Leena's eyes flicker between the sealed wax and the dark manor windows; she smiles, already stepping forward. Vigil counts the oaks, noting the uneven spacing, while sodacan_bob chuckles, already imagining the feast inside. A distant door creaks somewhere above, though no one moves to answer it.\n\nThe four of you begin up the avenue. What do you notice as you walk?",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 70.77,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 70.77,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The gatehouse gates groan open as you crest the drive. A liveried steward steps forward, clipboard in hand, and without a word hands each of you a sealed card\u2014heavy vellum, the Leto seal pressed deep into the wax. He gestures toward the manor house, its windows dark save for a single lantern in the highest tower.\n\nBeyond the courtyard, a long avenue of oaks leads to the doors. The air is cool, scented with pine and something metallic, faint. Somewhere inside, a door creaks. The four of you stand at the edge of the drive, invitations in hand, the estate silent around you.\n\nWhat do you do?",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The steward inclines his head and moves toward the oak-lined avenue, leaving the four of you standing at the drive's edge. Chadwick tucks the heavy card into his belt, his hand resting on the hilt of his sword. Leena's eyes flicker between the sealed wax and the dark manor windows; she smiles, already stepping forward. Vigil counts the oaks, noting the uneven spacing, while sodacan_bob chuckles, already imagining the feast inside. A distant door creaks somewhere above, though no one moves to answer it.\n\nThe four of you begin up the avenue. What do you notice as you walk?",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 72.64,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 72.64,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "reason": "repeats: repeats an earlier line ('Ask them plainly, or I will.'); say something new",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 74.5,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "Chadwick: This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 74.5,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "reason": "name_label: line starts with own name label 'Chadwick'",
+    "retry": 2,
+    "max": 2
+   }
+  },
+  {
+   "t": 76.39,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 78.49,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "this is the way.",
+    "kind": "overrule",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 78.49,
+   "type": "gm_overrule",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "committed_text": "this is the way.",
+    "note": "repeats: repeats an earlier line ('Ask them plainly, or I will.'); say something new"
+   }
+  },
+  {
+   "t": 82.0,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick asserts direction; the party continues up the avenue. No mechanical conflict, just narration of movement.",
+    "retake_seat": null,
+    "resolved": true,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 82.0,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "resolved": true,
+    "state_delta": {},
+    "record_id": null
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 13.07
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.38
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.78
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.76
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 3.94
+  },
+  {
+   "what": "gm_tick",
+   "s": 12.49
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.3
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.84
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 16.05
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.12
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.87
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.86
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.89
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 5.61
+  }
+ ]
+}

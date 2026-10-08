@@ -1,0 +1,1761 @@
+{
+ "wall_s": 175.8,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-1",
+     "order": 0,
+     "canon_goal": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-begene-program",
+      "moonwells"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 11.06,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 11.06,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 11.06,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 16.89,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 16.89,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 18.36,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "*draws his sword* \n\nThis is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 18.36,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "reason": "stage_direction: *asterisk action*; spoken lines only",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 20.24,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 20.24,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 24.02,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick's line matches his character: blunt, authoritative, and in line with his 'this is the way' tic. Scene setting is concrete (marble floors, gas lamps, smell of paper/metallic, clock chime). No player decisions made; all lines are narrative. Scene continues toward attack.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 34.13,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 34.13,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 34.13,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 40.0,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 40.0,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 41.64,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 41.64,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 45.13,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick's line follows his established style: short, blunt, authoritative. He addresses the shadow without hesitation, fulfilling his role as the one who leads in conflict. The scene progresses as per the contract (arrival, connection felt, ominous interruption).",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 55.62,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, \"The Duke expects you.\" It raises a hand. The gas lamps flicker violently. Shadows stretch across the marble floor, forming sharp points. Leena\u2019s invitation trembles in her grip. Vigil\u2019s dagger is half-drawn. Bob\u2019s hat slips off. The air crackles. The clock chimes again.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 55.62,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, \"The Duke expects you.\" It raises a hand. The gas lamps flicker violently. Shadows stretch across the marble floor, forming sharp points. Leena\u2019s invitation trembles in her grip. Vigil\u2019s dagger is half-drawn. Bob\u2019s hat slips off. The air crackles. The clock chimes again.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 55.62,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, \"The Duke expects you.\" It raises a hand. The gas lamps flicker violently. Shadows stretch across the marble floor, forming sharp points. Leena\u2019s invitation trembles in her grip. Vigil\u2019s dagger is half-drawn. Bob\u2019s hat slips off. The air crackles. The clock chimes again.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 61.52,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 61.52,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, \"The Duke expects you.\" It raises a hand. The gas lamps flicker violently. Shadows stretch across the marble floor, forming sharp points. Leena\u2019s invitation trembles in her grip. Vigil\u2019s dagger is half-drawn. Bob\u2019s hat slips off. The air crackles. The clock chimes again.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 63.16,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This is the way.  \nAsk them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 63.16,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "reason": "repeats: repeats an earlier line ('This is the way.  \nAsk them plainly, or I will.'); say something new",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 64.71,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This way is clear. Draw your blades.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 64.71,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This way is clear. Draw your blades.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 67.9,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick's line follows character voice (short, directive) and advances scene contract (confrontation). No ruling needed as he states action (drawing blades) without deciding outcome.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 77.98,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The shadow figure snaps its fingers. Gas lamps die. Darkness swallows the hall. Footsteps rush from the shadows\u2014too many. A blade slices the air near Chadwick's ear. Leena gasps. Vigil curses. Bob's hat lies forgotten on the marble. The clock chimes once. Then silence.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 77.98,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The shadow figure snaps its fingers. Gas lamps die. Darkness swallows the hall. Footsteps rush from the shadows\u2014too many. A blade slices the air near Chadwick's ear. Leena gasps. Vigil curses. Bob's hat lies forgotten on the marble. The clock chimes once. Then silence.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 77.98,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, \"The Duke expects you.\" It raises a hand. The gas lamps flicker violently. Shadows stretch across the marble floor, forming sharp points. Leena\u2019s invitation trembles in her grip. Vigil\u2019s dagger is half-drawn. Bob\u2019s hat slips off. The air crackles. The clock chimes again.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This way is clear. Draw your blades.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow figure snaps its fingers. Gas lamps die. Darkness swallows the hall. Footsteps rush from the shadows\u2014too many. A blade slices the air near Chadwick's ear. Leena gasps. Vigil curses. Bob's hat lies forgotten on the marble. The clock chimes once. Then silence.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 83.71,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 83.71,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The grand entrance door swings shut behind you. Marble floors gleam under gas lamps. Four figures stand in the hall, each holding a heavy invitation. Chadwick checks his sword hilt. Leena smiles, bright and sudden. Vigil scans the ceiling beams. Sodacan Bob adjusts his hat with a grin. A clock chimes once. Too quiet. The air smells of old paper and something faintly metallic. Someone coughs softly from the shadows.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "Leena\u2019s smile fades as she touches her invitation. The metal scent sharpens. Vigil\u2019s hand drifts to his dagger hilt. Bob\u2019s grin tightens. A shadow detaches itself from the wall. It steps into the lamplight. Its eyes glow faintly blue. The clock chimes again. Too loud.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way.  \nAsk them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow steps closer. Its blue eyes fix on Chadwick. A voice like grinding stone says, \"The Duke expects you.\" It raises a hand. The gas lamps flicker violently. Shadows stretch across the marble floor, forming sharp points. Leena\u2019s invitation trembles in her grip. Vigil\u2019s dagger is half-drawn. Bob\u2019s hat slips off. The air crackles. The clock chimes again.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This way is clear. Draw your blades.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The shadow figure snaps its fingers. Gas lamps die. Darkness swallows the hall. Footsteps rush from the shadows\u2014too many. A blade slices the air near Chadwick's ear. Leena gasps. Vigil curses. Bob's hat lies forgotten on the marble. The clock chimes once. Then silence.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 85.18,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 85.18,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "reason": "repeats: repeats an earlier line ('This is the way.'); say something new",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 86.71,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way. They're here.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 86.71,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. They're here.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "emotion": null
+   }
+  },
+  {
+   "t": 90.63,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Chadwick's line 'This is the way. They're here.' matches his established voice and character traits (blunt, oath-focused, leading in crisis). It accepts the GM's setup of the attack without overstepping or deciding outcomes. No player speaks for another. Scene continues toward the must_resolve 'sudden attack' as intended.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 90.63,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-1",
+    "resolved": false,
+    "state_delta": {},
+    "record_id": null
+   }
+  },
+  {
+   "t": 90.68,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "contract": {
+     "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+     "run_id": "ashiorid_1_20260913_180158_ce8d",
+     "segment_id": "invitation-arc",
+     "leaf_id": "invitation-arc-n0",
+     "slot_id": "invitation-arc-n0-arrival-2",
+     "order": 1,
+     "canon_goal": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+     "participants": [
+      "tuber_2",
+      "tuber_3",
+      "tuber_1",
+      "tuber_4"
+     ],
+     "lore": [
+      "the-bahadur",
+      "amulet-of-wonder"
+     ],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "must_resolve": [
+      "The party is interrupted by a sudden attack"
+     ],
+     "expected_beats": [
+      "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration",
+      "They arrive and meet for the first time, feeling an inexplicable connection",
+      "The party begins, but an ominous feeling lingers in the air",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1"
+    ]
+   }
+  },
+  {
+   "t": 101.0,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 101.0,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 101.0,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 106.87,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 106.87,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 108.5,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 108.5,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 111.28,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Chadwick states his stance clearly per character traits. No action taken, only dialogue.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 121.37,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "speaker": "tuber_0",
+    "text": "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 121.37,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 121.37,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 127.25,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 127.25,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 128.89,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "This is the way. Ask them plainly, or I will.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 128.89,
+   "type": "retake",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "reason": "repeats: repeats an earlier line ('This is the way. Ask them plainly, or I will.'); say something new",
+    "retry": 1,
+    "max": 2
+   }
+  },
+  {
+   "t": 130.53,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r2.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "seat": "tuber_1",
+    "text": "This is the way. The duke sent you. Say it plainly.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 130.53,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. The duke sent you. Say it plainly.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 133.65,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r2.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 2,
+    "verdict": "pass",
+    "notes": "Chadwick's line matches his established speech pattern (short, blunt, oath-driven). He correctly identifies the host's messenger without hesitation. The scene continues as intended.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 144.3,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "speaker": "tuber_0",
+    "text": "A tall figure steps into the candlelight\u2014Grovley, the butler, his face pale under the chandelier. He holds a silver bell. \"Duke Leto requests your presence in the garden,\" he says, voice tight. \"Please follow me.\" The portrait's eyes snap shut. The draft dies. The quartet's violins begin again, sharp and discordant. From the hall behind you, a scream cuts through the music.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 144.3,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "A tall figure steps into the candlelight\u2014Grovley, the butler, his face pale under the chandelier. He holds a silver bell. \"Duke Leto requests your presence in the garden,\" he says, voice tight. \"Please follow me.\" The portrait's eyes snap shut. The draft dies. The quartet's violins begin again, sharp and discordant. From the hall behind you, a scream cuts through the music.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 144.3,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. The duke sent you. Say it plainly.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A tall figure steps into the candlelight\u2014Grovley, the butler, his face pale under the chandelier. He holds a silver bell. \"Duke Leto requests your presence in the garden,\" he says, voice tight. \"Please follow me.\" The portrait's eyes snap shut. The draft dies. The quartet's violins begin again, sharp and discordant. From the hall behind you, a scream cuts through the music.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 150.18,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 150.18,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. The duke sent you. Say it plainly.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A tall figure steps into the candlelight\u2014Grovley, the butler, his face pale under the chandelier. He holds a silver bell. \"Duke Leto requests your presence in the garden,\" he says, voice tight. \"Please follow me.\" The portrait's eyes snap shut. The draft dies. The quartet's violins begin again, sharp and discordant. From the hall behind you, a scream cuts through the music.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 151.7,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r3.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "seat": "tuber_1",
+    "text": "This is the way. Move.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 151.7,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Move.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 155.06,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r3.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 3,
+    "verdict": "pass",
+    "notes": "Chadwick's line follows character voice: short, blunt, oath-focused. He accepts GM's setup (Grovley's appearance, the scream) without overruling. No dice roll needed per scene contract.",
+    "retake_seat": null,
+    "resolved": false,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 165.43,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.directing.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "speaker": "tuber_0",
+    "text": "The scream shatters the music. Two guards stumble into the foyer, blood on their tunics. One gasps, \"They're in the gardens\u2014burning the rose beds!\" Grovley drops the silver bell. It clatters against the oak floor. Candle flames flare blue. The scent of burning petals fills the air. The quartet's violins screech.",
+    "expects": [
+     "tuber_1"
+    ],
+    "must_resolve": "The party is interrupted by a sudden attack"
+   }
+  },
+  {
+   "t": 165.43,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The scream shatters the music. Two guards stumble into the foyer, blood on their tunics. One gasps, \"They're in the gardens\u2014burning the rose beds!\" Grovley drops the silver bell. It clatters against the oak floor. Candle flames flare blue. The scent of burning petals fills the air. The quartet's violins screech.",
+    "kind": "direction",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 165.43,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seats": [
+     "tuber_1"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. The duke sent you. Say it plainly.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A tall figure steps into the candlelight\u2014Grovley, the butler, his face pale under the chandelier. He holds a silver bell. \"Duke Leto requests your presence in the garden,\" he says, voice tight. \"Please follow me.\" The portrait's eyes snap shut. The draft dies. The quartet's violins begin again, sharp and discordant. From the hall behind you, a scream cuts through the music.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Move.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The scream shatters the music. Two guards stumble into the foyer, blood on their tunics. One gasps, \"They're in the gardens\u2014burning the rose beds!\" Grovley drops the silver bell. It clatters against the oak floor. Candle flames flare blue. The scent of burning petals fills the air. The quartet's violins screech.",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 171.24,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.think.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 171.24,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_1",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "order_pos": 0,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The foyer gleams with polished oak floors and candlelight. A string quartet plays a slow, mournful tune near the stairs. The air hums faintly, vibrating the candle flames. Portraits of stern-faced men line the walls. One portrait\u2019s eyes seem to follow you as you walk past. The scent of beeswax and old paper hangs thick in the air.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Ask them plainly, or I will.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A silver tray glides past on its own, bearing a single black card. The quartet stops playing. The portrait eyes lock on Chadwick. Candle flames gutter low. A draft slams the front door shut. The air thickens with the scent of ozone and burnt sugar. Someone steps from the shadows near the stairs.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. The duke sent you. Say it plainly.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "A tall figure steps into the candlelight\u2014Grovley, the butler, his face pale under the chandelier. He holds a silver bell. \"Duke Leto requests your presence in the garden,\" he says, voice tight. \"Please follow me.\" The portrait's eyes snap shut. The draft dies. The quartet's violins begin again, sharp and discordant. From the hall behind you, a scream cuts through the music.",
+      "kind": "direction"
+     },
+     {
+      "speaker": "tuber_1",
+      "text": "This is the way. Move.",
+      "kind": "reply"
+     },
+     {
+      "speaker": "gm",
+      "text": "The scream shatters the music. Two guards stumble into the foyer, blood on their tunics. One gasps, \"They're in the gardens\u2014burning the rose beds!\" Grovley drops the silver bell. It clatters against the oak floor. Candle flames flare blue. The scent of burning petals fills the air. The quartet's violins screech.",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The party is interrupted by a sudden attack",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 172.81,
+   "type": "character_reply",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r4.speak.tuber_1",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "seat": "tuber_1",
+    "text": "This is the way. Gardens. Now.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 172.81,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_1",
+    "text": "This is the way. Gardens. Now.",
+    "kind": "reply",
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "emotion": null
+   }
+  },
+  {
+   "t": 175.79,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.adjudicating.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "round": 4,
+    "verdict": "pass",
+    "notes": "Chadwick's line follows scene contract: he states the destination plainly and moves toward action. No out-of-character or unresolved elements.",
+    "retake_seat": null,
+    "resolved": true,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 175.79,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r4.resolved.gm",
+   "payload": {
+    "scene_id": "invitation-arc.invitation-arc-n0.invitation-arc-n0-arrival-2",
+    "resolved": true,
+    "state_delta": {},
+    "record_id": null
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 11.06
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.83
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.47
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.88
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.89
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.87
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.64
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.98
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.9
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.65
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.54
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.28
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.73
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.47
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.53
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 3.92
+  },
+  {
+   "what": "gm_tick",
+   "s": 10.32
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.87
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.62
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 12.87
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.88
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.64
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 0.0
+  },
+  {
+   "what": "seat:retake",
+   "s": 1.64
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.77
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.88
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.52
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 13.73
+  },
+  {
+   "what": "seat:think_request",
+   "s": 5.81
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 1.56
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 2.99
+  }
+ ]
+}

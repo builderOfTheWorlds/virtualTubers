@@ -101,7 +101,7 @@ def _drop_conn():
             pass
 
 
-def brief_for(agent_config, worker_id, unlocked=()):
+def _real_brief_for(agent_config, worker_id, unlocked=()):
     """The seat's brief from the character DB (production default).
 
     Reads ``agent_config["table"]``: ``character_slug`` (the cast id of this
@@ -115,6 +115,9 @@ def brief_for(agent_config, worker_id, unlocked=()):
     table_cfg = agent_config.get("table") or {}
     slug = table_cfg.get("character_slug")
     pack_dir = table_cfg.get("pack_dir")
+    # table.common_lore: lore every seat knows (the office pack's profiles carry no
+    # lore stems of their own); session unlocks first, then the common lore.
+    unlocked = list(unlocked) + [s for s in table_cfg.get("common_lore", []) if s not in unlocked]
     lore = _load_lore(pack_dir) if pack_dir else {}
     from table import seat_brief
     try:
@@ -126,6 +129,9 @@ def brief_for(agent_config, worker_id, unlocked=()):
         log.error("seat brief: character DB read failed for %s", worker_id)
         _drop_conn()
         raise
+
+
+brief_for = _real_brief_for        # module attribute: tests monkeypatch it; handlers look it up per call
 
 
 class SeatMemory:
