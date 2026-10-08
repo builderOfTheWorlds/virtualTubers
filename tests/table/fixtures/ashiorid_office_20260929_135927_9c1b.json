@@ -1,0 +1,2049 @@
+{
+ "artifacts": [
+  {
+   "content": {
+    "segments": [
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "",
+      "continuity_out": "The Office Manager arrives to prepare for the day.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "off-hours-arc",
+      "loop": 0,
+      "mirror_of": [],
+      "mirror_transform": null,
+      "order": 0,
+      "plot_path": [],
+      "spine_scenes": [],
+      "synopsis": "The office is dark and quiet. The Party Member sits alone in the corner, writing in their notebook by the emergency light's glow. The others are home, some asleep, others thinking about the day ahead."
+     },
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The Office Manager arrives to prepare for the day.",
+      "continuity_out": "The team disperses to their desks to begin work on the day's tasks.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "first-standup-arc",
+      "loop": 0,
+      "mirror_of": [],
+      "mirror_transform": null,
+      "order": 1,
+      "plot_path": [],
+      "spine_scenes": [
+       "first-standup"
+      ],
+      "synopsis": "The team gathers for the CEO's 06:00 standup. The CEO gives the directive for the day. The Analyst outlines the functional requirements. The Tech Lead translates them into a technical plan and assigns tasks to the Engineer and Tester. Marketing outlines their pitch to a client."
+     },
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The team disperses to their desks to begin work on the day's tasks.",
+      "continuity_out": "The team gathers for the final test pass and release.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "build-arc",
+      "loop": 0,
+      "mirror_of": [],
+      "mirror_transform": null,
+      "order": 2,
+      "plot_path": [],
+      "spine_scenes": [],
+      "synopsis": "The Engineer and Tester work on their assigned tasks, passing code back and forth for fixes. Marketing works on their pitch. The team takes a break for lunch in the kitchen, discussing the day's progress. The Analyst reviews the functional requirements."
+     },
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The team gathers for the final test pass and release.",
+      "continuity_out": "The Office Manager turns off the lights and locks up for the night.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "ship-arc",
+      "loop": 0,
+      "mirror_of": [],
+      "mirror_transform": null,
+      "order": 3,
+      "plot_path": [],
+      "spine_scenes": [],
+      "synopsis": "The Engineer and Tester complete final fixes and pass the code for the final test run. Marketing prepares the release notes. The team releases the day's work to production. The Office Manager performs garbage collection and winds down for the day. The Party Member observes from their corner."
+     }
+    ]
+   },
+   "kind": "arc_plan",
+   "segment_id": ""
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The team disperses to their desks to begin work on the day's tasks.",
+    "continuity_out": "The team gathers for the final test pass and release.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "build-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 10
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "build-arc-n0",
+      "parent_id": "build-arc",
+      "slots": 0,
+      "target_slots": 6
+     },
+     {
+      "depth": 2,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "build-arc-n0-n0",
+      "parent_id": "build-arc-n0",
+      "slots": 4,
+      "target_slots": 4
+     },
+     {
+      "depth": 2,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "build-arc-n0-n1",
+      "parent_id": "build-arc-n0",
+      "slots": 4,
+      "target_slots": 2
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "build-arc-n1",
+      "parent_id": "build-arc",
+      "slots": 4,
+      "target_slots": 4
+     }
+    ],
+    "order": 2,
+    "segment_id": "build-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "product"
+      ],
+      "node_id": "build-arc-n0-n0",
+      "participants": [
+       "engineer",
+       "tester"
+      ],
+      "prompt": "The Engineer and Tester collaborate on their assigned tasks, passing code back and forth for fixes and improvements.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n0-n0-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "company"
+      ],
+      "node_id": "build-arc-n0-n0",
+      "participants": [
+       "marketing"
+      ],
+      "prompt": "Marketing works on crafting their pitch for the product.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n0-n0-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "build-arc-n0-n0",
+      "participants": [
+       "engineer",
+       "tester",
+       "marketing",
+       "analyst"
+      ],
+      "prompt": "The team takes a break for lunch in the kitchen, discussing the day's progress.",
+      "sensitivity": "tone",
+      "slot_id": "build-arc-n0-n0-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "company"
+      ],
+      "node_id": "build-arc-n0-n0",
+      "participants": [
+       "analyst"
+      ],
+      "prompt": "The Analyst reviews the functional requirements for the product.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n0-n0-004"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "product"
+      ],
+      "node_id": "build-arc-n0-n1",
+      "participants": [
+       "engineer",
+       "tester"
+      ],
+      "prompt": "The Engineer and Tester collaborate on their assigned tasks, passing code back and forth for fixes and improvements.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n0-n1-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "company"
+      ],
+      "node_id": "build-arc-n0-n1",
+      "participants": [
+       "marketing"
+      ],
+      "prompt": "Marketing works on crafting their pitch for the product, brainstorming key selling points and messaging.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n0-n1-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "build-arc-n0-n1",
+      "participants": [
+       "engineer",
+       "tester",
+       "marketing",
+       "analyst"
+      ],
+      "prompt": "The team takes a break for lunch in the kitchen, discussing the day's progress and any challenges they've encountered.",
+      "sensitivity": "tone",
+      "slot_id": "build-arc-n0-n1-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "company"
+      ],
+      "node_id": "build-arc-n0-n1",
+      "participants": [
+       "analyst"
+      ],
+      "prompt": "The Analyst reviews the functional requirements, ensuring that the team's work aligns with the project's goals.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n0-n1-004"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "build-arc-n1",
+      "participants": [
+       "analyst",
+       "engineer",
+       "marketing",
+       "tester"
+      ],
+      "prompt": "The team gathers in the kitchen for lunch, carrying their meals to the table.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n1-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "company",
+       "product"
+      ],
+      "node_id": "build-arc-n1",
+      "participants": [
+       "analyst"
+      ],
+      "prompt": "The Analyst reviews the functional requirements document, making notes in the margins.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n1-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "product"
+      ],
+      "node_id": "build-arc-n1",
+      "participants": [
+       "engineer",
+       "tester"
+      ],
+      "prompt": "The Engineer and Tester discuss the code changes they made in the morning, identifying any potential issues.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n1-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "company",
+       "product"
+      ],
+      "node_id": "build-arc-n1",
+      "participants": [
+       "marketing",
+       "analyst",
+       "engineer",
+       "tester"
+      ],
+      "prompt": "Marketing outlines their pitch for the product, asking for feedback from the rest of the team.",
+      "sensitivity": "none",
+      "slot_id": "build-arc-n1-004"
+     }
+    ],
+    "synopsis": "The Engineer and Tester work on their assigned tasks, passing code back and forth for fixes. Marketing works on their pitch. The team takes a break for lunch in the kitchen, discussing the day's progress. The Analyst reviews the functional requirements."
+   },
+   "kind": "brief",
+   "segment_id": "build-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The Office Manager arrives to prepare for the day.",
+    "continuity_out": "The team disperses to their desks to begin work on the day's tasks.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "first-standup-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 10
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "first-standup-arc-n0",
+      "parent_id": "first-standup-arc",
+      "slots": 4,
+      "target_slots": 4
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "first-standup-arc-n1",
+      "parent_id": "first-standup-arc",
+      "slots": 0,
+      "target_slots": 6
+     },
+     {
+      "depth": 2,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "first-standup-arc-n1-n0",
+      "parent_id": "first-standup-arc-n1",
+      "slots": 2,
+      "target_slots": 2
+     },
+     {
+      "depth": 2,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "first-standup-arc-n1-n1",
+      "parent_id": "first-standup-arc-n1",
+      "slots": 4,
+      "target_slots": 4
+     }
+    ],
+    "order": 1,
+    "segment_id": "first-standup-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "first-standup-arc-n0",
+      "participants": [
+       "ceo",
+       "analyst",
+       "tech_lead",
+       "engineer",
+       "tester",
+       "marketing",
+       "office_manager"
+      ],
+      "prompt": "The team gathers in the conference room for the daily 06:00 standup.",
+      "sensitivity": "none",
+      "slot_id": "first-standup-arc-n0-001"
+     },
+     {
+      "kind": "spine",
+      "node_id": "first-standup-arc-n0",
+      "participants": [
+       "ceo",
+       "analyst",
+       "tech_lead",
+       "engineer",
+       "tester",
+       "marketing"
+      ],
+      "scene_ref": "first-standup",
+      "slot_id": "first-standup-arc-n0-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "clients"
+      ],
+      "node_id": "first-standup-arc-n0",
+      "participants": [
+       "analyst",
+       "ceo",
+       "tech_lead",
+       "engineer",
+       "tester",
+       "marketing"
+      ],
+      "prompt": "The Analyst outlines the key functional requirements for the day's work.",
+      "sensitivity": "none",
+      "slot_id": "first-standup-arc-n0-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "org_chart"
+      ],
+      "node_id": "first-standup-arc-n0",
+      "participants": [
+       "tech_lead",
+       "engineer",
+       "tester",
+       "analyst",
+       "ceo",
+       "marketing"
+      ],
+      "prompt": "The Tech Lead translates the requirements into a technical plan and assigns tasks.",
+      "sensitivity": "none",
+      "slot_id": "first-standup-arc-n0-004"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "first-standup-arc-n1-n0",
+      "participants": [
+       "analyst",
+       "ceo",
+       "engineer",
+       "marketing",
+       "office_manager",
+       "tech_lead",
+       "tester"
+      ],
+      "prompt": "The team gathers in the conference room for the daily 06:00 standup.",
+      "sensitivity": "none",
+      "slot_id": "first-standup-arc-n1-n0-001"
+     },
+     {
+      "kind": "spine",
+      "node_id": "first-standup-arc-n1-n0",
+      "participants": [
+       "analyst",
+       "ceo",
+       "engineer",
+       "marketing",
+       "office_manager",
+       "tech_lead",
+       "tester"
+      ],
+      "scene_ref": "first-standup",
+      "slot_id": "first-standup-arc-n1-n0-002"
+     },
+     {
+      "kind": "spine",
+      "node_id": "first-standup-arc-n1-n1",
+      "participants": [
+       "ceo",
+       "analyst",
+       "tech_lead",
+       "engineer",
+       "tester",
+       "marketing"
+      ],
+      "scene_ref": "first-standup",
+      "slot_id": "first-standup-arc-n1-n1-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "org_chart"
+      ],
+      "node_id": "first-standup-arc-n1-n1",
+      "participants": [
+       "tech_lead",
+       "analyst",
+       "engineer",
+       "tester"
+      ],
+      "prompt": "The Tech Lead takes over to translate the requirements into a technical plan.",
+      "sensitivity": "none",
+      "slot_id": "first-standup-arc-n1-n1-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "office"
+      ],
+      "node_id": "first-standup-arc-n1-n1",
+      "participants": [
+       "engineer",
+       "tester",
+       "tech_lead"
+      ],
+      "prompt": "The Engineer and Tester ask clarifying questions about the technical plan.",
+      "sensitivity": "none",
+      "slot_id": "first-standup-arc-n1-n1-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "clients",
+       "product"
+      ],
+      "node_id": "first-standup-arc-n1-n1",
+      "participants": [
+       "marketing",
+       "ceo",
+       "analyst"
+      ],
+      "prompt": "Marketing outlines the key selling points for the client pitch.",
+      "sensitivity": "tone",
+      "slot_id": "first-standup-arc-n1-n1-004"
+     }
+    ],
+    "synopsis": "The team gathers for the CEO's 06:00 standup. The CEO gives the directive for the day. The Analyst outlines the functional requirements. The Tech Lead translates them into a technical plan and assigns tasks to the Engineer and Tester. Marketing outlines their pitch to a client."
+   },
+   "kind": "brief",
+   "segment_id": "first-standup-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "",
+    "continuity_out": "The Office Manager arrives to prepare for the day.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "off-hours-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 10
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "off-hours-arc-n0",
+      "parent_id": "off-hours-arc",
+      "slots": 0,
+      "target_slots": 7
+     },
+     {
+      "depth": 2,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "off-hours-arc-n0-n0",
+      "parent_id": "off-hours-arc-n0",
+      "slots": 4,
+      "target_slots": 4
+     },
+     {
+      "depth": 2,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "off-hours-arc-n0-n1",
+      "parent_id": "off-hours-arc-n0",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "off-hours-arc-n1",
+      "parent_id": "off-hours-arc",
+      "slots": 3,
+      "target_slots": 3
+     }
+    ],
+    "order": 0,
+    "segment_id": "off-hours-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "off-hours-arc-n0-n0",
+      "participants": [
+       "party_member"
+      ],
+      "prompt": "The Party Member sits alone in the dark office, lost in thought as they write in their notebook by the emergency light's dim glow.",
+      "sensitivity": "tone",
+      "slot_id": "off-hours-arc-n0-n0-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office"
+      ],
+      "node_id": "off-hours-arc-n0-n0",
+      "participants": [
+       "party_member"
+      ],
+      "prompt": "The Party Member's pen scratches against the paper as they pour their thoughts onto the page, the only sound in the quiet office.",
+      "sensitivity": "none",
+      "slot_id": "off-hours-arc-n0-n0-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office"
+      ],
+      "node_id": "off-hours-arc-n0-n0",
+      "participants": [
+       "party_member"
+      ],
+      "prompt": "The Party Member pauses, tapping their pen against the notebook as they contemplate what to write next in the solitude of the dark office.",
+      "sensitivity": "tone",
+      "slot_id": "off-hours-arc-n0-n0-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "company"
+      ],
+      "node_id": "off-hours-arc-n0-n0",
+      "participants": [
+       "party_member",
+       "office_manager"
+      ],
+      "prompt": "With a sigh, the Party Member finishes writing, closes the notebook, and stands up just as the Office Manager arrives to prepare for the day ahead.",
+      "sensitivity": "none",
+      "slot_id": "off-hours-arc-n0-n0-004"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "off-hours-arc-n0-n1",
+      "participants": [
+       "office_manager",
+       "party_member"
+      ],
+      "prompt": "The Party Member looks up from their writing as the Office Manager enters, surprised to see someone else there so early.",
+      "sensitivity": "tone",
+      "slot_id": "off-hours-arc-n0-n1-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "off-hours-arc-n0-n1",
+      "participants": [
+       "office_manager",
+       "party_member"
+      ],
+      "prompt": "The Office Manager begins preparing for the day, tidying up the office and checking schedules. The Party Member packs up their notebook.",
+      "sensitivity": "none",
+      "slot_id": "off-hours-arc-n0-n1-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office"
+      ],
+      "node_id": "off-hours-arc-n0-n1",
+      "participants": [
+       "office_manager",
+       "party_member"
+      ],
+      "prompt": "The Party Member and Office Manager exchange a few words before the Party Member heads out, leaving the Office Manager to start their day.",
+      "sensitivity": "tone",
+      "slot_id": "off-hours-arc-n0-n1-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office"
+      ],
+      "node_id": "off-hours-arc-n1",
+      "participants": [
+       "party_member"
+      ],
+      "prompt": "The office is dark and quiet. The Party Member sits alone in the corner, writing in their notebook by the emergency light's glow. The others are home, some asleep, others thinking about the day ahead.",
+      "sensitivity": "none",
+      "slot_id": "off-hours-arc-n1-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office"
+      ],
+      "node_id": "off-hours-arc-n1",
+      "participants": [
+       "office_manager",
+       "party_member"
+      ],
+      "prompt": "The Party Member looks up from their writing as the Office Manager arrives, turning on lights and getting ready for the day ahead.",
+      "sensitivity": "none",
+      "slot_id": "off-hours-arc-n1-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "off-hours-arc-n1",
+      "participants": [
+       "office_manager",
+       "party_member"
+      ],
+      "prompt": "The Office Manager starts setting up the office as the Party Member finishes their late night writing, preparing to join the others for the work day.",
+      "sensitivity": "none",
+      "slot_id": "off-hours-arc-n1-003"
+     }
+    ],
+    "synopsis": "The office is dark and quiet. The Party Member sits alone in the corner, writing in their notebook by the emergency light's glow. The others are home, some asleep, others thinking about the day ahead."
+   },
+   "kind": "brief",
+   "segment_id": "off-hours-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The team gathers for the final test pass and release.",
+    "continuity_out": "The Office Manager turns off the lights and locks up for the night.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "ship-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 10
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "ship-arc-n0",
+      "parent_id": "ship-arc",
+      "slots": 0,
+      "target_slots": 6
+     },
+     {
+      "depth": 2,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "ship-arc-n0-n0",
+      "parent_id": "ship-arc-n0",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 2,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "ship-arc-n0-n1",
+      "parent_id": "ship-arc-n0",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "ship-arc-n1",
+      "parent_id": "ship-arc",
+      "slots": 4,
+      "target_slots": 4
+     }
+    ],
+    "order": 3,
+    "segment_id": "ship-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "product"
+      ],
+      "node_id": "ship-arc-n0-n0",
+      "participants": [
+       "engineer",
+       "tester"
+      ],
+      "prompt": "The Engineer and Tester make final tweaks to the code and run it through automated tests.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n0-n0-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "product"
+      ],
+      "node_id": "ship-arc-n0-n0",
+      "participants": [
+       "engineer",
+       "tester",
+       "tech_lead"
+      ],
+      "prompt": "The team reviews the test results and discusses any remaining issues.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n0-n0-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "company"
+      ],
+      "node_id": "ship-arc-n0-n0",
+      "participants": [
+       "marketing"
+      ],
+      "prompt": "Marketing drafts the release notes as the final tests are completed.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n0-n0-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "ship-arc-n0-n1",
+      "participants": [
+       "engineer",
+       "tester",
+       "marketing",
+       "tech_lead"
+      ],
+      "prompt": "The team gathers around the deployment dashboard, watching as the final tests run.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n0-n1-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "office"
+      ],
+      "node_id": "ship-arc-n0-n1",
+      "participants": [
+       "marketing"
+      ],
+      "prompt": "Marketing puts the finishing touches on the release notes as the tests complete successfully.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n0-n1-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "ship-arc-n0-n1",
+      "participants": [
+       "office_manager"
+      ],
+      "prompt": "The Office Manager begins winding down for the day, performing garbage collection and other end-of-day tasks.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n0-n1-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "office"
+      ],
+      "node_id": "ship-arc-n1",
+      "participants": [
+       "engineer",
+       "tester"
+      ],
+      "prompt": "The Engineer and Tester make final tweaks to the code and run the last tests before release.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n1-001"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "product",
+       "company"
+      ],
+      "node_id": "ship-arc-n1",
+      "participants": [
+       "marketing"
+      ],
+      "prompt": "Marketing drafts the release notes highlighting the key changes going out in today's deployment.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n1-002"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office",
+       "rituals"
+      ],
+      "node_id": "ship-arc-n1",
+      "participants": [
+       "ceo",
+       "engineer",
+       "tech_lead",
+       "tester",
+       "marketing",
+       "office_manager"
+      ],
+      "prompt": "The team gathers to review the final tests, release notes, and deployment plan one last time.",
+      "sensitivity": "tone",
+      "slot_id": "ship-arc-n1-003"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "office"
+      ],
+      "node_id": "ship-arc-n1",
+      "participants": [
+       "office_manager"
+      ],
+      "prompt": "The Office Manager begins end-of-day cleanup tasks as the team initiates the production release.",
+      "sensitivity": "none",
+      "slot_id": "ship-arc-n1-004"
+     }
+    ],
+    "synopsis": "The Engineer and Tester complete final fixes and pass the code for the final test run. Marketing prepares the release notes. The team releases the day's work to production. The Office Manager performs garbage collection and winds down for the day. The Party Member observes from their corner."
+   },
+   "kind": "brief",
+   "segment_id": "ship-arc"
+  },
+  {
+   "content": {
+    "build-arc": {
+     "children": [
+      "build-arc-n0",
+      "build-arc-n1"
+     ],
+     "continuity_in": "The team disperses to their desks to begin work on the day's tasks.",
+     "continuity_out": "The team gathers for the final test pass and release.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "build-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The Engineer and Tester work on their assigned tasks, passing code back and forth for fixes. Marketing works on their pitch. The team takes a break for lunch in the kitchen, discussing the day's progress. The Analyst reviews the functional requirements.",
+     "target_slots": 10,
+     "target_words": 1050,
+     "title": "The Engineer and Tester work on their assigned tasks, passing code back and fort"
+    },
+    "build-arc-n0": {
+     "children": [
+      "build-arc-n0-n0",
+      "build-arc-n0-n1"
+     ],
+     "continuity_in": "The team disperses to their desks to begin work on the day's tasks.",
+     "continuity_out": "The team takes a break for lunch in the kitchen, discussing the day's progress.",
+     "depth": 1,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "build-arc-n0",
+     "order": 0,
+     "parent_id": "build-arc",
+     "slots": null,
+     "summary": "The Engineer and Tester collaborate on their assigned tasks, passing code back and forth for fixes and improvements. Marketing works on crafting their pitch for the product.",
+     "target_slots": 6,
+     "target_words": 630,
+     "title": "Development Sprint"
+    },
+    "build-arc-n0-n0": {
+     "children": [],
+     "continuity_in": "The team disperses to their desks to begin work on the day's tasks.",
+     "continuity_out": "The Marketing team begins working on their pitch for the product.",
+     "depth": 2,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "build-arc-n0-n0",
+     "order": 0,
+     "parent_id": "build-arc-n0",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "product"
+       ],
+       "participants": [
+        "engineer",
+        "tester"
+       ],
+       "prompt": "The Engineer and Tester collaborate on their assigned tasks, passing code back and forth for fixes and improvements.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n0-n0-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "company"
+       ],
+       "participants": [
+        "marketing"
+       ],
+       "prompt": "Marketing works on crafting their pitch for the product.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n0-n0-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "engineer",
+        "tester",
+        "marketing",
+        "analyst"
+       ],
+       "prompt": "The team takes a break for lunch in the kitchen, discussing the day's progress.",
+       "sensitivity": "tone",
+       "slot_id": "build-arc-n0-n0-003"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "company"
+       ],
+       "participants": [
+        "analyst"
+       ],
+       "prompt": "The Analyst reviews the functional requirements for the product.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n0-n0-004"
+      }
+     ],
+     "summary": "The Engineer and Tester work together on their assigned tasks, passing code back and forth for fixes and improvements.",
+     "target_slots": 4,
+     "target_words": 378,
+     "title": "Engineer and Tester Collaboration"
+    },
+    "build-arc-n0-n1": {
+     "children": [],
+     "continuity_in": "The Engineer and Tester pass their latest code for review and feedback.",
+     "continuity_out": "The team takes a break for lunch in the kitchen, discussing the day's progress.",
+     "depth": 2,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "build-arc-n0-n1",
+     "order": 1,
+     "parent_id": "build-arc-n0",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "product"
+       ],
+       "participants": [
+        "engineer",
+        "tester"
+       ],
+       "prompt": "The Engineer and Tester collaborate on their assigned tasks, passing code back and forth for fixes and improvements.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n0-n1-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "company"
+       ],
+       "participants": [
+        "marketing"
+       ],
+       "prompt": "Marketing works on crafting their pitch for the product, brainstorming key selling points and messaging.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n0-n1-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "engineer",
+        "tester",
+        "marketing",
+        "analyst"
+       ],
+       "prompt": "The team takes a break for lunch in the kitchen, discussing the day's progress and any challenges they've encountered.",
+       "sensitivity": "tone",
+       "slot_id": "build-arc-n0-n1-003"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "company"
+       ],
+       "participants": [
+        "analyst"
+       ],
+       "prompt": "The Analyst reviews the functional requirements, ensuring that the team's work aligns with the project's goals.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n0-n1-004"
+      }
+     ],
+     "summary": "While the Engineer and Tester continue their work, the Marketing team starts crafting their pitch for the product.",
+     "target_slots": 2,
+     "target_words": 252,
+     "title": "Marketing Pitch Development"
+    },
+    "build-arc-n1": {
+     "children": [],
+     "continuity_in": "The team takes a break for lunch in the kitchen, discussing the day's progress.",
+     "continuity_out": "The team gathers for the final test pass and release.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "build-arc-n1",
+     "order": 1,
+     "parent_id": "build-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "analyst",
+        "engineer",
+        "marketing",
+        "tester"
+       ],
+       "prompt": "The team gathers in the kitchen for lunch, carrying their meals to the table.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n1-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "company",
+        "product"
+       ],
+       "participants": [
+        "analyst"
+       ],
+       "prompt": "The Analyst reviews the functional requirements document, making notes in the margins.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n1-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "product"
+       ],
+       "participants": [
+        "engineer",
+        "tester"
+       ],
+       "prompt": "The Engineer and Tester discuss the code changes they made in the morning, identifying any potential issues.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n1-003"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "company",
+        "product"
+       ],
+       "participants": [
+        "marketing",
+        "analyst",
+        "engineer",
+        "tester"
+       ],
+       "prompt": "Marketing outlines their pitch for the product, asking for feedback from the rest of the team.",
+       "sensitivity": "none",
+       "slot_id": "build-arc-n1-004"
+      }
+     ],
+     "summary": "The team takes a break for lunch in the kitchen, discussing the day's progress and any challenges they've encountered. The Analyst reviews the functional requirements to ensure the product aligns with the project goals.",
+     "target_slots": 4,
+     "target_words": 420,
+     "title": "Lunch Break and Analysis"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "build-arc"
+  },
+  {
+   "content": {
+    "first-standup-arc": {
+     "children": [
+      "first-standup-arc-n0",
+      "first-standup-arc-n1"
+     ],
+     "continuity_in": "The Office Manager arrives to prepare for the day.",
+     "continuity_out": "The team disperses to their desks to begin work on the day's tasks.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "first-standup-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The team gathers for the CEO's 06:00 standup. The CEO gives the directive for the day. The Analyst outlines the functional requirements. The Tech Lead translates them into a technical plan and assigns tasks to the Engineer and Tester. Marketing outlines their pitch to a client.",
+     "target_slots": 10,
+     "target_words": 1050,
+     "title": "The team gathers for the CEO's 06:00 standup. The CEO gives the directive for th"
+    },
+    "first-standup-arc-n0": {
+     "children": [],
+     "continuity_in": "The Office Manager arrives early to prepare the conference room for the standup.",
+     "continuity_out": "The Analyst takes the floor to outline the key functional requirements.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "first-standup-arc-n0",
+     "order": 0,
+     "parent_id": "first-standup-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "ceo",
+        "analyst",
+        "tech_lead",
+        "engineer",
+        "tester",
+        "marketing",
+        "office_manager"
+       ],
+       "prompt": "The team gathers in the conference room for the daily 06:00 standup.",
+       "sensitivity": "none",
+       "slot_id": "first-standup-arc-n0-001"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "ceo",
+        "analyst",
+        "tech_lead",
+        "engineer",
+        "tester",
+        "marketing"
+       ],
+       "scene_ref": "first-standup",
+       "slot_id": "first-standup-arc-n0-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "clients"
+       ],
+       "participants": [
+        "analyst",
+        "ceo",
+        "tech_lead",
+        "engineer",
+        "tester",
+        "marketing"
+       ],
+       "prompt": "The Analyst outlines the key functional requirements for the day's work.",
+       "sensitivity": "none",
+       "slot_id": "first-standup-arc-n0-003"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "org_chart"
+       ],
+       "participants": [
+        "tech_lead",
+        "engineer",
+        "tester",
+        "analyst",
+        "ceo",
+        "marketing"
+       ],
+       "prompt": "The Tech Lead translates the requirements into a technical plan and assigns tasks.",
+       "sensitivity": "none",
+       "slot_id": "first-standup-arc-n0-004"
+      }
+     ],
+     "summary": "The team gathers for the daily 06:00 standup meeting. The CEO provides the directive and goals for the day ahead.",
+     "target_slots": 4,
+     "target_words": 450,
+     "title": "Morning Standup"
+    },
+    "first-standup-arc-n1": {
+     "children": [
+      "first-standup-arc-n1-n0",
+      "first-standup-arc-n1-n1"
+     ],
+     "continuity_in": "The Analyst takes the floor to outline the key functional requirements.",
+     "continuity_out": "The team disperses to their desks to begin work on the day's assigned tasks.",
+     "depth": 1,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "first-standup-arc-n1",
+     "order": 1,
+     "parent_id": "first-standup-arc",
+     "slots": null,
+     "summary": "The Analyst presents the functional requirements. The Tech Lead translates them into a technical plan and assigns tasks to the Engineer and Tester. Marketing outlines their client pitch.",
+     "target_slots": 6,
+     "target_words": 600,
+     "title": "Planning the Work"
+    },
+    "first-standup-arc-n1-n0": {
+     "children": [],
+     "continuity_in": "The Analyst takes the floor to outline the key functional requirements.",
+     "continuity_out": "The Tech Lead takes over to translate the requirements into a technical plan.",
+     "depth": 2,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "first-standup-arc-n1-n0",
+     "order": 0,
+     "parent_id": "first-standup-arc-n1",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "analyst",
+        "ceo",
+        "engineer",
+        "marketing",
+        "office_manager",
+        "tech_lead",
+        "tester"
+       ],
+       "prompt": "The team gathers in the conference room for the daily 06:00 standup.",
+       "sensitivity": "none",
+       "slot_id": "first-standup-arc-n1-n0-001"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "analyst",
+        "ceo",
+        "engineer",
+        "marketing",
+        "office_manager",
+        "tech_lead",
+        "tester"
+       ],
+       "scene_ref": "first-standup",
+       "slot_id": "first-standup-arc-n1-n0-002"
+      }
+     ],
+     "summary": "The Analyst presents the key functional requirements for the project.",
+     "target_slots": 2,
+     "target_words": 225,
+     "title": "Functional Requirements"
+    },
+    "first-standup-arc-n1-n1": {
+     "children": [],
+     "continuity_in": "The Tech Lead takes over to translate the requirements into a technical plan.",
+     "continuity_out": "The team disperses to their desks to begin work on the day's assigned tasks.",
+     "depth": 2,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "first-standup-arc-n1-n1",
+     "order": 1,
+     "parent_id": "first-standup-arc-n1",
+     "slots": [
+      {
+       "kind": "spine",
+       "participants": [
+        "ceo",
+        "analyst",
+        "tech_lead",
+        "engineer",
+        "tester",
+        "marketing"
+       ],
+       "scene_ref": "first-standup",
+       "slot_id": "first-standup-arc-n1-n1-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "org_chart"
+       ],
+       "participants": [
+        "tech_lead",
+        "analyst",
+        "engineer",
+        "tester"
+       ],
+       "prompt": "The Tech Lead takes over to translate the requirements into a technical plan.",
+       "sensitivity": "none",
+       "slot_id": "first-standup-arc-n1-n1-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "office"
+       ],
+       "participants": [
+        "engineer",
+        "tester",
+        "tech_lead"
+       ],
+       "prompt": "The Engineer and Tester ask clarifying questions about the technical plan.",
+       "sensitivity": "none",
+       "slot_id": "first-standup-arc-n1-n1-003"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "clients",
+        "product"
+       ],
+       "participants": [
+        "marketing",
+        "ceo",
+        "analyst"
+       ],
+       "prompt": "Marketing outlines the key selling points for the client pitch.",
+       "sensitivity": "tone",
+       "slot_id": "first-standup-arc-n1-n1-004"
+      }
+     ],
+     "summary": "The Tech Lead translates the functional requirements into a technical plan and assigns tasks to the Engineer and Tester. Marketing outlines their pitch to a client.",
+     "target_slots": 4,
+     "target_words": 375,
+     "title": "Technical Planning"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "first-standup-arc"
+  },
+  {
+   "content": {
+    "off-hours-arc": {
+     "children": [
+      "off-hours-arc-n0",
+      "off-hours-arc-n1"
+     ],
+     "continuity_in": "",
+     "continuity_out": "The Office Manager arrives to prepare for the day.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "off-hours-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The office is dark and quiet. The Party Member sits alone in the corner, writing in their notebook by the emergency light's glow. The others are home, some asleep, others thinking about the day ahead.",
+     "target_slots": 10,
+     "target_words": 1050,
+     "title": "The office is dark and quiet. The Party Member sits alone in the corner, writing"
+    },
+    "off-hours-arc-n0": {
+     "children": [
+      "off-hours-arc-n0-n0",
+      "off-hours-arc-n0-n1"
+     ],
+     "continuity_in": "The office is dark and quiet, with only the Party Member present, writing.",
+     "continuity_out": "The Party Member finishes writing and prepares to leave as the Office Manager arrives.",
+     "depth": 1,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "off-hours-arc-n0",
+     "order": 0,
+     "parent_id": "off-hours-arc",
+     "slots": null,
+     "summary": "The Party Member sits alone in the dark office, pouring thoughts into their notebook by the glow of the emergency light. The others have gone home to rest or ponder the day ahead.",
+     "target_slots": 7,
+     "target_words": 700,
+     "title": "Late night reflections"
+    },
+    "off-hours-arc-n0-n0": {
+     "children": [],
+     "continuity_in": "The office is dark and quiet, with only the Party Member present, writing.",
+     "continuity_out": "The Party Member finishes writing and prepares to leave as the Office Manager arrives.",
+     "depth": 2,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "off-hours-arc-n0-n0",
+     "order": 0,
+     "parent_id": "off-hours-arc-n0",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "party_member"
+       ],
+       "prompt": "The Party Member sits alone in the dark office, lost in thought as they write in their notebook by the emergency light's dim glow.",
+       "sensitivity": "tone",
+       "slot_id": "off-hours-arc-n0-n0-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office"
+       ],
+       "participants": [
+        "party_member"
+       ],
+       "prompt": "The Party Member's pen scratches against the paper as they pour their thoughts onto the page, the only sound in the quiet office.",
+       "sensitivity": "none",
+       "slot_id": "off-hours-arc-n0-n0-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office"
+       ],
+       "participants": [
+        "party_member"
+       ],
+       "prompt": "The Party Member pauses, tapping their pen against the notebook as they contemplate what to write next in the solitude of the dark office.",
+       "sensitivity": "tone",
+       "slot_id": "off-hours-arc-n0-n0-003"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "company"
+       ],
+       "participants": [
+        "party_member",
+        "office_manager"
+       ],
+       "prompt": "With a sigh, the Party Member finishes writing, closes the notebook, and stands up just as the Office Manager arrives to prepare for the day ahead.",
+       "sensitivity": "none",
+       "slot_id": "off-hours-arc-n0-n0-004"
+      }
+     ],
+     "summary": "The Party Member sits alone in the dark office, lost in thought as they write in their notebook by the emergency light's dim glow.",
+     "target_slots": 4,
+     "target_words": 420,
+     "title": "Solitude in the Dark Office"
+    },
+    "off-hours-arc-n0-n1": {
+     "children": [],
+     "continuity_in": "The Party Member finishes writing and prepares to leave as the Office Manager arrives.",
+     "continuity_out": "The Office Manager and Party Member exchange words before the Party Member departs, leaving the Office Manager to begin their day.",
+     "depth": 2,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "off-hours-arc-n0-n1",
+     "order": 1,
+     "parent_id": "off-hours-arc-n0",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "office_manager",
+        "party_member"
+       ],
+       "prompt": "The Party Member looks up from their writing as the Office Manager enters, surprised to see someone else there so early.",
+       "sensitivity": "tone",
+       "slot_id": "off-hours-arc-n0-n1-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "office_manager",
+        "party_member"
+       ],
+       "prompt": "The Office Manager begins preparing for the day, tidying up the office and checking schedules. The Party Member packs up their notebook.",
+       "sensitivity": "none",
+       "slot_id": "off-hours-arc-n0-n1-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office"
+       ],
+       "participants": [
+        "office_manager",
+        "party_member"
+       ],
+       "prompt": "The Party Member and Office Manager exchange a few words before the Party Member heads out, leaving the Office Manager to start their day.",
+       "sensitivity": "tone",
+       "slot_id": "off-hours-arc-n0-n1-003"
+      }
+     ],
+     "summary": "The Office Manager enters the office early to prepare for the day, finding the Party Member still there from the night before.",
+     "target_slots": 3,
+     "target_words": 280,
+     "title": "The Office Manager Arrives"
+    },
+    "off-hours-arc-n1": {
+     "children": [],
+     "continuity_in": "The Office Manager arrives at the office before the others to get ready for the day.",
+     "continuity_out": "The Office Manager starts setting up as the Party Member wraps up their writing.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "off-hours-arc-n1",
+     "order": 1,
+     "parent_id": "off-hours-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office"
+       ],
+       "participants": [
+        "party_member"
+       ],
+       "prompt": "The office is dark and quiet. The Party Member sits alone in the corner, writing in their notebook by the emergency light's glow. The others are home, some asleep, others thinking about the day ahead.",
+       "sensitivity": "none",
+       "slot_id": "off-hours-arc-n1-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office"
+       ],
+       "participants": [
+        "office_manager",
+        "party_member"
+       ],
+       "prompt": "The Party Member looks up from their writing as the Office Manager arrives, turning on lights and getting ready for the day ahead.",
+       "sensitivity": "none",
+       "slot_id": "off-hours-arc-n1-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "office_manager",
+        "party_member"
+       ],
+       "prompt": "The Office Manager starts setting up the office as the Party Member finishes their late night writing, preparing to join the others for the work day.",
+       "sensitivity": "none",
+       "slot_id": "off-hours-arc-n1-003"
+      }
+     ],
+     "summary": "The Office Manager enters the dark office early in the morning to prepare for the day. The Party Member is just finishing up some late night writing.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "New day begins"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "off-hours-arc"
+  },
+  {
+   "content": {
+    "ship-arc": {
+     "children": [
+      "ship-arc-n0",
+      "ship-arc-n1"
+     ],
+     "continuity_in": "The team gathers for the final test pass and release.",
+     "continuity_out": "The Office Manager turns off the lights and locks up for the night.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "ship-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The Engineer and Tester complete final fixes and pass the code for the final test run. Marketing prepares the release notes. The team releases the day's work to production. The Office Manager performs garbage collection and winds down for the day. The Party Member observes from their corner.",
+     "target_slots": 10,
+     "target_words": 1050,
+     "title": "The Engineer and Tester complete final fixes and pass the code for the final tes"
+    },
+    "ship-arc-n0": {
+     "children": [
+      "ship-arc-n0-n0",
+      "ship-arc-n0-n1"
+     ],
+     "continuity_in": "The team gathers for the final test pass and release.",
+     "continuity_out": "The final tests pass successfully and the team prepares for deployment.",
+     "depth": 1,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "ship-arc-n0",
+     "order": 0,
+     "parent_id": "ship-arc",
+     "slots": null,
+     "summary": "The Engineer and Tester complete the remaining bug fixes and pass the code for the final automated and manual test run. Marketing begins drafting the release notes.",
+     "target_slots": 6,
+     "target_words": 630,
+     "title": "Final Fixes and Test Pass"
+    },
+    "ship-arc-n0-n0": {
+     "children": [],
+     "continuity_in": "The team gathers for the final test pass and release.",
+     "continuity_out": "The code passes all automated and manual tests.",
+     "depth": 2,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "ship-arc-n0-n0",
+     "order": 0,
+     "parent_id": "ship-arc-n0",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "product"
+       ],
+       "participants": [
+        "engineer",
+        "tester"
+       ],
+       "prompt": "The Engineer and Tester make final tweaks to the code and run it through automated tests.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n0-n0-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "product"
+       ],
+       "participants": [
+        "engineer",
+        "tester",
+        "tech_lead"
+       ],
+       "prompt": "The team reviews the test results and discusses any remaining issues.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n0-n0-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "company"
+       ],
+       "participants": [
+        "marketing"
+       ],
+       "prompt": "Marketing drafts the release notes as the final tests are completed.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n0-n0-003"
+      }
+     ],
+     "summary": "The Engineer and Tester complete the remaining bug fixes and pass the code for the final automated and manual test run.",
+     "target_slots": 3,
+     "target_words": 270,
+     "title": "Final Bug Fixes"
+    },
+    "ship-arc-n0-n1": {
+     "children": [],
+     "continuity_in": "The code passes all tests and is ready for release.",
+     "continuity_out": "The Office Manager turns off the lights and locks up for the night.",
+     "depth": 2,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "ship-arc-n0-n1",
+     "order": 1,
+     "parent_id": "ship-arc-n0",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "engineer",
+        "tester",
+        "marketing",
+        "tech_lead"
+       ],
+       "prompt": "The team gathers around the deployment dashboard, watching as the final tests run.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n0-n1-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "office"
+       ],
+       "participants": [
+        "marketing"
+       ],
+       "prompt": "Marketing puts the finishing touches on the release notes as the tests complete successfully.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n0-n1-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "office_manager"
+       ],
+       "prompt": "The Office Manager begins winding down for the day, performing garbage collection and other end-of-day tasks.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n0-n1-003"
+      }
+     ],
+     "summary": "Marketing finalizes the release notes. The team releases the day's work to production. The Office Manager performs garbage collection and winds down for the day. The Party Member observes from their corner.",
+     "target_slots": 3,
+     "target_words": 360,
+     "title": "Release Deployment"
+    },
+    "ship-arc-n1": {
+     "children": [],
+     "continuity_in": "The final tests pass successfully and the team prepares for deployment.",
+     "continuity_out": "The Office Manager turns off the lights and locks up for the night.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "ship-arc-n1",
+     "order": 1,
+     "parent_id": "ship-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "office"
+       ],
+       "participants": [
+        "engineer",
+        "tester"
+       ],
+       "prompt": "The Engineer and Tester make final tweaks to the code and run the last tests before release.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n1-001"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "product",
+        "company"
+       ],
+       "participants": [
+        "marketing"
+       ],
+       "prompt": "Marketing drafts the release notes highlighting the key changes going out in today's deployment.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n1-002"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office",
+        "rituals"
+       ],
+       "participants": [
+        "ceo",
+        "engineer",
+        "tech_lead",
+        "tester",
+        "marketing",
+        "office_manager"
+       ],
+       "prompt": "The team gathers to review the final tests, release notes, and deployment plan one last time.",
+       "sensitivity": "tone",
+       "slot_id": "ship-arc-n1-003"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "office"
+       ],
+       "participants": [
+        "office_manager"
+       ],
+       "prompt": "The Office Manager begins end-of-day cleanup tasks as the team initiates the production release.",
+       "sensitivity": "none",
+       "slot_id": "ship-arc-n1-004"
+      }
+     ],
+     "summary": "The team releases the day's work to the production environment. The Office Manager performs garbage collection and begins winding down for the day. The Party Member observes the release process from their corner.",
+     "target_slots": 4,
+     "target_words": 420,
+     "title": "Release to Production"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "ship-arc"
+  }
+ ],
+ "run_id": "ashiorid_office_20260929_135927_9c1b"
+}

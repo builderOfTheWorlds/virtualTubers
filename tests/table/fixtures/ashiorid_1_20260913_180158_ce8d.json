@@ -1,0 +1,4672 @@
+{
+ "artifacts": [
+  {
+   "content": {
+    "segments": [
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "",
+      "continuity_out": "The party is interrupted by a sudden attack.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "invitation-arc",
+      "loop": 0,
+      "order": 0,
+      "spine_scenes": [
+       "invitation"
+      ],
+      "synopsis": "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration. They arrive and meet for the first time, feeling an inexplicable connection. The party begins, but an ominous feeling lingers in the air."
+     },
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The party is interrupted by a sudden attack.",
+      "continuity_out": "The manor starts to burn, forcing them to flee.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "letos-manor-arc",
+      "loop": 0,
+      "order": 1,
+      "spine_scenes": [
+       "letos-manor"
+      ],
+      "synopsis": "The four explore Leto's manor, marveling at its opulence and grandeur. They uncover hidden passages and rooms, hinting at the manor's secrets. As they delve deeper, they stumble upon Grovley, the butler, who seems to know more than he lets on."
+     },
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The manor starts to burn, forcing them to flee.",
+      "continuity_out": "They escape the burning manor and find themselves in a subbasement with Grovley.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "party-attack-arc",
+      "loop": 0,
+      "order": 2,
+      "spine_scenes": [
+       "party-attack"
+      ],
+      "synopsis": "Uninvited guests storm the party, causing chaos and panic. The four must defend themselves and uncover the attackers' motives. They discover a connection to the Bahadur and their nefarious plans, putting the weight of the world's fate on their shoulders."
+     },
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "They escape the burning manor and find themselves in a subbasement with Grovley.",
+      "continuity_out": "They learn of the vault and the importance of the Event.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "burn-it-down-arc",
+      "loop": 0,
+      "order": 3,
+      "spine_scenes": [
+       "burn-it-down"
+      ],
+      "synopsis": "The manor burns, and the four must navigate the flames and collapsing structures to escape. They discover a hidden subbasement where Grovley reveals the truth about their identities and the significance of the ten thousandth anniversary."
+     },
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "They learn of the vault and the importance of the Event.",
+      "continuity_out": "They decide to explore the vault and confront the looming threat.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "grovley-revelation-arc",
+      "loop": 0,
+      "order": 4,
+      "spine_scenes": [
+       "grovley-revelation"
+      ],
+      "synopsis": "In the subbasement, Grovley explains the four's roles as products of the Begene Sisters' Program and their connection to the Event. He reveals the existence of the vault and its contents, urging them to take action before it's too late."
+     },
+     {
+      "ambient_focus": "",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "They decide to explore the vault and confront the looming threat.",
+      "continuity_out": "The portal opens, and they must face the consequences of their choice.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "the-vault-arc",
+      "loop": 0,
+      "order": 5,
+      "spine_scenes": [
+       "the-vault"
+      ],
+      "synopsis": "The four explore the vault, uncovering ancient artifacts and a dying wizard who reveals the true nature of the portal and the consequences of its opening. They must make a crucial decision that will determine the fate of Ashiorid."
+     },
+     {
+      "ambient_focus": "road-talk",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The portal has opened, and the group must decide what to do.",
+      "continuity_out": "The group has made their choice, and must now face the consequences.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "portal-choice-arc",
+      "loop": 0,
+      "order": 6,
+      "spine_scenes": [
+       "portal-choice"
+      ],
+      "synopsis": "The group discusses the implications of their choice at the portal as they travel the road south."
+     },
+     {
+      "ambient_focus": "malmont-market",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The group has traveled south from the manor.",
+      "continuity_out": "The group has learned about Malmont's two power centers.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "malmont-arrival-arc",
+      "loop": 0,
+      "order": 7,
+      "spine_scenes": [
+       "malmont-arrival"
+      ],
+      "synopsis": "The group arrives in Malmont and begins to explore the town, learning about its power structure and magical resources."
+     },
+     {
+      "ambient_focus": "night-watch",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The group is exploring Malmont.",
+      "continuity_out": "The group has learned about the Bahadur's necromancy and plans.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "bahadur-revealed-arc",
+      "loop": 0,
+      "order": 8,
+      "spine_scenes": [
+       "bahadur-revealed"
+      ],
+      "synopsis": "The group encounters the Bahadur in Malmont at night and learns about their origins and intentions."
+     },
+     {
+      "ambient_focus": "sodacan_bob-on-runes",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The group is searching for the monuments.",
+      "continuity_out": "The group has obtained one fragment of the map.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "malvakar-riddle-arc",
+      "loop": 0,
+      "order": 9,
+      "spine_scenes": [
+       "malvakar-riddle"
+      ],
+      "synopsis": "The group solves the riddle of the Malvakar monument and gains a fragment of the map."
+     },
+     {
+      "ambient_focus": "camp-fire",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The group has one fragment of the map.",
+      "continuity_out": "The group has decided on their next destination.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "amulet-map-arc",
+      "loop": 0,
+      "order": 10,
+      "spine_scenes": [
+       "amulet-map"
+      ],
+      "synopsis": "The group discusses the implications of the map fragments and plans their next move around the campfire."
+     },
+     {
+      "ambient_focus": "vigil-counts",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The group is reflecting on past events.",
+      "continuity_out": "The group has reached a new understanding of Grovley's words.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "grovley-revelation-arc2",
+      "loop": 1,
+      "order": 11,
+      "spine_scenes": [
+       "grovley-revelation"
+      ],
+      "synopsis": "The group revisits Grovley's revelations and debates their significance as Vigil counts the stars."
+     },
+     {
+      "ambient_focus": "camp-fire",
+      "carry_in": {},
+      "carry_out": {},
+      "continuity_in": "The group has reached a new understanding of Grovley's words.",
+      "continuity_out": "The group has decided to continue their quest for the amulet, despite the risks and uncertainties.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "grovley-revelation-arc3",
+      "loop": 1,
+      "order": 12,
+      "spine_scenes": [
+       "grovley-revelation"
+      ],
+      "synopsis": "The group discusses Grovley's revelation around a campfire. They debate the implications of their origins and the true purpose of the amulet they seek."
+     },
+     {
+      "ambient_focus": "night-watch",
+      "carry_in": {},
+      "carry_out": {
+       "Leena-wounded": "Leena was injured during the encounter with the night watch."
+      },
+      "continuity_in": "The group has decided to continue their quest for the amulet.",
+      "continuity_out": "The group has gathered valuable information and made contacts in Malmont.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "malmont-arrival-arc2",
+      "loop": 2,
+      "order": 13,
+      "spine_scenes": [
+       "malmont-arrival"
+      ],
+      "synopsis": "The group arrives in Malmont under the cover of night. They seek shelter and information, trying to remain inconspicuous in the unfamiliar town."
+     },
+     {
+      "ambient_focus": "road-talk",
+      "carry_in": {
+       "Leena-wounded": "Leena was injured during the encounter with the night watch."
+      },
+      "carry_out": {},
+      "continuity_in": "The group has gathered information and made contacts in Malmont.",
+      "continuity_out": "The group has solved the riddle and gained the next map fragment, but they have also drawn unwanted attention.",
+      "event_windows": [],
+      "fork": null,
+      "hours": 6,
+      "id": "malvakar-riddle-arc2",
+      "loop": 3,
+      "order": 14,
+      "spine_scenes": [
+       "malvakar-riddle"
+      ],
+      "synopsis": "The group travels to the Malvakar monument, discussing their plans and the riddle they must solve to gain the next map fragment."
+     }
+    ]
+   },
+   "kind": "arc_plan",
+   "segment_id": ""
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The group has one fragment of the map.",
+    "continuity_out": "The group has decided on their next destination.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "amulet-map-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "amulet-map-arc-n0",
+      "parent_id": "amulet-map-arc",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "amulet-map-arc-n1",
+      "parent_id": "amulet-map-arc",
+      "slots": 0,
+      "target_slots": 5
+     }
+    ],
+    "order": 10,
+    "segment_id": "amulet-map-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder",
+       "moonwells"
+      ],
+      "node_id": "amulet-map-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group huddles around the fire, studying the fragment with varying degrees of scrutiny and skepticism.",
+      "sensitivity": "tone",
+      "slot_id": "amulet-map-arc-n0-map-analysis-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "the-begene-program"
+      ],
+      "node_id": "amulet-map-arc-n0",
+      "participants": [
+       "Leena",
+       "chadwick"
+      ],
+      "prompt": "Leena offers a theory about the symbols on the fragment, while Chadwick remains unconvinced.",
+      "sensitivity": "tone",
+      "slot_id": "amulet-map-arc-n0-map-analysis-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "amulet-map-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "amulet-map",
+      "slot_id": "amulet-map-arc-n0-map-analysis-3"
+     }
+    ],
+    "synopsis": "The group discusses the implications of the map fragments and plans their next move around the campfire."
+   },
+   "kind": "brief",
+   "segment_id": "amulet-map-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The group is exploring Malmont.",
+    "continuity_out": "The group has learned about the Bahadur's necromancy and plans.",
+    "hours": 6,
+    "loop": 0,
+    "needs_rebrief": true,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "bahadur-revealed-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "bahadur-revealed-arc-n0",
+      "parent_id": "bahadur-revealed-arc",
+      "slots": 0,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "bahadur-revealed-arc-n1",
+      "parent_id": "bahadur-revealed-arc",
+      "slots": 5,
+      "target_slots": 5
+     }
+    ],
+    "order": 8,
+    "segment_id": "bahadur-revealed-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "moonwells"
+      ],
+      "node_id": "bahadur-revealed-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group observes the Bahadur's necromantic preparations in the shadows of Malmont's streets.",
+      "sensitivity": "tone",
+      "slot_id": "bahadur-revealed-arc-n1-bahadur-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "the-bahadur"
+      ],
+      "node_id": "bahadur-revealed-arc-n1",
+      "participants": [
+       "Leena",
+       "gm"
+      ],
+      "prompt": "Leena listens intently as a Bahadur elder explains the Begene Program's origins.",
+      "sensitivity": "tone",
+      "slot_id": "bahadur-revealed-arc-n1-bahadur-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont",
+       "the-bahadur"
+      ],
+      "node_id": "bahadur-revealed-arc-n1",
+      "participants": [
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "Chadwick notices strange symbols carved into the ancient stones of Malmont's ruins.",
+      "sensitivity": "tone",
+      "slot_id": "bahadur-revealed-arc-n1-bahadur-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells",
+       "the-bahadur"
+      ],
+      "node_id": "bahadur-revealed-arc-n1",
+      "participants": [
+       "Vigil",
+       "gm"
+      ],
+      "prompt": "Vigil examines a moonwell that has been corrupted by Bahadur magic.",
+      "sensitivity": "tone",
+      "slot_id": "bahadur-revealed-arc-n1-bahadur-4"
+     },
+     {
+      "kind": "spine",
+      "node_id": "bahadur-revealed-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "scene_ref": "bahadur-revealed",
+      "slot_id": "bahadur-revealed-arc-n1-bahadur-5"
+     }
+    ],
+    "synopsis": "The group encounters the Bahadur in Malmont at night and learns about their origins and intentions."
+   },
+   "kind": "brief",
+   "segment_id": "bahadur-revealed-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "They escape the burning manor and find themselves in a subbasement with Grovley.",
+    "continuity_out": "They learn of the vault and the importance of the Event.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "burn-it-down-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "burn-it-down-arc-n0",
+      "parent_id": "burn-it-down-arc",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "burn-it-down-arc-n1",
+      "parent_id": "burn-it-down-arc",
+      "slots": 5,
+      "target_slots": 5
+     }
+    ],
+    "order": 3,
+    "segment_id": "burn-it-down-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "node_id": "burn-it-down-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "The four protagonists must navigate through flames and collapsing structures to escape the burning manor, facing immediate physical danger and chaos as the building deteriorates around them",
+      "sensitivity": "tone",
+      "slot_id": "burn-it-down-arc-n0-escape-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "node_id": "burn-it-down-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "prompt": "They discover a hidden subbasement where Grovley reveals the truth about their identities and the significance of the ten thousandth anniversary",
+      "sensitivity": "tone",
+      "slot_id": "burn-it-down-arc-n0-escape-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "burn-it-down-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "grovley-revelation",
+      "slot_id": "burn-it-down-arc-n0-escape-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event",
+       "moonwells"
+      ],
+      "node_id": "burn-it-down-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "The four survivors emerge from the collapsing manor, their lungs filled with smoke and ash, finding themselves in a hidden subbasement lit by flickering torches.",
+      "sensitivity": "tone",
+      "slot_id": "burn-it-down-arc-n1-revelation-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event",
+       "the-bahadur"
+      ],
+      "node_id": "burn-it-down-arc-n1",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "Grovley steps forward from the shadows, his voice echoing off the stone walls as he begins to speak of their true identities and the ten thousandth anniversary.",
+      "sensitivity": "tone",
+      "slot_id": "burn-it-down-arc-n1-revelation-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event",
+       "the-begene-program"
+      ],
+      "node_id": "burn-it-down-arc-n1",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "As Grovley speaks, the ground trembles beneath their feet, and the walls of the subbasement begin to shift, revealing hidden passages.",
+      "sensitivity": "tone",
+      "slot_id": "burn-it-down-arc-n1-revelation-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event",
+       "the-bahadur"
+      ],
+      "node_id": "burn-it-down-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "The four exchange glances, realizing that what they thought they knew about themselves and their mission is about to be completely rewritten.",
+      "sensitivity": "tone",
+      "slot_id": "burn-it-down-arc-n1-revelation-4"
+     },
+     {
+      "kind": "spine",
+      "node_id": "burn-it-down-arc-n1",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "scene_ref": "grovley-revelation",
+      "slot_id": "burn-it-down-arc-n1-revelation-5"
+     }
+    ],
+    "synopsis": "The manor burns, and the four must navigate the flames and collapsing structures to escape. They discover a hidden subbasement where Grovley reveals the truth about their identities and the significance of the ten thousandth anniversary."
+   },
+   "kind": "brief",
+   "segment_id": "burn-it-down-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "They learn of the vault and the importance of the Event.",
+    "continuity_out": "They decide to explore the vault and confront the looming threat.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "grovley-revelation-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "grovley-revelation-arc-n0",
+      "parent_id": "grovley-revelation-arc",
+      "slots": 0,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "grovley-revelation-arc-n1",
+      "parent_id": "grovley-revelation-arc",
+      "slots": 0,
+      "target_slots": 5
+     }
+    ],
+    "order": 4,
+    "segment_id": "grovley-revelation-arc",
+    "slots": [],
+    "synopsis": "In the subbasement, Grovley explains the four's roles as products of the Begene Sisters' Program and their connection to the Event. He reveals the existence of the vault and its contents, urging them to take action before it's too late."
+   },
+   "kind": "brief",
+   "segment_id": "grovley-revelation-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The group is reflecting on past events.",
+    "continuity_out": "The group has reached a new understanding of Grovley's words.",
+    "hours": 6,
+    "loop": 1,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "grovley-revelation-arc2",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "grovley-revelation-arc2-n0",
+      "parent_id": "grovley-revelation-arc2",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "grovley-revelation-arc2-n1",
+      "parent_id": "grovley-revelation-arc2",
+      "slots": 5,
+      "target_slots": 5
+     }
+    ],
+    "order": 11,
+    "segment_id": "grovley-revelation-arc2",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells",
+       "the-begene-program"
+      ],
+      "node_id": "grovley-revelation-arc2-n0",
+      "participants": [
+       "Leena",
+       "Vigil"
+      ],
+      "prompt": "Leena looks up at the stars, her voice barely a whisper as she recalls Grovley's words about the moonwells and their connection to the ancient forces.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc2-n0-grovley-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "the-event"
+      ],
+      "node_id": "grovley-revelation-arc2-n0",
+      "participants": [
+       "chadwick",
+       "Vigil"
+      ],
+      "prompt": "Chadwick leans back, his usual bravado replaced by contemplation, as he tries to piece together how Grovley's revelation might tie into the larger cosmic narrative.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc2-n0-grovley-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "grovley-revelation-arc2-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "grovley-revelation",
+      "slot_id": "grovley-revelation-arc2-n0-grovley-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "moonwells"
+      ],
+      "node_id": "grovley-revelation-arc2-n1",
+      "participants": [
+       "Leena"
+      ],
+      "prompt": "Leena reflects on Grovley's words, her voice barely above a whisper as she tries to process the implications.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc2-n1-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "amulet-of-wonder"
+      ],
+      "node_id": "grovley-revelation-arc2-n1",
+      "participants": [
+       "Vigil"
+      ],
+      "prompt": "Vigil points to the stars, his voice steady and knowing, connecting Grovley's revelations to the cosmic patterns he's been studying.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc2-n1-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont",
+       "the-event"
+      ],
+      "node_id": "grovley-revelation-arc2-n1",
+      "participants": [
+       "chadwick"
+      ],
+      "prompt": "Chadwick looks skeptical, arms crossed, questioning whether Grovley's words hold any real weight in the face of what they've seen.",
+      "sensitivity": "none",
+      "slot_id": "grovley-revelation-arc2-n1-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "moonwells"
+      ],
+      "node_id": "grovley-revelation-arc2-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group sits in contemplative silence, each lost in their own thoughts as they weigh the significance of what they've learned.",
+      "sensitivity": "none",
+      "slot_id": "grovley-revelation-arc2-n1-4"
+     },
+     {
+      "kind": "spine",
+      "node_id": "grovley-revelation-arc2-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "grovley-revelation",
+      "slot_id": "grovley-revelation-arc2-n1-5"
+     }
+    ],
+    "synopsis": "The group revisits Grovley's revelations and debates their significance as Vigil counts the stars."
+   },
+   "kind": "brief",
+   "segment_id": "grovley-revelation-arc2"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The group has reached a new understanding of Grovley's words.",
+    "continuity_out": "The group has decided to continue their quest for the amulet, despite the risks and uncertainties.",
+    "hours": 6,
+    "loop": 1,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "grovley-revelation-arc3",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "grovley-revelation-arc3-n0",
+      "parent_id": "grovley-revelation-arc3",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "grovley-revelation-arc3-n1",
+      "parent_id": "grovley-revelation-arc3",
+      "slots": 6,
+      "target_slots": 6
+     }
+    ],
+    "order": 12,
+    "segment_id": "grovley-revelation-arc3",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder",
+       "moonwells",
+       "the-begene-program",
+       "the-event"
+      ],
+      "node_id": "grovley-revelation-arc3-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "The group sits in contemplation around the campfire, grappling with Grovley's revelation about their true origins and the amulet's purpose. Each member wrestles with the implications of their discovery.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc3-n0-grovley-fire-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder",
+       "moonwells",
+       "the-bahadur",
+       "the-event"
+      ],
+      "node_id": "grovley-revelation-arc3-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "The group discusses the implications of Grovley's revelation, with each member expressing their concerns and questions about their origins and the amulet they seek.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc3-n0-grovley-fire-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "grovley-revelation-arc3-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "grovley-revelation",
+      "slot_id": "grovley-revelation-arc3-n0-grovley-fire-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder",
+       "moonwells"
+      ],
+      "node_id": "grovley-revelation-arc3-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "Leena stares into the fire, her wounded arm resting on her knee. The weight of Grovley's revelation settles over the group like smoke.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "the-event"
+      ],
+      "node_id": "grovley-revelation-arc3-n1",
+      "participants": [
+       "chadwick",
+       "Vigil"
+      ],
+      "prompt": "Chadwick's voice cuts through the night air, his axe still gripped tightly in his hand despite its loss.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "amulet-of-wonder"
+      ],
+      "node_id": "grovley-revelation-arc3-n1",
+      "participants": [
+       "Vigil",
+       "Leena"
+      ],
+      "prompt": "Vigil leans forward, his expression unreadable, as he contemplates the implications of their origins.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-3"
+     },
+     {
+      "kind": "spine",
+      "node_id": "grovley-revelation-arc3-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "grovley-revelation",
+      "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-4"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont",
+       "the-event"
+      ],
+      "node_id": "grovley-revelation-arc3-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group falls silent, each member lost in thought. The fire crackles and pops as they weigh their options.",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-5"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "moonwells"
+      ],
+      "node_id": "grovley-revelation-arc3-n1",
+      "participants": [
+       "sodacan_bob",
+       "Vigil"
+      ],
+      "prompt": "Sodacan Bob speaks softly, his voice barely audible above the wind. \"What if we're not meant to understand?\"",
+      "sensitivity": "tone",
+      "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-6"
+     }
+    ],
+    "synopsis": "The group discusses Grovley's revelation around a campfire. They debate the implications of their origins and the true purpose of the amulet they seek."
+   },
+   "kind": "brief",
+   "segment_id": "grovley-revelation-arc3"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "",
+    "continuity_out": "The party is interrupted by a sudden attack.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "invitation-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "invitation-arc-n0",
+      "parent_id": "invitation-arc",
+      "slots": 5,
+      "target_slots": 5
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "invitation-arc-n1",
+      "parent_id": "invitation-arc",
+      "slots": 3,
+      "target_slots": 3
+     }
+    ],
+    "order": 0,
+    "segment_id": "invitation-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "moonwells"
+      ],
+      "node_id": "invitation-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+      "sensitivity": "tone",
+      "slot_id": "invitation-arc-n0-arrival-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "amulet-of-wonder"
+      ],
+      "node_id": "invitation-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+      "sensitivity": "tone",
+      "slot_id": "invitation-arc-n0-arrival-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event",
+       "moonwells"
+      ],
+      "node_id": "invitation-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "As the party begins, an ominous feeling lingers in the air, unspoken but deeply felt by all present.",
+      "sensitivity": "tone",
+      "slot_id": "invitation-arc-n0-arrival-3"
+     },
+     {
+      "kind": "spine",
+      "node_id": "invitation-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob",
+       "gm"
+      ],
+      "scene_ref": "letos-manor",
+      "slot_id": "invitation-arc-n0-arrival-4"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder",
+       "the-begene-program"
+      ],
+      "node_id": "invitation-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "The strangers' connection deepens as they realize they are not alone in their journey, and that the celebration may be just the beginning of something far greater.",
+      "sensitivity": "tone",
+      "slot_id": "invitation-arc-n0-arrival-5"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "node_id": "invitation-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "The four strangers gather in the grand hall of Leto's manor, each feeling an inexplicable connection to the others as traditional festivities begin.",
+      "sensitivity": "tone",
+      "slot_id": "invitation-arc-n1-ominous-celebration-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "node_id": "invitation-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "As the celebration continues, an ominous feeling lingers in the air—something terrible seems imminent, though none can quite name what it is.",
+      "sensitivity": "tone",
+      "slot_id": "invitation-arc-n1-ominous-celebration-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "invitation-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob",
+       "gm"
+      ],
+      "scene_ref": "party-attack",
+      "slot_id": "invitation-arc-n1-ominous-celebration-3"
+     }
+    ],
+    "synopsis": "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration. They arrive and meet for the first time, feeling an inexplicable connection. The party begins, but an ominous feeling lingers in the air."
+   },
+   "kind": "brief",
+   "segment_id": "invitation-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The party is interrupted by a sudden attack.",
+    "continuity_out": "The manor starts to burn, forcing them to flee.",
+    "hours": 6,
+    "loop": 0,
+    "needs_rebrief": true,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "letos-manor-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "letos-manor-arc-n0",
+      "parent_id": "letos-manor-arc",
+      "slots": 5,
+      "target_slots": 5
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "letos-manor-arc-n1",
+      "parent_id": "letos-manor-arc",
+      "slots": 0,
+      "target_slots": 3
+     }
+    ],
+    "order": 1,
+    "segment_id": "letos-manor-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder"
+      ],
+      "node_id": "letos-manor-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "The party enters Leto's manor and is immediately struck by its opulence and grandeur",
+      "sensitivity": "none",
+      "slot_id": "letos-manor-arc-n0-grand-entrance-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "node_id": "letos-manor-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "They explore the main halls, discovering hidden passages and secret rooms that hint at the manor's deeper mysteries",
+      "sensitivity": "none",
+      "slot_id": "letos-manor-arc-n0-hidden-corridors-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "node_id": "letos-manor-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "prompt": "The exploration reveals architectural secrets and forgotten chambers",
+      "sensitivity": "none",
+      "slot_id": "letos-manor-arc-n0-architectural-secrets-1"
+     },
+     {
+      "kind": "spine",
+      "node_id": "letos-manor-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "grovley-revelation",
+      "sensitivity": "tone",
+      "slot_id": "letos-manor-arc-n0-grovley-encounter-1"
+     },
+     {
+      "kind": "spine",
+      "node_id": "letos-manor-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "party-attack",
+      "sensitivity": "flags",
+      "slot_id": "letos-manor-arc-n0-party-attack-1"
+     }
+    ],
+    "synopsis": "The four explore Leto's manor, marveling at its opulence and grandeur. They uncover hidden passages and rooms, hinting at the manor's secrets. As they delve deeper, they stumble upon Grovley, the butler, who seems to know more than he lets on."
+   },
+   "kind": "brief",
+   "segment_id": "letos-manor-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The group has traveled south from the manor.",
+    "continuity_out": "The group has learned about Malmont's two power centers.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "malmont-arrival-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "malmont-arrival-arc-n0",
+      "parent_id": "malmont-arrival-arc",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "malmont-arrival-arc-n1",
+      "parent_id": "malmont-arrival-arc",
+      "slots": 5,
+      "target_slots": 5
+     }
+    ],
+    "order": 7,
+    "segment_id": "malmont-arrival-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group steps off the carriage onto the cobblestones of Malmont, taking in the sights and sounds of their new surroundings.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc-n0-malmont-arrival-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "Leena notices the contrast between the pristine district and the war-torn area, wondering about the town's history.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc-n0-malmont-arrival-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "malmont-arrival-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "malmont-arrival",
+      "slot_id": "malmont-arrival-arc-n0-malmont-arrival-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group steps off the carriage onto the cobblestones of Malmont, taking in the sights and sounds of their new surroundings.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc-n1-malmont-arrival-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc-n1",
+      "participants": [
+       "Leena"
+      ],
+      "prompt": "Leena examines the ancient stone architecture, noting how it reflects the town's long history.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc-n1-malmont-arrival-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc-n1",
+      "participants": [
+       "chadwick"
+      ],
+      "prompt": "Chadwick scans the streets for potential threats, his axe at the ready despite the peaceful appearance.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc-n1-malmont-arrival-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc-n1",
+      "participants": [
+       "Vigil"
+      ],
+      "prompt": "Vigil listens carefully to the conversations around them, trying to piece together the town's social structure.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc-n1-malmont-arrival-4"
+     },
+     {
+      "kind": "spine",
+      "node_id": "malmont-arrival-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "malmont-arrival",
+      "slot_id": "malmont-arrival-arc-n1-malmont-arrival-5"
+     }
+    ],
+    "synopsis": "The group arrives in Malmont and begins to explore the town, learning about its power structure and magical resources."
+   },
+   "kind": "brief",
+   "segment_id": "malmont-arrival-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {
+     "Leena-wounded": "Leena was injured during the encounter with the night watch."
+    },
+    "continuity_in": "The group has decided to continue their quest for the amulet.",
+    "continuity_out": "The group has gathered valuable information and made contacts in Malmont.",
+    "hours": 6,
+    "loop": 2,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "malmont-arrival-arc2",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "malmont-arrival-arc2-n0",
+      "parent_id": "malmont-arrival-arc2",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "malmont-arrival-arc2-n1",
+      "parent_id": "malmont-arrival-arc2",
+      "slots": 6,
+      "target_slots": 6
+     }
+    ],
+    "order": 13,
+    "segment_id": "malmont-arrival-arc2",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc2-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group stealthily enters Malmont's cobblestone streets at nightfall, their eyes scanning for signs of danger or shelter.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc2-n0-malmont-arrival-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "node_id": "malmont-arrival-arc2-n0",
+      "participants": [
+       "Leena"
+      ],
+      "prompt": "Leena whispers a quiet prayer to the moonwells, hoping for guidance in this strange town.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc2-n0-malmont-arrival-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "malmont-arrival-arc2-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "malmont-arrival",
+      "slot_id": "malmont-arrival-arc2-n0-malmont-arrival-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc2-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group cautiously enters Malmont's main street, scanning for potential threats or informants.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc2-n1-malmont-01"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc2-n1",
+      "participants": [
+       "Leena",
+       "gm"
+      ],
+      "prompt": "Leena discreetly approaches a local merchant, attempting to gather information about recent events in town.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc2-n1-malmont-02"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc2-n1",
+      "participants": [
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "Chadwick keeps watch from a nearby rooftop while the others search for shelter.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc2-n1-malmont-03"
+     },
+     {
+      "kind": "spine",
+      "node_id": "malmont-arrival-arc2-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "scene_ref": "malmont-arrival",
+      "slot_id": "malmont-arrival-arc2-n1-malmont-04"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc2-n1",
+      "participants": [
+       "Vigil",
+       "gm"
+      ],
+      "prompt": "Vigil tries to blend in with the crowd, subtly observing the town's layout and key landmarks.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc2-n1-malmont-05"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malmont-arrival-arc2-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group discusses their strategy for gathering information without drawing attention to themselves.",
+      "sensitivity": "tone",
+      "slot_id": "malmont-arrival-arc2-n1-malmont-06"
+     }
+    ],
+    "synopsis": "The group arrives in Malmont under the cover of night. They seek shelter and information, trying to remain inconspicuous in the unfamiliar town."
+   },
+   "kind": "brief",
+   "segment_id": "malmont-arrival-arc2"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The group is searching for the monuments.",
+    "continuity_out": "The group has obtained one fragment of the map.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "malvakar-riddle-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "malvakar-riddle-arc-n0",
+      "parent_id": "malvakar-riddle-arc",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "malvakar-riddle-arc-n1",
+      "parent_id": "malvakar-riddle-arc",
+      "slots": 5,
+      "target_slots": 5
+     }
+    ],
+    "order": 9,
+    "segment_id": "malvakar-riddle-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "malmont"
+      ],
+      "node_id": "malvakar-riddle-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group examines the intricate symbols etched into the Malvakar monument, their fingers tracing the ancient grooves as they attempt to decipher the meaning behind the cryptic inscriptions.",
+      "sensitivity": "tone",
+      "slot_id": "malvakar-riddle-arc-n0-malvakar-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "malmont"
+      ],
+      "node_id": "malvakar-riddle-arc-n0",
+      "participants": [
+       "Leena",
+       "chadwick"
+      ],
+      "prompt": "As Leena whispers a theory about the alignment of the symbols, Chadwick points out a pattern that seems to match the markings on the map fragment they found earlier.",
+      "sensitivity": "tone",
+      "slot_id": "malvakar-riddle-arc-n0-malvakar-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "malvakar-riddle-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "scene_ref": "malvakar-riddle",
+      "slot_id": "malvakar-riddle-arc-n0-malvakar-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur"
+      ],
+      "node_id": "malvakar-riddle-arc-n1",
+      "participants": [
+       "Leena"
+      ],
+      "prompt": "Leena carefully examines the mechanism of the monument, her fingers tracing ancient symbols as she tries to understand how the riddle connects to the hidden compartment.",
+      "sensitivity": "tone",
+      "slot_id": "malvakar-riddle-arc-n1-claim-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "malvakar-riddle-arc-n1",
+      "participants": [
+       "Vigil"
+      ],
+      "prompt": "Vigil studies the glowing runes etched into the stone, his voice soft as he mutters about the alignment of celestial bodies and how they might relate to the riddle's solution.",
+      "sensitivity": "tone",
+      "slot_id": "malvakar-riddle-arc-n1-claim-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "node_id": "malvakar-riddle-arc-n1",
+      "participants": [
+       "chadwick"
+      ],
+      "prompt": "Chadwick, axe in hand, watches the others work, occasionally stepping forward to help stabilize the monument as they uncover the hidden compartment.",
+      "sensitivity": "tone",
+      "slot_id": "malvakar-riddle-arc-n1-claim-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder"
+      ],
+      "node_id": "malvakar-riddle-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group holds their breath as they carefully extract the fragment, feeling a strange energy pulse through the stone, as if the monument itself is aware of what has been taken.",
+      "sensitivity": "none",
+      "slot_id": "malvakar-riddle-arc-n1-claim-4"
+     },
+     {
+      "kind": "spine",
+      "node_id": "malvakar-riddle-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "amulet-map",
+      "slot_id": "malvakar-riddle-arc-n1-claim-5"
+     }
+    ],
+    "synopsis": "The group solves the riddle of the Malvakar monument and gains a fragment of the map."
+   },
+   "kind": "brief",
+   "segment_id": "malvakar-riddle-arc"
+  },
+  {
+   "content": {
+    "carry_in": {
+     "Leena-wounded": "Leena was injured during the encounter with the night watch."
+    },
+    "carry_out": {},
+    "continuity_in": "The group has gathered information and made contacts in Malmont.",
+    "continuity_out": "The group has solved the riddle and gained the next map fragment, but they have also drawn unwanted attention.",
+    "hours": 6,
+    "loop": 3,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "malvakar-riddle-arc2",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "malvakar-riddle-arc2-n0",
+      "parent_id": "malvakar-riddle-arc2",
+      "slots": 0,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "malvakar-riddle-arc2-n1",
+      "parent_id": "malvakar-riddle-arc2",
+      "slots": 0,
+      "target_slots": 6
+     }
+    ],
+    "order": 14,
+    "segment_id": "malvakar-riddle-arc2",
+    "slots": [],
+    "synopsis": "The group travels to the Malvakar monument, discussing their plans and the riddle they must solve to gain the next map fragment."
+   },
+   "kind": "brief",
+   "segment_id": "malvakar-riddle-arc2"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The manor starts to burn, forcing them to flee.",
+    "continuity_out": "They escape the burning manor and find themselves in a subbasement with Grovley.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "party-attack-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "party-attack-arc-n0",
+      "parent_id": "party-attack-arc",
+      "slots": 5,
+      "target_slots": 5
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "party-attack-arc-n1",
+      "parent_id": "party-attack-arc",
+      "slots": 3,
+      "target_slots": 3
+     }
+    ],
+    "order": 2,
+    "segment_id": "party-attack-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "node_id": "party-attack-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The sound of breaking glass echoes through the manor as masked figures burst through the windows, their weapons drawn.",
+      "sensitivity": "tone",
+      "slot_id": "party-attack-arc-n0-assault-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "node_id": "party-attack-arc-n0",
+      "participants": [
+       "Leena",
+       "sodacan_bob"
+      ],
+      "prompt": "Leena's sword clashes with a dagger, her movements fluid and desperate as she fights off an attacker.",
+      "sensitivity": "tone",
+      "slot_id": "party-attack-arc-n0-assault-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur"
+      ],
+      "node_id": "party-attack-arc-n0",
+      "participants": [
+       "chadwick",
+       "Vigil"
+      ],
+      "prompt": "Chadwick's axe crashes down, sending an attacker sprawling, but more are closing in from all sides.",
+      "sensitivity": "tone",
+      "slot_id": "party-attack-arc-n0-assault-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "node_id": "party-attack-arc-n0",
+      "participants": [
+       "Leena",
+       "chadwick"
+      ],
+      "prompt": "The manor begins to burn, smoke filling the air as the attackers' flames spread through the halls.",
+      "sensitivity": "tone",
+      "slot_id": "party-attack-arc-n0-assault-4"
+     },
+     {
+      "kind": "spine",
+      "node_id": "party-attack-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "scene_ref": "party-attack",
+      "slot_id": "party-attack-arc-n0-assault-5"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "moonwells"
+      ],
+      "node_id": "party-attack-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The sound of crackling flames echoes as Leena and the others flee the burning manor, their footsteps urgent on the stone floor.",
+      "sensitivity": "tone",
+      "slot_id": "party-attack-arc-n1-escape-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "the-event"
+      ],
+      "node_id": "party-attack-arc-n1",
+      "participants": [
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "Chadwick's axe clatters to the ground as he grabs for a loose stone, his breath ragged with panic and exertion.",
+      "sensitivity": "tone",
+      "slot_id": "party-attack-arc-n1-escape-2"
+     },
+     {
+      "kind": "spine",
+      "node_id": "party-attack-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ],
+      "scene_ref": "grovley-revelation",
+      "slot_id": "party-attack-arc-n1-escape-3"
+     }
+    ],
+    "synopsis": "Uninvited guests storm the party, causing chaos and panic. The four must defend themselves and uncover the attackers' motives. They discover a connection to the Bahadur and their nefarious plans, putting the weight of the world's fate on their shoulders."
+   },
+   "kind": "brief",
+   "segment_id": "party-attack-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "The portal has opened, and the group must decide what to do.",
+    "continuity_out": "The group has made their choice, and must now face the consequences.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": false,
+      "kind": "branch",
+      "node_id": "portal-choice-arc",
+      "parent_id": null,
+      "slots": 0,
+      "target_slots": 9
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "portal-choice-arc-n0",
+      "parent_id": "portal-choice-arc",
+      "slots": 3,
+      "target_slots": 3
+     },
+     {
+      "depth": 1,
+      "forced": false,
+      "kind": "leaf",
+      "node_id": "portal-choice-arc-n1",
+      "parent_id": "portal-choice-arc",
+      "slots": 5,
+      "target_slots": 5
+     }
+    ],
+    "order": 6,
+    "segment_id": "portal-choice-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "node_id": "portal-choice-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "Leena reflects on the weight of their choice while the group travels south, considering how the portal's opening might affect the moonwell.",
+      "sensitivity": "tone",
+      "slot_id": "portal-choice-arc-n0-1"
+     },
+     {
+      "kind": "spine",
+      "node_id": "portal-choice-arc-n0",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "portal-choice",
+      "slot_id": "portal-choice-arc-n0-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "node_id": "portal-choice-arc-n0",
+      "participants": [
+       "chadwick",
+       "Vigil",
+       "Leena"
+      ],
+      "prompt": "Chadwick shares his concerns about the axe he lost, wondering if it was a wise choice to proceed through the portal without it.",
+      "sensitivity": "tone",
+      "slot_id": "portal-choice-arc-n0-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder",
+       "moonwells"
+      ],
+      "node_id": "portal-choice-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "Leena reflects on the weight of their choice while the group travels south",
+      "sensitivity": "tone",
+      "slot_id": "portal-choice-arc-n1-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "the-event"
+      ],
+      "node_id": "portal-choice-arc-n1",
+      "participants": [
+       "chadwick",
+       "Vigil"
+      ],
+      "prompt": "Chadwick expresses concern about the path they've chosen and its consequences",
+      "sensitivity": "tone",
+      "slot_id": "portal-choice-arc-n1-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont",
+       "the-begene-program"
+      ],
+      "node_id": "portal-choice-arc-n1",
+      "participants": [
+       "Vigil",
+       "Leena"
+      ],
+      "prompt": "Vigil shares their thoughts on what lies ahead as they travel the road south",
+      "sensitivity": "tone",
+      "slot_id": "portal-choice-arc-n1-3"
+     },
+     {
+      "kind": "spine",
+      "node_id": "portal-choice-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "portal-choice",
+      "slot_id": "portal-choice-arc-n1-4"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder",
+       "moonwells"
+      ],
+      "node_id": "portal-choice-arc-n1",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ],
+      "prompt": "The group's mood shifts as they consider the implications of their decision, with Leena feeling a sense of foreboding",
+      "sensitivity": "tone",
+      "slot_id": "portal-choice-arc-n1-5"
+     }
+    ],
+    "synopsis": "The group discusses the implications of their choice at the portal as they travel the road south."
+   },
+   "kind": "brief",
+   "segment_id": "portal-choice-arc"
+  },
+  {
+   "content": {
+    "carry_in": {},
+    "carry_out": {},
+    "continuity_in": "They decide to explore the vault and confront the looming threat.",
+    "continuity_out": "The portal opens, and they must face the consequences of their choice.",
+    "hours": 6,
+    "loop": 0,
+    "nodes": [
+     {
+      "depth": 0,
+      "forced": true,
+      "kind": "leaf",
+      "node_id": "the-vault-arc",
+      "parent_id": null,
+      "slots": 9,
+      "target_slots": 9
+     }
+    ],
+    "order": 5,
+    "segment_id": "the-vault-arc",
+    "slots": [
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "The four adventurers step into the ancient vault, their footsteps echoing off the stone walls as they take in the weight of centuries.",
+      "sensitivity": "tone",
+      "slot_id": "the-vault-arc-vault-1"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder"
+      ],
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "Dust swirls around their boots as they uncover a weathered amulet, its surface shimmering with an otherworldly energy.",
+      "sensitivity": "tone",
+      "slot_id": "the-vault-arc-vault-2"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "A dying wizard's voice whispers warnings about the portal's true nature, his words heavy with the weight of fate.",
+      "sensitivity": "tone",
+      "slot_id": "the-vault-arc-vault-3"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "The air grows thick with magic as they find a map revealing the location of the source of the portal's power.",
+      "sensitivity": "tone",
+      "slot_id": "the-vault-arc-vault-4"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "Leena stumbles upon a hidden chamber, her wound throbbing as she discovers an ancient moonwell's tainted core.",
+      "sensitivity": "tone",
+      "slot_id": "the-vault-arc-vault-5"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur"
+      ],
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "Chadwick's axe clatters to the ground as he realizes the true cost of opening the portal, his face grim with understanding.",
+      "sensitivity": "tone",
+      "slot_id": "the-vault-arc-vault-6"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "The four stand before a crystalline artifact, its glow pulsing in rhythm with the heartbeat of the world.",
+      "sensitivity": "tone",
+      "slot_id": "the-vault-arc-vault-7"
+     },
+     {
+      "depends_on": [],
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ],
+      "prompt": "As they gather around the dying wizard, his final words echo through the vault—choices must be made.",
+      "sensitivity": "tone",
+      "slot_id": "the-vault-arc-vault-8"
+     },
+     {
+      "kind": "spine",
+      "node_id": "the-vault-arc",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ],
+      "scene_ref": "the-vault",
+      "slot_id": "the-vault-arc-vault-9"
+     }
+    ],
+    "synopsis": "The four explore the vault, uncovering ancient artifacts and a dying wizard who reveals the true nature of the portal and the consequences of its opening. They must make a crucial decision that will determine the fate of Ashiorid."
+   },
+   "kind": "brief",
+   "segment_id": "the-vault-arc"
+  },
+  {
+   "content": {
+    "amulet-map-arc": {
+     "children": [
+      "amulet-map-arc-n0",
+      "amulet-map-arc-n1"
+     ],
+     "continuity_in": "The group has one fragment of the map.",
+     "continuity_out": "The group has decided on their next destination.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "amulet-map-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group discusses the implications of the map fragments and plans their next move around the campfire.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group discusses the implications of the map fragments and plans their next m"
+    },
+    "amulet-map-arc-n0": {
+     "children": [],
+     "continuity_in": "The group has one fragment of the map.",
+     "continuity_out": "The group has analyzed the fragment and formed initial theories about its contents.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "amulet-map-arc-n0",
+     "order": 0,
+     "parent_id": "amulet-map-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group huddles around the fire, studying the fragment with varying degrees of scrutiny and skepticism.",
+       "sensitivity": "tone",
+       "slot_id": "amulet-map-arc-n0-map-analysis-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "the-begene-program"
+       ],
+       "participants": [
+        "Leena",
+        "chadwick"
+       ],
+       "prompt": "Leena offers a theory about the symbols on the fragment, while Chadwick remains unconvinced.",
+       "sensitivity": "tone",
+       "slot_id": "amulet-map-arc-n0-map-analysis-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "amulet-map",
+       "slot_id": "amulet-map-arc-n0-map-analysis-3"
+      }
+     ],
+     "summary": "The group examines the map fragment closely, debating its meaning and significance while sharing theories about what it might reveal.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "Map Analysis and Debate"
+    },
+    "amulet-map-arc-n1": {
+     "children": [],
+     "continuity_in": "The group has analyzed the fragment and formed initial theories about its contents.",
+     "continuity_out": "The group has decided on their next destination.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "amulet-map-arc-n1",
+     "order": 1,
+     "parent_id": "amulet-map-arc",
+     "slots": [],
+     "summary": "After discussing possibilities, the group moves to strategic planning, deciding on their next destination and how to proceed with their quest.",
+     "target_slots": 5,
+     "target_words": 550,
+     "title": "Strategic Planning and Decision Making"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "amulet-map-arc"
+  },
+  {
+   "content": {
+    "bahadur-revealed-arc": {
+     "children": [
+      "bahadur-revealed-arc-n0",
+      "bahadur-revealed-arc-n1"
+     ],
+     "continuity_in": "The group is exploring Malmont.",
+     "continuity_out": "The group has learned about the Bahadur's necromancy and plans.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "bahadur-revealed-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group encounters the Bahadur in Malmont at night and learns about their origins and intentions.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group encounters the Bahadur in Malmont at night and learns about their orig"
+    },
+    "bahadur-revealed-arc-n0": {
+     "children": [],
+     "continuity_in": "The group is exploring Malmont.",
+     "continuity_out": "The group has encountered the Bahadur and begun to learn about their presence.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "bahadur-revealed-arc-n0",
+     "order": 0,
+     "parent_id": "bahadur-revealed-arc",
+     "slots": [],
+     "summary": "The group stumbles upon the Bahadur during their exploration of Malmont, initially unaware of the danger they face.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "Night Encounter in Malmont"
+    },
+    "bahadur-revealed-arc-n1": {
+     "children": [],
+     "continuity_in": "The group has encountered the Bahadur and begun to learn about their presence.",
+     "continuity_out": "The group has learned about the Bahadur's necromancy and plans.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "bahadur-revealed-arc-n1",
+     "order": 1,
+     "parent_id": "bahadur-revealed-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group observes the Bahadur's necromantic preparations in the shadows of Malmont's streets.",
+       "sensitivity": "tone",
+       "slot_id": "bahadur-revealed-arc-n1-bahadur-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "the-bahadur"
+       ],
+       "participants": [
+        "Leena",
+        "gm"
+       ],
+       "prompt": "Leena listens intently as a Bahadur elder explains the Begene Program's origins.",
+       "sensitivity": "tone",
+       "slot_id": "bahadur-revealed-arc-n1-bahadur-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont",
+        "the-bahadur"
+       ],
+       "participants": [
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "Chadwick notices strange symbols carved into the ancient stones of Malmont's ruins.",
+       "sensitivity": "tone",
+       "slot_id": "bahadur-revealed-arc-n1-bahadur-3"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells",
+        "the-bahadur"
+       ],
+       "participants": [
+        "Vigil",
+        "gm"
+       ],
+       "prompt": "Vigil examines a moonwell that has been corrupted by Bahadur magic.",
+       "sensitivity": "tone",
+       "slot_id": "bahadur-revealed-arc-n1-bahadur-4"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "scene_ref": "bahadur-revealed",
+       "slot_id": "bahadur-revealed-arc-n1-bahadur-5"
+      }
+     ],
+     "summary": "Through conversation and observation, the group discovers the Bahadur's necromantic practices and their intentions for Malmont.",
+     "target_slots": 5,
+     "target_words": 550,
+     "title": "Unraveling the Bahadur's Plans"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "bahadur-revealed-arc"
+  },
+  {
+   "content": {
+    "burn-it-down-arc": {
+     "children": [
+      "burn-it-down-arc-n0",
+      "burn-it-down-arc-n1"
+     ],
+     "continuity_in": "They escape the burning manor and find themselves in a subbasement with Grovley.",
+     "continuity_out": "They learn of the vault and the importance of the Event.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "burn-it-down-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The manor burns, and the four must navigate the flames and collapsing structures to escape. They discover a hidden subbasement where Grovley reveals the truth about their identities and the significance of the ten thousandth anniversary.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The manor burns, and the four must navigate the flames and collapsing structures"
+    },
+    "burn-it-down-arc-n0": {
+     "children": [],
+     "continuity_in": "They escape the burning manor and find themselves in a subbasement with Grovley.",
+     "continuity_out": "They discover the hidden subbasement where Grovley reveals the truth about their identities.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "burn-it-down-arc-n0",
+     "order": 0,
+     "parent_id": "burn-it-down-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "The four protagonists must navigate through flames and collapsing structures to escape the burning manor, facing immediate physical danger and chaos as the building deteriorates around them",
+       "sensitivity": "tone",
+       "slot_id": "burn-it-down-arc-n0-escape-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "prompt": "They discover a hidden subbasement where Grovley reveals the truth about their identities and the significance of the ten thousandth anniversary",
+       "sensitivity": "tone",
+       "slot_id": "burn-it-down-arc-n0-escape-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "grovley-revelation",
+       "slot_id": "burn-it-down-arc-n0-escape-3"
+      }
+     ],
+     "summary": "The four protagonists must navigate through flames and collapsing structures to escape the burning manor, facing immediate physical danger and chaos as the building deteriorates around them.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "Escape Through the Burning Manor"
+    },
+    "burn-it-down-arc-n1": {
+     "children": [],
+     "continuity_in": "They discover the hidden subbasement where Grovley reveals the truth about their identities.",
+     "continuity_out": "They learn of the vault and the importance of the Event.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "burn-it-down-arc-n1",
+     "order": 1,
+     "parent_id": "burn-it-down-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "The four survivors emerge from the collapsing manor, their lungs filled with smoke and ash, finding themselves in a hidden subbasement lit by flickering torches.",
+       "sensitivity": "tone",
+       "slot_id": "burn-it-down-arc-n1-revelation-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event",
+        "the-bahadur"
+       ],
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "Grovley steps forward from the shadows, his voice echoing off the stone walls as he begins to speak of their true identities and the ten thousandth anniversary.",
+       "sensitivity": "tone",
+       "slot_id": "burn-it-down-arc-n1-revelation-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event",
+        "the-begene-program"
+       ],
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "As Grovley speaks, the ground trembles beneath their feet, and the walls of the subbasement begin to shift, revealing hidden passages.",
+       "sensitivity": "tone",
+       "slot_id": "burn-it-down-arc-n1-revelation-3"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event",
+        "the-bahadur"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "The four exchange glances, realizing that what they thought they knew about themselves and their mission is about to be completely rewritten.",
+       "sensitivity": "tone",
+       "slot_id": "burn-it-down-arc-n1-revelation-4"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "scene_ref": "grovley-revelation",
+       "slot_id": "burn-it-down-arc-n1-revelation-5"
+      }
+     ],
+     "summary": "In the hidden subbasement, Grovley reveals the truth about their identities and the significance of the ten thousandth anniversary, while they learn about the vault and the importance of the Event.",
+     "target_slots": 5,
+     "target_words": 550,
+     "title": "Revelation in the Subbasement"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "burn-it-down-arc"
+  },
+  {
+   "content": {
+    "grovley-revelation-arc": {
+     "children": [
+      "grovley-revelation-arc-n0",
+      "grovley-revelation-arc-n1"
+     ],
+     "continuity_in": "They learn of the vault and the importance of the Event.",
+     "continuity_out": "They decide to explore the vault and confront the looming threat.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "grovley-revelation-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "In the subbasement, Grovley explains the four's roles as products of the Begene Sisters' Program and their connection to the Event. He reveals the existence of the vault and its contents, urging them to take action before it's too late.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "In the subbasement, Grovley explains the four's roles as products of the Begene "
+    },
+    "grovley-revelation-arc-n0": {
+     "children": [],
+     "continuity_in": "They learn of the vault and the importance of the Event.",
+     "continuity_out": "They understand their roles as pawns in a larger cosmic game and begin to grasp the urgency of the situation.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "grovley-revelation-arc-n0",
+     "order": 0,
+     "parent_id": "grovley-revelation-arc",
+     "slots": [],
+     "summary": "Grovley explains how the four protagonists were created as products of the Begene Sisters' experimental program, detailing their unique connections to the Event and the cosmic forces at play.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "The Begene Sisters' Program Revealed"
+    },
+    "grovley-revelation-arc-n1": {
+     "children": [],
+     "continuity_in": "They understand their roles as pawns in a larger cosmic game and begin to grasp the urgency of the situation.",
+     "continuity_out": "They decide to explore the vault and confront the looming threat.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "grovley-revelation-arc-n1",
+     "order": 1,
+     "parent_id": "grovley-revelation-arc",
+     "slots": [],
+     "summary": "Grovley reveals the existence of the vault containing crucial information about the Event, warning them that time is running out before the threat becomes unstoppable.",
+     "target_slots": 5,
+     "target_words": 550,
+     "title": "The Vault's Secret and Urgent Warning"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "grovley-revelation-arc"
+  },
+  {
+   "content": {
+    "grovley-revelation-arc2": {
+     "children": [
+      "grovley-revelation-arc2-n0",
+      "grovley-revelation-arc2-n1"
+     ],
+     "continuity_in": "The group is reflecting on past events.",
+     "continuity_out": "The group has reached a new understanding of Grovley's words.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "grovley-revelation-arc2",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group revisits Grovley's revelations and debates their significance as Vigil counts the stars.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group revisits Grovley's revelations and debates their significance as Vigil"
+    },
+    "grovley-revelation-arc2-n0": {
+     "children": [],
+     "continuity_in": "The group is reflecting on past events.",
+     "continuity_out": "The group begins to understand the connection between Grovley's words and the cosmic forces at play.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "grovley-revelation-arc2-n0",
+     "order": 0,
+     "parent_id": "grovley-revelation-arc2",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells",
+        "the-begene-program"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil"
+       ],
+       "prompt": "Leena looks up at the stars, her voice barely a whisper as she recalls Grovley's words about the moonwells and their connection to the ancient forces.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc2-n0-grovley-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "the-event"
+       ],
+       "participants": [
+        "chadwick",
+        "Vigil"
+       ],
+       "prompt": "Chadwick leans back, his usual bravado replaced by contemplation, as he tries to piece together how Grovley's revelation might tie into the larger cosmic narrative.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc2-n0-grovley-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "grovley-revelation",
+       "slot_id": "grovley-revelation-arc2-n0-grovley-3"
+      }
+     ],
+     "summary": "The group gathers around Vigil as he carefully examines the night sky, contemplating the deeper meanings behind Grovley's revelations while the stars whisper their ancient secrets.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "Grovley's Words Echo Through the Night"
+    },
+    "grovley-revelation-arc2-n1": {
+     "children": [],
+     "continuity_in": "The group begins to understand the connection between Grovley's words and the cosmic forces at play.",
+     "continuity_out": "The group has reached a new understanding of Grovley's words.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "grovley-revelation-arc2-n1",
+     "order": 1,
+     "parent_id": "grovley-revelation-arc2",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena"
+       ],
+       "prompt": "Leena reflects on Grovley's words, her voice barely above a whisper as she tries to process the implications.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc2-n1-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "amulet-of-wonder"
+       ],
+       "participants": [
+        "Vigil"
+       ],
+       "prompt": "Vigil points to the stars, his voice steady and knowing, connecting Grovley's revelations to the cosmic patterns he's been studying.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc2-n1-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont",
+        "the-event"
+       ],
+       "participants": [
+        "chadwick"
+       ],
+       "prompt": "Chadwick looks skeptical, arms crossed, questioning whether Grovley's words hold any real weight in the face of what they've seen.",
+       "sensitivity": "none",
+       "slot_id": "grovley-revelation-arc2-n1-3"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group sits in contemplative silence, each lost in their own thoughts as they weigh the significance of what they've learned.",
+       "sensitivity": "none",
+       "slot_id": "grovley-revelation-arc2-n1-4"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "grovley-revelation",
+       "slot_id": "grovley-revelation-arc2-n1-5"
+      }
+     ],
+     "summary": "Through careful discussion and observation, the group reaches a breakthrough in their comprehension of Grovley's revelations, linking them to the celestial patterns Vigil has been studying.",
+     "target_slots": 5,
+     "target_words": 550,
+     "title": "A New Understanding Emerges"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "grovley-revelation-arc2"
+  },
+  {
+   "content": {
+    "grovley-revelation-arc3": {
+     "children": [
+      "grovley-revelation-arc3-n0",
+      "grovley-revelation-arc3-n1"
+     ],
+     "continuity_in": "The group has reached a new understanding of Grovley's words.",
+     "continuity_out": "The group has decided to continue their quest for the amulet, despite the risks and uncertainties.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "grovley-revelation-arc3",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group discusses Grovley's revelation around a campfire. They debate the implications of their origins and the true purpose of the amulet they seek.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group discusses Grovley's revelation around a campfire. They debate the impl"
+    },
+    "grovley-revelation-arc3-n0": {
+     "children": [],
+     "continuity_in": "The group has reached a new understanding of Grovley's words.",
+     "continuity_out": "The group begins to discuss their next steps and the risks ahead.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "grovley-revelation-arc3-n0",
+     "order": 0,
+     "parent_id": "grovley-revelation-arc3",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder",
+        "moonwells",
+        "the-begene-program",
+        "the-event"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "The group sits in contemplation around the campfire, grappling with Grovley's revelation about their true origins and the amulet's purpose. Each member wrestles with the implications of their discovery.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc3-n0-grovley-fire-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder",
+        "moonwells",
+        "the-bahadur",
+        "the-event"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "The group discusses the implications of Grovley's revelation, with each member expressing their concerns and questions about their origins and the amulet they seek.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc3-n0-grovley-fire-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "grovley-revelation",
+       "slot_id": "grovley-revelation-arc3-n0-grovley-fire-3"
+      }
+     ],
+     "summary": "The group sits in contemplation around the campfire, grappling with Grovley's revelation about their true origins and the amulet's purpose. Each member wrestles with the implications of their discovery.",
+     "target_slots": 3,
+     "target_words": 270,
+     "title": "The Weight of Truth"
+    },
+    "grovley-revelation-arc3-n1": {
+     "children": [],
+     "continuity_in": "The group begins to discuss their next steps and the risks ahead.",
+     "continuity_out": "The group has decided to continue their quest for the amulet, despite the risks and uncertainties.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "grovley-revelation-arc3-n1",
+     "order": 1,
+     "parent_id": "grovley-revelation-arc3",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "Leena stares into the fire, her wounded arm resting on her knee. The weight of Grovley's revelation settles over the group like smoke.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "the-event"
+       ],
+       "participants": [
+        "chadwick",
+        "Vigil"
+       ],
+       "prompt": "Chadwick's voice cuts through the night air, his axe still gripped tightly in his hand despite its loss.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "amulet-of-wonder"
+       ],
+       "participants": [
+        "Vigil",
+        "Leena"
+       ],
+       "prompt": "Vigil leans forward, his expression unreadable, as he contemplates the implications of their origins.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-3"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "grovley-revelation",
+       "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-4"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont",
+        "the-event"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group falls silent, each member lost in thought. The fire crackles and pops as they weigh their options.",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-5"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "moonwells"
+       ],
+       "participants": [
+        "sodacan_bob",
+        "Vigil"
+       ],
+       "prompt": "Sodacan Bob speaks softly, his voice barely audible above the wind. \"What if we're not meant to understand?\"",
+       "sensitivity": "tone",
+       "slot_id": "grovley-revelation-arc3-n1-grovley-revelation-6"
+      }
+     ],
+     "summary": "After heated debate and quiet reflection, the group makes a collective decision about whether to continue their quest for the amulet. They weigh the dangers against the potential rewards of uncovering their true destiny.",
+     "target_slots": 6,
+     "target_words": 630,
+     "title": "Choosing Their Path"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "grovley-revelation-arc3"
+  },
+  {
+   "content": {
+    "invitation-arc": {
+     "children": [
+      "invitation-arc-n0",
+      "invitation-arc-n1"
+     ],
+     "continuity_in": "",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "invitation-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration. They arrive and meet for the first time, feeling an inexplicable connection. The party begins, but an ominous feeling lingers in the air.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The four strangers each receive an invitation to Leto's manor for the ten thousa"
+    },
+    "invitation-arc-n0": {
+     "children": [],
+     "continuity_in": "The four strangers have received invitations to Leto's manor for the ten thousandth anniversary celebration and are now arriving at the estate.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "invitation-arc-n0",
+     "order": 0,
+     "parent_id": "invitation-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "The four strangers arrive at Leto's Manor, each feeling an inexplicable connection to the others as they step through the grand entrance.",
+       "sensitivity": "tone",
+       "slot_id": "invitation-arc-n0-arrival-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "amulet-of-wonder"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "Inside the manor, the strangers exchange glances, sensing that something ancient and powerful is stirring within these walls.",
+       "sensitivity": "tone",
+       "slot_id": "invitation-arc-n0-arrival-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "As the party begins, an ominous feeling lingers in the air, unspoken but deeply felt by all present.",
+       "sensitivity": "tone",
+       "slot_id": "invitation-arc-n0-arrival-3"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob",
+        "gm"
+       ],
+       "scene_ref": "letos-manor",
+       "slot_id": "invitation-arc-n0-arrival-4"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder",
+        "the-begene-program"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "The strangers' connection deepens as they realize they are not alone in their journey, and that the celebration may be just the beginning of something far greater.",
+       "sensitivity": "tone",
+       "slot_id": "invitation-arc-n0-arrival-5"
+      }
+     ],
+     "summary": "The four strangers each receive an invitation to Leto's manor for the ten thousandth anniversary celebration. They arrive and meet for the first time, feeling an inexplicable connection. The party begins, but an ominous feeling lingers in the air.",
+     "target_slots": 5,
+     "target_words": 540,
+     "title": "Arrival at Leto's Manor"
+    },
+    "invitation-arc-n1": {
+     "children": [],
+     "continuity_in": "The four strangers have arrived at Leto's manor and are beginning their first meeting together at the anniversary celebration.",
+     "continuity_out": "The party is interrupted by a sudden attack.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "invitation-arc-n1",
+     "order": 1,
+     "parent_id": "invitation-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "The four strangers gather in the grand hall of Leto's manor, each feeling an inexplicable connection to the others as traditional festivities begin.",
+       "sensitivity": "tone",
+       "slot_id": "invitation-arc-n1-ominous-celebration-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "As the celebration continues, an ominous feeling lingers in the air—something terrible seems imminent, though none can quite name what it is.",
+       "sensitivity": "tone",
+       "slot_id": "invitation-arc-n1-ominous-celebration-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob",
+        "gm"
+       ],
+       "scene_ref": "party-attack",
+       "slot_id": "invitation-arc-n1-ominous-celebration-3"
+      }
+     ],
+     "summary": "As the strangers gather in the grand hall of Leto's manor, they feel an inexplicable connection to one another. The celebration begins with traditional festivities, but an ominous feeling lingers in the air as if something terrible is about to occur.",
+     "target_slots": 3,
+     "target_words": 360,
+     "title": "The Ominous Celebration"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "invitation-arc"
+  },
+  {
+   "content": {
+    "letos-manor-arc": {
+     "children": [
+      "letos-manor-arc-n0",
+      "letos-manor-arc-n1"
+     ],
+     "continuity_in": "The party is interrupted by a sudden attack.",
+     "continuity_out": "The manor starts to burn, forcing them to flee.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "letos-manor-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The four explore Leto's manor, marveling at its opulence and grandeur. They uncover hidden passages and rooms, hinting at the manor's secrets. As they delve deeper, they stumble upon Grovley, the butler, who seems to know more than he lets on.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The four explore Leto's manor, marveling at its opulence and grandeur. They unco"
+    },
+    "letos-manor-arc-n0": {
+     "children": [],
+     "continuity_in": "The party is interrupted by a sudden attack.",
+     "continuity_out": "They encounter Grovley, the butler, who seems to know more than he lets on.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "letos-manor-arc-n0",
+     "order": 0,
+     "parent_id": "letos-manor-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "The party enters Leto's manor and is immediately struck by its opulence and grandeur",
+       "sensitivity": "none",
+       "slot_id": "letos-manor-arc-n0-grand-entrance-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "They explore the main halls, discovering hidden passages and secret rooms that hint at the manor's deeper mysteries",
+       "sensitivity": "none",
+       "slot_id": "letos-manor-arc-n0-hidden-corridors-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "prompt": "The exploration reveals architectural secrets and forgotten chambers",
+       "sensitivity": "none",
+       "slot_id": "letos-manor-arc-n0-architectural-secrets-1"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "grovley-revelation",
+       "sensitivity": "tone",
+       "slot_id": "letos-manor-arc-n0-grovley-encounter-1"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "party-attack",
+       "sensitivity": "flags",
+       "slot_id": "letos-manor-arc-n0-party-attack-1"
+      }
+     ],
+     "summary": "The party enters Leto's manor and is immediately struck by its opulence and grandeur. They explore the main halls, discovering hidden passages and secret rooms that hint at the manor's deeper mysteries. The exploration reveals architectural secrets and forgotten chambers.",
+     "target_slots": 5,
+     "target_words": 540,
+     "title": "Grand Entrance and Hidden Corridors"
+    },
+    "letos-manor-arc-n1": {
+     "children": [],
+     "continuity_in": "They encounter Grovley, the butler, who seems to know more than he lets on.",
+     "continuity_out": "The manor starts to burn, forcing them to flee.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "letos-manor-arc-n1",
+     "order": 1,
+     "parent_id": "letos-manor-arc",
+     "slots": [],
+     "summary": "The party confronts Grovley, the butler, who reveals himself to be more knowledgeable about the manor's secrets than initially apparent. His cryptic responses and suspicious behavior suggest he may be hiding crucial information about the manor's hidden passages and the source of the attack.",
+     "target_slots": 3,
+     "target_words": 360,
+     "title": "Confrontation with the Butler"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "letos-manor-arc"
+  },
+  {
+   "content": {
+    "malmont-arrival-arc": {
+     "children": [
+      "malmont-arrival-arc-n0",
+      "malmont-arrival-arc-n1"
+     ],
+     "continuity_in": "The group has traveled south from the manor.",
+     "continuity_out": "The group has learned about Malmont's two power centers.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "malmont-arrival-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group arrives in Malmont and begins to explore the town, learning about its power structure and magical resources.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group arrives in Malmont and begins to explore the town, learning about its "
+    },
+    "malmont-arrival-arc-n0": {
+     "children": [],
+     "continuity_in": "The group has traveled south from the manor.",
+     "continuity_out": "The group has observed the town's two distinct power centers and their influence on different districts.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "malmont-arrival-arc-n0",
+     "order": 0,
+     "parent_id": "malmont-arrival-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group steps off the carriage onto the cobblestones of Malmont, taking in the sights and sounds of their new surroundings.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc-n0-malmont-arrival-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "Leena notices the contrast between the pristine district and the war-torn area, wondering about the town's history.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc-n0-malmont-arrival-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "malmont-arrival",
+       "slot_id": "malmont-arrival-arc-n0-malmont-arrival-3"
+      }
+     ],
+     "summary": "The group arrives in Malmont and begins to explore the town's layout, observing the contrasting districts and initial interactions with locals to understand the basic power structure.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "Arrival and Initial Exploration"
+    },
+    "malmont-arrival-arc-n1": {
+     "children": [],
+     "continuity_in": "The group has observed the town's two distinct power centers and their influence on different districts.",
+     "continuity_out": "The group has learned about Malmont's two power centers.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "malmont-arrival-arc-n1",
+     "order": 1,
+     "parent_id": "malmont-arrival-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group steps off the carriage onto the cobblestones of Malmont, taking in the sights and sounds of their new surroundings.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc-n1-malmont-arrival-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena"
+       ],
+       "prompt": "Leena examines the ancient stone architecture, noting how it reflects the town's long history.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc-n1-malmont-arrival-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "chadwick"
+       ],
+       "prompt": "Chadwick scans the streets for potential threats, his axe at the ready despite the peaceful appearance.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc-n1-malmont-arrival-3"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Vigil"
+       ],
+       "prompt": "Vigil listens carefully to the conversations around them, trying to piece together the town's social structure.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc-n1-malmont-arrival-4"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "malmont-arrival",
+       "slot_id": "malmont-arrival-arc-n1-malmont-arrival-5"
+      }
+     ],
+     "summary": "The group delves deeper into understanding Malmont's two main power centers, learning about their magical resources, leadership dynamics, and how they affect the town's daily operations.",
+     "target_slots": 5,
+     "target_words": 550,
+     "title": "Power Center Investigation"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "malmont-arrival-arc"
+  },
+  {
+   "content": {
+    "malmont-arrival-arc2": {
+     "children": [
+      "malmont-arrival-arc2-n0",
+      "malmont-arrival-arc2-n1"
+     ],
+     "continuity_in": "The group has decided to continue their quest for the amulet.",
+     "continuity_out": "The group has gathered valuable information and made contacts in Malmont.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "malmont-arrival-arc2",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group arrives in Malmont under the cover of night. They seek shelter and information, trying to remain inconspicuous in the unfamiliar town.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group arrives in Malmont under the cover of night. They seek shelter and inf"
+    },
+    "malmont-arrival-arc2-n0": {
+     "children": [],
+     "continuity_in": "The group has decided to continue their quest for the amulet.",
+     "continuity_out": "The group has gathered valuable information and made contacts in Malmont.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "malmont-arrival-arc2-n0",
+     "order": 0,
+     "parent_id": "malmont-arrival-arc2",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group stealthily enters Malmont's cobblestone streets at nightfall, their eyes scanning for signs of danger or shelter.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc2-n0-malmont-arrival-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "participants": [
+        "Leena"
+       ],
+       "prompt": "Leena whispers a quiet prayer to the moonwells, hoping for guidance in this strange town.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc2-n0-malmont-arrival-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "malmont-arrival",
+       "slot_id": "malmont-arrival-arc2-n0-malmont-arrival-3"
+      }
+     ],
+     "summary": "The group arrives in Malmont under the cover of night, seeking shelter and information while trying to remain inconspicuous in the unfamiliar town. They navigate the darkness and establish initial plans for their stay.",
+     "target_slots": 3,
+     "target_words": 270,
+     "title": "Nightfall in Malmont"
+    },
+    "malmont-arrival-arc2-n1": {
+     "children": [],
+     "continuity_in": "The group has gathered valuable information and made contacts in Malmont.",
+     "continuity_out": "The group has gathered valuable information and made contacts in Malmont.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "malmont-arrival-arc2-n1",
+     "order": 1,
+     "parent_id": "malmont-arrival-arc2",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group cautiously enters Malmont's main street, scanning for potential threats or informants.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc2-n1-malmont-01"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "gm"
+       ],
+       "prompt": "Leena discreetly approaches a local merchant, attempting to gather information about recent events in town.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc2-n1-malmont-02"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "Chadwick keeps watch from a nearby rooftop while the others search for shelter.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc2-n1-malmont-03"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "scene_ref": "malmont-arrival",
+       "slot_id": "malmont-arrival-arc2-n1-malmont-04"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Vigil",
+        "gm"
+       ],
+       "prompt": "Vigil tries to blend in with the crowd, subtly observing the town's layout and key landmarks.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc2-n1-malmont-05"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group discusses their strategy for gathering information without drawing attention to themselves.",
+       "sensitivity": "tone",
+       "slot_id": "malmont-arrival-arc2-n1-malmont-06"
+      }
+     ],
+     "summary": "The group begins their search for information about the amulet, making contacts with locals and gathering intelligence while maintaining their cover. They establish connections that will prove crucial to their journey.",
+     "target_slots": 6,
+     "target_words": 630,
+     "title": "Information Gathering"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "malmont-arrival-arc2"
+  },
+  {
+   "content": {
+    "malvakar-riddle-arc": {
+     "children": [
+      "malvakar-riddle-arc-n0",
+      "malvakar-riddle-arc-n1"
+     ],
+     "continuity_in": "The group is searching for the monuments.",
+     "continuity_out": "The group has obtained one fragment of the map.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "malvakar-riddle-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group solves the riddle of the Malvakar monument and gains a fragment of the map.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group solves the riddle of the Malvakar monument and gains a fragment of the"
+    },
+    "malvakar-riddle-arc-n0": {
+     "children": [],
+     "continuity_in": "The group is searching for the monuments.",
+     "continuity_out": "The group has deciphered the riddle and unlocked the first clue.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "malvakar-riddle-arc-n0",
+     "order": 0,
+     "parent_id": "malvakar-riddle-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group examines the intricate symbols etched into the Malvakar monument, their fingers tracing the ancient grooves as they attempt to decipher the meaning behind the cryptic inscriptions.",
+       "sensitivity": "tone",
+       "slot_id": "malvakar-riddle-arc-n0-malvakar-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "chadwick"
+       ],
+       "prompt": "As Leena whispers a theory about the alignment of the symbols, Chadwick points out a pattern that seems to match the markings on the map fragment they found earlier.",
+       "sensitivity": "tone",
+       "slot_id": "malvakar-riddle-arc-n0-malvakar-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "scene_ref": "malvakar-riddle",
+       "slot_id": "malvakar-riddle-arc-n0-malvakar-3"
+      }
+     ],
+     "summary": "The group carefully studies the cryptic symbols and inscriptions on the Malvakar monument, working together to piece together the ancient puzzle that has puzzled travelers for generations.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "Deciphering the Ancient Riddle"
+    },
+    "malvakar-riddle-arc-n1": {
+     "children": [],
+     "continuity_in": "The group has deciphered the riddle and unlocked the first clue.",
+     "continuity_out": "The group has obtained one fragment of the map.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "malvakar-riddle-arc-n1",
+     "order": 1,
+     "parent_id": "malvakar-riddle-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur"
+       ],
+       "participants": [
+        "Leena"
+       ],
+       "prompt": "Leena carefully examines the mechanism of the monument, her fingers tracing ancient symbols as she tries to understand how the riddle connects to the hidden compartment.",
+       "sensitivity": "tone",
+       "slot_id": "malvakar-riddle-arc-n1-claim-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Vigil"
+       ],
+       "prompt": "Vigil studies the glowing runes etched into the stone, his voice soft as he mutters about the alignment of celestial bodies and how they might relate to the riddle's solution.",
+       "sensitivity": "tone",
+       "slot_id": "malvakar-riddle-arc-n1-claim-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "participants": [
+        "chadwick"
+       ],
+       "prompt": "Chadwick, axe in hand, watches the others work, occasionally stepping forward to help stabilize the monument as they uncover the hidden compartment.",
+       "sensitivity": "tone",
+       "slot_id": "malvakar-riddle-arc-n1-claim-3"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group holds their breath as they carefully extract the fragment, feeling a strange energy pulse through the stone, as if the monument itself is aware of what has been taken.",
+       "sensitivity": "none",
+       "slot_id": "malvakar-riddle-arc-n1-claim-4"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "amulet-map",
+       "slot_id": "malvakar-riddle-arc-n1-claim-5"
+      }
+     ],
+     "summary": "Having solved the riddle, the group carefully extracts the fragment of the map from its hidden compartment, feeling the ancient power of the monument flow through them as they claim their prize.",
+     "target_slots": 5,
+     "target_words": 550,
+     "title": "Claiming the Map Fragment"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "malvakar-riddle-arc"
+  },
+  {
+   "content": {
+    "malvakar-riddle-arc2": {
+     "children": [
+      "malvakar-riddle-arc2-n0",
+      "malvakar-riddle-arc2-n1"
+     ],
+     "continuity_in": "The group has gathered information and made contacts in Malmont.",
+     "continuity_out": "The group has solved the riddle and gained the next map fragment, but they have also drawn unwanted attention.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "malvakar-riddle-arc2",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group travels to the Malvakar monument, discussing their plans and the riddle they must solve to gain the next map fragment.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group travels to the Malvakar monument, discussing their plans and the riddl"
+    },
+    "malvakar-riddle-arc2-n0": {
+     "children": [],
+     "continuity_in": "The group has gathered information and made contacts in Malmont.",
+     "continuity_out": "The group has arrived at the Malvakar monument and begun their discussion of the riddle.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "malvakar-riddle-arc2-n0",
+     "order": 0,
+     "parent_id": "malvakar-riddle-arc2",
+     "slots": [],
+     "summary": "The group embarks on their journey to the Malvakar monument, discussing strategies and debating the nature of the riddle they must solve to obtain the next map fragment.",
+     "target_slots": 3,
+     "target_words": 270,
+     "title": "Journey to Malvakar"
+    },
+    "malvakar-riddle-arc2-n1": {
+     "children": [],
+     "continuity_in": "The group has arrived at the Malvakar monument and begun their discussion of the riddle.",
+     "continuity_out": "The group has solved the riddle and gained the next map fragment, but they have also drawn unwanted attention.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "malvakar-riddle-arc2-n1",
+     "order": 1,
+     "parent_id": "malvakar-riddle-arc2",
+     "slots": [],
+     "summary": "The group works together to solve the complex riddle at the Malvakar monument, ultimately succeeding in obtaining the next map fragment while inadvertently attracting the attention of hostile forces.",
+     "target_slots": 6,
+     "target_words": 630,
+     "title": "Riddle Resolution"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "malvakar-riddle-arc2"
+  },
+  {
+   "content": {
+    "party-attack-arc": {
+     "children": [
+      "party-attack-arc-n0",
+      "party-attack-arc-n1"
+     ],
+     "continuity_in": "The manor starts to burn, forcing them to flee.",
+     "continuity_out": "They escape the burning manor and find themselves in a subbasement with Grovley.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "party-attack-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "Uninvited guests storm the party, causing chaos and panic. The four must defend themselves and uncover the attackers' motives. They discover a connection to the Bahadur and their nefarious plans, putting the weight of the world's fate on their shoulders.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "Uninvited guests storm the party, causing chaos and panic. The four must defend "
+    },
+    "party-attack-arc-n0": {
+     "children": [],
+     "continuity_in": "The manor starts to burn, forcing them to flee.",
+     "continuity_out": "The guests are driven back, but the attack has only just begun.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "party-attack-arc-n0",
+     "order": 0,
+     "parent_id": "party-attack-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The sound of breaking glass echoes through the manor as masked figures burst through the windows, their weapons drawn.",
+       "sensitivity": "tone",
+       "slot_id": "party-attack-arc-n0-assault-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "sodacan_bob"
+       ],
+       "prompt": "Leena's sword clashes with a dagger, her movements fluid and desperate as she fights off an attacker.",
+       "sensitivity": "tone",
+       "slot_id": "party-attack-arc-n0-assault-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur"
+       ],
+       "participants": [
+        "chadwick",
+        "Vigil"
+       ],
+       "prompt": "Chadwick's axe crashes down, sending an attacker sprawling, but more are closing in from all sides.",
+       "sensitivity": "tone",
+       "slot_id": "party-attack-arc-n0-assault-3"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "participants": [
+        "Leena",
+        "chadwick"
+       ],
+       "prompt": "The manor begins to burn, smoke filling the air as the attackers' flames spread through the halls.",
+       "sensitivity": "tone",
+       "slot_id": "party-attack-arc-n0-assault-4"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "scene_ref": "party-attack",
+       "slot_id": "party-attack-arc-n0-assault-5"
+      }
+     ],
+     "summary": "Uninvited guests storm the party, causing chaos and panic. The four must defend themselves and uncover the attackers' motives. They discover a connection to the Bahadur and their nefarious plans, putting the weight of the world's fate on their shoulders.",
+     "target_slots": 5,
+     "target_words": 540,
+     "title": "The Assault Begins"
+    },
+    "party-attack-arc-n1": {
+     "children": [],
+     "continuity_in": "The guests are driven back, but the attack has only just begun.",
+     "continuity_out": "They discover hidden passages leading to the heart of the Bahadur's operation.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "party-attack-arc-n1",
+     "order": 1,
+     "parent_id": "party-attack-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The sound of crackling flames echoes as Leena and the others flee the burning manor, their footsteps urgent on the stone floor.",
+       "sensitivity": "tone",
+       "slot_id": "party-attack-arc-n1-escape-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "the-event"
+       ],
+       "participants": [
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "Chadwick's axe clatters to the ground as he grabs for a loose stone, his breath ragged with panic and exertion.",
+       "sensitivity": "tone",
+       "slot_id": "party-attack-arc-n1-escape-2"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ],
+       "scene_ref": "grovley-revelation",
+       "slot_id": "party-attack-arc-n1-escape-3"
+      }
+     ],
+     "summary": "The four escape the burning manor and find themselves in a subbasement with Grovley. Here they must regroup and plan their next move while the chaos continues above.",
+     "target_slots": 3,
+     "target_words": 360,
+     "title": "Escape to the Subbasement"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "party-attack-arc"
+  },
+  {
+   "content": {
+    "portal-choice-arc": {
+     "children": [
+      "portal-choice-arc-n0",
+      "portal-choice-arc-n1"
+     ],
+     "continuity_in": "The portal has opened, and the group must decide what to do.",
+     "continuity_out": "The group has made their choice, and must now face the consequences.",
+     "depth": 0,
+     "forced": false,
+     "kind": "branch",
+     "node_id": "portal-choice-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": null,
+     "summary": "The group discusses the implications of their choice at the portal as they travel the road south.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The group discusses the implications of their choice at the portal as they trave"
+    },
+    "portal-choice-arc-n0": {
+     "children": [],
+     "continuity_in": "The portal has opened, and the group must decide what to do.",
+     "continuity_out": "The group discusses the implications of their choice at the portal as they travel the road south.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "portal-choice-arc-n0",
+     "order": 0,
+     "parent_id": "portal-choice-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "Leena reflects on the weight of their choice while the group travels south, considering how the portal's opening might affect the moonwell.",
+       "sensitivity": "tone",
+       "slot_id": "portal-choice-arc-n0-1"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "portal-choice",
+       "slot_id": "portal-choice-arc-n0-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "participants": [
+        "chadwick",
+        "Vigil",
+        "Leena"
+       ],
+       "prompt": "Chadwick shares his concerns about the axe he lost, wondering if it was a wise choice to proceed through the portal without it.",
+       "sensitivity": "tone",
+       "slot_id": "portal-choice-arc-n0-3"
+      }
+     ],
+     "summary": "The group gathers around the portal, each member weighing the potential consequences of their decision while traveling south on the winding road.",
+     "target_slots": 3,
+     "target_words": 350,
+     "title": "The Weight of Choice"
+    },
+    "portal-choice-arc-n1": {
+     "children": [],
+     "continuity_in": "The group discusses the implications of their choice at the portal as they travel the road south.",
+     "continuity_out": "The group has made their choice, and must now face the consequences.",
+     "depth": 1,
+     "forced": false,
+     "kind": "leaf",
+     "node_id": "portal-choice-arc-n1",
+     "order": 1,
+     "parent_id": "portal-choice-arc",
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "Leena reflects on the weight of their choice while the group travels south",
+       "sensitivity": "tone",
+       "slot_id": "portal-choice-arc-n1-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "the-event"
+       ],
+       "participants": [
+        "chadwick",
+        "Vigil"
+       ],
+       "prompt": "Chadwick expresses concern about the path they've chosen and its consequences",
+       "sensitivity": "tone",
+       "slot_id": "portal-choice-arc-n1-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont",
+        "the-begene-program"
+       ],
+       "participants": [
+        "Vigil",
+        "Leena"
+       ],
+       "prompt": "Vigil shares their thoughts on what lies ahead as they travel the road south",
+       "sensitivity": "tone",
+       "slot_id": "portal-choice-arc-n1-3"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "portal-choice",
+       "slot_id": "portal-choice-arc-n1-4"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder",
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ],
+       "prompt": "The group's mood shifts as they consider the implications of their decision, with Leena feeling a sense of foreboding",
+       "sensitivity": "tone",
+       "slot_id": "portal-choice-arc-n1-5"
+      }
+     ],
+     "summary": "As the group continues their journey southward, the weight of their decision settles over them while they navigate the challenging terrain and consider what lies ahead.",
+     "target_slots": 5,
+     "target_words": 550,
+     "title": "Road Southward"
+    }
+   },
+   "kind": "tree",
+   "segment_id": "portal-choice-arc"
+  },
+  {
+   "content": {
+    "the-vault-arc": {
+     "children": [],
+     "continuity_in": "They decide to explore the vault and confront the looming threat.",
+     "continuity_out": "The portal opens, and they must face the consequences of their choice.",
+     "depth": 0,
+     "forced": true,
+     "kind": "leaf",
+     "node_id": "the-vault-arc",
+     "order": 0,
+     "parent_id": null,
+     "slots": [
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "The four adventurers step into the ancient vault, their footsteps echoing off the stone walls as they take in the weight of centuries.",
+       "sensitivity": "tone",
+       "slot_id": "the-vault-arc-vault-1"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "Dust swirls around their boots as they uncover a weathered amulet, its surface shimmering with an otherworldly energy.",
+       "sensitivity": "tone",
+       "slot_id": "the-vault-arc-vault-2"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "A dying wizard's voice whispers warnings about the portal's true nature, his words heavy with the weight of fate.",
+       "sensitivity": "tone",
+       "slot_id": "the-vault-arc-vault-3"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "The air grows thick with magic as they find a map revealing the location of the source of the portal's power.",
+       "sensitivity": "tone",
+       "slot_id": "the-vault-arc-vault-4"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "Leena stumbles upon a hidden chamber, her wound throbbing as she discovers an ancient moonwell's tainted core.",
+       "sensitivity": "tone",
+       "slot_id": "the-vault-arc-vault-5"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "Chadwick's axe clatters to the ground as he realizes the true cost of opening the portal, his face grim with understanding.",
+       "sensitivity": "tone",
+       "slot_id": "the-vault-arc-vault-6"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "The four stand before a crystalline artifact, its glow pulsing in rhythm with the heartbeat of the world.",
+       "sensitivity": "tone",
+       "slot_id": "the-vault-arc-vault-7"
+      },
+      {
+       "depends_on": [],
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ],
+       "prompt": "As they gather around the dying wizard, his final words echo through the vault—choices must be made.",
+       "sensitivity": "tone",
+       "slot_id": "the-vault-arc-vault-8"
+      },
+      {
+       "kind": "spine",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ],
+       "scene_ref": "the-vault",
+       "slot_id": "the-vault-arc-vault-9"
+      }
+     ],
+     "summary": "The four explore the vault, uncovering ancient artifacts and a dying wizard who reveals the true nature of the portal and the consequences of its opening. They must make a crucial decision that will determine the fate of Ashiorid.",
+     "target_slots": 9,
+     "target_words": 900,
+     "title": "The four explore the vault, uncovering ancient artifacts and a dying wizard who "
+    }
+   },
+   "kind": "tree",
+   "segment_id": "the-vault-arc"
+  }
+ ],
+ "run_id": "ashiorid_1_20260913_180158_ce8d"
+}
