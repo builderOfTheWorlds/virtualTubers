@@ -177,6 +177,15 @@ class LLMGM:
     # ------------------------------------------------------------------ GMPort
     def direct(self, contract, transcript, round):
         system = self._context_fn(contract) + "\n\n" + _DIRECTION_INSTRUCTION
+        phrases = self._budgets.get("gm_forbidden_phrases", ())
+        unlocked = _revealed_by_contract(contract, phrases)
+        locked = [p for p in phrases if p not in unlocked]
+        if locked:
+            # The check below rejects these; naming them up front lets the model
+            # avoid them instead of burning both tries (run 2: a reveal scene was
+            # skipped after two refusals on a still-locked phrase).
+            system += ("\nThese words are secret in this scene; never use them: "
+                       + ", ".join(map(str, locked)) + ".")
         user = _render_transcript(transcript, self._seat_names)
         user = (user + "\n" if user else "") + f"Round {round}."
         max_tokens, reasoning = _budget(self._budgets, "direct")
@@ -186,13 +195,13 @@ class LLMGM:
         text = (content or "").strip()
         text = _GM_LABEL_RE.sub("", text, count=1).strip()
         lowered = text.casefold()
-        unlocked = _revealed_by_contract(contract, self._budgets.get("gm_forbidden_phrases", ()))
-        leaked = [p for p in self._budgets.get("gm_forbidden_phrases", ())
-                  if str(p).casefold() in lowered and p not in unlocked]
+        leaked = [p for p in locked if str(p).casefold() in lowered]
         if re.search(r"gm block", lowered) or re.search(r"^\s*#", text, re.MULTILINE) or leaked:
             # 2026-10-08: GLM-4.7-Flash pasted its "GM block: truth" context into the
             # public narration. GM-only text never reaches the table; the arbiter retries.
-            raise ValueError("direction contains GM-only context")
+            why = (f"phrases={leaked}" if leaked else
+                   "'gm block'" if "gm block" in lowered else "markdown heading")
+            raise ValueError(f"direction contains GM-only context ({why})")
         copied = commit_check.repeats_prior(text, [e.get("text") for e in transcript or []])
         if copied is not None:
             # 2026-10-08: the MoE GM copied a player's line as its direction. Raising

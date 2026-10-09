@@ -233,3 +233,23 @@ def test_unlock_covers_only_the_revealed_phrase_and_not_lore_names():
         _gm("The Begene program kept you in four cribs.").direct(contract, [], 1)
     with pytest.raises(ValueError, match="GM-only"):    # lore alone is no reveal
         _gm(SECRET_LINE).direct(dict(CONTRACT, lore=["the-begene-program"]), [], 1)
+
+
+def test_direction_prompt_names_only_the_still_locked_phrases():
+    seen = {}
+
+    class Rec(LLM):
+        def complete_stream(self, system_prompt, messages, **kw):
+            seen["system"] = system_prompt
+            return "", "The cellar door opens onto cold stone stairs."
+
+    g = gm.LLMGM(Rec(None), lambda c: "CTX", seat_names=NAMES,
+                 budgets={"gm_forbidden_phrases": ["Begene", "four cribs"]})
+    g.direct(dict(CONTRACT, canon_goal="Grovley reveals the Begene program."), [], 1)
+    assert "never use them: four cribs." in seen["system"]
+    assert "Begene," not in seen["system"].split("never use them:")[1]
+
+
+def test_rejection_names_the_reason():
+    with pytest.raises(ValueError, match=r"phrases=\['Begene'\]"):
+        _gm(SECRET_LINE).direct(dict(CONTRACT), [], 1)
