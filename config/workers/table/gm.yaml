@@ -44,9 +44,9 @@ agent:
     - style
     auto_duration_s: 3600
     auto_pace:
-      words_per_s: 2.6
-      per_line_s: 5.0
-      lead_s: 15
+      words_per_s: 2.9
+      per_line_s: 1.0
+      lead_s: 25
     auto_skip_stuck: true
     auto_max_consecutive_stuck: 3
     dedupe_canon_goal: true

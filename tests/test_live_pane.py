@@ -465,3 +465,62 @@ def test_office_roundtable_config_enables_live_with_observer():
     assert settings["enabled"] is True and settings["observer_slot"] == PM == "tuber_7"
     dev = yaml.safe_load((root / "config/workers/roundtable.yaml").read_text())
     assert live_pane.live_settings(dev)["enabled"] is False
+
+
+# ── prefetch: the next line is synthesized while the current one plays ─────
+def test_next_line_is_synthesized_while_the_current_line_plays(relay, fast):
+    import threading
+    config = roundtable_config()
+    for seat, text in ((CEO, "First."), (TL, "Second."), (AN, "Third.")):
+        live_pane.handle_office_line("roundtable", config["agent"], office_line(seat, text=text))
+    synthesized = {}
+
+    class SignallingTTS(FakeTTS):
+        def synthesize(self, text, out_wav, speaker="coder", voice_name=None):
+            out = super().synthesize(text, out_wav, speaker, voice_name)
+            synthesized.setdefault(text, threading.Event()).set()
+            return out
+
+    director = live_pane.LiveDirector(config, relay_dir=str(relay), tts=SignallingTTS(),
+                                      sleep=lambda s: None)
+    order, overlapped = [], []
+
+    def hand(payload):
+        order.append(payload["text"])
+        following = {"First.": "Second.", "Second.": "Third."}.get(payload["text"])
+        if following:   # hand() blocks for the line's duration: the next TTS runs meanwhile
+            overlapped.append(synthesized.setdefault(following, threading.Event()).wait(5))
+        return True
+
+    director.hand = hand
+    assert director.drain_once() == 3
+    assert order == ["First.", "Second.", "Third."] and overlapped == [True, True]
+
+
+def test_prefetch_off_prepares_in_line(relay, fast):
+    config = roundtable_config(prefetch=False)
+    assert live_pane.live_settings(config)["prefetch"] is False
+    for text in ("one", "two"):
+        live_pane.handle_office_line("roundtable", config["agent"], office_line(TL, text=text))
+    director = live_pane.LiveDirector(config, relay_dir=str(relay), sleep=lambda s: None)
+    handed = []
+    director.hand = lambda p: handed.append(p["text"]) or True
+    assert director.drain_once() == 2 and handed == ["one", "two"] and director._pool is None
+
+
+def test_a_line_prepared_before_a_yield_airs_first_next_time(relay, fast):
+    config = roundtable_config()
+    for text in ("one", "two", "three"):
+        live_pane.handle_office_line("roundtable", config["agent"], office_line(TL, text=text))
+    director = live_pane.LiveDirector(config, relay_dir=str(relay), sleep=lambda s: None)
+    handed = []
+    director.hand = lambda p: handed.append(p["text"]) or True
+    calls = {"n": 0}
+
+    def yield_after_first():
+        calls["n"] += 1
+        return calls["n"] > 1
+    assert director.drain_once(should_yield=yield_after_first) == 1
+    assert handed == ["one"]                         # "two" is prepared and carried
+    assert director.drain_once() == 2
+    assert handed == ["one", "two", "three"]

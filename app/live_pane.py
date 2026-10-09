@@ -162,6 +162,7 @@ def live_settings(config):
         "consume_timeout_s": number("consume_timeout_s", DEFAULT_CONSUME_TIMEOUT_S),
         "line_gap_s": max(0.0, number("line_gap_s", DEFAULT_LINE_GAP_S)),
         "spool_max": max(1, int(number("spool_max", DEFAULT_SPOOL_MAX))),
+        "prefetch": raw.get("prefetch", True) is not False,
     }
 
 
@@ -388,6 +389,16 @@ def _display_name(config, slot):
     return str(name or slot)
 
 
+class _Done:
+    """A finished 'future' for the synchronous (prefetch off) path."""
+
+    def __init__(self, value):
+        self._value = value
+
+    def result(self):
+        return self._value
+
+
 class LiveDirector:
     """Drains the live spool in commit order, one line at a time.
 
@@ -406,6 +417,8 @@ class LiveDirector:
         self.clock = clock
         self.sleep = sleep
         self.mono = mono
+        self._pool = None     # one TTS worker thread, created on first prefetch
+        self._carry = None    # a prepared line left over from a yielded drain
 
     @classmethod
     def from_config(cls, config, relay_dir=None):
@@ -492,37 +505,72 @@ class LiveDirector:
         self.sleep(payload["duration"] + self.settings["line_gap_s"])
         return True
 
+    def _next_entry(self):
+        """Consume the oldest airable spooled line, or None. Drops invalid,
+        stale and observer lines on the way (same rules as before prefetch)."""
+        for path in self.pending():
+            found, entry, error = relay_io.consume_json(path)
+            if not found:
+                continue
+            if error or not isinstance(entry, dict) or not entry.get("seat") \
+                    or not entry.get("text"):
+                _event("live_line_dropped", logging.WARNING, reason="invalid", path=path)
+                continue
+            age = self.clock() - float(entry.get("received_at") or 0)
+            if age > self.settings["max_age_s"]:
+                _event("live_line_dropped", logging.WARNING, reason="stale",
+                       seat=entry["seat"], age_s=round(age, 1))
+                continue
+            if entry["seat"] == self.settings["observer_slot"]:
+                _event("live_line_dropped", logging.WARNING,
+                       reason="observer_never_speaks", seat=entry["seat"])
+                continue
+            return entry
+        return None
+
+    def _prefetch(self, entry):
+        """Start preparing (TTS) `entry` in the background; returns a handle
+        whose .result() is the payload. Synchronous when prefetch is off."""
+        if not self.settings.get("prefetch", True):
+            payload = self.prepare(entry)
+            return _Done(payload)
+        if self._pool is None:
+            from concurrent.futures import ThreadPoolExecutor
+            self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="live-tts")
+        return self._pool.submit(self.prepare, entry)
+
     def drain_once(self, should_yield=None, limit=None):
         """Air every pending line (oldest first) until the spool is empty,
         `limit` lines were handed, or should_yield() says a replay request
         is waiting — the recorded path wins and the rest stays spooled.
-        Returns the number of lines handed. Never raises."""
+        Returns the number of lines handed. Never raises.
+
+        Prefetch (agent.live.prefetch, default on): line N+1 is synthesized
+        while line N plays, so the gap between lines is the line gap, not the
+        TTS time of the next line (which grew with its length: median 3.3 s,
+        up to ~13 s for a 50 s GM narration on 2026-10-09). A line prepared
+        before a yield is kept and handed first on the next drain."""
         handed = 0
         try:
-            for path in self.pending():
+            nxt, self._carry = self._carry, None
+            while True:
                 if should_yield is not None and should_yield():
                     log.debug("live_pane drain yielded handed=%d", handed)
                     break
                 if limit is not None and handed >= limit:
                     break
-                found, entry, error = relay_io.consume_json(path)
-                if not found:
-                    continue
-                if error or not isinstance(entry, dict) or not entry.get("seat") \
-                        or not entry.get("text"):
-                    _event("live_line_dropped", logging.WARNING, reason="invalid", path=path)
-                    continue
-                age = self.clock() - float(entry.get("received_at") or 0)
-                if age > self.settings["max_age_s"]:
-                    _event("live_line_dropped", logging.WARNING, reason="stale",
-                           seat=entry["seat"], age_s=round(age, 1))
-                    continue
-                if entry["seat"] == self.settings["observer_slot"]:
-                    _event("live_line_dropped", logging.WARNING,
-                           reason="observer_never_speaks", seat=entry["seat"])
-                    continue
-                if self.hand(self.prepare(entry)):
+                if nxt is None:
+                    entry = self._next_entry()
+                    if entry is None:
+                        break
+                    nxt = self._prefetch(entry)
+                payload, nxt = nxt.result(), None
+                following = self._next_entry()
+                if following is not None:
+                    nxt = self._prefetch(following)   # synthesizes during hand()'s wait
+                if self.hand(payload):
                     handed += 1
+            self._carry = nxt
             self.prune_audio()
         except Exception as exc:  # noqa: BLE001 — the director loop must survive
             _event("live_drain_failed", logging.ERROR, error=f"'{type(exc).__name__}: {exc}'")

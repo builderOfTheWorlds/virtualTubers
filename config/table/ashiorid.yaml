@@ -38,11 +38,15 @@ start_index: 0
 max_scenes: 60                # cap only; auto_duration_s ends the run
 
 # Long unattended run (TableRuntime docstring). ~1 hour: no new scene after 3600 s,
-# the running one finishes. Pacing models the roundtable voice queue (measured
-# 2026-10-08: ~2.6 spoken words/s + ~5 s TTS/handoff per line) so the GM does
-# not out-write the voices and lines never age past live.max_age_s.
+# the running one finishes. Pacing models the roundtable voice queue so the GM does not
+# out-write the voices and lines never age past live.max_age_s.
+# Measured on air 2026-10-09: piper speaks 2.7-3.0 words/s. With roundtable TTS
+# prefetch (live_pane) the per-line overhead is ~1 s (line gap + claim), not the
+# ~4 s of synthesize-after-play. The old 2.6 w/s + 5 s overestimated every line
+# and left ~45-50 s of dead air between scenes. lead_s covers the next scene's
+# GM direction call + its first TTS.
 auto_duration_s: 3600
-auto_pace: {words_per_s: 2.6, per_line_s: 5.0, lead_s: 15}
+auto_pace: {words_per_s: 2.9, per_line_s: 1.0, lead_s: 25}
 auto_skip_stuck: true
 auto_max_consecutive_stuck: 3
 
