@@ -32,6 +32,7 @@ import logging
 import math
 import re
 import yaml
+from yaml_repair import quote_plain_scalars
 
 log = logging.getLogger(__name__)
 
@@ -198,6 +199,8 @@ def _parse_reply(reply, key):
             if line.startswith(key + ":") or line.startswith("- "):
                 candidates.append("\n".join(lines[i:]))
                 break
+    # Last resort: the same candidates with prose values quoted (yaml_repair).
+    candidates += [quote_plain_scalars(c) for c in candidates]
 
     for candidate in candidates:
         try:

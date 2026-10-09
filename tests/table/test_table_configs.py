@@ -39,7 +39,8 @@ def test_gm_config_owns_the_table(tmp_path):
     agent = cfgs["gm"]["agent"]
     assert agent["role"] == "table_gm" and agent["tick_rate_ms"] == 500
     t = agent["table"]
-    assert t["seats"] == ["tuber_1"]                       # slice: active players only
+    # active players only; P5.1 (2026-10-09) seats all four (the P3.7 slice had tuber_1)
+    assert t["seats"] == ["tuber_1", "tuber_2", "tuber_3", "tuber_4"]
     assert t["gm_seat"] == "tuber_0" and t["gm_slug"] == "gm"
     assert t["seat_names"]["tuber_1"] == "Chadwick" and t["seat_names"]["gm"] == "GM"
     assert t["seat_slugs"]["tuber_1"] == "chadwick"

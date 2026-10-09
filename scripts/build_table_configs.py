@@ -25,7 +25,8 @@ SEAT_PASSES = ("think", "speak")
 GM_PASSES = ("direct", "adjudicate", "overrule")
 GM_KEYS = ("pack", "start_mode", "position_file", "gm_slug", "gm_seat", "pack_dir", "run_id", "contracts_fixture", "gm_forbidden_phrases",
            "only_with_active_players", "start_index", "max_scenes", "think_s", "speak_s",
-           "gm_blocks_order")
+           "gm_blocks_order", "auto_duration_s", "auto_pace", "auto_skip_stuck",
+           "auto_max_consecutive_stuck")
 
 
 class _Dumper(yaml.SafeDumper):

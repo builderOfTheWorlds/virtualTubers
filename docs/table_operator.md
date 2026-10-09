@@ -14,6 +14,19 @@ The position (index of the last started scene) is saved in `table.position_file`
 (default `/data/world-state/table_<pack>_position.json`, the shared world-state volume),
 so "next" after a GM restart continues the arc. Delete the file to start the arc over.
 
+### Long unattended auto runs (added 2026-10-09 for the 1-hour D&D run)
+
+| key | effect |
+|---|---|
+| `auto_duration_s` | no new scene after this many seconds since the first auto scene; the running one finishes |
+| `auto_pace: {words_per_s, per_line_s, lead_s}` | the GM models the roundtable voice queue (each committed line = `per_line_s + words/words_per_s`, back to back) and starts the next scene only `lead_s` before it drains. Without it the GM writes ~2x faster than the voices speak, the live spool backs up and lines are dropped past `live.max_age_s` |
+| `auto_skip_stuck` (default true) | a scene the GM is stuck on (2 failed GM calls) is skipped instead of waiting for an operator |
+| `auto_max_consecutive_stuck` (default 3) | after this many skips in a row the table halts and stays stuck (model probably down); any operator `scene_request` clears the halt |
+
+A new story run should get its own `position_file` so an old index doesn't skip the opening.
+Story fixtures: `scripts/export_table_fixture.py <run_id>` writes `tests/table/fixtures/<run_id>.json`
+and prints the contract count the table will see.
+
 ## CLI
 
 ```bash

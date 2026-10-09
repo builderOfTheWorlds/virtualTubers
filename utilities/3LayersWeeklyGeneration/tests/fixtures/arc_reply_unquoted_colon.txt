@@ -1,0 +1,50 @@
+
+
+segments:
+  - id: ashiorid-05-monument-tear
+    order: 5
+    loop: 0
+    hours: 6
+    spine_scenes: [malvakar-riddle, amulet-map]
+    ambient_focus: road-talk
+    synopsis: The party travels to the northern glass plain where the first monument stands. The black-glass riddle answers itself to those who know the old tongue, and the door yields. Inside, they claim the first map fragment, which instantly redraws the route to the next door. As they leave, the widening tear in the sky bleeds static into the air, and the amulet’s dormant ruby hums in resonance.
+    continuity_in: The map now bears the mark of the first door, the vault's guardian is fully awake, and the party must choose their next move while the tear in the air widens.
+    continuity_out: The first fragment is secured, the map points south toward the second monument, and the tear’s edge begins to drip crystalline residue onto the road.
+    carry_in: {}
+    carry_out: {moonwell-tainted: true}
+
+  - id: ashiorid-06-wizard-tear
+    order: 6
+    loop: 0
+    hours: 6
+    spine_scenes: [portal-encounter, portal-choice]
+    ambient_focus: night-watch
+    synopsis: The tear stabilizes into a tunnel-mouth portal, and a dying wizard from the Bahadur crossing finishes his warding ritual before collapsing. He leaves behind a fractured chronicle and a warning: the tear is not a door, but a siphon. The party must decide whether to seal the aperture, push through to Ord’s dead timeline, or let it widen into a permanent breach. Their choice alters the local magical pressure and draws the attention of uninvited forces.
+    continuity_in: The first fragment is secured, the map points south toward the second monument, and the tear’s edge begins to drip crystalline residue onto the road.
+    continuity_out: The portal’s fate is set, the wizard’s chronicle is in party possession, and the tear’s behavior now directly influences the region’s ambient magic.
+    carry_in: {moonwell-tainted: true}
+    carry_out: {moonwell-tainted: true, Alcinoe-wounded: true}
+
+  - id: ashiorid-07-age-revelation
+    order: 7
+    loop: 0
+    hours: 6
+    spine_scenes: [the-age-of-war, magic-retained]
+    ambient_focus: the-meal
+    synopsis: With the portal secured, the party pieces together the wizard’s chronicle and Grovley’s fragmented warnings to reconstruct the Event. They learn that ten thousand years ago, the moonwells were drained as fuel, and a handful of heroes chose to seal the last well rather than let the world burn. The seal holds, but magic is now rationed and harvested by hidden hands. This revelation reframes the Begene program, the Bahadur’s breeding, and the true purpose of the nine doors.
+    continuity_in: The portal’s fate is set, the wizard’s chronicle is in party possession, and the tear’s behavior now directly influences the region’s ambient magic.
+    continuity_out: The party understands the historical stakes, the moonwells’ depletion is confirmed as artificial, and the map’s second mark glows with renewed urgency.
+    carry_in: {moonwell-tainted: true, Alcinoe-wounded: true}
+    carry_out: {moonwell-tainted: true, Alcinoe-wounded: true}
+
+  - id: ashiorid-08-second-door
+    order: 8
+    loop: 0
+    hours: 6
+    spine_scenes: [amulet-map, bahadur-revealed]
+    ambient_focus: camp-fire
+    synopsis: Following the newly drawn mark, the party tracks the second monument’s location through Malmont’s uneasy politics and Bahadur supply routes. They discover that the tear’s lingering residue has been siphoned by an unregistered night faction, and Grovley’s half-ring matches their sigil. When they finally reach the second door, the map’s ruby lights partially, and the party realizes the Bahadur have been farming the Event’s aftermath for centuries. The tear answers back.
+    continuity_in: The party understands the historical stakes, the moonwells’ depletion is confirmed as artificial, and the map’s second mark glows with renewed urgency.
+    continuity_out: The second fragment is within reach, the Bahadur’s long game is exposed, and the half-ring clue points directly to the manor’s arsonist.
+    carry_in: {moonwell-tainted: true, Alcinoe-wounded: true}
+    carry_out: {moonwell-tainted: true, Alcinoe-wounded: true}

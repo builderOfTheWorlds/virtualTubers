@@ -43,7 +43,9 @@ ROLE = "table_gm"
 # Per-call budget defaults (max_tokens / reasoning_budget).
 _DEFAULT_BUDGETS = {
     "direct": {"max_tokens": 768, "reasoning_budget": 384},
-    "adjudicate": {"max_tokens": 256, "reasoning_budget": 64},
+    # 512: a 6-seat round's notes + state_delta overran 256 and the cut JSON was
+    # unparsable (live office run 2026-10-08: two failures -> scene_stuck).
+    "adjudicate": {"max_tokens": 512, "reasoning_budget": 64},
     "overrule": {"max_tokens": 160, "reasoning_budget": 48},
 }
 
@@ -57,7 +59,8 @@ _DIRECTION_INSTRUCTION = (
 _ADJUDICATE_INSTRUCTION = (
     "Adjudicate the round. Reply with ONLY a JSON object of the form "
     '{"verdict": "pass"|"reject", "retake_seat": null|name, "notes": str, '
-    '"resolved": bool, "state_delta": object}. No prose, no code fences.'
+    '"resolved": bool, "state_delta": object}. No prose, no code fences. '
+    "Keep notes to one short sentence and state_delta to at most three keys."
 )
 
 _OVERRULE_INSTRUCTION = (
@@ -189,7 +192,9 @@ class LLMGM:
             max_tokens=max_tokens, reasoning_budget=reasoning)
         obj = _first_json_object(content)
         if not isinstance(obj, dict):
-            raise ValueError("adjudicate: no parsable JSON object in GM reply")
+            tail = (content or "")[-160:].replace("\n", " ")
+            raise ValueError(f"adjudicate: no parsable JSON object in GM reply "
+                             f"(len={len(content or '')}, tail={tail!r})")
         verdict = obj.get("verdict")
         if verdict == "retake":
             verdict = "reject"
@@ -370,6 +375,22 @@ class TableRuntime:
               advance after each scene, playing at most table.max_scenes automatically.
     The FULL contract list is loaded (start_index/max_scenes no longer slice it) so any
     scene can be requested. The last started index persists in table.position_file.
+
+    Long unattended runs (auto mode only):
+      table.auto_duration_s  stop starting new scenes once this much wall time has
+                             passed since the first automatic scene (the running
+                             scene still finishes). Unset = only max_scenes limits.
+      table.auto_pace        {words_per_s, per_line_s, lead_s}: the roundtable voices
+                             lines far slower than the model writes them, so the GM
+                             models the voice queue (each committed line adds
+                             per_line_s + words/words_per_s after the previous one)
+                             and starts the next scene only lead_s before that queue
+                             drains. Without it the spool backs up past max_age_s and
+                             lines are dropped. Unset = no pacing.
+      table.auto_skip_stuck  (default true) a scene the GM got stuck on is skipped
+                             instead of waiting for an operator; after
+                             auto_max_consecutive_stuck (default 3) skips in a row
+                             the table halts (model likely down) and stays stuck.
     """
 
     def __init__(self, worker_id, agent_config, llm_client, producer, *,
@@ -391,6 +412,12 @@ class TableRuntime:
         self.index = (self.last_index + 1 if self.last_index is not None
                       else int(self.table_cfg.get("start_index", 0) or 0))
         self.auto_played = 0
+        self._auto_started_at = None
+        self._air_until = None          # modelled end of the roundtable voice queue
+        self._consecutive_stuck = 0
+        self._skipped_scene = None
+        self._halted = False
+        self._said = set()              # once-only log keys
         # P4.1: committed lines -> roundtable live transcript (table.live_feed)
         from table import live_feed
         self._feed = (live_feed.CommitPublisher(worker_id, producer.send)
@@ -399,6 +426,34 @@ class TableRuntime:
     def _on_commit(self, entry, scene_id):
         if self._feed is not None:
             self._feed.publish_entry(entry, scene_id)
+        pace = self.table_cfg.get("auto_pace")
+        if pace:
+            words = len(str((entry or {}).get("text") or "").split())
+            est = float(pace.get("per_line_s", 5.0)) + words / float(pace.get("words_per_s", 2.6))
+            now = self.clock()
+            start = now if self._air_until is None else max(now, self._air_until)
+            self._air_until = start + est
+
+    def _once(self, key, msg, *args):
+        if key not in self._said:
+            self._said.add(key)
+            log.info(msg, *args)
+
+    def _auto_blocked(self):
+        """True while auto mode must not start a new scene yet (pace / time budget)."""
+        now = self.clock()
+        duration = self.table_cfg.get("auto_duration_s")
+        if duration and self._auto_started_at is not None \
+                and now - self._auto_started_at >= float(duration):
+            self._once("duration", "table auto run time budget reached (%ss); no new scenes",
+                       duration)
+            return True
+        pace = self.table_cfg.get("auto_pace")
+        if pace and self._air_until is not None:
+            ready_at = self._air_until - float(pace.get("lead_s", 15.0))
+            if now < ready_at:
+                return True
+        return False
 
     def _publish(self):
         if self._feed is not None and self.arbiter is not None:
@@ -475,15 +530,38 @@ class TableRuntime:
 
     def ensure_started(self):
         """Auto mode only: start the next scene while the automatic budget lasts."""
-        if self.mode != "auto" or self.arbiter is not None:
+        if self.mode != "auto" or self.arbiter is not None or self._halted:
+            return
+        if self._auto_blocked():
             return
         limit = self.table_cfg.get("max_scenes")
         while self.index < len(self.contracts) and (limit is None or self.auto_played < int(limit)):
             index = self.index
             if self._start(index):
                 self.auto_played += 1
+                if self._auto_started_at is None:
+                    self._auto_started_at = self.clock()
                 return
             self.index = index + 1            # skip a contract that cannot be built
+
+    def _skip_if_stuck(self):
+        """Auto mode: skip a stuck scene so an unattended run keeps going."""
+        if (self.mode != "auto" or not self.table_cfg.get("auto_skip_stuck", True)
+                or not self.running() or not self.arbiter.state.get("stuck")):
+            return
+        limit = int(self.table_cfg.get("auto_max_consecutive_stuck", 3))
+        if self._consecutive_stuck >= limit:
+            if not self._halted:
+                self._halted = True
+                log.error("table halted: %d stuck scenes in a row (is the model up?) scene=%s",
+                          self._consecutive_stuck, self.arbiter.state["scene_id"])
+            return
+        self._consecutive_stuck += 1
+        log.warning("table auto-skip stuck scene=%s phase=%s (%d in a row)",
+                    self.arbiter.state["scene_id"], self.arbiter.state["phase"],
+                    self._consecutive_stuck)
+        self._skipped_scene = self.arbiter.state["scene_id"]
+        self._end_running("auto: scene stuck")
 
     def _end_running(self, note):
         """End the running scene through the arbiter's own operator_override path."""
@@ -552,6 +630,7 @@ class TableRuntime:
                 return self._reply(msg, "busy")
             self._end_running("operator scene_request force")
         self.arbiter = None
+        self._halted, self._consecutive_stuck = False, 0   # operator took over
         if not self._start(target):
             return self._reply(msg, "error", "scene could not be built")
         log.info("table scene requested index=%d scene=%s", target, self.contracts[target]["scene_id"])
@@ -564,7 +643,10 @@ class TableRuntime:
             return
         self.arbiter.tick()
         self._publish()
+        self._skip_if_stuck()
         if self.arbiter.state["phase"] in TERMINAL:
+            if self.arbiter.state["scene_id"] != self._skipped_scene:
+                self._consecutive_stuck = 0     # a scene finished on its own
             self.arbiter = None
             if self.mode == "auto" and self.table_cfg.get("auto_advance", True):
                 self.index = self.next_index()

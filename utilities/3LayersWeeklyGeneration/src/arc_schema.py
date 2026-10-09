@@ -16,6 +16,7 @@ import yaml
 from typing import Dict, List, Optional, Union
 
 from vocabulary import Vocabulary
+from yaml_repair import quote_plain_scalars
 from ring import MIRROR_TRANSFORMS as _MIRROR_TRANSFORMS
 
 log = logging.getLogger(__name__)
@@ -169,6 +170,8 @@ def parse_reply(reply: str) -> List[Dict]:
             if line.startswith("segments:") or line.startswith("- "):
                 candidates.append("\n".join(lines[i:]))
                 break
+    # Last resort: the same candidates with prose values quoted (yaml_repair).
+    candidates += [quote_plain_scalars(c) for c in candidates]
 
     for candidate in candidates:
         try:
