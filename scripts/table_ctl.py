@@ -54,6 +54,13 @@ def build(args):
         return "table_status_request", {}
     if args.cmd == "stop":
         return "scene_stop", {}
+    if args.cmd == "run":
+        payload = {"from": int(args.start) if args.start.isdigit() else args.start}
+        if args.minutes is not None:
+            payload["duration_min"] = args.minutes
+        return "table_run_start", payload
+    if args.cmd == "run-stop":
+        return "table_run_stop", {"now": args.now}
     if args.cmd == "next":
         return "scene_request", {"next": True, "force": args.force}
     target = args.scene
@@ -76,6 +83,11 @@ def main(argv=None):
     sp.add_argument("scene")
     sp.add_argument("--force", action="store_true", help="end the running scene first")
     sub.add_parser("stop", help="skip the running scene")
+    sp = sub.add_parser("run", help="play scenes unattended (auto) for --minutes")
+    sp.add_argument("--from", dest="start", default="next", help='"next" (default), "beginning" or an index')
+    sp.add_argument("--minutes", type=float, help="run length (default: the config's auto_duration_s)")
+    sp = sub.add_parser("run-stop", help="back to manual; the running scene finishes")
+    sp.add_argument("--now", action="store_true", help="also end the running scene")
     args = p.parse_args(argv)
 
     type_, payload = build(args)

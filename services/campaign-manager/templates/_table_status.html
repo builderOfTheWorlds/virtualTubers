@@ -1,0 +1,18 @@
+{% if banner %}
+<div class="alert alert-{{ 'success' if banner.ok else 'danger' }} py-1 px-2 small">{{ banner.msg }}</div>
+{% endif %}
+{% if t.ok %}
+{% set s = t.status %}
+<table class="table table-sm mb-0">
+  <tr><th style="width: 30%">Run</th><td>
+    <span class="fw-semibold {{ 'text-success' if t.run.active else ('text-danger' if t.run.halted else '') }}">{{ t.run_state }}</span>
+    {% if t.elapsed %}<span class="text-muted small ms-2">{{ t.elapsed }} played{% if t.remaining %}, {{ t.remaining }} left of {{ t.duration }}{% endif %} · {{ t.run.played }} scene(s)</span>{% endif %}
+  </td></tr>
+  <tr><th>Table</th><td>{{ s.state }}{% if s.scene_id %} · round {{ s.round }} · {{ s.phase }}{% endif %}</td></tr>
+  <tr><th>Scene</th><td class="small">{% if s.scene_id %}#{{ s.index }} {{ s.scene_id }}{% else %}<span class="text-muted">none</span>{% endif %}</td></tr>
+  <tr><th>Next</th><td class="small">{{ s.next_scene_id or "end of story" }} <span class="text-muted">({{ s.total }} scenes)</span></td></tr>
+  <tr><th>Story</th><td class="small">{{ t.run.story_run }}</td></tr>
+</table>
+{% elif not banner %}
+<span class="text-muted">No status.</span>
+{% endif %}

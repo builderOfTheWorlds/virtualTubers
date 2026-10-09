@@ -253,3 +253,84 @@ def test_direction_prompt_names_only_the_still_locked_phrases():
 def test_rejection_names_the_reason():
     with pytest.raises(ValueError, match=r"phrases=\['Begene'\]"):
         _gm(SECRET_LINE).direct(dict(CONTRACT), [], 1)
+
+
+# ── operator run control (campaign manager "Live table" page) ────────────────
+def _op(rt, type_, payload):
+    from message_bus import build_message
+    rt.on_message(build_message("operator", "tuber_0", type_, payload))
+
+
+def _status(prod):
+    return [m["payload"] for m in prod.sent if m["type"] == "table_status"][-1]
+
+
+def test_run_start_switches_a_manual_table_to_auto_and_honours_the_duration():
+    prod, clock, llm = Prod(), Clock(), LLM(good)
+    c = cfg(start_mode="manual")
+    tick(c, llm, prod, clock)
+    rt = gm.runtime_for("tuber_0")
+    assert starts(prod) == []                                   # manual: idle
+    _op(rt, "table_run_start", {"from": "beginning", "duration_min": 1})
+    assert _status(prod)["result"] == "started" and starts(prod) == ["s1"]
+    play_scene(rt, prod)
+    tick(c, llm, prod, clock)
+    assert starts(prod) == ["s1", "s2"]                         # auto advances
+    clock.t += 61
+    play_scene(rt, prod)
+    tick(c, llm, prod, clock)
+    tick(c, llm, prod, clock)
+    assert starts(prod) == ["s1", "s2"]                         # 1 min budget spent
+    _op(rt, "table_status_request", {})
+    run = _status(prod)["run"]
+    assert run["finished"] is True and run["active"] is False and run["played"] == 2
+
+
+def test_run_start_from_an_index_and_from_next():
+    prod, clock, llm = Prod(), Clock(), LLM(good)
+    c = cfg(start_mode="manual")
+    tick(c, llm, prod, clock)
+    rt = gm.runtime_for("tuber_0")
+    _op(rt, "table_run_start", {"from": 3})
+    assert starts(prod) == ["s4"]
+    _op(rt, "table_run_stop", {"now": True})
+    assert _status(prod)["result"] == "stopped"
+    tick(c, llm, prod, clock)
+    assert starts(prod) == ["s4"]                               # manual again: no new scene
+    _op(rt, "table_run_start", {"from": "next"})
+    assert starts(prod) == ["s4", "s5"]
+
+
+def test_run_stop_lets_the_running_scene_finish():
+    prod, clock, llm = Prod(), Clock(), LLM(good)
+    c = cfg()
+    tick(c, llm, prod, clock)
+    rt = gm.runtime_for("tuber_0")
+    _op(rt, "table_run_stop", {"now": False})
+    assert rt.running()
+    play_scene(rt, prod)
+    tick(c, llm, prod, clock)
+    tick(c, llm, prod, clock)
+    assert "scene_resolve" in [m["type"] for m in prod.sent] and starts(prod) == ["s1"]
+
+
+def test_run_start_while_a_scene_runs_continues_from_the_target_afterwards():
+    prod, clock, llm = Prod(), Clock(), LLM(good)
+    c = cfg()
+    tick(c, llm, prod, clock)
+    rt = gm.runtime_for("tuber_0")
+    _op(rt, "table_run_start", {"from": 4, "duration_min": 30})
+    assert starts(prod) == ["s1"]                               # s1 keeps running
+    play_scene(rt, prod)
+    tick(c, llm, prod, clock)
+    assert starts(prod) == ["s1", "s5"]
+
+
+@pytest.mark.parametrize("payload", [{"from": "middle"}, {"from": -1}, {"duration_min": 0},
+                                     {"duration_min": "x"}, {"from": 99}])
+def test_run_start_rejects_bad_payloads(payload):
+    prod, clock, llm = Prod(), Clock(), LLM(good)
+    c = cfg(start_mode="manual")
+    tick(c, llm, prod, clock)
+    _op(gm.runtime_for("tuber_0"), "table_run_start", payload)
+    assert _status(prod)["result"] == "error" and starts(prod) == []

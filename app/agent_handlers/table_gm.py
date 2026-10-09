@@ -456,6 +456,7 @@ class TableRuntime:
                       else int(self.table_cfg.get("start_index", 0) or 0))
         self.auto_played = 0
         self._auto_started_at = None
+        self._duration_s = self.table_cfg.get("auto_duration_s")   # table_run_start overrides
         self._air_until = None          # modelled end of the roundtable voice queue
         self._consecutive_stuck = 0
         self._skipped_scene = None
@@ -485,7 +486,7 @@ class TableRuntime:
     def _auto_blocked(self):
         """True while auto mode must not start a new scene yet (pace / time budget)."""
         now = self.clock()
-        duration = self.table_cfg.get("auto_duration_s")
+        duration = self._duration_s
         if duration and self._auto_started_at is not None \
                 and now - self._auto_started_at >= float(duration):
             self._once("duration", "table auto run time budget reached (%ss); no new scenes",
@@ -624,10 +625,39 @@ class TableRuntime:
             self.arbiter.on_message(msg)
             self._publish()
 
-    def status(self, result="status", error=""):
+    def _run_info(self):
+        elapsed = (None if self._auto_started_at is None
+                   else round(self.clock() - self._auto_started_at, 1))
+        duration = float(self._duration_s) if self._duration_s else None
+        limit = self.table_cfg.get("max_scenes")
+        out_of_time = bool(duration and elapsed is not None and elapsed >= duration)
+        out_of_scenes = self.next_index() >= len(self.contracts) or \
+            (limit is not None and self.auto_played >= int(limit))
+        return {
+            "active": self.mode == "auto" and not self._halted
+                      and not out_of_time and not out_of_scenes,
+            "elapsed_s": elapsed,
+            "duration_s": duration,
+            "remaining_s": (round(max(0.0, duration - elapsed), 1)
+                            if duration and elapsed is not None else None),
+            "played": self.auto_played,
+            "halted": self._halted,
+            "finished": self.mode == "auto" and (out_of_time or out_of_scenes),
+            "story_run": self.table_cfg.get("run_id"),
+        }
+
+    def status(self, result="status", error="", scenes=False):
         nxt = self.next_index()
         state = self.arbiter.state if self.arbiter is not None else {}
+        extra = {}
+        if scenes:      # on request only (operator UI picker): keeps the polled status small
+            extra["scenes"] = [{"index": i, "scene_id": c.get("scene_id"),
+                                "goal": str(c.get("canon_goal") or "")[:140]}
+                               for i, c in enumerate(self.contracts)]
         return {
+            **extra,
+            "seat_names": dict(self.table_cfg.get("seat_names") or {}),
+            "run": self._run_info(),
             "state": "running" if self.running() else "idle",
             "scene_id": state.get("scene_id") if self.running() else None,
             "round": state.get("round") if self.running() else None,
@@ -640,16 +670,20 @@ class TableRuntime:
             "error": error,
         }
 
-    def _reply(self, msg, result, error=""):
+    def _reply(self, msg, result, error="", scenes=False):
         from message_bus import build_message
         self.producer.send(build_message(
             self.worker_id, msg.get("from") or "operator", control.TABLE_STATUS,
-            self.status(result, error), causation_id=msg.get("id")))
+            self.status(result, error, scenes=scenes), causation_id=msg.get("id")))
 
     def _control(self, msg):
         type_, payload = msg.get("type"), msg.get("payload") or {}
         if type_ == control.STATUS_REQUEST:
-            return self._reply(msg, "status")
+            return self._reply(msg, "status", scenes=bool(payload.get("scenes")))
+        if type_ == control.RUN_START:
+            return self._run_start(msg, payload)
+        if type_ == control.RUN_STOP:
+            return self._run_stop(msg, payload)
         if type_ == control.SCENE_STOP:
             if not self.running():
                 return self._reply(msg, "idle")
@@ -678,6 +712,54 @@ class TableRuntime:
             return self._reply(msg, "error", "scene could not be built")
         log.info("table scene requested index=%d scene=%s", target, self.contracts[target]["scene_id"])
         return self._reply(msg, "started")
+
+    def _run_start(self, msg, payload):
+        """table_run_start: unattended auto play from the operator UI (no GM restart)."""
+        try:
+            req = control.parse_run_start(payload)
+        except control.ControlError as exc:
+            return self._reply(msg, "error", str(exc))
+        start = req["from"]
+        if start == "beginning":
+            target = 0
+        elif start == "next":
+            target = self.next_index()
+        else:
+            target = start
+        if not 0 <= target < len(self.contracts):
+            return self._reply(msg, "error", f"no scene at index {target} (total {len(self.contracts)})")
+        self.mode = "auto"
+        if req["duration_s"] is not None:
+            self._duration_s = req["duration_s"]
+        self.auto_played = 0
+        self._auto_started_at = None
+        self._halted, self._consecutive_stuck = False, 0
+        self._said.discard("duration")
+        if self.running():
+            # The running scene finishes first; the run continues from `target`
+            # (next_index() reads last_index, so point it just before target).
+            self.last_index = target - 1 if target > 0 else None
+            self.index = target
+            if target == 0:
+                self.last_index = None
+        else:
+            self.arbiter = None
+            self.last_index = target - 1 if target > 0 else None
+            self.index = target
+            self.ensure_started()
+        log.info("table run started from=%s index=%d duration_s=%s", start, target, self._duration_s)
+        return self._reply(msg, "started")
+
+    def _run_stop(self, msg, payload):
+        try:
+            req = control.parse_run_stop(payload)
+        except control.ControlError as exc:
+            return self._reply(msg, "error", str(exc))
+        self.mode = "manual"
+        if req["now"] and self.running():
+            self._end_running("operator table_run_stop now")
+        log.info("table run stopped now=%s", req["now"])
+        return self._reply(msg, "stopped")
 
     def tick(self):
         if self.arbiter is None:

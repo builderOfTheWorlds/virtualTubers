@@ -31,6 +31,15 @@ A new story run should get its own `position_file` so an old index doesn't skip 
 Story fixtures: `scripts/export_table_fixture.py <run_id>` writes `tests/table/fixtures/<run_id>.json`
 and prints the contract count the table will see.
 
+## Campaign manager: Live table page (http://<host>:8082/table)
+
+The normal way to run the table. **Start run** (length in minutes; from where the story left off,
+the beginning, or a picked scene) sends `table_run_start`; **Stop after this scene** /
+**Stop now** send `table_run_stop`; **Play next scene** / **Skip current scene** are the manual
+controls. Status refreshes every 10 s and the last 15 minutes of committed lines are shown.
+Runs need no restart and write nothing to the host: the mode lives in the GM runtime, and a GM
+restart goes back to the config's `start_mode` (manual). Code: `services/campaign-manager/table_control.py`.
+
 ## CLI
 
 ```bash
@@ -40,6 +49,8 @@ and prints the contract count the table will see.
 .venv/bin/python scripts/table_ctl.py start 6           # by index
 .venv/bin/python scripts/table_ctl.py start first-standup-arc.first-standup-arc-n0.first-standup-arc-n0-003
 .venv/bin/python scripts/table_ctl.py stop              # skip the running scene
+.venv/bin/python scripts/table_ctl.py run --minutes 60 [--from next|beginning|N]   # unattended run
+.venv/bin/python scripts/table_ctl.py run-stop [--now]   # back to manual
 ```
 
 It prints the GM's `table_status` reply (read back from message-api `GET /logs/messages`).

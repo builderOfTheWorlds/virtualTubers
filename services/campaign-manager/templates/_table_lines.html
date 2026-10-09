@@ -1,0 +1,9 @@
+{% if error %}<div class="alert alert-warning py-1 small">{{ error }}</div>{% endif %}
+{% if not lines and not error %}<span class="text-muted">No lines in the last 15 minutes.</span>{% endif %}
+{% for l in lines %}
+<div class="mb-2 small">
+  <span class="text-muted">{{ l.time }}</span>
+  <span class="fw-semibold {{ 'line-gm' if l.kind == 'direction' or l.seat == 'tuber_0' else '' }}">{{ seat_names.get(l.seat, l.seat) }}</span>:
+  {{ l.text }}
+</div>
+{% endfor %}

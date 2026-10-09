@@ -16,6 +16,7 @@ from fastapi.templating import Jinja2Templates
 import httpx
 
 import log_reader
+import table_control
 
 # ---------------------------------------------------------------------------
 # Configuration & Setup
@@ -1047,8 +1048,89 @@ def _extract_error_detail(result: httpx.Response) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Live table: run the GM + character-agent table from the browser
+# (table_control.py; protocol app/table/control.py). No restart, no host writes.
+# ---------------------------------------------------------------------------
+table_http = httpx.AsyncClient(timeout=10.0)
+# A run start replies after the GM's first direction call (~10-30 s on vLLM).
+TABLE_ACTION_TIMEOUT_S = float(os.environ.get("TABLE_ACTION_TIMEOUT_S", "45"))
+TABLE_STATUS_TIMEOUT_S = float(os.environ.get("TABLE_STATUS_TIMEOUT_S", "8"))
+
+
+@app.get("/table", response_class=HTMLResponse)
+async def table_page(request: Request):
+    scenes, error, seat_names = [], None, {}
+    try:
+        status = await table_control.request(
+            table_http, "table_status_request", {"scenes": True}, TABLE_STATUS_TIMEOUT_S)
+        scenes = (status or {}).get("scenes") or []
+        seat_names = (status or {}).get("seat_names") or {}
+        if status is None:
+            error = "The GM did not answer (is worker-gm up with the table overlay?)"
+    except table_control.TableControlError as exc:
+        error = str(exc)
+    return templates.TemplateResponse(request, "table.html", {
+        "request": request, "scenes": scenes, "page_error": error,
+        "seat_names_json": json.dumps(seat_names),
+        "control_panel_url": _control_panel_public_url(request)})
+
+
+def _render_table_status(request: Request, status, banner=None):
+    return templates.TemplateResponse(request, "_table_status.html", {
+        "request": request, "t": table_control.describe(status), "banner": banner})
+
+
+@app.get("/table/status", response_class=HTMLResponse)
+async def table_status_partial(request: Request):
+    try:
+        status = await table_control.request(
+            table_http, "table_status_request", {}, TABLE_STATUS_TIMEOUT_S)
+    except table_control.TableControlError as exc:
+        return _render_table_status(request, None, {"ok": False, "msg": str(exc)})
+    banner = None if status else {"ok": False, "msg": "No reply from the GM yet."}
+    return _render_table_status(request, status, banner)
+
+
+@app.post("/table/action", response_class=HTMLResponse)
+async def table_action(request: Request, action: str = Form(...), duration_min: str = Form(""),
+                       start_from: str = Form("next"), start_index: str = Form("")):
+    try:
+        type_, payload = table_control.build_action(
+            action, duration_min=duration_min, start_from=start_from, start_index=start_index)
+        status = await table_control.request(table_http, type_, payload, TABLE_ACTION_TIMEOUT_S)
+    except table_control.TableControlError as exc:
+        return _render_table_status(request, None, {"ok": False, "msg": str(exc)})
+    if status is None:
+        return _render_table_status(request, None, {
+            "ok": False, "msg": f"Sent {type_}, but the GM did not answer within "
+                                f"{TABLE_ACTION_TIMEOUT_S:.0f}s. Refresh the status in a moment."})
+    ok = status.get("result") not in ("error", "busy")
+    msg = {"started": "Started.", "stopped": "Stopped.", "idle": "Nothing was running.",
+           "busy": "A scene is running (use Skip scene first)."}.get(status.get("result"), "")
+    if status.get("error"):
+        msg = f"{msg} {status['error']}".strip()
+    return _render_table_status(request, status, {"ok": ok, "msg": msg or status.get("result")})
+
+
+@app.get("/table/lines", response_class=HTMLResponse)
+async def table_lines_partial(request: Request, names: str = ""):
+    error, lines = None, []
+    try:
+        lines = await table_control.recent_lines(table_http)
+    except table_control.TableControlError as exc:
+        error = str(exc)
+    try:
+        seat_names = json.loads(names) if names else {}
+    except ValueError:
+        seat_names = {}
+    return templates.TemplateResponse(request, "_table_lines.html", {
+        "request": request, "lines": lines, "error": error, "seat_names": seat_names})
+
+
+# ---------------------------------------------------------------------------
 # Lifespan
 # ---------------------------------------------------------------------------
 @app.on_event("shutdown")
 async def shutdown_event():
     await http_client.aclose()
+    await table_http.aclose()

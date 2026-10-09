@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live table</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        body { background-color: #f8f9fa; }
+        .line-gm { color: #6f42c1; }
+        .htmx-request .spin { display: inline-block !important; }
+        .spin { display: none; }
+    </style>
+</head>
+<body class="container mt-4" style="max-width: 1100px;">
+<nav class="navbar navbar-dark bg-dark mb-4 p-2">
+    <span class="navbar-brand me-4">Campaign Generator Manager</span>
+    <a href="/" class="btn btn-outline-light btn-sm">Dashboard</a>
+    <a href="/packs" class="btn btn-outline-light btn-sm">Packs</a>
+    <a href="/data" class="btn btn-outline-light btn-sm">Data Viewer</a>
+    <a href="{{ control_panel_url }}" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener">Control Panel</a>
+</nav>
+
+<h4>Live table <small class="text-muted fs-6">GM + character agents, roundtable channel</small></h4>
+{% if page_error %}<div class="alert alert-warning">{{ page_error }}</div>{% endif %}
+
+<div class="row">
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header fw-semibold">Run</div>
+      <div class="card-body">
+        <form hx-post="/table/action" hx-target="#table-status" hx-swap="innerHTML">
+          <input type="hidden" name="action" value="run_start">
+          <div class="mb-2">
+            <label class="form-label small mb-1">Length (minutes)</label>
+            <input type="number" name="duration_min" class="form-control form-control-sm"
+                   value="60" min="1" step="1">
+          </div>
+          <div class="mb-2">
+            <label class="form-label small mb-1">Start from</label>
+            <select name="start_from" class="form-select form-select-sm"
+                    onchange="document.getElementById('start-index').disabled = this.value !== 'index'">
+              <option value="next">Where the story left off</option>
+              <option value="beginning">The beginning of the story</option>
+              <option value="index">A specific scene…</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <select id="start-index" name="start_index" class="form-select form-select-sm" disabled>
+              {% for s in scenes %}
+              <option value="{{ s.index }}">{{ s.index }}: {{ s.goal[:90] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <button class="btn btn-success btn-sm">Start run <span class="spinner-border spinner-border-sm spin"></span></button>
+          <span class="small text-muted ms-2">The GM replies after its first narration (~10–30 s).</span>
+        </form>
+        <hr>
+        <div class="d-flex flex-wrap gap-2">
+          <form hx-post="/table/action" hx-target="#table-status" hx-swap="innerHTML"
+                title="No new scenes start; the current one plays to its end.">
+            <input type="hidden" name="action" value="run_stop">
+            <button class="btn btn-outline-secondary btn-sm">Stop after this scene</button>
+          </form>
+          <form hx-post="/table/action" hx-target="#table-status" hx-swap="innerHTML"
+                hx-confirm="End the current scene now and stop the run?">
+            <input type="hidden" name="action" value="run_stop_now">
+            <button class="btn btn-outline-danger btn-sm">Stop now</button>
+          </form>
+        </div>
+        <hr>
+        <div class="small text-muted mb-1">Manual (one scene at a time)</div>
+        <div class="d-flex flex-wrap gap-2">
+          <form hx-post="/table/action" hx-target="#table-status" hx-swap="innerHTML">
+            <input type="hidden" name="action" value="next">
+            <button class="btn btn-outline-primary btn-sm">Play next scene <span class="spinner-border spinner-border-sm spin"></span></button>
+          </form>
+          <form hx-post="/table/action" hx-target="#table-status" hx-swap="innerHTML">
+            <input type="hidden" name="action" value="skip">
+            <button class="btn btn-outline-warning btn-sm">Skip current scene</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header fw-semibold d-flex justify-content-between">
+        <span>Status</span><span class="small text-muted">refreshes every 10 s</span>
+      </div>
+      <div class="card-body" id="table-status" hx-get="/table/status" hx-trigger="load, every 10s"
+           hx-swap="innerHTML">
+        <span class="text-muted">Asking the GM…</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header fw-semibold">On air <span class="small text-muted">(last 15 min, as committed by the GM)</span></div>
+      <div class="card-body" hx-get="/table/lines" hx-vals='{"names": {{ seat_names_json | tojson }}}'
+           hx-trigger="load, every 8s" hx-swap="innerHTML">
+        <span class="text-muted">Loading…</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

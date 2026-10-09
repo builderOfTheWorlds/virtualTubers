@@ -102,6 +102,8 @@ MESSAGE_HANDLERS = {
     "scene_request": handle_table_message,
     "scene_stop": handle_table_message,
     "table_status_request": handle_table_message,
+    "table_run_start": handle_table_message,
+    "table_run_stop": handle_table_message,
 }
 
 # Per-role idle-tick hooks (role -> hook). The manager's feeds the opt-in
