@@ -1,0 +1,2524 @@
+{
+ "run_id": "ashiorid_1_20261009_034648_e309",
+ "artifacts": [
+  {
+   "kind": "arc_plan",
+   "segment_id": "",
+   "content": {
+    "segments": [
+     {
+      "id": "ashiorid-0-arrival",
+      "fork": null,
+      "loop": 0,
+      "hours": 6,
+      "order": 0,
+      "carry_in": {},
+      "synopsis": "Four strangers receive identical cards marking the ten-thousandth anniversary of the Event. They arrive at Duke Sorensen Leto the Third\u2019s manor, expecting a celebration, but find the doors opening onto uninvited guests and a room that suddenly stops moving. The party is suspended in an unnatural stasis as the true nature of the gathering reveals itself.",
+      "carry_out": {},
+      "mirror_of": [],
+      "plot_path": [],
+      "spine_scenes": [
+       "invitation",
+       "letos-manor",
+       "party-attack"
+      ],
+      "ambient_focus": "the-meal",
+      "continuity_in": "",
+      "event_windows": [],
+      "continuity_out": "The manor\u2019s guests are trapped in a suspended moment; the invitation cards are still clutched in hand.",
+      "mirror_transform": null
+     },
+     {
+      "id": "ashiorid-1-secrets",
+      "fork": null,
+      "loop": 0,
+      "hours": 6,
+      "order": 1,
+      "carry_in": {},
+      "synopsis": "Beneath the frozen party, the butler Grovley guides the four into the subbasement, where he reveals what they truly are: products of the Begene Sisters\u2019 breeding program and heirs to a century of hidden lineage. Behind a concealed wall lies the vault containing The Word and the Worm, the anchor of the manor\u2019s ten-thousand-year watch. A tear in the air begins to weep, and it answers back, exposing the Bahadur\u2019s ten-millennia harvesting of Ashiorid\u2019s magic to fund a fractured gateway home.",
+      "carry_out": {
+       "Alcinoe-wounded": "minor"
+      },
+      "mirror_of": [],
+      "plot_path": [],
+      "spine_scenes": [
+       "grovley-revelation",
+       "the-vault",
+       "bahadur-revealed"
+      ],
+      "ambient_focus": "night-watch",
+      "continuity_in": "The manor\u2019s stasis holds; the invitation cards remain in hand.",
+      "event_windows": [],
+      "continuity_out": "The tear widens; the manor\u2019s foundations groan under the strain of exposed magic.",
+      "mirror_transform": null
+     },
+     {
+      "id": "ashiorid-2-collapse",
+      "fork": null,
+      "loop": 0,
+      "hours": 6,
+      "order": 2,
+      "carry_in": {
+       "Alcinoe-wounded": "minor"
+      },
+      "synopsis": "The hold breaks too late. Flames consume the manor as the four escape into the smoke-choked night, forced to make a final decision at a widening tear in the air. They step through just as a dying wizard finishes his work at the tunnel\u2019s mouth, leaving behind a fragment of the amulet-map and a warning about the wells. The portal deposits them onto a quiet road, the weight of the burning past settling behind them.",
+      "carry_out": {
+       "moonwell-tainted": "trace"
+      },
+      "mirror_of": [],
+      "plot_path": [],
+      "spine_scenes": [
+       "burn-it-down",
+       "portal-choice",
+       "portal-encounter"
+      ],
+      "ambient_focus": "chadwick-lost",
+      "continuity_in": "The tear widens; the manor\u2019s foundations groan under the strain of exposed magic.",
+      "event_windows": [],
+      "continuity_out": "The portal deposits them onto a quiet road; the amulet-map fragment is secured.",
+      "mirror_transform": null
+     },
+     {
+      "id": "ashiorid-3-roots",
+      "fork": null,
+      "loop": 0,
+      "hours": 6,
+      "order": 3,
+      "carry_in": {
+       "moonwell-tainted": "trace"
+      },
+      "synopsis": "Four days south of the ashes, the road widens into Malmont, a town that has never heard of them. Amidst the uneasy balance of day-watch and night-stalkers, the group pieces together the fractured history of the Event through recovered accounts and the first monument\u2019s riddle. The black glass plain of the Malvakar answers itself to those who know where to look, and the map\u2019s next mark draws them toward the first of nine doors. The road ahead is long, but the first step is complete.",
+      "carry_out": {},
+      "mirror_of": [],
+      "plot_path": [],
+      "spine_scenes": [
+       "malmont-arrival",
+       "malvakar-riddle",
+       "the-age-of-war"
+      ],
+      "ambient_focus": "road-talk",
+      "continuity_in": "The portal deposits them onto a quiet road; the amulet-map fragment is secured.",
+      "event_windows": [],
+      "continuity_out": "The map\u2019s next mark is revealed; the nine-door route begins.",
+      "mirror_transform": null
+     },
+     {
+      "id": "amulet-map-arc",
+      "fork": null,
+      "loop": 0,
+      "hours": 6,
+      "order": 4,
+      "carry_in": {},
+      "synopsis": "The map hums as the ink settles, burning a fresh mark into the parchment that points north toward a jagged peak. The party leaves the ashes of the manor behind, finding the road south leads to Malmont, the first settlement in days. The town feels wrong: the magic shops are full, but the blacksmiths are cold, and the locals avoid the word 'Leto'. Grovley's half of the signet ring feels heavy, and the map's mark pulses in rhythm with the town's hidden heartbeat.",
+      "carry_out": {},
+      "mirror_of": [],
+      "plot_path": [],
+      "spine_scenes": [
+       "amulet-map",
+       "malmont-arrival"
+      ],
+      "ambient_focus": "road-talk",
+      "continuity_in": "The map's next mark is revealed; the nine-door route begins.",
+      "event_windows": [],
+      "continuity_out": "The mark points to the northern monument; Malmont holds a secret the constable cannot touch.",
+      "mirror_transform": null
+     },
+     {
+      "id": "malvakar-riddle-arc",
+      "fork": null,
+      "loop": 0,
+      "hours": 6,
+      "order": 5,
+      "carry_in": {},
+      "synopsis": "The journey north takes the party across glass plains where the wind screams. The Malvakar monument rises from the black glass, a slab of obsidian etched with runes that predate the Event. The riddle is not spoken; it is felt. As the party stands before the stone, the map reacts, and the monument answers, opening a door that should not exist. Inside, the air tastes of ozone and old blood, and the first fragment of the route is within reach, but something watches from the cracks in the glass.",
+      "carry_out": {},
+      "mirror_of": [],
+      "plot_path": [],
+      "spine_scenes": [
+       "malvakar-riddle"
+      ],
+      "ambient_focus": "camp-fire",
+      "continuity_in": "The mark points to the northern monument; Malmont holds a secret the constable cannot touch.",
+      "event_windows": [],
+      "continuity_out": "The first door opens; the map draws the second mark, which points toward the town's unregistered night.",
+      "mirror_transform": null
+     },
+     {
+      "id": "portal-encounter-arc",
+      "fork": null,
+      "loop": 0,
+      "hours": 6,
+      "order": 6,
+      "carry_in": {},
+      "synopsis": "The second mark leads back to the ruins of the manor's grounds, now overgrown with strange, silver flora. A dying wizard lies at the threshold of a shimmering tear in the air, his robes scorched with Bahadur sigils. He gasps a warning about the 'harvest' before his body crumbles to ash, leaving behind a journal filled with calculations on energy storage and a single, glowing rune. As the party studies the rune, the moonwell beneath the ruins flares with light, and the seal holds, preserving the last dregs of magic in the world.",
+      "carry_out": {},
+      "mirror_of": [],
+      "plot_path": [],
+      "spine_scenes": [
+       "portal-encounter",
+       "magic-retained"
+      ],
+      "ambient_focus": "sodacan_bob-on-runes",
+      "continuity_in": "The map draws the second mark, which points toward the town's unregistered night.",
+      "event_windows": [],
+      "continuity_out": "The wizard's warning reveals the Bahadur's endgame; the seal holds, confirming the current timeline.",
+      "mirror_transform": null
+     },
+     {
+      "id": "bahadur-revealed-arc",
+      "fork": null,
+      "loop": 0,
+      "hours": 6,
+      "order": 7,
+      "carry_in": {},
+      "synopsis": "The rune from the wizard's journal unlocks a hidden frequency in the map, projecting a holographic ledger that reveals the truth of the Begene Program. The party realizes Chadwick, Leena, Vigil, and Sodacan Bob are all children of Duke Leto, bred to serve the Bahadur's plan to reopen the door to Ord. The tear in the air begins to widen, not from magic, but from a microfracture forced by a sleeper agent in their midst. The tear does not close; it answers back, calling to the blood in their veins.",
+      "carry_out": {},
+      "mirror_of": [],
+      "plot_path": [],
+      "spine_scenes": [
+       "bahadur-revealed"
+      ],
+      "ambient_focus": "night-watch",
+      "continuity_in": "The wizard's warning reveals the Bahadur's endgame; the seal holds, confirming the current timeline.",
+      "event_windows": [],
+      "continuity_out": "The Bahadur breeding program is exposed; the tear widens and demands a decision.",
+      "mirror_transform": null
+     }
+    ]
+   }
+  },
+  {
+   "kind": "brief",
+   "segment_id": "amulet-map-arc",
+   "content": {
+    "loop": 0,
+    "hours": 6,
+    "nodes": [
+     {
+      "kind": "branch",
+      "depth": 0,
+      "slots": 0,
+      "forced": false,
+      "node_id": "amulet-map-arc",
+      "parent_id": null,
+      "target_slots": 7
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 2,
+      "forced": false,
+      "node_id": "amulet-map-arc-n0",
+      "parent_id": "amulet-map-arc",
+      "target_slots": 2
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 5,
+      "forced": false,
+      "node_id": "amulet-map-arc-n1",
+      "parent_id": "amulet-map-arc",
+      "target_slots": 5
+     }
+    ],
+    "order": 4,
+    "slots": [
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "prompt": "The parchment cools beneath your fingers, its surface humming with a low, rhythmic thrum that syncs with your own pulse. You fold it away, feeling the weight of Grovley\u2019s signet ring press against your palm as the road south opens up toward Malmont. The air smells of cold ash and distant rain, and the silence of the burned manor behind you is broken only by the crunch of gravel beneath your boots.",
+      "node_id": "amulet-map-arc-n0",
+      "slot_id": "amulet-map-arc-n0-001",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "amulet-map-arc-n0",
+      "slot_id": "amulet-map-arc-n0-002",
+      "scene_ref": "malmont-arrival",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "prompt": "The road south finally yields to cobblestones as Malmont rises from the mist. You step past the town ward, and the silence hits first\u2014no blacksmith\u2019s hammer, only the dull thud of your boots on wet stone.",
+      "node_id": "amulet-map-arc-n1",
+      "slot_id": "amulet-map-arc-n1-001",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "prompt": "Magic shops line the main thoroughfare, their windows crammed with wares that haven\u2019t moved in weeks. The shopkeepers watch you with hungry eyes, but the real tension lives in the tavern\u2019s back room, where the word 'Leto' is swallowed whole before it can leave anyone\u2019s lips.",
+      "node_id": "amulet-map-arc-n1",
+      "slot_id": "amulet-map-arc-n1-002",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "prompt": "Grovley\u2019s half of the signet ring grows heavy in his palm, warm against his skin. Across the square, the map unspooled in your pack begins to pulse, its ink mark throbbing in perfect rhythm with something buried deep beneath the town\u2019s foundations.",
+      "node_id": "amulet-map-arc-n1",
+      "slot_id": "amulet-map-arc-n1-003",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "amulet-map-arc-n1",
+      "slot_id": "amulet-map-arc-n1-004",
+      "scene_ref": "malmont-arrival",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "prompt": "The constable stands at the crossroads, posture rigid, eyes darting toward the northern ridge where the jagged peak cuts the sky. He knows the mark on your map points there, but his lips stay sealed. Whatever Malmont is hiding, it sits beyond his jurisdiction.",
+      "node_id": "amulet-map-arc-n1",
+      "slot_id": "amulet-map-arc-n1-005",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ]
+     }
+    ],
+    "carry_in": {},
+    "synopsis": "The map hums as the ink settles, burning a fresh mark into the parchment that points north toward a jagged peak. The party leaves the ashes of the manor behind, finding the road south leads to Malmont, the first settlement in days. The town feels wrong: the magic shops are full, but the blacksmiths are cold, and the locals avoid the word 'Leto'. Grovley's half of the signet ring feels heavy, and the map's mark pulses in rhythm with the town's hidden heartbeat.",
+    "carry_out": {},
+    "segment_id": "amulet-map-arc",
+    "continuity_in": "The map's next mark is revealed; the nine-door route begins.",
+    "continuity_out": "The mark points to the northern monument; Malmont holds a secret the constable cannot touch."
+   }
+  },
+  {
+   "kind": "brief",
+   "segment_id": "ashiorid-0-arrival",
+   "content": {
+    "loop": 0,
+    "hours": 6,
+    "nodes": [
+     {
+      "kind": "branch",
+      "depth": 0,
+      "slots": 0,
+      "forced": false,
+      "node_id": "ashiorid-0-arrival",
+      "parent_id": null,
+      "target_slots": 7
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 3,
+      "forced": false,
+      "node_id": "ashiorid-0-arrival-n0",
+      "parent_id": "ashiorid-0-arrival",
+      "target_slots": 3
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 4,
+      "forced": false,
+      "node_id": "ashiorid-0-arrival-n1",
+      "parent_id": "ashiorid-0-arrival",
+      "target_slots": 4
+     }
+    ],
+    "order": 0,
+    "slots": [
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-0-arrival-n0",
+      "slot_id": "ashiorid-0-arrival-n0-001",
+      "scene_ref": "letos-manor",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "prompt": "The brass anniversary medallions grow warm against palms that refuse to tremble. Dust motes hang like frozen stars in the foyer, and the chandelier\u2019s chime catches on an endless exhale.",
+      "node_id": "ashiorid-0-arrival-n0",
+      "slot_id": "ashiorid-0-arrival-n0-002",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "prompt": "Somewhere beyond the threshold, the manor\u2019s own foundations seem to hold their breath. A low resonance hums through the floorboards, tasting of old iron and moonwell silt, as the uninvited guests turn their faces toward the newcomers without blinking.",
+      "node_id": "ashiorid-0-arrival-n0",
+      "slot_id": "ashiorid-0-arrival-n0-003",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "prompt": "The heavy oak doors swing inward, but the grand hall beyond refuses to breathe. Dust motes hang suspended in the amber light, frozen mid-drift. Leena and Vigil step across the threshold, their boots making no sound on the marble as the warmth of the celebration fades into a weightless, breathless quiet.",
+      "node_id": "ashiorid-0-arrival-n1",
+      "slot_id": "ashiorid-0-arrival-n1-001",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-0-arrival-n1",
+      "slot_id": "ashiorid-0-arrival-n1-002",
+      "scene_ref": "letos-manor",
+      "participants": [
+       "gm",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "prompt": "Chadwick's fingers tighten around the invitation card, the embossed date pressing into his palm like a brand. Around him, the other guests stand in perfect, impossible stillness, their laughter trapped in their throats. The manor's stone walls hum with a low, dormant resonance, as if the architecture itself is holding its breath.",
+      "node_id": "ashiorid-0-arrival-n1",
+      "slot_id": "ashiorid-0-arrival-n1-003",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "chadwick",
+       "gm"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-0-arrival-n1",
+      "slot_id": "ashiorid-0-arrival-n1-004",
+      "scene_ref": "party-attack",
+      "participants": [
+       "gm",
+       "Vigil"
+      ]
+     }
+    ],
+    "carry_in": {},
+    "synopsis": "Four strangers receive identical cards marking the ten-thousandth anniversary of the Event. They arrive at Duke Sorensen Leto the Third\u2019s manor, expecting a celebration, but find the doors opening onto uninvited guests and a room that suddenly stops moving. The party is suspended in an unnatural stasis as the true nature of the gathering reveals itself.",
+    "carry_out": {},
+    "segment_id": "ashiorid-0-arrival",
+    "continuity_in": "",
+    "continuity_out": "The manor\u2019s guests are trapped in a suspended moment; the invitation cards are still clutched in hand."
+   }
+  },
+  {
+   "kind": "brief",
+   "segment_id": "ashiorid-1-secrets",
+   "content": {
+    "loop": 0,
+    "hours": 6,
+    "nodes": [
+     {
+      "kind": "branch",
+      "depth": 0,
+      "slots": 0,
+      "forced": false,
+      "node_id": "ashiorid-1-secrets",
+      "parent_id": null,
+      "target_slots": 7
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 3,
+      "forced": false,
+      "node_id": "ashiorid-1-secrets-n0",
+      "parent_id": "ashiorid-1-secrets",
+      "target_slots": 3
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 4,
+      "forced": false,
+      "node_id": "ashiorid-1-secrets-n1",
+      "parent_id": "ashiorid-1-secrets",
+      "target_slots": 4
+     }
+    ],
+    "order": 1,
+    "slots": [
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "prompt": "The heavy oak doors groan shut behind you, sealing away the frozen waltz and clinking glass. Upstairs, the party hangs in suspended animation, but down here the air is thick with dust and centuries of held breath. Your invitation cards feel suddenly heavy in your hands, their ink no longer mere paper but a key to a locked history. Follow Grovley's lantern as it cuts through the dark, leading you past frost-rimed brick into the manor's forgotten belly.",
+      "node_id": "ashiorid-1-secrets-n0",
+      "slot_id": "ashiorid-1-secrets-n0-001",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-1-secrets-n0",
+      "slot_id": "ashiorid-1-secrets-n0-002",
+      "scene_ref": "grovley-revelation",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-1-secrets-n0",
+      "slot_id": "ashiorid-1-secrets-n0-003",
+      "scene_ref": "the-vault",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "prompt": "The heavy oak door clicks shut behind you. Grovley turns, his face stripped of its usual mask, and tells you what you really are. He speaks of the Begene Sisters, of a breeding program that scoured a century for the right blood, and how you are the heirs to a lineage everyone else forgot.",
+      "node_id": "ashiorid-1-secrets-n1",
+      "slot_id": "ashiorid-1-secrets-n1-001",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-1-secrets-n1",
+      "slot_id": "ashiorid-1-secrets-n1-002",
+      "scene_ref": "grovley-revelation",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-event",
+       "moonwells"
+      ],
+      "prompt": "Grovley steps aside, revealing a seamless panel in the stone. With a twist of his signet ring, the wall slides back. Inside sits the vault: The Word bound in iron, and the Worm coiled in shadow. It is the anchor of the manor's ten-thousand-year watch, humming with a weight that makes your teeth ache.",
+      "node_id": "ashiorid-1-secrets-n1",
+      "slot_id": "ashiorid-1-secrets-n1-003",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-1-secrets-n1",
+      "slot_id": "ashiorid-1-secrets-n1-004",
+      "scene_ref": "bahadur-revealed",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     }
+    ],
+    "carry_in": {},
+    "synopsis": "Beneath the frozen party, the butler Grovley guides the four into the subbasement, where he reveals what they truly are: products of the Begene Sisters\u2019 breeding program and heirs to a century of hidden lineage. Behind a concealed wall lies the vault containing The Word and the Worm, the anchor of the manor\u2019s ten-thousand-year watch. A tear in the air begins to weep, and it answers back, exposing the Bahadur\u2019s ten-millennia harvesting of Ashiorid\u2019s magic to fund a fractured gateway home.",
+    "carry_out": {
+     "Alcinoe-wounded": "minor"
+    },
+    "segment_id": "ashiorid-1-secrets",
+    "continuity_in": "The manor\u2019s stasis holds; the invitation cards remain in hand.",
+    "continuity_out": "The tear widens; the manor\u2019s foundations groan under the strain of exposed magic."
+   }
+  },
+  {
+   "kind": "brief",
+   "segment_id": "ashiorid-2-collapse",
+   "content": {
+    "loop": 0,
+    "hours": 6,
+    "nodes": [
+     {
+      "kind": "branch",
+      "depth": 0,
+      "slots": 0,
+      "forced": false,
+      "node_id": "ashiorid-2-collapse",
+      "parent_id": null,
+      "target_slots": 7
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 0,
+      "forced": false,
+      "node_id": "ashiorid-2-collapse-n0",
+      "parent_id": "ashiorid-2-collapse",
+      "target_slots": 5
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 2,
+      "forced": false,
+      "node_id": "ashiorid-2-collapse-n1",
+      "parent_id": "ashiorid-2-collapse",
+      "target_slots": 2
+     }
+    ],
+    "order": 2,
+    "slots": [
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-2-collapse-n1",
+      "slot_id": "ashiorid-2-collapse-n1-001",
+      "scene_ref": "portal-encounter",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder",
+       "moonwells"
+      ],
+      "prompt": "The portal's roar fades to the steady chirp of crickets. Moonlight washes over a quiet, empty road as the four stumble onto solid ground. Hands tremble while securing the amulet-map fragment, its cryptic warning about the wells settling heavy in their minds as the burning past finally fades into history.",
+      "node_id": "ashiorid-2-collapse-n1",
+      "slot_id": "ashiorid-2-collapse-n1-002",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm",
+       "sodacan_bob"
+      ]
+     }
+    ],
+    "carry_in": {
+     "Alcinoe-wounded": "minor"
+    },
+    "synopsis": "The hold breaks too late. Flames consume the manor as the four escape into the smoke-choked night, forced to make a final decision at a widening tear in the air. They step through just as a dying wizard finishes his work at the tunnel\u2019s mouth, leaving behind a fragment of the amulet-map and a warning about the wells. The portal deposits them onto a quiet road, the weight of the burning past settling behind them.",
+    "carry_out": {
+     "moonwell-tainted": "trace"
+    },
+    "segment_id": "ashiorid-2-collapse",
+    "continuity_in": "The tear widens; the manor\u2019s foundations groan under the strain of exposed magic.",
+    "needs_rebrief": true,
+    "continuity_out": "The portal deposits them onto a quiet road; the amulet-map fragment is secured."
+   }
+  },
+  {
+   "kind": "brief",
+   "segment_id": "ashiorid-3-roots",
+   "content": {
+    "loop": 0,
+    "hours": 6,
+    "nodes": [
+     {
+      "kind": "branch",
+      "depth": 0,
+      "slots": 0,
+      "forced": false,
+      "node_id": "ashiorid-3-roots",
+      "parent_id": null,
+      "target_slots": 7
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 3,
+      "forced": false,
+      "node_id": "ashiorid-3-roots-n0",
+      "parent_id": "ashiorid-3-roots",
+      "target_slots": 3
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 4,
+      "forced": false,
+      "node_id": "ashiorid-3-roots-n1",
+      "parent_id": "ashiorid-3-roots",
+      "target_slots": 4
+     }
+    ],
+    "order": 3,
+    "slots": [
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont",
+       "the-event"
+      ],
+      "prompt": "The road unspools behind you as Malmont rises from the quiet dust. You settle into a steady rhythm: day-watch under the open sky, night-stalkers when the shadows lengthen. The town keeps its own counsel, but the first monument\u2019s riddle waits just beyond the outskirts, waiting for those who know where to look.",
+      "node_id": "ashiorid-3-roots-n0",
+      "slot_id": "ashiorid-3-roots-n0-001",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "gm"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-3-roots-n0",
+      "slot_id": "ashiorid-3-roots-n0-002",
+      "scene_ref": "malmont-arrival",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-event",
+       "malmont"
+      ],
+      "prompt": "You piece together the fractured history of the Event through recovered accounts and the town\u2019s forgotten records. Each fragment sharpens the map\u2019s next mark, pulling your eyes toward the black glass plain and the first of nine doors. The road ahead is long, but the first step is complete.",
+      "node_id": "ashiorid-3-roots-n0",
+      "slot_id": "ashiorid-3-roots-n0-003",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "sodacan_bob",
+       "gm"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-3-roots-n1",
+      "slot_id": "ashiorid-3-roots-n1-001",
+      "scene_ref": "malmont-arrival",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "prompt": "The dusty archives of Malmont hold whispers of a time before the glass. You sift through ledgers and half-remembered tales, piecing together how the town survived what the world forgot.",
+      "node_id": "ashiorid-3-roots-n1",
+      "slot_id": "ashiorid-3-roots-n1-002",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "gm",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "ashiorid-3-roots-n1",
+      "slot_id": "ashiorid-3-roots-n1-003",
+      "scene_ref": "malvakar-riddle",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "amulet-of-wonder"
+      ],
+      "prompt": "The black glass plain stretches out, silent and waiting. As you stand upon it, the surface catches the light and begins to mirror the paths you've already walked, revealing the next mark on your map.",
+      "node_id": "ashiorid-3-roots-n1",
+      "slot_id": "ashiorid-3-roots-n1-004",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "sodacan_bob"
+      ]
+     }
+    ],
+    "carry_in": {
+     "moonwell-tainted": "trace"
+    },
+    "synopsis": "Four days south of the ashes, the road widens into Malmont, a town that has never heard of them. Amidst the uneasy balance of day-watch and night-stalkers, the group pieces together the fractured history of the Event through recovered accounts and the first monument\u2019s riddle. The black glass plain of the Malvakar answers itself to those who know where to look, and the map\u2019s next mark draws them toward the first of nine doors. The road ahead is long, but the first step is complete.",
+    "carry_out": {},
+    "segment_id": "ashiorid-3-roots",
+    "continuity_in": "The portal deposits them onto a quiet road; the amulet-map fragment is secured.",
+    "continuity_out": "The map\u2019s next mark is revealed; the nine-door route begins."
+   }
+  },
+  {
+   "kind": "brief",
+   "segment_id": "bahadur-revealed-arc",
+   "content": {
+    "loop": 0,
+    "hours": 6,
+    "nodes": [
+     {
+      "kind": "branch",
+      "depth": 0,
+      "slots": 0,
+      "forced": false,
+      "node_id": "bahadur-revealed-arc",
+      "parent_id": null,
+      "target_slots": 7
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 4,
+      "forced": false,
+      "node_id": "bahadur-revealed-arc-n0",
+      "parent_id": "bahadur-revealed-arc",
+      "target_slots": 4
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 3,
+      "forced": false,
+      "node_id": "bahadur-revealed-arc-n1",
+      "parent_id": "bahadur-revealed-arc",
+      "target_slots": 3
+     }
+    ],
+    "order": 7,
+    "slots": [
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "prompt": "The wizard\u2019s rune flares against the ancient map. A shimmering holographic ledger materializes in the air, its cold light cutting through the dust. Data streams cascade across the stone floor, and the room falls silent as the truth begins to resolve.",
+      "node_id": "bahadur-revealed-arc-n0",
+      "slot_id": "bahadur-revealed-arc-n0-001",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "gm",
+       "chadwick",
+       "Leena",
+       "Vigil",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program",
+       "the-bahadur"
+      ],
+      "prompt": "The ledger\u2019s entries align with their faces. Chadwick, Leena, Vigil, and Sodacan Bob are not just allies\u2014they are vessels. Genetically engineered children of Duke Leto, bred in secret to serve the Bahadur\u2019s design. The air grows heavy with a biological mandate they never asked for.",
+      "node_id": "bahadur-revealed-arc-n0",
+      "slot_id": "bahadur-revealed-arc-n0-002",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "chadwick",
+       "Leena",
+       "Vigil",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "prompt": "The tear in the air does not close. It pulses, widening not by spellcraft, but by a precise microfracture forced from within. A sleeper agent\u2019s hand guided the split. The rift shivers, then answers back, humming a frequency that vibrates in their very blood.",
+      "node_id": "bahadur-revealed-arc-n0",
+      "slot_id": "bahadur-revealed-arc-n0-003",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "gm",
+       "chadwick",
+       "Leena",
+       "Vigil",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "bahadur-revealed-arc-n0",
+      "slot_id": "bahadur-revealed-arc-n0-004",
+      "scene_ref": "bahadur-revealed",
+      "participants": [
+       "gm",
+       "chadwick",
+       "Leena",
+       "Vigil",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-begene-program"
+      ],
+      "prompt": "The wizard's rune hums against the map. A hidden frequency clicks into place, and a holographic ledger blooms in the air. The pages turn themselves, spelling out the true name of the Begene Program.",
+      "node_id": "bahadur-revealed-arc-n1",
+      "slot_id": "bahadur-revealed-arc-n1-001",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur"
+      ],
+      "prompt": "The ledger closes. Four names align with a single bloodline: children of Duke Leto, engineered for the Bahadur's grand design. Above you, the dimensional tear shudders. It did not open from spellcraft. A sleeper's microfracture forced it wide, and now the rift resonates, calling back to your veins.",
+      "node_id": "bahadur-revealed-arc-n1",
+      "slot_id": "bahadur-revealed-arc-n1-002",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "bahadur-revealed-arc-n1",
+      "slot_id": "bahadur-revealed-arc-n1-003",
+      "scene_ref": "bahadur-revealed",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     }
+    ],
+    "carry_in": {},
+    "synopsis": "The rune from the wizard's journal unlocks a hidden frequency in the map, projecting a holographic ledger that reveals the truth of the Begene Program. The party realizes Chadwick, Leena, Vigil, and Sodacan Bob are all children of Duke Leto, bred to serve the Bahadur's plan to reopen the door to Ord. The tear in the air begins to widen, not from magic, but from a microfracture forced by a sleeper agent in their midst. The tear does not close; it answers back, calling to the blood in their veins.",
+    "carry_out": {},
+    "segment_id": "bahadur-revealed-arc",
+    "continuity_in": "The wizard's warning reveals the Bahadur's endgame; the seal holds, confirming the current timeline.",
+    "continuity_out": "The Bahadur breeding program is exposed; the tear widens and demands a decision."
+   }
+  },
+  {
+   "kind": "brief",
+   "segment_id": "malvakar-riddle-arc",
+   "content": {
+    "loop": 0,
+    "hours": 6,
+    "nodes": [
+     {
+      "kind": "branch",
+      "depth": 0,
+      "slots": 0,
+      "forced": false,
+      "node_id": "malvakar-riddle-arc",
+      "parent_id": null,
+      "target_slots": 7
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 4,
+      "forced": false,
+      "node_id": "malvakar-riddle-arc-n0",
+      "parent_id": "malvakar-riddle-arc",
+      "target_slots": 4
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 3,
+      "forced": false,
+      "node_id": "malvakar-riddle-arc-n1",
+      "parent_id": "malvakar-riddle-arc",
+      "target_slots": 3
+     }
+    ],
+    "order": 5,
+    "slots": [
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont"
+      ],
+      "prompt": "The wind howls across the glass plains like a blade drawn across stone. You walk toward the Malvakar monument, a towering slab of obsidian etched with runes that feel older than the Event itself.",
+      "node_id": "malvakar-riddle-arc-n0",
+      "slot_id": "malvakar-riddle-arc-n0-001",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "prompt": "You stand before the stone. The riddle doesn't ask for words; it presses directly into your mind. In your hand, the map shivers and trembles, as if recognizing what stands before you.",
+      "node_id": "malvakar-riddle-arc-n0",
+      "slot_id": "malvakar-riddle-arc-n0-002",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "malvakar-riddle-arc-n0",
+      "slot_id": "malvakar-riddle-arc-n0-003",
+      "scene_ref": "malvakar-riddle",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "gm"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "prompt": "The obsidian slabs grind apart, revealing a throat of shadow and stone. The air inside tastes of ozone and old blood. The first fragment of the route lies within reach, but something watches from the cracks in the glass.",
+      "node_id": "malvakar-riddle-arc-n0",
+      "slot_id": "malvakar-riddle-arc-n0-004",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "malmont",
+       "the-event"
+      ],
+      "prompt": "The wind across the glass plains screams like a shattered choir, scouring the party's cloaks as the obsidian monument looms ahead. Runes older than the Event glow faintly in the dark glass, and the riddle presses against their minds before a single word is spoken.",
+      "node_id": "malvakar-riddle-arc-n1",
+      "slot_id": "malvakar-riddle-arc-n1-001",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "malvakar-riddle-arc-n1",
+      "slot_id": "malvakar-riddle-arc-n1-002",
+      "scene_ref": "malvakar-riddle",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-event"
+      ],
+      "prompt": "The impossible threshold grinds open, spilling air thick with ozone and the copper tang of ancient blood. The first route fragment gleams within reach, but from the hairline fractures in the black glass, something ancient shifts its weight and watches.",
+      "node_id": "malvakar-riddle-arc-n1",
+      "slot_id": "malvakar-riddle-arc-n1-003",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil",
+       "sodacan_bob"
+      ]
+     }
+    ],
+    "carry_in": {},
+    "synopsis": "The journey north takes the party across glass plains where the wind screams. The Malvakar monument rises from the black glass, a slab of obsidian etched with runes that predate the Event. The riddle is not spoken; it is felt. As the party stands before the stone, the map reacts, and the monument answers, opening a door that should not exist. Inside, the air tastes of ozone and old blood, and the first fragment of the route is within reach, but something watches from the cracks in the glass.",
+    "carry_out": {},
+    "segment_id": "malvakar-riddle-arc",
+    "continuity_in": "The mark points to the northern monument; Malmont holds a secret the constable cannot touch.",
+    "continuity_out": "The first door opens; the map draws the second mark, which points toward the town's unregistered night."
+   }
+  },
+  {
+   "kind": "brief",
+   "segment_id": "portal-encounter-arc",
+   "content": {
+    "loop": 0,
+    "hours": 6,
+    "nodes": [
+     {
+      "kind": "branch",
+      "depth": 0,
+      "slots": 0,
+      "forced": false,
+      "node_id": "portal-encounter-arc",
+      "parent_id": null,
+      "target_slots": 7
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 4,
+      "forced": false,
+      "node_id": "portal-encounter-arc-n0",
+      "parent_id": "portal-encounter-arc",
+      "target_slots": 4
+     },
+     {
+      "kind": "leaf",
+      "depth": 1,
+      "slots": 3,
+      "forced": false,
+      "node_id": "portal-encounter-arc-n1",
+      "parent_id": "portal-encounter-arc",
+      "target_slots": 3
+     }
+    ],
+    "order": 6,
+    "slots": [
+     {
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "prompt": "The path winds back to the manor grounds, now swallowed by strange silver flora that hums with residual energy.",
+      "node_id": "portal-encounter-arc-n0",
+      "slot_id": "portal-encounter-arc-n0-001",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Leena",
+       "Vigil"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur"
+      ],
+      "prompt": "At the threshold of a shimmering tear, a dying wizard collapses. His robes bear scorched Bahadur sigils, and he gasps a fractured warning about the coming 'harvest' before his body turns to ash.",
+      "node_id": "portal-encounter-arc-n0",
+      "slot_id": "portal-encounter-arc-n0-002",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "portal-encounter-arc-n0",
+      "slot_id": "portal-encounter-arc-n0-003",
+      "scene_ref": "portal-encounter",
+      "participants": [
+       "gm",
+       "Leena"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "moonwells"
+      ],
+      "prompt": "The party gathers around the glowing rune left in the ashes. As fingers brush its surface, the moonwell beneath the ruins flares, and the ancient seal holds firm, preserving the last dregs of magic in the world.",
+      "node_id": "portal-encounter-arc-n0",
+      "slot_id": "portal-encounter-arc-n0-004",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "Vigil",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "the-bahadur",
+       "moonwells"
+      ],
+      "prompt": "The path winds back to the manor ruins, now swallowed by strange silver flora that chimes in the wind. At the threshold of a shimmering tear in the air, a dying wizard gasps a warning about the harvest, his robes scorched with the dark sigils of the Bahadur. As his body crumbles to ash, he leaves behind a journal and a single glowing rune.",
+      "node_id": "portal-encounter-arc-n1",
+      "slot_id": "portal-encounter-arc-n1-001",
+      "depends_on": [],
+      "sensitivity": "tone",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     },
+     {
+      "kind": "ambient",
+      "lore": [
+       "moonwells",
+       "the-event"
+      ],
+      "prompt": "The party gathers close, examining the glowing rune left in the wizard's wake. As fingers brush its edges, a deep resonance hums through the stone, pulling at the ancient magic buried below. The air grows heavy with ozone and old power, waiting for the next spark.",
+      "node_id": "portal-encounter-arc-n1",
+      "slot_id": "portal-encounter-arc-n1-002",
+      "depends_on": [],
+      "sensitivity": "none",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick",
+       "sodacan_bob"
+      ]
+     },
+     {
+      "kind": "spine",
+      "node_id": "portal-encounter-arc-n1",
+      "slot_id": "portal-encounter-arc-n1-003",
+      "scene_ref": "magic-retained",
+      "participants": [
+       "gm",
+       "Leena",
+       "Vigil",
+       "chadwick"
+      ]
+     }
+    ],
+    "carry_in": {},
+    "synopsis": "The second mark leads back to the ruins of the manor's grounds, now overgrown with strange, silver flora. A dying wizard lies at the threshold of a shimmering tear in the air, his robes scorched with Bahadur sigils. He gasps a warning about the 'harvest' before his body crumbles to ash, leaving behind a journal filled with calculations on energy storage and a single, glowing rune. As the party studies the rune, the moonwell beneath the ruins flares with light, and the seal holds, preserving the last dregs of magic in the world.",
+    "carry_out": {},
+    "segment_id": "portal-encounter-arc",
+    "continuity_in": "The map draws the second mark, which points toward the town's unregistered night.",
+    "continuity_out": "The wizard's warning reveals the Bahadur's endgame; the seal holds, confirming the current timeline."
+   }
+  },
+  {
+   "kind": "tree",
+   "segment_id": "amulet-map-arc",
+   "content": {
+    "amulet-map-arc": {
+     "kind": "branch",
+     "depth": 0,
+     "order": 0,
+     "slots": null,
+     "title": "The map hums as the ink settles, burning a fresh mark into the parchment that po",
+     "forced": false,
+     "node_id": "amulet-map-arc",
+     "summary": "The map hums as the ink settles, burning a fresh mark into the parchment that points north toward a jagged peak. The party leaves the ashes of the manor behind, finding the road south leads to Malmont, the first settlement in days. The town feels wrong: the magic shops are full, but the blacksmiths are cold, and the locals avoid the word 'Leto'. Grovley's half of the signet ring feels heavy, and the map's mark pulses in rhythm with the town's hidden heartbeat.",
+     "children": [
+      "amulet-map-arc-n0",
+      "amulet-map-arc-n1"
+     ],
+     "parent_id": null,
+     "target_slots": 7,
+     "target_words": 700,
+     "continuity_in": "The map's next mark is revealed; the nine-door route begins.",
+     "continuity_out": "The mark points to the northern monument; Malmont holds a secret the constable cannot touch."
+    },
+    "amulet-map-arc-n0": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 0,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "prompt": "The parchment cools beneath your fingers, its surface humming with a low, rhythmic thrum that syncs with your own pulse. You fold it away, feeling the weight of Grovley\u2019s signet ring press against your palm as the road south opens up toward Malmont. The air smells of cold ash and distant rain, and the silence of the burned manor behind you is broken only by the crunch of gravel beneath your boots.",
+       "slot_id": "amulet-map-arc-n0-001",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "amulet-map-arc-n0-002",
+       "scene_ref": "malmont-arrival",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ]
+      }
+     ],
+     "title": "The Ink Settles, The Road Opens",
+     "forced": false,
+     "node_id": "amulet-map-arc-n0",
+     "summary": "As the parchment cools, the new mark burns itself into view, pointing north toward a jagged peak. With the manor's ashes fading behind them, the party turns south toward Malmont, the first settlement in days. The nine-door route stirs to life, and the journey begins under the weight of the newly revealed path.",
+     "children": [],
+     "parent_id": "amulet-map-arc",
+     "target_slots": 2,
+     "target_words": 210,
+     "continuity_in": "The map's next mark is revealed; the nine-door route begins.",
+     "continuity_out": "The road south leads to Malmont, where the town's strange silence and hidden pulse await their arrival."
+    },
+    "amulet-map-arc-n1": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 1,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "prompt": "The road south finally yields to cobblestones as Malmont rises from the mist. You step past the town ward, and the silence hits first\u2014no blacksmith\u2019s hammer, only the dull thud of your boots on wet stone.",
+       "slot_id": "amulet-map-arc-n1-001",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "prompt": "Magic shops line the main thoroughfare, their windows crammed with wares that haven\u2019t moved in weeks. The shopkeepers watch you with hungry eyes, but the real tension lives in the tavern\u2019s back room, where the word 'Leto' is swallowed whole before it can leave anyone\u2019s lips.",
+       "slot_id": "amulet-map-arc-n1-002",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "prompt": "Grovley\u2019s half of the signet ring grows heavy in his palm, warm against his skin. Across the square, the map unspooled in your pack begins to pulse, its ink mark throbbing in perfect rhythm with something buried deep beneath the town\u2019s foundations.",
+       "slot_id": "amulet-map-arc-n1-003",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "amulet-map-arc-n1-004",
+       "scene_ref": "malmont-arrival",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "prompt": "The constable stands at the crossroads, posture rigid, eyes darting toward the northern ridge where the jagged peak cuts the sky. He knows the mark on your map points there, but his lips stay sealed. Whatever Malmont is hiding, it sits beyond his jurisdiction.",
+       "slot_id": "amulet-map-arc-n1-005",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "Malmont's Silent Heart",
+     "forced": false,
+     "node_id": "amulet-map-arc-n1",
+     "summary": "The party enters Malmont, a town that feels deeply wrong. Magic shops brim with stock, yet blacksmiths work without fire, and locals flinch at the name 'Leto'. Grovley's half of the signet ring grows heavy in his palm. Above all, the map's mark pulses in time with the town's concealed heartbeat, hinting at secrets the constable cannot touch.",
+     "children": [],
+     "parent_id": "amulet-map-arc",
+     "target_slots": 5,
+     "target_words": 490,
+     "continuity_in": "The road south leads to Malmont, where the town's strange silence and hidden pulse await their arrival.",
+     "continuity_out": "The mark points to the northern monument; Malmont holds a secret the constable cannot touch."
+    }
+   }
+  },
+  {
+   "kind": "tree",
+   "segment_id": "ashiorid-0-arrival",
+   "content": {
+    "ashiorid-0-arrival": {
+     "kind": "branch",
+     "depth": 0,
+     "order": 0,
+     "slots": null,
+     "title": "Four strangers receive identical cards marking the ten-thousandth anniversary of",
+     "forced": false,
+     "node_id": "ashiorid-0-arrival",
+     "summary": "Four strangers receive identical cards marking the ten-thousandth anniversary of the Event. They arrive at Duke Sorensen Leto the Third\u2019s manor, expecting a celebration, but find the doors opening onto uninvited guests and a room that suddenly stops moving. The party is suspended in an unnatural stasis as the true nature of the gathering reveals itself.",
+     "children": [
+      "ashiorid-0-arrival-n0",
+      "ashiorid-0-arrival-n1"
+     ],
+     "parent_id": null,
+     "target_slots": 7,
+     "target_words": 700,
+     "continuity_in": "",
+     "continuity_out": "The manor\u2019s guests are trapped in a suspended moment; the invitation cards are still clutched in hand."
+    },
+    "ashiorid-0-arrival-n0": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 0,
+     "slots": [
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-0-arrival-n0-001",
+       "scene_ref": "letos-manor",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "prompt": "The brass anniversary medallions grow warm against palms that refuse to tremble. Dust motes hang like frozen stars in the foyer, and the chandelier\u2019s chime catches on an endless exhale.",
+       "slot_id": "ashiorid-0-arrival-n0-002",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "prompt": "Somewhere beyond the threshold, the manor\u2019s own foundations seem to hold their breath. A low resonance hums through the floorboards, tasting of old iron and moonwell silt, as the uninvited guests turn their faces toward the newcomers without blinking.",
+       "slot_id": "ashiorid-0-arrival-n0-003",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "The Arrival and the Stillness",
+     "forced": false,
+     "node_id": "ashiorid-0-arrival-n0",
+     "summary": "Four strangers approach Duke Sorensen Leto the Third\u2019s manor, clutching identical commemorative cards for the Event\u2019s ten-thousandth anniversary. As the grand doors swing open, they step into a foyer filled with uninvited guests, only for the entire space to abruptly freeze. Time halts mid-breath, leaving the newcomers suspended in the threshold as the first whispers of the manor\u2019s secret begin to surface.",
+     "children": [],
+     "parent_id": "ashiorid-0-arrival",
+     "target_slots": 3,
+     "target_words": 280,
+     "continuity_in": "The strangers approach the manor grounds, cards in hand, anticipating the anniversary celebration.",
+     "continuity_out": "The doors swing wide to reveal a hall of uninvited guests, and the ambient motion of the world abruptly ceases as the room locks into stasis."
+    },
+    "ashiorid-0-arrival-n1": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 1,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "prompt": "The heavy oak doors swing inward, but the grand hall beyond refuses to breathe. Dust motes hang suspended in the amber light, frozen mid-drift. Leena and Vigil step across the threshold, their boots making no sound on the marble as the warmth of the celebration fades into a weightless, breathless quiet.",
+       "slot_id": "ashiorid-0-arrival-n1-001",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-0-arrival-n1-002",
+       "scene_ref": "letos-manor",
+       "participants": [
+        "gm",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "prompt": "Chadwick's fingers tighten around the invitation card, the embossed date pressing into his palm like a brand. Around him, the other guests stand in perfect, impossible stillness, their laughter trapped in their throats. The manor's stone walls hum with a low, dormant resonance, as if the architecture itself is holding its breath.",
+       "slot_id": "ashiorid-0-arrival-n1-003",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "chadwick",
+        "gm"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-0-arrival-n1-004",
+       "scene_ref": "party-attack",
+       "participants": [
+        "gm",
+        "Vigil"
+       ]
+      }
+     ],
+     "title": "The Frozen Gala and the Unveiling",
+     "forced": false,
+     "node_id": "ashiorid-0-arrival-n1",
+     "summary": "Suspended in an unnatural pause, the party\u2019s true purpose is laid bare: the gathering was never a celebration, but a convergence point for the Event\u2019s lingering resonance. The strangers realize they are part of a deliberate pattern, their identical cards acting as anchors in the temporal lock. The manor\u2019s architecture hums with dormant energy, holding every guest in perfect, weightless suspension as the deeper mechanics of the anniversary take shape.",
+     "children": [],
+     "parent_id": "ashiorid-0-arrival",
+     "target_slots": 4,
+     "target_words": 420,
+     "continuity_in": "The room locks into stasis, trapping the manor\u2019s guests in a suspended moment while the invitation cards remain tightly clutched in hand.",
+     "continuity_out": "The temporal lock holds firm, the guests remain frozen in their curated positions, and the true design of the anniversary gathering begins to unfold beyond the manor\u2019s walls."
+    }
+   }
+  },
+  {
+   "kind": "tree",
+   "segment_id": "ashiorid-1-secrets",
+   "content": {
+    "ashiorid-1-secrets": {
+     "kind": "branch",
+     "depth": 0,
+     "order": 0,
+     "slots": null,
+     "title": "Beneath the frozen party, the butler Grovley guides the four into the subbasemen",
+     "forced": false,
+     "node_id": "ashiorid-1-secrets",
+     "summary": "Beneath the frozen party, the butler Grovley guides the four into the subbasement, where he reveals what they truly are: products of the Begene Sisters\u2019 breeding program and heirs to a century of hidden lineage. Behind a concealed wall lies the vault containing The Word and the Worm, the anchor of the manor\u2019s ten-thousand-year watch. A tear in the air begins to weep, and it answers back, exposing the Bahadur\u2019s ten-millennia harvesting of Ashiorid\u2019s magic to fund a fractured gateway home.",
+     "children": [
+      "ashiorid-1-secrets-n0",
+      "ashiorid-1-secrets-n1"
+     ],
+     "parent_id": null,
+     "target_slots": 7,
+     "target_words": 700,
+     "continuity_in": "The manor\u2019s stasis holds; the invitation cards remain in hand.",
+     "continuity_out": "The tear widens; the manor\u2019s foundations groan under the strain of exposed magic."
+    },
+    "ashiorid-1-secrets-n0": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 0,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "prompt": "The heavy oak doors groan shut behind you, sealing away the frozen waltz and clinking glass. Upstairs, the party hangs in suspended animation, but down here the air is thick with dust and centuries of held breath. Your invitation cards feel suddenly heavy in your hands, their ink no longer mere paper but a key to a locked history. Follow Grovley's lantern as it cuts through the dark, leading you past frost-rimed brick into the manor's forgotten belly.",
+       "slot_id": "ashiorid-1-secrets-n0-001",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-1-secrets-n0-002",
+       "scene_ref": "grovley-revelation",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-1-secrets-n0-003",
+       "scene_ref": "the-vault",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ]
+      }
+     ],
+     "title": "The Descent and the Lineage",
+     "forced": false,
+     "node_id": "ashiorid-1-secrets-n0",
+     "summary": "Grovley leads the four past the frozen revelry into the subbasement, unveiling their origins as heirs to the Begene Sisters\u2019 breeding program. He parts a concealed wall to reveal the vault holding The Word and the Worm, the ancient anchor of the manor\u2019s ten-thousand-year watch.",
+     "children": [],
+     "parent_id": "ashiorid-1-secrets",
+     "target_slots": 3,
+     "target_words": 315,
+     "continuity_in": "The manor\u2019s stasis holds; the invitation cards remain in hand.",
+     "continuity_out": "The subbasement\u2019s ancient vault is exposed; the air grows heavy with the weight of ten millennia of hidden history."
+    },
+    "ashiorid-1-secrets-n1": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 1,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "prompt": "The heavy oak door clicks shut behind you. Grovley turns, his face stripped of its usual mask, and tells you what you really are. He speaks of the Begene Sisters, of a breeding program that scoured a century for the right blood, and how you are the heirs to a lineage everyone else forgot.",
+       "slot_id": "ashiorid-1-secrets-n1-001",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-1-secrets-n1-002",
+       "scene_ref": "grovley-revelation",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-event",
+        "moonwells"
+       ],
+       "prompt": "Grovley steps aside, revealing a seamless panel in the stone. With a twist of his signet ring, the wall slides back. Inside sits the vault: The Word bound in iron, and the Worm coiled in shadow. It is the anchor of the manor's ten-thousand-year watch, humming with a weight that makes your teeth ache.",
+       "slot_id": "ashiorid-1-secrets-n1-003",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-1-secrets-n1-004",
+       "scene_ref": "bahadur-revealed",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "The Weeping Tear and the Fractured Gateway",
+     "forced": false,
+     "node_id": "ashiorid-1-secrets-n1",
+     "summary": "A tear in the air begins to weep and answers back, its resonance unraveling the Bahadur\u2019s secret. The truth spills forth: a ten-millennia harvest of Ashiorid\u2019s magic was meticulously siphoned to sustain a fractured gateway home, straining the very foundations of the manor.",
+     "children": [],
+     "parent_id": "ashiorid-1-secrets",
+     "target_slots": 4,
+     "target_words": 385,
+     "continuity_in": "The subbasement\u2019s ancient vault is exposed; the air grows heavy with the weight of ten millennia of hidden history.",
+     "continuity_out": "The tear widens; the manor\u2019s foundations groan under the strain of exposed magic."
+    }
+   }
+  },
+  {
+   "kind": "tree",
+   "segment_id": "ashiorid-2-collapse",
+   "content": {
+    "ashiorid-2-collapse": {
+     "kind": "branch",
+     "depth": 0,
+     "order": 0,
+     "slots": null,
+     "title": "The hold breaks too late. Flames consume the manor as the four escape into the s",
+     "forced": false,
+     "node_id": "ashiorid-2-collapse",
+     "summary": "The hold breaks too late. Flames consume the manor as the four escape into the smoke-choked night, forced to make a final decision at a widening tear in the air. They step through just as a dying wizard finishes his work at the tunnel\u2019s mouth, leaving behind a fragment of the amulet-map and a warning about the wells. The portal deposits them onto a quiet road, the weight of the burning past settling behind them.",
+     "children": [
+      "ashiorid-2-collapse-n0",
+      "ashiorid-2-collapse-n1"
+     ],
+     "parent_id": null,
+     "target_slots": 7,
+     "target_words": 700,
+     "continuity_in": "The tear widens; the manor\u2019s foundations groan under the strain of exposed magic.",
+     "continuity_out": "The portal deposits them onto a quiet road; the amulet-map fragment is secured."
+    },
+    "ashiorid-2-collapse-n0": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 0,
+     "slots": [],
+     "title": "The Burning Threshold",
+     "forced": false,
+     "node_id": "ashiorid-2-collapse-n0",
+     "summary": "As the manor's foundations buckle, the tear in the air swallows the fleeing quartet. They plunge through the smoke just as the dying wizard completes his final incantation, his voice echoing a cryptic warning about the wells before his form dissolves into ash.",
+     "children": [],
+     "parent_id": "ashiorid-2-collapse",
+     "target_slots": 5,
+     "target_words": 490,
+     "continuity_in": "The tear widens; the manor\u2019s foundations groan under the strain of exposed magic.",
+     "continuity_out": "The portal's unstable energy begins to stabilize as the four cross the threshold, leaving the wizard's fading echo behind."
+    },
+    "ashiorid-2-collapse-n1": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 1,
+     "slots": [
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-2-collapse-n1-001",
+       "scene_ref": "portal-encounter",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder",
+        "moonwells"
+       ],
+       "prompt": "The portal's roar fades to the steady chirp of crickets. Moonlight washes over a quiet, empty road as the four stumble onto solid ground. Hands tremble while securing the amulet-map fragment, its cryptic warning about the wells settling heavy in their minds as the burning past finally fades into history.",
+       "slot_id": "ashiorid-2-collapse-n1-002",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "Ashes on the Quiet Road",
+     "forced": false,
+     "node_id": "ashiorid-2-collapse-n1",
+     "summary": "The portal deposits them onto a still, moonlit highway, the roar of the conflagration replaced by the chirp of crickets. Hands tremble as the amulet-map fragment is secured, its cryptic warning about the wells settling heavy in their minds while the burning past fades into history.",
+     "children": [],
+     "parent_id": "ashiorid-2-collapse",
+     "target_slots": 2,
+     "target_words": 210,
+     "continuity_in": "The portal's unstable energy begins to stabilize as the four cross the threshold, leaving the wizard's fading echo behind.",
+     "continuity_out": "The portal deposits them onto a quiet road; the amulet-map fragment is secured."
+    }
+   }
+  },
+  {
+   "kind": "tree",
+   "segment_id": "ashiorid-3-roots",
+   "content": {
+    "ashiorid-3-roots": {
+     "kind": "branch",
+     "depth": 0,
+     "order": 0,
+     "slots": null,
+     "title": "Four days south of the ashes, the road widens into Malmont, a town that has neve",
+     "forced": false,
+     "node_id": "ashiorid-3-roots",
+     "summary": "Four days south of the ashes, the road widens into Malmont, a town that has never heard of them. Amidst the uneasy balance of day-watch and night-stalkers, the group pieces together the fractured history of the Event through recovered accounts and the first monument\u2019s riddle. The black glass plain of the Malvakar answers itself to those who know where to look, and the map\u2019s next mark draws them toward the first of nine doors. The road ahead is long, but the first step is complete.",
+     "children": [
+      "ashiorid-3-roots-n0",
+      "ashiorid-3-roots-n1"
+     ],
+     "parent_id": null,
+     "target_slots": 7,
+     "target_words": 700,
+     "continuity_in": "The portal deposits them onto a quiet road; the amulet-map fragment is secured.",
+     "continuity_out": "The map\u2019s next mark is revealed; the nine-door route begins."
+    },
+    "ashiorid-3-roots-n0": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 0,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont",
+        "the-event"
+       ],
+       "prompt": "The road unspools behind you as Malmont rises from the quiet dust. You settle into a steady rhythm: day-watch under the open sky, night-stalkers when the shadows lengthen. The town keeps its own counsel, but the first monument\u2019s riddle waits just beyond the outskirts, waiting for those who know where to look.",
+       "slot_id": "ashiorid-3-roots-n0-001",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "gm"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-3-roots-n0-002",
+       "scene_ref": "malmont-arrival",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-event",
+        "malmont"
+       ],
+       "prompt": "You piece together the fractured history of the Event through recovered accounts and the town\u2019s forgotten records. Each fragment sharpens the map\u2019s next mark, pulling your eyes toward the black glass plain and the first of nine doors. The road ahead is long, but the first step is complete.",
+       "slot_id": "ashiorid-3-roots-n0-003",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "sodacan_bob",
+        "gm"
+       ]
+      }
+     ],
+     "title": "Arrival at Malmont",
+     "forced": false,
+     "node_id": "ashiorid-3-roots-n0",
+     "summary": "The group arrives in Malmont, a quiet town four days south of the ashes. They establish a routine of day-watch and night-stalkers while gathering recovered accounts that hint at the fractured history of the Event. The unfamiliar town offers a temporary respite as they prepare for what lies ahead.",
+     "children": [],
+     "parent_id": "ashiorid-3-roots",
+     "target_slots": 3,
+     "target_words": 311,
+     "continuity_in": "The portal deposits them onto a quiet road; the amulet-map fragment is secured.",
+     "continuity_out": "The group has settled into Malmont and begun piecing together clues from the town's forgotten records."
+    },
+    "ashiorid-3-roots-n1": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 1,
+     "slots": [
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-3-roots-n1-001",
+       "scene_ref": "malmont-arrival",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "prompt": "The dusty archives of Malmont hold whispers of a time before the glass. You sift through ledgers and half-remembered tales, piecing together how the town survived what the world forgot.",
+       "slot_id": "ashiorid-3-roots-n1-002",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "gm",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "ashiorid-3-roots-n1-003",
+       "scene_ref": "malvakar-riddle",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "amulet-of-wonder"
+       ],
+       "prompt": "The black glass plain stretches out, silent and waiting. As you stand upon it, the surface catches the light and begins to mirror the paths you've already walked, revealing the next mark on your map.",
+       "slot_id": "ashiorid-3-roots-n1-004",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "The Glass Plain and the First Mark",
+     "forced": false,
+     "node_id": "ashiorid-3-roots-n1",
+     "summary": "Through the recovered accounts and a cryptic monument riddle, the truth behind the Event starts to surface. The black glass expanse of the Malvakar plain responds to their understanding, revealing itself as a natural map. This clarity guides the amulet to its next mark, pointing the way toward the first of the nine doors.",
+     "children": [],
+     "parent_id": "ashiorid-3-roots",
+     "target_slots": 4,
+     "target_words": 389,
+     "continuity_in": "The group has settled into Malmont and begun piecing together clues from the town's forgotten records.",
+     "continuity_out": "The map\u2019s next mark is revealed; the nine-door route begins."
+    }
+   }
+  },
+  {
+   "kind": "tree",
+   "segment_id": "bahadur-revealed-arc",
+   "content": {
+    "bahadur-revealed-arc": {
+     "kind": "branch",
+     "depth": 0,
+     "order": 0,
+     "slots": null,
+     "title": "The rune from the wizard's journal unlocks a hidden frequency in the map, projec",
+     "forced": false,
+     "node_id": "bahadur-revealed-arc",
+     "summary": "The rune from the wizard's journal unlocks a hidden frequency in the map, projecting a holographic ledger that reveals the truth of the Begene Program. The party realizes Chadwick, Leena, Vigil, and Sodacan Bob are all children of Duke Leto, bred to serve the Bahadur's plan to reopen the door to Ord. The tear in the air begins to widen, not from magic, but from a microfracture forced by a sleeper agent in their midst. The tear does not close; it answers back, calling to the blood in their veins.",
+     "children": [
+      "bahadur-revealed-arc-n0",
+      "bahadur-revealed-arc-n1"
+     ],
+     "parent_id": null,
+     "target_slots": 7,
+     "target_words": 700,
+     "continuity_in": "The wizard's warning reveals the Bahadur's endgame; the seal holds, confirming the current timeline.",
+     "continuity_out": "The Bahadur breeding program is exposed; the tear widens and demands a decision."
+    },
+    "bahadur-revealed-arc-n0": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 0,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "prompt": "The wizard\u2019s rune flares against the ancient map. A shimmering holographic ledger materializes in the air, its cold light cutting through the dust. Data streams cascade across the stone floor, and the room falls silent as the truth begins to resolve.",
+       "slot_id": "bahadur-revealed-arc-n0-001",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "gm",
+        "chadwick",
+        "Leena",
+        "Vigil",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program",
+        "the-bahadur"
+       ],
+       "prompt": "The ledger\u2019s entries align with their faces. Chadwick, Leena, Vigil, and Sodacan Bob are not just allies\u2014they are vessels. Genetically engineered children of Duke Leto, bred in secret to serve the Bahadur\u2019s design. The air grows heavy with a biological mandate they never asked for.",
+       "slot_id": "bahadur-revealed-arc-n0-002",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "chadwick",
+        "Leena",
+        "Vigil",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "prompt": "The tear in the air does not close. It pulses, widening not by spellcraft, but by a precise microfracture forced from within. A sleeper agent\u2019s hand guided the split. The rift shivers, then answers back, humming a frequency that vibrates in their very blood.",
+       "slot_id": "bahadur-revealed-arc-n0-003",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "gm",
+        "chadwick",
+        "Leena",
+        "Vigil",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "bahadur-revealed-arc-n0-004",
+       "scene_ref": "bahadur-revealed",
+       "participants": [
+        "gm",
+        "chadwick",
+        "Leena",
+        "Vigil",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "The Ledger's Truth",
+     "forced": false,
+     "node_id": "bahadur-revealed-arc-n0",
+     "summary": "The wizard's rune pulses against the map, projecting a shimmering holographic ledger that lays bare the Begene Program. As the data streams forward, the party pieces together a horrifying lineage: Chadwick, Leena, Vigil, and Sodacan Bob are all genetically engineered children of Duke Leto, bred as vessels for the Bahadur's grand design. The revelation strikes them not just as plot, but as a biological mandate.",
+     "children": [],
+     "parent_id": "bahadur-revealed-arc",
+     "target_slots": 4,
+     "target_words": 420,
+     "continuity_in": "The wizard's warning reveals the Bahadur's endgame; the seal holds, confirming the current timeline.",
+     "continuity_out": "The holographic ledger confirms the party's engineered lineage, shifting the focus to the physical tear reacting to their blood."
+    },
+    "bahadur-revealed-arc-n1": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 1,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-begene-program"
+       ],
+       "prompt": "The wizard's rune hums against the map. A hidden frequency clicks into place, and a holographic ledger blooms in the air. The pages turn themselves, spelling out the true name of the Begene Program.",
+       "slot_id": "bahadur-revealed-arc-n1-001",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur"
+       ],
+       "prompt": "The ledger closes. Four names align with a single bloodline: children of Duke Leto, engineered for the Bahadur's grand design. Above you, the dimensional tear shudders. It did not open from spellcraft. A sleeper's microfracture forced it wide, and now the rift resonates, calling back to your veins.",
+       "slot_id": "bahadur-revealed-arc-n1-002",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "bahadur-revealed-arc-n1-003",
+       "scene_ref": "bahadur-revealed",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "The Fracture Calls",
+     "forced": false,
+     "node_id": "bahadur-revealed-arc-n1",
+     "summary": "The air around them fractures, but not from spellcraft. A sleeper agent's hidden mechanism triggers a microfracture that forces the dimensional tear to widen. Instead of remaining a passive breach, the rift resonates with a low, pulsing frequency that answers their presence. It recognizes their Duke Leto bloodline, calling to them with an undeniable, visceral pull that demands an immediate choice.",
+     "children": [],
+     "parent_id": "bahadur-revealed-arc",
+     "target_slots": 3,
+     "target_words": 280,
+     "continuity_in": "The holographic ledger confirms the party's engineered lineage, shifting the focus to the physical tear reacting to their blood.",
+     "continuity_out": "The Bahadur breeding program is exposed; the tear widens and demands a decision."
+    }
+   }
+  },
+  {
+   "kind": "tree",
+   "segment_id": "malvakar-riddle-arc",
+   "content": {
+    "malvakar-riddle-arc": {
+     "kind": "branch",
+     "depth": 0,
+     "order": 0,
+     "slots": null,
+     "title": "The journey north takes the party across glass plains where the wind screams. Th",
+     "forced": false,
+     "node_id": "malvakar-riddle-arc",
+     "summary": "The journey north takes the party across glass plains where the wind screams. The Malvakar monument rises from the black glass, a slab of obsidian etched with runes that predate the Event. The riddle is not spoken; it is felt. As the party stands before the stone, the map reacts, and the monument answers, opening a door that should not exist. Inside, the air tastes of ozone and old blood, and the first fragment of the route is within reach, but something watches from the cracks in the glass.",
+     "children": [
+      "malvakar-riddle-arc-n0",
+      "malvakar-riddle-arc-n1"
+     ],
+     "parent_id": null,
+     "target_slots": 7,
+     "target_words": 700,
+     "continuity_in": "The mark points to the northern monument; Malmont holds a secret the constable cannot touch.",
+     "continuity_out": "The first door opens; the map draws the second mark, which points toward the town's unregistered night."
+    },
+    "malvakar-riddle-arc-n0": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 0,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont"
+       ],
+       "prompt": "The wind howls across the glass plains like a blade drawn across stone. You walk toward the Malvakar monument, a towering slab of obsidian etched with runes that feel older than the Event itself.",
+       "slot_id": "malvakar-riddle-arc-n0-001",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "prompt": "You stand before the stone. The riddle doesn't ask for words; it presses directly into your mind. In your hand, the map shivers and trembles, as if recognizing what stands before you.",
+       "slot_id": "malvakar-riddle-arc-n0-002",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "malvakar-riddle-arc-n0-003",
+       "scene_ref": "malvakar-riddle",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "gm"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "prompt": "The obsidian slabs grind apart, revealing a throat of shadow and stone. The air inside tastes of ozone and old blood. The first fragment of the route lies within reach, but something watches from the cracks in the glass.",
+       "slot_id": "malvakar-riddle-arc-n0-004",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "The Obsidian Threshold",
+     "forced": false,
+     "node_id": "malvakar-riddle-arc-n0",
+     "summary": "The party crosses the screaming glass plains and reaches the Malvakar monument. As they stand before the rune-etched obsidian slab, the riddle presses against their minds. The map trembles in response, and the monument groans, splitting open a door that defies physics.",
+     "children": [],
+     "parent_id": "malvakar-riddle-arc",
+     "target_slots": 4,
+     "target_words": 389,
+     "continuity_in": "The mark points to the northern monument; Malmont holds a secret the constable cannot touch.",
+     "continuity_out": "The obsidian slabs grind apart, revealing a throat of shadow and stone that pulls the party inward."
+    },
+    "malvakar-riddle-arc-n1": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 1,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "malmont",
+        "the-event"
+       ],
+       "prompt": "The wind across the glass plains screams like a shattered choir, scouring the party's cloaks as the obsidian monument looms ahead. Runes older than the Event glow faintly in the dark glass, and the riddle presses against their minds before a single word is spoken.",
+       "slot_id": "malvakar-riddle-arc-n1-001",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "malvakar-riddle-arc-n1-002",
+       "scene_ref": "malvakar-riddle",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-event"
+       ],
+       "prompt": "The impossible threshold grinds open, spilling air thick with ozone and the copper tang of ancient blood. The first route fragment gleams within reach, but from the hairline fractures in the black glass, something ancient shifts its weight and watches.",
+       "slot_id": "malvakar-riddle-arc-n1-003",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "Ozone and Old Blood",
+     "forced": false,
+     "node_id": "malvakar-riddle-arc-n1",
+     "summary": "Stepping through the impossible threshold, the air grows thick with ozone and the copper tang of ancient blood. The first fragment of the route materializes within reach, but the victory is tempered by a creeping dread\u2014something ancient shifts in the cracks of the glass, watching their every move.",
+     "children": [],
+     "parent_id": "malvakar-riddle-arc",
+     "target_slots": 3,
+     "target_words": 311,
+     "continuity_in": "The obsidian slabs grind apart, revealing a throat of shadow and stone that pulls the party inward.",
+     "continuity_out": "The first door opens; the map draws the second mark, which points toward the town's unregistered night."
+    }
+   }
+  },
+  {
+   "kind": "tree",
+   "segment_id": "portal-encounter-arc",
+   "content": {
+    "portal-encounter-arc": {
+     "kind": "branch",
+     "depth": 0,
+     "order": 0,
+     "slots": null,
+     "title": "The second mark leads back to the ruins of the manor's grounds, now overgrown wi",
+     "forced": false,
+     "node_id": "portal-encounter-arc",
+     "summary": "The second mark leads back to the ruins of the manor's grounds, now overgrown with strange, silver flora. A dying wizard lies at the threshold of a shimmering tear in the air, his robes scorched with Bahadur sigils. He gasps a warning about the 'harvest' before his body crumbles to ash, leaving behind a journal filled with calculations on energy storage and a single, glowing rune. As the party studies the rune, the moonwell beneath the ruins flares with light, and the seal holds, preserving the last dregs of magic in the world.",
+     "children": [
+      "portal-encounter-arc-n0",
+      "portal-encounter-arc-n1"
+     ],
+     "parent_id": null,
+     "target_slots": 7,
+     "target_words": 700,
+     "continuity_in": "The map draws the second mark, which points toward the town's unregistered night.",
+     "continuity_out": "The wizard's warning reveals the Bahadur's endgame; the seal holds, confirming the current timeline."
+    },
+    "portal-encounter-arc-n0": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 0,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "prompt": "The path winds back to the manor grounds, now swallowed by strange silver flora that hums with residual energy.",
+       "slot_id": "portal-encounter-arc-n0-001",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Leena",
+        "Vigil"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur"
+       ],
+       "prompt": "At the threshold of a shimmering tear, a dying wizard collapses. His robes bear scorched Bahadur sigils, and he gasps a fractured warning about the coming 'harvest' before his body turns to ash.",
+       "slot_id": "portal-encounter-arc-n0-002",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "portal-encounter-arc-n0-003",
+       "scene_ref": "portal-encounter",
+       "participants": [
+        "gm",
+        "Leena"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "moonwells"
+       ],
+       "prompt": "The party gathers around the glowing rune left in the ashes. As fingers brush its surface, the moonwell beneath the ruins flares, and the ancient seal holds firm, preserving the last dregs of magic in the world.",
+       "slot_id": "portal-encounter-arc-n0-004",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "Vigil",
+        "sodacan_bob"
+       ]
+      }
+     ],
+     "title": "The Silver Overgrowth & The Dying Herald",
+     "forced": false,
+     "node_id": "portal-encounter-arc-n0",
+     "summary": "The party navigates the overgrown manor grounds, now reclaimed by strange silver flora. They discover a dying wizard at the edge of a shimmering dimensional tear, his robes marked with Bahadur sigils. With his last breath, he warns of an impending 'harvest' before crumbling to ash, leaving behind a cryptic journal of energy calculations and a single glowing rune.",
+     "children": [],
+     "parent_id": "portal-encounter-arc",
+     "target_slots": 4,
+     "target_words": 408,
+     "continuity_in": "The map draws the second mark, which points toward the town's unregistered night.",
+     "continuity_out": "The party turns their attention to the glowing rune left by the wizard, sensing it holds the key to the moonwell's reaction."
+    },
+    "portal-encounter-arc-n1": {
+     "kind": "leaf",
+     "depth": 1,
+     "order": 1,
+     "slots": [
+      {
+       "kind": "ambient",
+       "lore": [
+        "the-bahadur",
+        "moonwells"
+       ],
+       "prompt": "The path winds back to the manor ruins, now swallowed by strange silver flora that chimes in the wind. At the threshold of a shimmering tear in the air, a dying wizard gasps a warning about the harvest, his robes scorched with the dark sigils of the Bahadur. As his body crumbles to ash, he leaves behind a journal and a single glowing rune.",
+       "slot_id": "portal-encounter-arc-n1-001",
+       "depends_on": [],
+       "sensitivity": "tone",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      },
+      {
+       "kind": "ambient",
+       "lore": [
+        "moonwells",
+        "the-event"
+       ],
+       "prompt": "The party gathers close, examining the glowing rune left in the wizard's wake. As fingers brush its edges, a deep resonance hums through the stone, pulling at the ancient magic buried below. The air grows heavy with ozone and old power, waiting for the next spark.",
+       "slot_id": "portal-encounter-arc-n1-002",
+       "depends_on": [],
+       "sensitivity": "none",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick",
+        "sodacan_bob"
+       ]
+      },
+      {
+       "kind": "spine",
+       "slot_id": "portal-encounter-arc-n1-003",
+       "scene_ref": "magic-retained",
+       "participants": [
+        "gm",
+        "Leena",
+        "Vigil",
+        "chadwick"
+       ]
+      }
+     ],
+     "title": "The Rune's Resonance & The Held Seal",
+     "forced": false,
+     "node_id": "portal-encounter-arc-n1",
+     "summary": "As the party examines the wizard's rune, it resonates with the ancient moonwell buried beneath the ruins. The well erupts in a surge of radiant light, activating a dormant magical seal. The barrier stabilizes, successfully preserving the final reserves of ambient magic in the world against the coming harvest.",
+     "children": [],
+     "parent_id": "portal-encounter-arc",
+     "target_slots": 3,
+     "target_words": 292,
+     "continuity_in": "The party turns their attention to the glowing rune left by the wizard, sensing it holds the key to the moonwell's reaction.",
+     "continuity_out": "The wizard's warning reveals the Bahadur's endgame; the seal holds, confirming the current timeline."
+    }
+   }
+  }
+ ]
+}
