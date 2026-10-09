@@ -56,7 +56,7 @@ roundtable:
     enabled: true
     table_arbiter: tuber_0
     observer_slot: tuber_7        # no D&D seat; the office keeps its silent observer here
-    max_age_s: 120
+    max_age_s: 600          # table lines queue behind each other while voiced; 120 dropped the last seat (Nora, 2026-10-08)
     consume_timeout_s: 20
     line_gap_s: 0.5
     spool_max: 200
