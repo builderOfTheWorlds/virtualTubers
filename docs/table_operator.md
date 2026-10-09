@@ -23,6 +23,10 @@ so "next" after a GM restart continues the arc. Delete the file to start the arc
 | `auto_skip_stuck` (default true) | a scene the GM is stuck on (2 failed GM calls) is skipped instead of waiting for an operator |
 | `auto_max_consecutive_stuck` (default 3) | after this many skips in a row the table halts and stays stuck (model probably down); any operator `scene_request` clears the halt |
 
+To switch modes: edit `start_mode`, run `scripts/build_table_configs.py config/table/<pack>.yaml`,
+then `docker restart virtualtubers-worker-gm-1` (`compose up` does NOT recreate the GM when only the
+mounted config file changed). The run's hour counts from that restart.
+
 A new story run should get its own `position_file` so an old index doesn't skip the opening.
 Story fixtures: `scripts/export_table_fixture.py <run_id>` writes `tests/table/fixtures/<run_id>.json`
 and prints the contract count the table will see.
