@@ -65,7 +65,8 @@ def main(argv=None):
     p = argparse.ArgumentParser(description="Operator control of the live table GM.")
     p.add_argument("--url", default=DEFAULT_URL, help=f"message-api base URL (default {DEFAULT_URL})")
     p.add_argument("--gm", default="tuber_0", help="the GM worker id (default tuber_0)")
-    p.add_argument("--timeout", type=float, default=20.0, help="seconds to wait for the GM's reply")
+    p.add_argument("--timeout", type=float, default=60.0,
+                   help="seconds to wait for the GM's reply (a start replies after the first GM direction call, ~10-20 s)")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("status", help="show the table state")
     for name, helptext in (("next", "start the next scene in the arc"),):
