@@ -29,11 +29,15 @@ silent_seats: [tuber_7]
 # The office profiles carry no lore stems; every seat knows the company basics.
 common_lore: [company, office, org_chart, product, rituals]
 
+# Operator control (app/table/control.py, scripts/table_ctl.py, control panel "Live table"):
+# manual = the GM waits for a scene_request after boot and goes idle after each scene;
+# auto = plays max_scenes by itself from the persisted position (else start_index).
+start_mode: manual
 tick_rate_ms: 500
 run_id: ashiorid_office_20260929_135927_9c1b
 contracts_fixture: /data/table/fixtures/ashiorid_office_20260929_135927_9c1b.json
 only_with_active_players: true
-start_index: 8
+start_index: 0
 max_scenes: 1
 
 think_s: 60

@@ -19,6 +19,10 @@ seats:
 # P3.7 vertical slice: GM + Chadwick only. P5.1 lists every player seat.
 active_players: [tuber_1]
 
+# Operator control (app/table/control.py, scripts/table_ctl.py, control panel "Live table"):
+# manual = the GM waits for a scene_request after boot and goes idle after each scene;
+# auto = plays max_scenes by itself from the persisted position (else start_index).
+start_mode: manual
 tick_rate_ms: 500            # every GM<->seat hop waits up to one tick on each side
 
 # Scene source (U8): the 3-layer generator run. The fixture is used until a fresh

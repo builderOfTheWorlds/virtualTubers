@@ -16,6 +16,8 @@ agent:
   tick_rate_ms: 500
   max_context_tokens: 8000
   table:
+    pack: ashiorid
+    start_mode: manual
     gm_slug: gm
     gm_seat: tuber_0
     pack_dir: /data/campaigns/ashiorid

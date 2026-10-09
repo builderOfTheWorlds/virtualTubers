@@ -98,6 +98,10 @@ MESSAGE_HANDLERS = {
     "operator_override": handle_table_message,
     # P4.1: the arbiter's committed lines -> the roundtable live spool.
     "table_line": handle_table_line,
+    # Operator control of the table GM (app/table/control.py, scripts/table_ctl.py).
+    "scene_request": handle_table_message,
+    "scene_stop": handle_table_message,
+    "table_status_request": handle_table_message,
 }
 
 # Per-role idle-tick hooks (role -> hook). The manager's feeds the opt-in

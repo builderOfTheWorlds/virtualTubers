@@ -21,7 +21,7 @@ import re
 import time
 from typing import Callable, Optional
 
-from table import commit_check, protocol
+from table import commit_check, control, protocol
 from turns import (
     ADJUDICATING,
     ABORTED,
@@ -362,7 +362,15 @@ def context_provider(agent_config, contract):
 
 
 class TableRuntime:
-    """Loads scene contracts, runs one ``Arbiter`` per scene, advances on resolve."""
+    """Loads scene contracts, runs one ``Arbiter`` per scene, takes operator control.
+
+    table.start_mode:
+      manual  wait for a scene_request (table.control); go idle after each scene.
+      auto    start by itself at the persisted position (else table.start_index) and
+              advance after each scene, playing at most table.max_scenes automatically.
+    The FULL contract list is loaded (start_index/max_scenes no longer slice it) so any
+    scene can be requested. The last started index persists in table.position_file.
+    """
 
     def __init__(self, worker_id, agent_config, llm_client, producer, *,
                  clock=time.monotonic, store=None):
@@ -373,10 +381,16 @@ class TableRuntime:
         self.clock = clock
         self.store = store
         self.table_cfg = agent_config.get("table", {})
+        self.mode = self.table_cfg.get("start_mode", "auto")
+        self.position_file = self.table_cfg.get("position_file") or \
+            f"/data/world-state/table_{self.table_cfg.get('pack') or 'table'}_position.json"
         self._contracts = None
-        self.index = 0
         self.arbiter = None
         self._context_cache = {}
+        self.last_index = self._load_position()
+        self.index = (self.last_index + 1 if self.last_index is not None
+                      else int(self.table_cfg.get("start_index", 0) or 0))
+        self.auto_played = 0
         # P4.1: committed lines -> roundtable live transcript (table.live_feed)
         from table import live_feed
         self._feed = (live_feed.CommitPublisher(worker_id, producer.send)
@@ -390,11 +404,31 @@ class TableRuntime:
         if self._feed is not None and self.arbiter is not None:
             self._feed.publish_new(self.arbiter.state)
 
+    # ------------------------------------------------------------------ position
+    def _load_position(self):
+        try:
+            with open(self.position_file, encoding="utf-8") as fh:
+                value = json.load(fh).get("index")
+            return value if isinstance(value, int) and value >= 0 else None
+        except (OSError, ValueError, AttributeError):
+            return None
+
+    def _save_position(self, index, scene_id):
+        try:
+            import relay_io
+            import os
+            os.makedirs(os.path.dirname(self.position_file) or ".", exist_ok=True)
+            relay_io.atomic_write_json(self.position_file,
+                                       {"index": index, "scene_id": scene_id, "at": time.time()})
+        except Exception as exc:  # noqa: BLE001 - a lost position must not stop the table
+            log.warning("table position not saved file=%s: %s", self.position_file, exc)
+
     # ------------------------------------------------------------------ lazy
     @property
     def contracts(self):
         if self._contracts is None:
-            self._contracts = list(contracts_provider(self.agent_config))
+            full = dict(self.agent_config, table=dict(self.table_cfg, start_index=0, max_scenes=None))
+            self._contracts = list(contracts_provider(full))
         return self._contracts
 
     def _context(self, contract):
@@ -403,35 +437,33 @@ class TableRuntime:
             self._context_cache[scene_id] = context_provider(self.agent_config, contract)
         return self._context_cache[scene_id]
 
-    # ------------------------------------------------------------------ API
-    def ensure_started(self):
-        if self.arbiter is not None:
-            return
-        if self.index >= len(self.contracts):
-            return
-        contract = self.contracts[self.index]
-        seats = self.table_cfg.get("seats", [])
-        gm_seat = self.table_cfg.get("gm_seat", "tuber_0")
+    # ------------------------------------------------------------------ scenes
+    def running(self):
+        return self.arbiter is not None and self.arbiter.state["phase"] not in TERMINAL
+
+    def next_index(self):
+        return self.last_index + 1 if self.last_index is not None else \
+            int(self.table_cfg.get("start_index", 0) or 0)
+
+    def _start(self, index):
+        """Build and start the arbiter for contracts[index]. Returns True when started."""
+        contract = self.contracts[index]
         gm = LLMGM(self.llm_client, self._context,
-                   seat_names=self.table_cfg.get("seat_names", {}),
-                   budgets=self.table_cfg)
-        check = build_check(self.table_cfg)
+                   seat_names=self.table_cfg.get("seat_names", {}), budgets=self.table_cfg)
         try:
             arbiter = Arbiter(
-                contract, seats, gm, check, send=self.producer.send,
-                clock=self.clock, gm_seat=gm_seat,
-                think_s=self.table_cfg.get("think_s", 60),
-                speak_s=self.table_cfg.get("speak_s", 45),
-                store=self.store, arbiter_id=self.worker_id,
-                on_commit=self._on_commit)
+                contract, self.table_cfg.get("seats", []), gm, build_check(self.table_cfg),
+                send=self.producer.send, clock=self.clock,
+                gm_seat=self.table_cfg.get("gm_seat", "tuber_0"),
+                think_s=self.table_cfg.get("think_s", 60), speak_s=self.table_cfg.get("speak_s", 45),
+                store=self.store, arbiter_id=self.worker_id, on_commit=self._on_commit)
         except Exception as exc:  # noqa: BLE001 - a bad contract must not kill the hook
             log.warning("table_gm cannot build arbiter scene=%s: %s", contract.get("scene_id"), exc)
-            self.index += 1          # skip the bad contract instead of retrying it forever
-            return
+            return False
         # Keep the arbiter even if start() fails: it stays in DIRECTING and its own
-        # tick() retries the GM call (review fix: re-creating it re-sent scene_start
-        # on every tick).
-        self.arbiter = arbiter
+        # tick() retries the GM call (review fix: re-creating it re-sent scene_start).
+        self.arbiter, self.index, self.last_index = arbiter, index, index
+        self._save_position(index, contract.get("scene_id"))
         try:
             arbiter.start()
         except GMUnavailable as exc:
@@ -439,22 +471,104 @@ class TableRuntime:
         except Exception as exc:  # noqa: BLE001
             log.warning("table_gm start failed scene=%s: %s", contract.get("scene_id"), exc)
         self._publish()
+        return True
 
+    def ensure_started(self):
+        """Auto mode only: start the next scene while the automatic budget lasts."""
+        if self.mode != "auto" or self.arbiter is not None:
+            return
+        limit = self.table_cfg.get("max_scenes")
+        while self.index < len(self.contracts) and (limit is None or self.auto_played < int(limit)):
+            index = self.index
+            if self._start(index):
+                self.auto_played += 1
+                return
+            self.index = index + 1            # skip a contract that cannot be built
+
+    def _end_running(self, note):
+        """End the running scene through the arbiter's own operator_override path."""
+        if not self.running():
+            return
+        override = protocol.build("operator_override", "operator", self.worker_id, {
+            "scene_id": self.arbiter.state["scene_id"], "action": "skip_scene", "note": note})
+        self.arbiter.on_message(override)
+        self._publish()
+
+    # ------------------------------------------------------------------ messages
     def on_message(self, msg):
+        if isinstance(msg, dict) and msg.get("type") in control.CONTROL_TYPES:
+            self._control(msg)
+            return
         if self.arbiter is not None:
             self.arbiter.on_message(msg)
             self._publish()
 
+    def status(self, result="status", error=""):
+        nxt = self.next_index()
+        state = self.arbiter.state if self.arbiter is not None else {}
+        return {
+            "state": "running" if self.running() else "idle",
+            "scene_id": state.get("scene_id") if self.running() else None,
+            "round": state.get("round") if self.running() else None,
+            "phase": state.get("phase") if self.running() else None,
+            "index": self.last_index,
+            "next_scene_id": self.contracts[nxt]["scene_id"] if nxt < len(self.contracts) else None,
+            "total": len(self.contracts),
+            "mode": self.mode,
+            "result": result,
+            "error": error,
+        }
+
+    def _reply(self, msg, result, error=""):
+        from message_bus import build_message
+        self.producer.send(build_message(
+            self.worker_id, msg.get("from") or "operator", control.TABLE_STATUS,
+            self.status(result, error), causation_id=msg.get("id")))
+
+    def _control(self, msg):
+        type_, payload = msg.get("type"), msg.get("payload") or {}
+        if type_ == control.STATUS_REQUEST:
+            return self._reply(msg, "status")
+        if type_ == control.SCENE_STOP:
+            if not self.running():
+                return self._reply(msg, "idle")
+            self._end_running("operator scene_stop")
+            return self._reply(msg, "stopped")
+        try:
+            req = control.parse_scene_request(payload)
+        except control.ControlError as exc:
+            return self._reply(msg, "error", str(exc))
+        if "next" in req:
+            target = self.next_index()
+        elif "index" in req:
+            target = req["index"]
+        else:
+            ids = [c.get("scene_id") for c in self.contracts]
+            target = ids.index(req["scene_id"]) if req["scene_id"] in ids else None
+        if target is None or not 0 <= target < len(self.contracts):
+            return self._reply(msg, "error", f"no such scene ({payload})")
+        if self.running():
+            if not req["force"]:
+                return self._reply(msg, "busy")
+            self._end_running("operator scene_request force")
+        self.arbiter = None
+        if not self._start(target):
+            return self._reply(msg, "error", "scene could not be built")
+        log.info("table scene requested index=%d scene=%s", target, self.contracts[target]["scene_id"])
+        return self._reply(msg, "started")
+
     def tick(self):
-        self.ensure_started()
+        if self.arbiter is None:
+            self.ensure_started()
         if self.arbiter is None:
             return
         self.arbiter.tick()
         self._publish()
-        if self.arbiter.state["phase"] in TERMINAL and self.table_cfg.get("auto_advance", True):
-            self.index += 1
+        if self.arbiter.state["phase"] in TERMINAL:
             self.arbiter = None
-            self.ensure_started()
+            if self.mode == "auto" and self.table_cfg.get("auto_advance", True):
+                self.index = self.next_index()
+                self.ensure_started()
 
 
 _RUNTIMES = {}

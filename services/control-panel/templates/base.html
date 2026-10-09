@@ -23,6 +23,30 @@
   </section>
 
   <section>
+    <h2>Live table <span class="hint">GM tuber_0 · replies arrive as table_status (scripts/table_ctl.py status prints them)</span></h2>
+    <div class="stack-form">
+      <button class="btn" hx-post="/messages" hx-target="#message-result" hx-swap="outerHTML"
+              hx-vals='{"to": "tuber_0", "type": "scene_request", "payload": "{\"next\": true}"}'>Next scene</button>
+      <button class="btn" hx-post="/messages" hx-target="#message-result" hx-swap="outerHTML"
+              hx-confirm="End the running scene and start the next one?"
+              hx-vals='{"to": "tuber_0", "type": "scene_request", "payload": "{\"next\": true, \"force\": true}"}'>Next scene (force)</button>
+      <button class="btn danger" hx-post="/messages" hx-target="#message-result" hx-swap="outerHTML"
+              hx-confirm="Skip the running scene?"
+              hx-vals='{"to": "tuber_0", "type": "scene_stop", "payload": "{}"}'>Stop scene</button>
+      <button class="btn" hx-post="/messages" hx-target="#message-result" hx-swap="outerHTML"
+              hx-vals='{"to": "tuber_0", "type": "table_status_request", "payload": "{}"}'>Status</button>
+    </div>
+    <form class="stack-form" hx-post="/messages" hx-target="#message-result" hx-swap="outerHTML">
+      <input type="hidden" name="to" value="tuber_0">
+      <input type="hidden" name="type" value="scene_request">
+      <label>start a scene (payload: {"scene_id": "..."} or {"index": N}, add "force": true to interrupt)
+        <input type="text" name="payload" value='{"index": 0}' spellcheck="false">
+      </label>
+      <button class="btn" type="submit">Start scene</button>
+    </form>
+  </section>
+
+  <section>
     <h2>Send a message</h2>
     <form class="stack-form" hx-post="/messages" hx-target="#message-result" hx-swap="outerHTML">
       <label>to

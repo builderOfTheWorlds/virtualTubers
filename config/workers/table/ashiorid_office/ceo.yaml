@@ -32,6 +32,8 @@ agent:
   tick_rate_ms: 500
   max_context_tokens: 8000
   table:
+    pack: ashiorid_office
+    start_mode: manual
     gm_slug: ceo
     gm_seat: tuber_0
     pack_dir: /data/campaigns/ashiorid_office
@@ -43,7 +45,7 @@ agent:
     - simulation
     - simulated
     only_with_active_players: true
-    start_index: 8
+    start_index: 0
     max_scenes: 1
     think_s: 60
     speak_s: 45
