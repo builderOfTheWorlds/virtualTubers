@@ -201,3 +201,35 @@ def test_contracts_provider_drops_repeated_canon_goals(monkeypatch, tmp_path):
     assert ids == ["a", "c"]
     ids = [p["scene_id"] for p in gm.contracts_provider({"table": base})]
     assert ids == ["a", "b", "c"]
+
+
+# ── a scene whose goal IS the reveal may say the secret (user decision 2026-10-09) ──
+SECRET_LINE = "Grovley speaks at last: you are children of the Begene program."
+
+
+def _gm(reply):
+    return gm.LLMGM(LLM(lambda kind: reply), lambda c: "CTX", seat_names=NAMES,
+                    budgets={"gm_forbidden_phrases": ["Begene", "four cribs"]})
+
+
+def test_forbidden_phrase_still_blocked_in_an_ordinary_scene():
+    with pytest.raises(ValueError, match="GM-only"):
+        _gm(SECRET_LINE).direct(dict(CONTRACT), [], 1)
+
+
+@pytest.mark.parametrize("field,value", [
+    ("canon_goal", "Grovley reveals the Begene breeding program."),
+    ("expected_beats", ["the party learns of the begene program"]),
+    ("must_resolve", ["Begene revealed"]),
+])
+def test_forbidden_phrase_allowed_when_the_scene_goal_is_that_reveal(field, value):
+    d = _gm(SECRET_LINE).direct(dict(CONTRACT, **{field: value}), [], 1)
+    assert "Begene" in d.text
+
+
+def test_unlock_covers_only_the_revealed_phrase_and_not_lore_names():
+    contract = dict(CONTRACT, canon_goal="Grovley reveals the Begene program.")
+    with pytest.raises(ValueError, match="GM-only"):
+        _gm("The Begene program kept you in four cribs.").direct(contract, [], 1)
+    with pytest.raises(ValueError, match="GM-only"):    # lore alone is no reveal
+        _gm(SECRET_LINE).direct(dict(CONTRACT, lore=["the-begene-program"]), [], 1)

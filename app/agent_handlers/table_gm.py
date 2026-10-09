@@ -78,6 +78,25 @@ _QUOTES = "\"'\u201c\u201d\u2018\u2019"
 _NAME_LABEL_RE = re.compile(r"^\s*(?:\*\*)?([^\s:*\u2013\u2014][^:]*?)(?:\*\*)?\s*[:\-]\s*")
 
 
+# Contract fields that state what the scene is FOR. A GM-only phrase named here is
+# the scene's own reveal, so the GM may say it (lore names only attach reference
+# text, so they don't count).
+_GOAL_FIELDS = ("canon_goal", "must_resolve", "expected_beats")
+
+
+def _revealed_by_contract(contract, phrases):
+    """The gm_forbidden_phrases this scene's goal itself reveals.
+
+    2026-10-09 hour run: the e309 story's Grovley scenes ARE the Begene reveal,
+    and the static forbidden list made the GM refuse them twice each, so all
+    three were auto-skipped and the reveal never aired. User decision: allow a
+    secret phrase when the scene's goal is that reveal."""
+    goal = " ".join(
+        " ".join(map(str, v)) if isinstance(v, (list, tuple)) else str(v or "")
+        for v in (contract.get(f) for f in _GOAL_FIELDS)).casefold()
+    return {p for p in phrases if str(p).casefold() in goal}
+
+
 def _budget(budgets, key):
     """(max_tokens, reasoning_budget) for a call kind, with defaults."""
     entry = (budgets or {}).get(key) or {}
@@ -167,7 +186,9 @@ class LLMGM:
         text = (content or "").strip()
         text = _GM_LABEL_RE.sub("", text, count=1).strip()
         lowered = text.casefold()
-        leaked = [p for p in self._budgets.get("gm_forbidden_phrases", ()) if str(p).casefold() in lowered]
+        unlocked = _revealed_by_contract(contract, self._budgets.get("gm_forbidden_phrases", ()))
+        leaked = [p for p in self._budgets.get("gm_forbidden_phrases", ())
+                  if str(p).casefold() in lowered and p not in unlocked]
         if re.search(r"gm block", lowered) or re.search(r"^\s*#", text, re.MULTILINE) or leaked:
             # 2026-10-08: GLM-4.7-Flash pasted its "GM block: truth" context into the
             # public narration. GM-only text never reaches the table; the arbiter retries.

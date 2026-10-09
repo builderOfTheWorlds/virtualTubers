@@ -17,8 +17,8 @@ agent:
   max_context_tokens: 8000
   table:
     pack: ashiorid
-    start_mode: manual
-    position_file: /data/world-state/table_ashiorid_e309_position.json
+    start_mode: auto
+    position_file: /data/world-state/table_ashiorid_e309_run2_position.json
     gm_slug: gm
     gm_seat: tuber_0
     pack_dir: /data/campaigns/ashiorid
