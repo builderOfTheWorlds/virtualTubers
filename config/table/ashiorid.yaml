@@ -16,22 +16,35 @@ seats:
   - {seat: tuber_3, slug: Vigil,       base: config/workers/coder-aider.yaml,  service: worker-coder-aider}
   - {seat: tuber_4, slug: sodacan_bob, base: config/workers/tester.yaml,       service: worker-tester}
 
-# P3.7 vertical slice: GM + Chadwick only. P5.1 lists every player seat.
-active_players: [tuber_1]
+# P5.1: every player seat (the P3.7 slice was GM + Chadwick only).
+active_players: [tuber_1, tuber_2, tuber_3, tuber_4]
 
 # Operator control (app/table/control.py, scripts/table_ctl.py, control panel "Live table"):
 # manual = the GM waits for a scene_request after boot and goes idle after each scene;
 # auto = plays max_scenes by itself from the persisted position (else start_index).
-start_mode: manual
+start_mode: auto
+# Fresh position per story run: a stale index from an older run would skip the opening.
+position_file: /data/world-state/table_ashiorid_e309_position.json
 tick_rate_ms: 500            # every GM<->seat hop waits up to one tick on each side
 
-# Scene source (U8): the 3-layer generator run. The fixture is used until a fresh
-# plan_arc run is accepted (see the P3.2 report: ce8d is incomplete).
-run_id: ashiorid_1_20260913_180158_ce8d
-contracts_fixture: /data/table/fixtures/ashiorid_1_20260913_180158_ce8d.json
+# Scene source (U8): the 3-layer generator run. e309 (2026-10-09, vllm-agents,
+# 8 segments) replaces ce8d (23 prompt-less spine slots, 2 empty segments).
+# Fixture written by scripts/export_table_fixture.py <run_id>.
+run_id: ashiorid_1_20261009_034648_e309
+contracts_fixture: /data/table/fixtures/ashiorid_1_20261009_034648_e309.json
 only_with_active_players: true
+dedupe_canon_goal: true       # the planner repeats some slots verbatim inside a leaf
 start_index: 0
-max_scenes: 3
+max_scenes: 60                # cap only; auto_duration_s ends the run
+
+# Long unattended run (TableRuntime docstring). ~1 hour: no new scene after 3600 s,
+# the running one finishes. Pacing models the roundtable voice queue (measured
+# 2026-10-08: ~2.6 spoken words/s + ~5 s TTS/handoff per line) so the GM does
+# not out-write the voices and lines never age past live.max_age_s.
+auto_duration_s: 3600
+auto_pace: {words_per_s: 2.6, per_line_s: 5.0, lead_s: 15}
+auto_skip_stuck: true
+auto_max_consecutive_stuck: 3
 
 think_s: 60
 speak_s: 45
@@ -44,7 +57,7 @@ gm_forbidden_phrases: [Begene, four cribs, half-sibling, half-brother, half-sist
 think:      {max_tokens: 1024, reasoning_budget: 256}
 speak:      {max_tokens: 160,  reasoning_budget: 48}
 direct:     {max_tokens: 768,  reasoning_budget: 384}
-adjudicate: {max_tokens: 256,  reasoning_budget: 64}
+adjudicate: {max_tokens: 512,  reasoning_budget: 64}   # 256 cut the JSON (office run 2026-10-08)
 overrule:   {max_tokens: 160,  reasoning_budget: 48}
 
 # The roundtable channel (P4): its slot config + the live feed (table_line from the
@@ -56,7 +69,7 @@ roundtable:
     enabled: true
     table_arbiter: tuber_0
     observer_slot: tuber_7        # no D&D seat; the office keeps its silent observer here
-    max_age_s: 600          # table lines queue behind each other while voiced; 120 dropped the last seat (Nora, 2026-10-08)
+    max_age_s: 1800         # backstop only: auto_pace keeps the queue short. 120 dropped Nora (2026-10-08)
     consume_timeout_s: 20
     line_gap_s: 0.5
     spool_max: 200

@@ -288,6 +288,19 @@ def contracts_provider(agent_config):
     contracts = contract.contracts_for_run(
         artifacts, seat_of=table_cfg.get("seat_of", {}), pack_cast=_pack_cast(table_cfg))
     payloads = [c.to_payload() for c in contracts]
+    if table_cfg.get("dedupe_canon_goal"):
+        # The segment planner sometimes repeats a slot verbatim inside one leaf
+        # (e309: 3 of the first 14 contracts); replaying it airs the same scene twice.
+        seen, kept = set(), []
+        for p in payloads:
+            key = " ".join(str(p.get("canon_goal") or "").lower().split())
+            if key and key in seen:
+                continue
+            seen.add(key)
+            kept.append(p)
+        if len(kept) != len(payloads):
+            log.info("table contracts: dropped %d duplicate canon_goal(s)", len(payloads) - len(kept))
+        payloads = kept
     if table_cfg.get("only_with_active_players"):
         active = set(table_cfg.get("seats", []))
         payloads = [p for p in payloads if active & set(p.get("participants", []))]

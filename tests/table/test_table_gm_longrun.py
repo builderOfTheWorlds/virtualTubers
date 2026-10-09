@@ -180,3 +180,24 @@ def test_adjudicate_error_names_the_reply_tail():
                  seat_names=NAMES, budgets={})
     with pytest.raises(ValueError, match="tail="):
         g.adjudicate(dict(CONTRACT), [], 1)
+
+
+def test_contracts_provider_drops_repeated_canon_goals(monkeypatch, tmp_path):
+    from table import arc_source, contract as contract_mod
+
+    class C:
+        def __init__(self, sid, goal):
+            self.p = dict(CONTRACT, scene_id=sid, canon_goal=goal)
+
+        def to_payload(self):
+            return dict(self.p)
+
+    monkeypatch.undo()
+    monkeypatch.setattr(arc_source.RunArtifacts, "from_json", classmethod(lambda cls, p: None))
+    monkeypatch.setattr(contract_mod, "contracts_for_run", lambda *a, **k: [
+        C("a", "Open the door."), C("b", "open the  door."), C("c", "Close it.")])
+    base = {"contracts_fixture": "x.json", "seats": ["tuber_1"]}
+    ids = [p["scene_id"] for p in gm.contracts_provider({"table": dict(base, dedupe_canon_goal=True)})]
+    assert ids == ["a", "c"]
+    ids = [p["scene_id"] for p in gm.contracts_provider({"table": base})]
+    assert ids == ["a", "b", "c"]
