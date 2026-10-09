@@ -73,6 +73,14 @@ roundtable:
     consume_timeout_s: 20
     line_gap_s: 0.5
     spool_max: 200
+  # Tile title + 3D head per seat (replaces the base roundtable roster, whose slots are
+  # the old replay cast). Heads follow the character, as on the old roster.
+  roster:
+    tuber_0: {name: Game Master, character_params: gm0}
+    tuber_1: {name: Chadwick,    character_params: chadwick}
+    tuber_2: {name: Leena,       character_params: tess3}
+    tuber_3: {name: Vigil,       character_params: nyx1}
+    tuber_4: {name: Sodacan Bob, character_params: oko2}
   voices:                         # seat -> piper voice (cast voice hints: GM narrator, Chadwick gruff ...)
     tuber_0: /data/voices/en_US-lessac-medium.onnx
     tuber_1: /data/voices/en_US-ryan-high.onnx

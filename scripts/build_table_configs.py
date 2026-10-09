@@ -161,6 +161,11 @@ def _build_roundtable(cfg, table_cfg_path, out_dir, names):
     for seat, model_path in (rt.get("voices") or {}).items():
         speakers[seat] = dict(speakers.get(seat) or {}, model_path=model_path)
     voice["speaker_names"] = {s["seat"]: names[s["seat"]] for s in cfg["seats"]}
+    if rt.get("roster"):
+        # Tile title + head per seat. REPLACES the base roster: the base slot config's
+        # roster is the old replay cast (tuber_2 "Vigil", tuber_4 "Braxton" ...), which
+        # put the table's lines under the wrong names (D&D run 2026-10-09).
+        doc["roster"] = copy.deepcopy(rt["roster"])
     rel = table_cfg_path.resolve().relative_to(REPO) if table_cfg_path.resolve().is_relative_to(REPO) \
         else table_cfg_path.name
     path = out_dir / "roundtable.yaml"

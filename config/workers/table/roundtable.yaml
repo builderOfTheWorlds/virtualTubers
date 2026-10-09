@@ -110,30 +110,21 @@ layout:
 roundtable:
   narrator_slot: tuber_0
 roster:
+  tuber_0:
+    name: Game Master
+    character_params: gm0
   tuber_1:
     name: Chadwick
     character_params: chadwick
   tuber_2:
-    name: Vigil
-    character_params: nyx1
-  tuber_3:
-    name: Sodacan Bob
-    character_params: oko2
-  tuber_4:
-    name: Braxton
-    character_params: braxton
-  tuber_5:
     name: Leena
     character_params: tess3
-  tuber_6:
-    name: MAX-1
-    character_params: max1
-  tuber_7:
-    name: Iris
-    character_params: iris7
-  tuber_0:
-    name: Game Master
-    character_params: gm0
+  tuber_3:
+    name: Vigil
+    character_params: nyx1
+  tuber_4:
+    name: Sodacan Bob
+    character_params: oko2
 stream:
   rtmp_url: rtmp://localhost:1935/live
   key: test-roundtable
