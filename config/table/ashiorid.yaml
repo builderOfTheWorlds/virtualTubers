@@ -46,7 +46,7 @@ max_scenes: 60                # cap only; auto_duration_s ends the run
 # and left ~45-50 s of dead air between scenes. lead_s covers the next scene's
 # GM direction call + its first TTS.
 auto_duration_s: 3600
-auto_pace: {words_per_s: 2.9, per_line_s: 1.0, lead_s: 25}
+auto_pace: {words_per_s: 2.9, per_line_s: 2.2, lead_s: 25}   # 2.2: done-marker handoff measured 1.9 s + 0.5 gap per line (2026-10-10)
 auto_skip_stuck: true
 auto_max_consecutive_stuck: 3
 
