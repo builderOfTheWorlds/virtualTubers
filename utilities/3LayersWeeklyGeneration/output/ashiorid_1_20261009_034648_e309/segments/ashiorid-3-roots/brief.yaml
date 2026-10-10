@@ -1,0 +1,124 @@
+segment_id: ashiorid-3-roots
+order: 3
+loop: 0
+hours: 6
+synopsis: Four days south of the ashes, the road widens into Malmont, a town that
+  has never heard of them. Amidst the uneasy balance of day-watch and night-stalkers,
+  the group pieces together the fractured history of the Event through recovered accounts
+  and the first monument’s riddle. The black glass plain of the Malvakar answers itself
+  to those who know where to look, and the map’s next mark draws them toward the first
+  of nine doors. The road ahead is long, but the first step is complete.
+continuity_in: The portal deposits them onto a quiet road; the amulet-map fragment
+  is secured.
+continuity_out: The map’s next mark is revealed; the nine-door route begins.
+carry_in:
+  moonwell-tainted: trace
+carry_out: {}
+slots:
+- slot_id: ashiorid-3-roots-n0-001
+  kind: ambient
+  prompt: 'The road unspools behind you as Malmont rises from the quiet dust. You
+    settle into a steady rhythm: day-watch under the open sky, night-stalkers when
+    the shadows lengthen. The town keeps its own counsel, but the first monument’s
+    riddle waits just beyond the outskirts, waiting for those who know where to look.'
+  lore:
+  - malmont
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - gm
+  sensitivity: none
+  depends_on: []
+  node_id: ashiorid-3-roots-n0
+- slot_id: ashiorid-3-roots-n0-002
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  node_id: ashiorid-3-roots-n0
+- slot_id: ashiorid-3-roots-n0-003
+  kind: ambient
+  prompt: You piece together the fractured history of the Event through recovered
+    accounts and the town’s forgotten records. Each fragment sharpens the map’s next
+    mark, pulling your eyes toward the black glass plain and the first of nine doors.
+    The road ahead is long, but the first step is complete.
+  lore:
+  - the-event
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - sodacan_bob
+  - gm
+  sensitivity: none
+  depends_on: []
+  node_id: ashiorid-3-roots-n0
+- slot_id: ashiorid-3-roots-n1-001
+  kind: spine
+  scene_ref: malmont-arrival
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  node_id: ashiorid-3-roots-n1
+- slot_id: ashiorid-3-roots-n1-002
+  kind: ambient
+  prompt: The dusty archives of Malmont hold whispers of a time before the glass.
+    You sift through ledgers and half-remembered tales, piecing together how the town
+    survived what the world forgot.
+  lore:
+  - malmont
+  participants:
+  - gm
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: ashiorid-3-roots-n1
+- slot_id: ashiorid-3-roots-n1-003
+  kind: spine
+  scene_ref: malvakar-riddle
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  node_id: ashiorid-3-roots-n1
+- slot_id: ashiorid-3-roots-n1-004
+  kind: ambient
+  prompt: The black glass plain stretches out, silent and waiting. As you stand upon
+    it, the surface catches the light and begins to mirror the paths you've already
+    walked, revealing the next mark on your map.
+  lore:
+  - amulet-of-wonder
+  participants:
+  - Leena
+  - Vigil
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: ashiorid-3-roots-n1
+nodes:
+- node_id: ashiorid-3-roots
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: ashiorid-3-roots-n0
+  parent_id: ashiorid-3-roots
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: ashiorid-3-roots-n1
+  parent_id: ashiorid-3-roots
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

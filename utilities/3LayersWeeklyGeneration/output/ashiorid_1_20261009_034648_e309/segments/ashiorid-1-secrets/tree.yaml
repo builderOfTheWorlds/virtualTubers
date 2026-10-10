@@ -1,0 +1,147 @@
+ashiorid-1-secrets:
+  node_id: ashiorid-1-secrets
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Beneath the frozen party, the butler Grovley guides the four into the subbasemen
+  summary: 'Beneath the frozen party, the butler Grovley guides the four into the
+    subbasement, where he reveals what they truly are: products of the Begene Sisters’
+    breeding program and heirs to a century of hidden lineage. Behind a concealed
+    wall lies the vault containing The Word and the Worm, the anchor of the manor’s
+    ten-thousand-year watch. A tear in the air begins to weep, and it answers back,
+    exposing the Bahadur’s ten-millennia harvesting of Ashiorid’s magic to fund a
+    fractured gateway home.'
+  continuity_in: The manor’s stasis holds; the invitation cards remain in hand.
+  continuity_out: The tear widens; the manor’s foundations groan under the strain
+    of exposed magic.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - ashiorid-1-secrets-n0
+  - ashiorid-1-secrets-n1
+  slots: null
+ashiorid-1-secrets-n0:
+  node_id: ashiorid-1-secrets-n0
+  parent_id: ashiorid-1-secrets
+  order: 0
+  depth: 1
+  title: The Descent and the Lineage
+  summary: Grovley leads the four past the frozen revelry into the subbasement, unveiling
+    their origins as heirs to the Begene Sisters’ breeding program. He parts a concealed
+    wall to reveal the vault holding The Word and the Worm, the ancient anchor of
+    the manor’s ten-thousand-year watch.
+  continuity_in: The manor’s stasis holds; the invitation cards remain in hand.
+  continuity_out: The subbasement’s ancient vault is exposed; the air grows heavy
+    with the weight of ten millennia of hidden history.
+  target_words: 315
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: ashiorid-1-secrets-n0-001
+    kind: ambient
+    prompt: The heavy oak doors groan shut behind you, sealing away the frozen waltz
+      and clinking glass. Upstairs, the party hangs in suspended animation, but down
+      here the air is thick with dust and centuries of held breath. Your invitation
+      cards feel suddenly heavy in your hands, their ink no longer mere paper but
+      a key to a locked history. Follow Grovley's lantern as it cuts through the dark,
+      leading you past frost-rimed brick into the manor's forgotten belly.
+    lore:
+    - the-begene-program
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    sensitivity: none
+    depends_on: []
+  - slot_id: ashiorid-1-secrets-n0-002
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+  - slot_id: ashiorid-1-secrets-n0-003
+    kind: spine
+    scene_ref: the-vault
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+ashiorid-1-secrets-n1:
+  node_id: ashiorid-1-secrets-n1
+  parent_id: ashiorid-1-secrets
+  order: 1
+  depth: 1
+  title: The Weeping Tear and the Fractured Gateway
+  summary: 'A tear in the air begins to weep and answers back, its resonance unraveling
+    the Bahadur’s secret. The truth spills forth: a ten-millennia harvest of Ashiorid’s
+    magic was meticulously siphoned to sustain a fractured gateway home, straining
+    the very foundations of the manor.'
+  continuity_in: The subbasement’s ancient vault is exposed; the air grows heavy with
+    the weight of ten millennia of hidden history.
+  continuity_out: The tear widens; the manor’s foundations groan under the strain
+    of exposed magic.
+  target_words: 385
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: ashiorid-1-secrets-n1-001
+    kind: ambient
+    prompt: The heavy oak door clicks shut behind you. Grovley turns, his face stripped
+      of its usual mask, and tells you what you really are. He speaks of the Begene
+      Sisters, of a breeding program that scoured a century for the right blood, and
+      how you are the heirs to a lineage everyone else forgot.
+    lore:
+    - the-begene-program
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: ashiorid-1-secrets-n1-002
+    kind: spine
+    scene_ref: grovley-revelation
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+  - slot_id: ashiorid-1-secrets-n1-003
+    kind: ambient
+    prompt: 'Grovley steps aside, revealing a seamless panel in the stone. With a
+      twist of his signet ring, the wall slides back. Inside sits the vault: The Word
+      bound in iron, and the Worm coiled in shadow. It is the anchor of the manor''s
+      ten-thousand-year watch, humming with a weight that makes your teeth ache.'
+    lore:
+    - the-event
+    - moonwells
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: ashiorid-1-secrets-n1-004
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob

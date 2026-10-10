@@ -1,0 +1,118 @@
+segment_id: ashiorid-0-arrival
+order: 0
+loop: 0
+hours: 6
+synopsis: Four strangers receive identical cards marking the ten-thousandth anniversary
+  of the Event. They arrive at Duke Sorensen Leto the Third’s manor, expecting a celebration,
+  but find the doors opening onto uninvited guests and a room that suddenly stops
+  moving. The party is suspended in an unnatural stasis as the true nature of the
+  gathering reveals itself.
+continuity_in: ''
+continuity_out: The manor’s guests are trapped in a suspended moment; the invitation
+  cards are still clutched in hand.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: ashiorid-0-arrival-n0-001
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  node_id: ashiorid-0-arrival-n0
+- slot_id: ashiorid-0-arrival-n0-002
+  kind: ambient
+  prompt: The brass anniversary medallions grow warm against palms that refuse to
+    tremble. Dust motes hang like frozen stars in the foyer, and the chandelier’s
+    chime catches on an endless exhale.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  sensitivity: none
+  depends_on: []
+  node_id: ashiorid-0-arrival-n0
+- slot_id: ashiorid-0-arrival-n0-003
+  kind: ambient
+  prompt: Somewhere beyond the threshold, the manor’s own foundations seem to hold
+    their breath. A low resonance hums through the floorboards, tasting of old iron
+    and moonwell silt, as the uninvited guests turn their faces toward the newcomers
+    without blinking.
+  lore:
+  - moonwells
+  participants:
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: ashiorid-0-arrival-n0
+- slot_id: ashiorid-0-arrival-n1-001
+  kind: ambient
+  prompt: The heavy oak doors swing inward, but the grand hall beyond refuses to breathe.
+    Dust motes hang suspended in the amber light, frozen mid-drift. Leena and Vigil
+    step across the threshold, their boots making no sound on the marble as the warmth
+    of the celebration fades into a weightless, breathless quiet.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  sensitivity: none
+  depends_on: []
+  node_id: ashiorid-0-arrival-n1
+- slot_id: ashiorid-0-arrival-n1-002
+  kind: spine
+  scene_ref: letos-manor
+  participants:
+  - gm
+  - sodacan_bob
+  node_id: ashiorid-0-arrival-n1
+- slot_id: ashiorid-0-arrival-n1-003
+  kind: ambient
+  prompt: Chadwick's fingers tighten around the invitation card, the embossed date
+    pressing into his palm like a brand. Around him, the other guests stand in perfect,
+    impossible stillness, their laughter trapped in their throats. The manor's stone
+    walls hum with a low, dormant resonance, as if the architecture itself is holding
+    its breath.
+  lore:
+  - the-event
+  participants:
+  - chadwick
+  - gm
+  sensitivity: none
+  depends_on: []
+  node_id: ashiorid-0-arrival-n1
+- slot_id: ashiorid-0-arrival-n1-004
+  kind: spine
+  scene_ref: party-attack
+  participants:
+  - gm
+  - Vigil
+  node_id: ashiorid-0-arrival-n1
+nodes:
+- node_id: ashiorid-0-arrival
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: ashiorid-0-arrival-n0
+  parent_id: ashiorid-0-arrival
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: ashiorid-0-arrival-n1
+  parent_id: ashiorid-0-arrival
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

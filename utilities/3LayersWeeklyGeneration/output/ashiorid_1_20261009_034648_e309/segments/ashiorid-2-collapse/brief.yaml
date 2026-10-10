@@ -1,0 +1,69 @@
+segment_id: ashiorid-2-collapse
+order: 2
+loop: 0
+hours: 6
+synopsis: The hold breaks too late. Flames consume the manor as the four escape into
+  the smoke-choked night, forced to make a final decision at a widening tear in the
+  air. They step through just as a dying wizard finishes his work at the tunnel’s
+  mouth, leaving behind a fragment of the amulet-map and a warning about the wells.
+  The portal deposits them onto a quiet road, the weight of the burning past settling
+  behind them.
+continuity_in: The tear widens; the manor’s foundations groan under the strain of
+  exposed magic.
+continuity_out: The portal deposits them onto a quiet road; the amulet-map fragment
+  is secured.
+carry_in:
+  Alcinoe-wounded: minor
+carry_out:
+  moonwell-tainted: trace
+slots:
+- slot_id: ashiorid-2-collapse-n1-001
+  kind: spine
+  scene_ref: portal-encounter
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  node_id: ashiorid-2-collapse-n1
+- slot_id: ashiorid-2-collapse-n1-002
+  kind: ambient
+  prompt: The portal's roar fades to the steady chirp of crickets. Moonlight washes
+    over a quiet, empty road as the four stumble onto solid ground. Hands tremble
+    while securing the amulet-map fragment, its cryptic warning about the wells settling
+    heavy in their minds as the burning past finally fades into history.
+  lore:
+  - amulet-of-wonder
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: ashiorid-2-collapse-n1
+nodes:
+- node_id: ashiorid-2-collapse
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: ashiorid-2-collapse-n0
+  parent_id: ashiorid-2-collapse
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 5
+  slots: 0
+- node_id: ashiorid-2-collapse-n1
+  parent_id: ashiorid-2-collapse
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 2
+  slots: 2
+needs_rebrief: true

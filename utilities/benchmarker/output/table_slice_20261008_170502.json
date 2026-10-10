@@ -1,0 +1,337 @@
+{
+ "wall_s": 59.2,
+ "messages": [
+  {
+   "t": 0.0,
+   "type": "scene_start",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.loaded.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "contract": {
+     "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+     "run_id": "ashiorid_office_20260929_135927_9c1b",
+     "segment_id": "off-hours-arc",
+     "leaf_id": "off-hours-arc-n0-n0",
+     "slot_id": "off-hours-arc-n0-n0-004",
+     "order": 3,
+     "canon_goal": "With a sigh, the Party Member finishes writing, closes the notebook, and stands up just as the Office Manager arrives to prepare for the day ahead.",
+     "participants": [
+      "tuber_7",
+      "tuber_6"
+     ],
+     "lore": [
+      "office",
+      "company"
+     ],
+     "continuity_in": "The office is dark and quiet, with only the Party Member present, writing.",
+     "continuity_out": "The Party Member finishes writing and prepares to leave as the Office Manager arrives.",
+     "must_resolve": [
+      "The Party Member finishes writing and prepares to leave as the Office Manager arrives"
+     ],
+     "expected_beats": [
+      "The Party Member sits alone in the dark office, lost in thought as they write in their notebook by the emergency light's dim glow",
+      "kind:ambient"
+     ],
+     "max_rounds": 4,
+     "max_retries_per_turn": 2,
+     "scene_ref": ""
+    },
+    "round": 1,
+    "max_rounds": 4,
+    "seats": [
+     "tuber_1",
+     "tuber_2",
+     "tuber_3",
+     "tuber_4",
+     "tuber_5",
+     "tuber_6"
+    ]
+   }
+  },
+  {
+   "t": 12.62,
+   "type": "scene_direction",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.directing.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "speaker": "tuber_0",
+    "text": "The emergency bulb hums, casting a bruised purple halo over your desk. You fill the final line, the scratch of your pen loud in the stillness. A long exhale escapes you as you cap the pen and shut the cover. The leather creaks softly. Just as you rise from the chair, the glass doors at the entrance slide open with a sharp hiss. Fluorescent lights flicker on down the hall, pushing back the shadows. Nora steps into the gloom, a tote bag slung over her shoulder, her eyes scanning the room before landing on you. She sets her bag on the reception counter and offers a",
+    "expects": [
+     "tuber_6"
+    ],
+    "must_resolve": "The Party Member finishes writing and prepares to leave as the Office Manager arrives"
+   }
+  },
+  {
+   "t": 12.62,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_0",
+    "text": "The emergency bulb hums, casting a bruised purple halo over your desk. You fill the final line, the scratch of your pen loud in the stillness. A long exhale escapes you as you cap the pen and shut the cover. The leather creaks softly. Just as you rise from the chair, the glass doors at the entrance slide open with a sharp hiss. Fluorescent lights flicker on down the hall, pushing back the shadows. Nora steps into the gloom, a tote bag slung over her shoulder, her eyes scanning the room before landing on you. She sets her bag on the reception counter and offers a",
+    "kind": "direction",
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "emotion": null
+   }
+  },
+  {
+   "t": 12.62,
+   "type": "think_request",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seats": [
+     "tuber_1",
+     "tuber_2",
+     "tuber_3",
+     "tuber_4",
+     "tuber_5",
+     "tuber_6"
+    ],
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The emergency bulb hums, casting a bruised purple halo over your desk. You fill the final line, the scratch of your pen loud in the stillness. A long exhale escapes you as you cap the pen and shut the cover. The leather creaks softly. Just as you rise from the chair, the glass doors at the entrance slide open with a sharp hiss. Fluorescent lights flicker on down the hall, pushing back the shadows. Nora steps into the gloom, a tote bag slung over her shoulder, her eyes scanning the room before landing on you. She sets her bag on the reception counter and offers a",
+      "kind": "direction"
+     }
+    ],
+    "deadline_s": 60
+   }
+  },
+  {
+   "t": 18.99,
+   "type": "think_done",
+   "from": "tuber_1",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seat": "tuber_1",
+    "ok": true
+   }
+  },
+  {
+   "t": 26.04,
+   "type": "think_done",
+   "from": "tuber_2",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seat": "tuber_2",
+    "ok": true
+   }
+  },
+  {
+   "t": 33.68,
+   "type": "think_done",
+   "from": "tuber_3",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seat": "tuber_3",
+    "ok": true
+   }
+  },
+  {
+   "t": 39.91,
+   "type": "think_done",
+   "from": "tuber_4",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seat": "tuber_4",
+    "ok": true
+   }
+  },
+  {
+   "t": 47.11,
+   "type": "think_done",
+   "from": "tuber_5",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seat": "tuber_5",
+    "ok": true
+   }
+  },
+  {
+   "t": 53.38,
+   "type": "think_done",
+   "from": "tuber_6",
+   "to": "tuber_0",
+   "turn": "r1.think.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seat": "tuber_6",
+    "ok": true
+   }
+  },
+  {
+   "t": 53.38,
+   "type": "turn_assignment",
+   "from": "tuber_0",
+   "to": "tuber_6",
+   "turn": "r1.speak.tuber_6",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seat": "tuber_6",
+    "order_pos": 5,
+    "committed_transcript": [
+     {
+      "speaker": "gm",
+      "text": "The emergency bulb hums, casting a bruised purple halo over your desk. You fill the final line, the scratch of your pen loud in the stillness. A long exhale escapes you as you cap the pen and shut the cover. The leather creaks softly. Just as you rise from the chair, the glass doors at the entrance slide open with a sharp hiss. Fluorescent lights flicker on down the hall, pushing back the shadows. Nora steps into the gloom, a tote bag slung over her shoulder, her eyes scanning the room before landing on you. She sets her bag on the reception counter and offers a",
+      "kind": "direction"
+     }
+    ],
+    "instruction": "The Party Member finishes writing and prepares to leave as the Office Manager arrives",
+    "deadline_s": 45,
+    "max_retries": 2
+   }
+  },
+  {
+   "t": 55.64,
+   "type": "character_reply",
+   "from": "tuber_6",
+   "to": "tuber_0",
+   "turn": "r1.speak.tuber_6",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "seat": "tuber_6",
+    "text": "Leaving soon, love? I\u2019ve been meaning to ask about that stale branch on the server\u2014people are saying it\u2019s gathering dust.",
+    "took": true,
+    "reason": ""
+   }
+  },
+  {
+   "t": 55.64,
+   "type": "table_line",
+   "from": "tuber_0",
+   "to": "roundtable",
+   "turn": null,
+   "payload": {
+    "seat": "tuber_6",
+    "text": "Leaving soon, love? I\u2019ve been meaning to ask about that stale branch on the server\u2014people are saying it\u2019s gathering dust.",
+    "kind": "reply",
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "emotion": null
+   }
+  },
+  {
+   "t": 59.21,
+   "type": "adjudication",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.adjudicating.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "round": 1,
+    "verdict": "pass",
+    "notes": "Scene contract fully met. The Party Member finishes writing and prepares to leave as the Office Manager arrives. The GM's narration successfully bridges the continuity from the dark office to Nora's arrival.",
+    "retake_seat": null,
+    "resolved": true,
+    "state_delta": {}
+   }
+  },
+  {
+   "t": 59.21,
+   "type": "scene_resolve",
+   "from": "tuber_0",
+   "to": "broadcast",
+   "turn": "r1.resolved.gm",
+   "payload": {
+    "scene_id": "off-hours-arc.off-hours-arc-n0-n0.off-hours-arc-n0-n0-004",
+    "resolved": true,
+    "state_delta": {},
+    "record_id": null
+   }
+  }
+ ],
+ "calls": [
+  {
+   "what": "gm_tick",
+   "s": 12.62
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.36
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.06
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.64
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.23
+  },
+  {
+   "what": "seat:think_request",
+   "s": 7.2
+  },
+  {
+   "what": "seat:think_request",
+   "s": 6.27
+  },
+  {
+   "what": "gm:think_request",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "gm:think_done",
+   "s": 0.0
+  },
+  {
+   "what": "seat:turn_assignment",
+   "s": 2.25
+  },
+  {
+   "what": "gm:character_reply",
+   "s": 3.57
+  }
+ ]
+}

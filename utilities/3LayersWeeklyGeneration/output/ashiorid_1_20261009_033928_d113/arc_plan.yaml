@@ -1,0 +1,145 @@
+segments:
+- ambient_focus: malmont-market
+  carry_in: {}
+  carry_out:
+    moonwell-tainted: true
+  continuity_in: 'The manor has burned. The four of you have escaped the collapse,
+    carrying the knowledge of what you are and the half-rings from Grovley.
+
+    '
+  continuity_out: 'The party settles in Malmont, sensing the night entity''s gaze.
+    The constable''s watch and the unregistered power both react to the ring halves.
+
+    '
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malmont-arrival-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 4
+  plot_path: []
+  spine_scenes:
+  - malmont-arrival
+  synopsis: 'Four days south of the ash where Leto''s manor stood, the road widens
+    into Malmont. The four of you are complete strangers here, which offers a strange
+    relief after the manor''s fever dream. The town supports two magic shops for its
+    size and four blacksmiths who keep their forges cold. Two power centers rule uneasily:
+    the lawful constable''s watch by day, and something unregistered and unfriendly
+    that moves through the streets at night. The party begins to notice that the local
+    magic is rationed and strange, and the constable takes an interest in their scarred
+    ring halves.
+
+    '
+- ambient_focus: night-watch
+  carry_in:
+    moonwell-tainted: true
+  carry_out:
+    moonwell-tainted: true
+  continuity_in: 'The party has arrived in Malmont and begun to feel the weight of
+    the town''s divided loyalties. The ring halves hum with a history that predates
+    the town itself.
+
+    '
+  continuity_out: 'The party understands the stakes of the Event. The moonwell''s
+    taint is confirmed as the source of the world''s starvation. The night entity
+    reveals itself as a remnant of the Bahadur''s breeding program, seeking the energy
+    stored in the party''s bloodlines.
+
+    '
+  event_windows: []
+  fork: null
+  hours: 6
+  id: the-age-of-war-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 5
+  plot_path: []
+  spine_scenes:
+  - the-age-of-war
+  synopsis: 'In the quiet of Malmont, the truth of the world''s decay surfaces. The
+    party learns that ten thousand years ago, the Age of War ended not with a bang,
+    but with a desperate choice at the last moonwell. The world''s magic was being
+    spent as fuel, draining the wells until only one remained. A small group attempted
+    to seal the final well, but the Event fractured memory. The party must confront
+    the possibility that their existence, their immortality, and the drain on the
+    world are tied to this ancient catastrophe. The constable''s watch and the night
+    entity both seek information about the "Word and the Worm" that was lost in the
+    fire.
+
+    '
+- ambient_focus: sodacan_bob-on-craft
+  carry_in:
+    moonwell-tainted: true
+  carry_out:
+    moonwell-tainted: true
+  continuity_in: 'The party knows the Bahadur are harvesting magic to open a fracture.
+    The moonwell is the source, and the party''s bloodlines are the storage vessels.
+    The night entity has retreated, but the Bahadur''s presence is undeniable.
+
+    '
+  continuity_out: 'The party possesses the language to open the Malvakar monument.
+    The map draws the first mark. The tear in the air is now a visible threat that
+    demands a decision.
+
+    '
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 6
+  plot_path: []
+  spine_scenes:
+  - portal-encounter
+  synopsis: 'The Bahadur''s pressure forces the party toward the northern monument.
+    At the tunnel''s mouth of the Malvakar, a dying wizard finishes what he came to
+    do. He was a scholar of the Event, trying to preserve the language of the seal
+    before the Bahadur''s harvesters found him. He transfers the riddle''s syntax
+    to the party''s map and imparts a warning: the tear in the air is widening because
+    the Bahadur are siphoning the last well to open a door to Ord. The wizard collapses,
+    leaving the party with the key to the first door and the knowledge that the tear
+    is not just a wound, but a lock being picked from the other side.
+
+    '
+- ambient_focus: road-talk
+  carry_in:
+    moonwell-tainted: true
+  carry_out:
+    moonwell-tainted: true
+  continuity_in: 'The party has the map mark, the riddle language, and the knowledge
+    of the Bahadur''s goal. The tear is active, and the Eighty-Sixth is approaching.
+    The moonwell''s taint is critical; the well is failing.
+
+    '
+  continuity_out: 'The party makes their choice. The tear reacts. The arc moves into
+    the consequences of the decision, whether it leads to the Bahadur''s revealed
+    nature, the opening of the first door, or the catastrophic failure of the seal.
+
+    '
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-choice-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 7
+  plot_path: []
+  spine_scenes:
+  - portal-choice
+  synopsis: 'The tear in the air widens to a threshold the party cannot ignore. The
+    Malvakar monument stands ready, but the choice is not just about entering the
+    dungeon. The Bahadur''s Eighty-Sixth has manifested at the tear''s edge, a creature
+    bred to absorb the party''s stored energy. The party must decide what comes through
+    the tear: do they seal it, risking the Bahadur''s retaliation and the collapse
+    of the local reality? Do they step through to confront the source of the fracture
+    in Ord''s timeline? Or do they use the tear to flood the Bahadur''s microfractures
+    with the raw magic of the last well, potentially refilling the moonwell but destroying
+    the barrier between worlds? The deciding cannot wait.
+
+    '

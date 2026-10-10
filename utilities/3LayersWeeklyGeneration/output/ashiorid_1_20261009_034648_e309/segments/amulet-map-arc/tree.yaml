@@ -1,0 +1,160 @@
+amulet-map-arc:
+  node_id: amulet-map-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The map hums as the ink settles, burning a fresh mark into the parchment
+    that po
+  summary: 'The map hums as the ink settles, burning a fresh mark into the parchment
+    that points north toward a jagged peak. The party leaves the ashes of the manor
+    behind, finding the road south leads to Malmont, the first settlement in days.
+    The town feels wrong: the magic shops are full, but the blacksmiths are cold,
+    and the locals avoid the word ''Leto''. Grovley''s half of the signet ring feels
+    heavy, and the map''s mark pulses in rhythm with the town''s hidden heartbeat.'
+  continuity_in: The map's next mark is revealed; the nine-door route begins.
+  continuity_out: The mark points to the northern monument; Malmont holds a secret
+    the constable cannot touch.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - amulet-map-arc-n0
+  - amulet-map-arc-n1
+  slots: null
+amulet-map-arc-n0:
+  node_id: amulet-map-arc-n0
+  parent_id: amulet-map-arc
+  order: 0
+  depth: 1
+  title: The Ink Settles, The Road Opens
+  summary: As the parchment cools, the new mark burns itself into view, pointing north
+    toward a jagged peak. With the manor's ashes fading behind them, the party turns
+    south toward Malmont, the first settlement in days. The nine-door route stirs
+    to life, and the journey begins under the weight of the newly revealed path.
+  continuity_in: The map's next mark is revealed; the nine-door route begins.
+  continuity_out: The road south leads to Malmont, where the town's strange silence
+    and hidden pulse await their arrival.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: amulet-map-arc-n0-001
+    kind: ambient
+    prompt: The parchment cools beneath your fingers, its surface humming with a low,
+      rhythmic thrum that syncs with your own pulse. You fold it away, feeling the
+      weight of Grovley’s signet ring press against your palm as the road south opens
+      up toward Malmont. The air smells of cold ash and distant rain, and the silence
+      of the burned manor behind you is broken only by the crunch of gravel beneath
+      your boots.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n0-002
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+amulet-map-arc-n1:
+  node_id: amulet-map-arc-n1
+  parent_id: amulet-map-arc
+  order: 1
+  depth: 1
+  title: Malmont's Silent Heart
+  summary: The party enters Malmont, a town that feels deeply wrong. Magic shops brim
+    with stock, yet blacksmiths work without fire, and locals flinch at the name 'Leto'.
+    Grovley's half of the signet ring grows heavy in his palm. Above all, the map's
+    mark pulses in time with the town's concealed heartbeat, hinting at secrets the
+    constable cannot touch.
+  continuity_in: The road south leads to Malmont, where the town's strange silence
+    and hidden pulse await their arrival.
+  continuity_out: The mark points to the northern monument; Malmont holds a secret
+    the constable cannot touch.
+  target_words: 490
+  target_slots: 5
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: amulet-map-arc-n1-001
+    kind: ambient
+    prompt: The road south finally yields to cobblestones as Malmont rises from the
+      mist. You step past the town ward, and the silence hits first—no blacksmith’s
+      hammer, only the dull thud of your boots on wet stone.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: amulet-map-arc-n1-002
+    kind: ambient
+    prompt: Magic shops line the main thoroughfare, their windows crammed with wares
+      that haven’t moved in weeks. The shopkeepers watch you with hungry eyes, but
+      the real tension lives in the tavern’s back room, where the word 'Leto' is swallowed
+      whole before it can leave anyone’s lips.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: amulet-map-arc-n1-003
+    kind: ambient
+    prompt: Grovley’s half of the signet ring grows heavy in his palm, warm against
+      his skin. Across the square, the map unspooled in your pack begins to pulse,
+      its ink mark throbbing in perfect rhythm with something buried deep beneath
+      the town’s foundations.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: amulet-map-arc-n1-004
+    kind: spine
+    scene_ref: malmont-arrival
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+  - slot_id: amulet-map-arc-n1-005
+    kind: ambient
+    prompt: The constable stands at the crossroads, posture rigid, eyes darting toward
+      the northern ridge where the jagged peak cuts the sky. He knows the mark on
+      your map points there, but his lips stay sealed. Whatever Malmont is hiding,
+      it sits beyond his jurisdiction.
+    lore:
+    - malmont
+    participants:
+    - Leena
+    - Vigil
+    - chadwick
+    - gm
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []

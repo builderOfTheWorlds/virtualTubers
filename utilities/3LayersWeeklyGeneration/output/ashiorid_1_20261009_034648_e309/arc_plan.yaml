@@ -1,0 +1,207 @@
+segments:
+- ambient_focus: the-meal
+  carry_in: {}
+  carry_out: {}
+  continuity_in: ''
+  continuity_out: The manor’s guests are trapped in a suspended moment; the invitation
+    cards are still clutched in hand.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: ashiorid-0-arrival
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 0
+  plot_path: []
+  spine_scenes:
+  - invitation
+  - letos-manor
+  - party-attack
+  synopsis: Four strangers receive identical cards marking the ten-thousandth anniversary
+    of the Event. They arrive at Duke Sorensen Leto the Third’s manor, expecting a
+    celebration, but find the doors opening onto uninvited guests and a room that
+    suddenly stops moving. The party is suspended in an unnatural stasis as the true
+    nature of the gathering reveals itself.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out:
+    Alcinoe-wounded: minor
+  continuity_in: The manor’s stasis holds; the invitation cards remain in hand.
+  continuity_out: The tear widens; the manor’s foundations groan under the strain
+    of exposed magic.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: ashiorid-1-secrets
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 1
+  plot_path: []
+  spine_scenes:
+  - grovley-revelation
+  - the-vault
+  - bahadur-revealed
+  synopsis: 'Beneath the frozen party, the butler Grovley guides the four into the
+    subbasement, where he reveals what they truly are: products of the Begene Sisters’
+    breeding program and heirs to a century of hidden lineage. Behind a concealed
+    wall lies the vault containing The Word and the Worm, the anchor of the manor’s
+    ten-thousand-year watch. A tear in the air begins to weep, and it answers back,
+    exposing the Bahadur’s ten-millennia harvesting of Ashiorid’s magic to fund a
+    fractured gateway home.'
+- ambient_focus: chadwick-lost
+  carry_in:
+    Alcinoe-wounded: minor
+  carry_out:
+    moonwell-tainted: trace
+  continuity_in: The tear widens; the manor’s foundations groan under the strain of
+    exposed magic.
+  continuity_out: The portal deposits them onto a quiet road; the amulet-map fragment
+    is secured.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: ashiorid-2-collapse
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 2
+  plot_path: []
+  spine_scenes:
+  - burn-it-down
+  - portal-choice
+  - portal-encounter
+  synopsis: The hold breaks too late. Flames consume the manor as the four escape
+    into the smoke-choked night, forced to make a final decision at a widening tear
+    in the air. They step through just as a dying wizard finishes his work at the
+    tunnel’s mouth, leaving behind a fragment of the amulet-map and a warning about
+    the wells. The portal deposits them onto a quiet road, the weight of the burning
+    past settling behind them.
+- ambient_focus: road-talk
+  carry_in:
+    moonwell-tainted: trace
+  carry_out: {}
+  continuity_in: The portal deposits them onto a quiet road; the amulet-map fragment
+    is secured.
+  continuity_out: The map’s next mark is revealed; the nine-door route begins.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: ashiorid-3-roots
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 3
+  plot_path: []
+  spine_scenes:
+  - malmont-arrival
+  - malvakar-riddle
+  - the-age-of-war
+  synopsis: Four days south of the ashes, the road widens into Malmont, a town that
+    has never heard of them. Amidst the uneasy balance of day-watch and night-stalkers,
+    the group pieces together the fractured history of the Event through recovered
+    accounts and the first monument’s riddle. The black glass plain of the Malvakar
+    answers itself to those who know where to look, and the map’s next mark draws
+    them toward the first of nine doors. The road ahead is long, but the first step
+    is complete.
+- ambient_focus: road-talk
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The map's next mark is revealed; the nine-door route begins.
+  continuity_out: The mark points to the northern monument; Malmont holds a secret
+    the constable cannot touch.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: amulet-map-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 4
+  plot_path: []
+  spine_scenes:
+  - amulet-map
+  - malmont-arrival
+  synopsis: 'The map hums as the ink settles, burning a fresh mark into the parchment
+    that points north toward a jagged peak. The party leaves the ashes of the manor
+    behind, finding the road south leads to Malmont, the first settlement in days.
+    The town feels wrong: the magic shops are full, but the blacksmiths are cold,
+    and the locals avoid the word ''Leto''. Grovley''s half of the signet ring feels
+    heavy, and the map''s mark pulses in rhythm with the town''s hidden heartbeat.'
+- ambient_focus: camp-fire
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The mark points to the northern monument; Malmont holds a secret
+    the constable cannot touch.
+  continuity_out: The first door opens; the map draws the second mark, which points
+    toward the town's unregistered night.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: malvakar-riddle-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 5
+  plot_path: []
+  spine_scenes:
+  - malvakar-riddle
+  synopsis: The journey north takes the party across glass plains where the wind screams.
+    The Malvakar monument rises from the black glass, a slab of obsidian etched with
+    runes that predate the Event. The riddle is not spoken; it is felt. As the party
+    stands before the stone, the map reacts, and the monument answers, opening a door
+    that should not exist. Inside, the air tastes of ozone and old blood, and the
+    first fragment of the route is within reach, but something watches from the cracks
+    in the glass.
+- ambient_focus: sodacan_bob-on-runes
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The map draws the second mark, which points toward the town's unregistered
+    night.
+  continuity_out: The wizard's warning reveals the Bahadur's endgame; the seal holds,
+    confirming the current timeline.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: portal-encounter-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 6
+  plot_path: []
+  spine_scenes:
+  - portal-encounter
+  - magic-retained
+  synopsis: The second mark leads back to the ruins of the manor's grounds, now overgrown
+    with strange, silver flora. A dying wizard lies at the threshold of a shimmering
+    tear in the air, his robes scorched with Bahadur sigils. He gasps a warning about
+    the 'harvest' before his body crumbles to ash, leaving behind a journal filled
+    with calculations on energy storage and a single, glowing rune. As the party studies
+    the rune, the moonwell beneath the ruins flares with light, and the seal holds,
+    preserving the last dregs of magic in the world.
+- ambient_focus: night-watch
+  carry_in: {}
+  carry_out: {}
+  continuity_in: The wizard's warning reveals the Bahadur's endgame; the seal holds,
+    confirming the current timeline.
+  continuity_out: The Bahadur breeding program is exposed; the tear widens and demands
+    a decision.
+  event_windows: []
+  fork: null
+  hours: 6
+  id: bahadur-revealed-arc
+  loop: 0
+  mirror_of: []
+  mirror_transform: null
+  order: 7
+  plot_path: []
+  spine_scenes:
+  - bahadur-revealed
+  synopsis: The rune from the wizard's journal unlocks a hidden frequency in the map,
+    projecting a holographic ledger that reveals the truth of the Begene Program.
+    The party realizes Chadwick, Leena, Vigil, and Sodacan Bob are all children of
+    Duke Leto, bred to serve the Bahadur's plan to reopen the door to Ord. The tear
+    in the air begins to widen, not from magic, but from a microfracture forced by
+    a sleeper agent in their midst. The tear does not close; it answers back, calling
+    to the blood in their veins.

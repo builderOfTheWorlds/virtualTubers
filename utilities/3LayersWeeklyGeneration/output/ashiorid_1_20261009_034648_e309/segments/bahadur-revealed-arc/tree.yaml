@@ -1,0 +1,166 @@
+bahadur-revealed-arc:
+  node_id: bahadur-revealed-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The rune from the wizard's journal unlocks a hidden frequency in the map,
+    projec
+  summary: The rune from the wizard's journal unlocks a hidden frequency in the map,
+    projecting a holographic ledger that reveals the truth of the Begene Program.
+    The party realizes Chadwick, Leena, Vigil, and Sodacan Bob are all children of
+    Duke Leto, bred to serve the Bahadur's plan to reopen the door to Ord. The tear
+    in the air begins to widen, not from magic, but from a microfracture forced by
+    a sleeper agent in their midst. The tear does not close; it answers back, calling
+    to the blood in their veins.
+  continuity_in: The wizard's warning reveals the Bahadur's endgame; the seal holds,
+    confirming the current timeline.
+  continuity_out: The Bahadur breeding program is exposed; the tear widens and demands
+    a decision.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - bahadur-revealed-arc-n0
+  - bahadur-revealed-arc-n1
+  slots: null
+bahadur-revealed-arc-n0:
+  node_id: bahadur-revealed-arc-n0
+  parent_id: bahadur-revealed-arc
+  order: 0
+  depth: 1
+  title: The Ledger's Truth
+  summary: 'The wizard''s rune pulses against the map, projecting a shimmering holographic
+    ledger that lays bare the Begene Program. As the data streams forward, the party
+    pieces together a horrifying lineage: Chadwick, Leena, Vigil, and Sodacan Bob
+    are all genetically engineered children of Duke Leto, bred as vessels for the
+    Bahadur''s grand design. The revelation strikes them not just as plot, but as
+    a biological mandate.'
+  continuity_in: The wizard's warning reveals the Bahadur's endgame; the seal holds,
+    confirming the current timeline.
+  continuity_out: The holographic ledger confirms the party's engineered lineage,
+    shifting the focus to the physical tear reacting to their blood.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-n0-001
+    kind: ambient
+    prompt: The wizard’s rune flares against the ancient map. A shimmering holographic
+      ledger materializes in the air, its cold light cutting through the dust. Data
+      streams cascade across the stone floor, and the room falls silent as the truth
+      begins to resolve.
+    lore:
+    - the-begene-program
+    participants:
+    - gm
+    - chadwick
+    - Leena
+    - Vigil
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n0-002
+    kind: ambient
+    prompt: The ledger’s entries align with their faces. Chadwick, Leena, Vigil, and
+      Sodacan Bob are not just allies—they are vessels. Genetically engineered children
+      of Duke Leto, bred in secret to serve the Bahadur’s design. The air grows heavy
+      with a biological mandate they never asked for.
+    lore:
+    - the-begene-program
+    - the-bahadur
+    participants:
+    - chadwick
+    - Leena
+    - Vigil
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n0-003
+    kind: ambient
+    prompt: The tear in the air does not close. It pulses, widening not by spellcraft,
+      but by a precise microfracture forced from within. A sleeper agent’s hand guided
+      the split. The rift shivers, then answers back, humming a frequency that vibrates
+      in their very blood.
+    lore:
+    - the-event
+    participants:
+    - gm
+    - chadwick
+    - Leena
+    - Vigil
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n0-004
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - gm
+    - chadwick
+    - Leena
+    - Vigil
+    - sodacan_bob
+bahadur-revealed-arc-n1:
+  node_id: bahadur-revealed-arc-n1
+  parent_id: bahadur-revealed-arc
+  order: 1
+  depth: 1
+  title: The Fracture Calls
+  summary: The air around them fractures, but not from spellcraft. A sleeper agent's
+    hidden mechanism triggers a microfracture that forces the dimensional tear to
+    widen. Instead of remaining a passive breach, the rift resonates with a low, pulsing
+    frequency that answers their presence. It recognizes their Duke Leto bloodline,
+    calling to them with an undeniable, visceral pull that demands an immediate choice.
+  continuity_in: The holographic ledger confirms the party's engineered lineage, shifting
+    the focus to the physical tear reacting to their blood.
+  continuity_out: The Bahadur breeding program is exposed; the tear widens and demands
+    a decision.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: bahadur-revealed-arc-n1-001
+    kind: ambient
+    prompt: The wizard's rune hums against the map. A hidden frequency clicks into
+      place, and a holographic ledger blooms in the air. The pages turn themselves,
+      spelling out the true name of the Begene Program.
+    lore:
+    - the-begene-program
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-002
+    kind: ambient
+    prompt: 'The ledger closes. Four names align with a single bloodline: children
+      of Duke Leto, engineered for the Bahadur''s grand design. Above you, the dimensional
+      tear shudders. It did not open from spellcraft. A sleeper''s microfracture forced
+      it wide, and now the rift resonates, calling back to your veins.'
+    lore:
+    - the-bahadur
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: tone
+    depends_on: []
+  - slot_id: bahadur-revealed-arc-n1-003
+    kind: spine
+    scene_ref: bahadur-revealed
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob

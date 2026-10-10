@@ -1,0 +1,132 @@
+segment_id: malvakar-riddle-arc
+order: 5
+loop: 0
+hours: 6
+synopsis: The journey north takes the party across glass plains where the wind screams.
+  The Malvakar monument rises from the black glass, a slab of obsidian etched with
+  runes that predate the Event. The riddle is not spoken; it is felt. As the party
+  stands before the stone, the map reacts, and the monument answers, opening a door
+  that should not exist. Inside, the air tastes of ozone and old blood, and the first
+  fragment of the route is within reach, but something watches from the cracks in
+  the glass.
+continuity_in: The mark points to the northern monument; Malmont holds a secret the
+  constable cannot touch.
+continuity_out: The first door opens; the map draws the second mark, which points
+  toward the town's unregistered night.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: malvakar-riddle-arc-n0-001
+  kind: ambient
+  prompt: The wind howls across the glass plains like a blade drawn across stone.
+    You walk toward the Malvakar monument, a towering slab of obsidian etched with
+    runes that feel older than the Event itself.
+  lore:
+  - malmont
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malvakar-riddle-arc-n0
+- slot_id: malvakar-riddle-arc-n0-002
+  kind: ambient
+  prompt: You stand before the stone. The riddle doesn't ask for words; it presses
+    directly into your mind. In your hand, the map shivers and trembles, as if recognizing
+    what stands before you.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: tone
+  depends_on: []
+  node_id: malvakar-riddle-arc-n0
+- slot_id: malvakar-riddle-arc-n0-003
+  kind: spine
+  scene_ref: malvakar-riddle
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - gm
+  node_id: malvakar-riddle-arc-n0
+- slot_id: malvakar-riddle-arc-n0-004
+  kind: ambient
+  prompt: The obsidian slabs grind apart, revealing a throat of shadow and stone.
+    The air inside tastes of ozone and old blood. The first fragment of the route
+    lies within reach, but something watches from the cracks in the glass.
+  lore:
+  - moonwells
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  - sodacan_bob
+  sensitivity: tone
+  depends_on: []
+  node_id: malvakar-riddle-arc-n0
+- slot_id: malvakar-riddle-arc-n1-001
+  kind: ambient
+  prompt: The wind across the glass plains screams like a shattered choir, scouring
+    the party's cloaks as the obsidian monument looms ahead. Runes older than the
+    Event glow faintly in the dark glass, and the riddle presses against their minds
+    before a single word is spoken.
+  lore:
+  - malmont
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - chadwick
+  sensitivity: none
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-002
+  kind: spine
+  scene_ref: malvakar-riddle
+  participants:
+  - gm
+  - Leena
+  - Vigil
+  - chadwick
+  node_id: malvakar-riddle-arc-n1
+- slot_id: malvakar-riddle-arc-n1-003
+  kind: ambient
+  prompt: The impossible threshold grinds open, spilling air thick with ozone and
+    the copper tang of ancient blood. The first route fragment gleams within reach,
+    but from the hairline fractures in the black glass, something ancient shifts its
+    weight and watches.
+  lore:
+  - the-event
+  participants:
+  - Leena
+  - Vigil
+  - sodacan_bob
+  sensitivity: none
+  depends_on: []
+  node_id: malvakar-riddle-arc-n1
+nodes:
+- node_id: malvakar-riddle-arc
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: malvakar-riddle-arc-n0
+  parent_id: malvakar-riddle-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+- node_id: malvakar-riddle-arc-n1
+  parent_id: malvakar-riddle-arc
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3

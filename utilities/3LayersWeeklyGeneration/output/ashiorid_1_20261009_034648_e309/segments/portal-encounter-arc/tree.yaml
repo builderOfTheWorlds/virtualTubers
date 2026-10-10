@@ -1,0 +1,150 @@
+portal-encounter-arc:
+  node_id: portal-encounter-arc
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The second mark leads back to the ruins of the manor's grounds, now overgrown
+    wi
+  summary: The second mark leads back to the ruins of the manor's grounds, now overgrown
+    with strange, silver flora. A dying wizard lies at the threshold of a shimmering
+    tear in the air, his robes scorched with Bahadur sigils. He gasps a warning about
+    the 'harvest' before his body crumbles to ash, leaving behind a journal filled
+    with calculations on energy storage and a single, glowing rune. As the party studies
+    the rune, the moonwell beneath the ruins flares with light, and the seal holds,
+    preserving the last dregs of magic in the world.
+  continuity_in: The map draws the second mark, which points toward the town's unregistered
+    night.
+  continuity_out: The wizard's warning reveals the Bahadur's endgame; the seal holds,
+    confirming the current timeline.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - portal-encounter-arc-n0
+  - portal-encounter-arc-n1
+  slots: null
+portal-encounter-arc-n0:
+  node_id: portal-encounter-arc-n0
+  parent_id: portal-encounter-arc
+  order: 0
+  depth: 1
+  title: The Silver Overgrowth & The Dying Herald
+  summary: The party navigates the overgrown manor grounds, now reclaimed by strange
+    silver flora. They discover a dying wizard at the edge of a shimmering dimensional
+    tear, his robes marked with Bahadur sigils. With his last breath, he warns of
+    an impending 'harvest' before crumbling to ash, leaving behind a cryptic journal
+    of energy calculations and a single glowing rune.
+  continuity_in: The map draws the second mark, which points toward the town's unregistered
+    night.
+  continuity_out: The party turns their attention to the glowing rune left by the
+    wizard, sensing it holds the key to the moonwell's reaction.
+  target_words: 408
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-encounter-arc-n0-001
+    kind: ambient
+    prompt: The path winds back to the manor grounds, now swallowed by strange silver
+      flora that hums with residual energy.
+    lore:
+    - moonwells
+    participants:
+    - Leena
+    - Vigil
+    sensitivity: none
+    depends_on: []
+  - slot_id: portal-encounter-arc-n0-002
+    kind: ambient
+    prompt: At the threshold of a shimmering tear, a dying wizard collapses. His robes
+      bear scorched Bahadur sigils, and he gasps a fractured warning about the coming
+      'harvest' before his body turns to ash.
+    lore:
+    - the-bahadur
+    participants:
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n0-003
+    kind: spine
+    scene_ref: portal-encounter
+    participants:
+    - gm
+    - Leena
+  - slot_id: portal-encounter-arc-n0-004
+    kind: ambient
+    prompt: The party gathers around the glowing rune left in the ashes. As fingers
+      brush its surface, the moonwell beneath the ruins flares, and the ancient seal
+      holds firm, preserving the last dregs of magic in the world.
+    lore:
+    - moonwells
+    participants:
+    - Vigil
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+portal-encounter-arc-n1:
+  node_id: portal-encounter-arc-n1
+  parent_id: portal-encounter-arc
+  order: 1
+  depth: 1
+  title: The Rune's Resonance & The Held Seal
+  summary: As the party examines the wizard's rune, it resonates with the ancient
+    moonwell buried beneath the ruins. The well erupts in a surge of radiant light,
+    activating a dormant magical seal. The barrier stabilizes, successfully preserving
+    the final reserves of ambient magic in the world against the coming harvest.
+  continuity_in: The party turns their attention to the glowing rune left by the wizard,
+    sensing it holds the key to the moonwell's reaction.
+  continuity_out: The wizard's warning reveals the Bahadur's endgame; the seal holds,
+    confirming the current timeline.
+  target_words: 292
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: portal-encounter-arc-n1-001
+    kind: ambient
+    prompt: The path winds back to the manor ruins, now swallowed by strange silver
+      flora that chimes in the wind. At the threshold of a shimmering tear in the
+      air, a dying wizard gasps a warning about the harvest, his robes scorched with
+      the dark sigils of the Bahadur. As his body crumbles to ash, he leaves behind
+      a journal and a single glowing rune.
+    lore:
+    - the-bahadur
+    - moonwells
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    sensitivity: tone
+    depends_on: []
+  - slot_id: portal-encounter-arc-n1-002
+    kind: ambient
+    prompt: The party gathers close, examining the glowing rune left in the wizard's
+      wake. As fingers brush its edges, a deep resonance hums through the stone, pulling
+      at the ancient magic buried below. The air grows heavy with ozone and old power,
+      waiting for the next spark.
+    lore:
+    - moonwells
+    - the-event
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
+    - sodacan_bob
+    sensitivity: none
+    depends_on: []
+  - slot_id: portal-encounter-arc-n1-003
+    kind: spine
+    scene_ref: magic-retained
+    participants:
+    - gm
+    - Leena
+    - Vigil
+    - chadwick
