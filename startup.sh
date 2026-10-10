@@ -384,6 +384,13 @@ if [ "${RECORDING_TAP_ENABLED}" = "1" ] || [ "${RECORDING_TAP_ENABLED}" = "true"
     log "Recording tap enabled → ${RECORDING_TAP_URL} (docs/stream_recorder.md)"
     RECORD_TAP_ARGS=(--record-tap-url "${RECORDING_TAP_URL}")
 fi
+# Two-process broadcaster (stream_supervisor.SplitBroadcast): a live Pulse
+# input in the same ffmpeg as x11grab cost 50-80% of captured frames.
+SPLIT_CAPTURE_ARGS=()
+if [ "${STREAM_SPLIT_CAPTURE:-0}" = "1" ] || [ "${STREAM_SPLIT_CAPTURE:-0}" = "true" ]; then
+    log "Split broadcaster enabled (capture and audio mux in separate ffmpeg processes)"
+    SPLIT_CAPTURE_ARGS=(--split-capture)
+fi
 python3 /app/stream_supervisor.py \
     --config "${CONFIG_PATH}" \
     --rtmp-url "${STREAM_RTMP_URL}" \
@@ -392,7 +399,8 @@ python3 /app/stream_supervisor.py \
     --capture-resolution "${CAPTURE_RESOLUTION}" \
     --display "${DISPLAY}" \
     "${LOCAL_PREVIEW_ARGS[@]}" \
-    "${RECORD_TAP_ARGS[@]}"
+    "${RECORD_TAP_ARGS[@]}" \
+    "${SPLIT_CAPTURE_ARGS[@]}"
 
 log "Stream supervisor exited. Cleaning up."
 # AGENT_PID is the restart-on-crash WRAPPER (§7), not agent.py itself — kill

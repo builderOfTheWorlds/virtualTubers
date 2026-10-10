@@ -54,7 +54,7 @@ DEFAULT_TIMEOUT_S = 5.0
 
 def render_worker_main(cmd_q, result_q, shm_name, shape,
                        character_params, width, height, view_dist,
-                       angle_speed, background=None):
+                       angle_speed, background=None, breath_scale=1.0):
     """Entry point for the child process (must be a module-level function
     — multiprocessing's 'spawn' context pickles a reference to it, which
     only works for something importable, not a closure or lambda).
@@ -79,7 +79,7 @@ def render_worker_main(cmd_q, result_q, shm_name, shape,
 
     source = FrameSource(character_params, width=width, height=height,
                          view_dist=view_dist, angle_speed=angle_speed,
-                         background=background)
+                         background=background, breath_scale=breath_scale)
     shm = shared_memory.SharedMemory(name=shm_name)
     out = np.ndarray(shape, dtype=np.uint8, buffer=shm.buf)
 
@@ -136,7 +136,8 @@ class GPURenderWorker:
     """
 
     def __init__(self, character_params, width, height, view_dist,
-                angle_speed, timeout_s=DEFAULT_TIMEOUT_S, background=None):
+                angle_speed, timeout_s=DEFAULT_TIMEOUT_S, background=None,
+                breath_scale=1.0):
         from multiprocessing import shared_memory
         self.width = width
         self.height = height
@@ -160,7 +161,7 @@ class GPURenderWorker:
             target=render_worker_main,
             args=(self._cmd_q, self._result_q, self._shm.name, self._shape,
                   character_params, width, height, view_dist, angle_speed,
-                  background),
+                  background, breath_scale),
             daemon=True,
         )
         self._proc.start()

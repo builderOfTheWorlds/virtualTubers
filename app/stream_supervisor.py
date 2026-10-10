@@ -276,6 +276,36 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     to a port nobody is listening on just drops, so the tap costs one
     loopback datagram copy per packet and never blocks the broadcast.
     """
+    p = _ffmpeg_parts(rtmp_url, stream_key, resolution, capture_resolution,
+                      use_gpu, local_preview_url, music_source, music_duck,
+                      record_tap_url)
+    return [
+        "ffmpeg",
+        "-thread_queue_size", str(video_thread_queue_size(p["capture_resolution"])),
+        "-f", "x11grab",
+        "-video_size", p["capture_resolution"],
+        "-framerate", "30",
+        "-i", display,
+        *p["audio_input"],
+        *p["music_args"],
+        *p["scale_filter"],
+        *p["encode_args"],
+        *AUDIO_ENCODE_ARGS,
+        *RECONNECT_ARGS,
+        *p["output_args"],
+    ]
+
+
+AUDIO_ENCODE_ARGS = ("-c:a", "aac", "-b:a", "128k", "-ar", "44100")
+RECONNECT_ARGS = ("-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5")
+
+
+def _ffmpeg_parts(rtmp_url, stream_key, resolution, capture_resolution,
+                  use_gpu, local_preview_url, music_source, music_duck,
+                  record_tap_url):
+    """The argument groups build_ffmpeg_cmd() and SplitBroadcast assemble:
+    audio inputs (+ music graph), video scale/encode, and the output/tee
+    tail. One source so both broadcaster shapes always stream identically."""
     if capture_resolution is None:
         capture_resolution = resolution
     if use_gpu is None:
@@ -302,17 +332,25 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     output_w, output_h = resolution.split("x", 1)
 
     if use_gpu:
-        # format=nv12 before hwupload_cuda: scale_cuda/nvenc need a pixel
-        # format they can actually upload to the GPU — the raw x11grab
-        # capture comes out as bgr0, which neither accepts directly
-        # (confirmed on gx10: omitting this raises "Impossible to
-        # convert between the formats supported by the filter"). This
-        # conversion IS still a CPU step either way — small relative to
-        # the scale+encode work it unblocks moving to the GPU.
+        # Without a resize, upload the raw bgr0 capture and let NVENC do the
+        # RGB->YUV conversion on the GPU. The old `format=nv12` here was a
+        # CPU swscale pass over every 1080p frame: measured 2026-10-09 at
+        # ~0.8 of a core per channel (7.0s user CPU per 10s of capture) vs
+        # ~0.07 for this path (0.15s), with identical output (h264 Main,
+        # yuv420p, same colours). Across nine channels that conversion was
+        # what pushed the 2-CPU avatar workers into cgroup throttling (gm:
+        # 41% of periods throttled), which froze the 3D heads for 5-frame
+        # stretches on air.
+        #
+        # The scale path keeps format=nv12: scale_cuda in this ffmpeg (4.4)
+        # does not accept bgr0 (on gx10, omitting it there raised
+        # "Impossible to convert between the formats supported by the
+        # filter"). Plain hwupload_cuda -> h264_nvenc with bgr0 was verified
+        # in the worker image on 2026-10-09.
         scale_filter = (
             ["-vf", f"format=nv12,hwupload_cuda,scale_cuda={output_w}:{output_h}"]
             if needs_scale else
-            ["-vf", "format=nv12,hwupload_cuda"]
+            ["-vf", "hwupload_cuda"]
         )
         encode_args = [
             "-c:v", "h264_nvenc",
@@ -422,25 +460,195 @@ def build_ffmpeg_cmd(rtmp_url, stream_key, resolution, display,
     else:
         output_args = ["-f", "flv", primary_output]
 
-    return [
-        "ffmpeg",
-        "-thread_queue_size", str(video_thread_queue_size(capture_resolution)),
-        "-f", "x11grab",
-        "-video_size", capture_resolution,
-        "-framerate", "30",
-        "-i", display,
-        *audio_input,
-        *music_args,
-        *scale_filter,
-        *encode_args,
-        "-c:a", "aac",
-        "-b:a", "128k",
-        "-ar", "44100",
-        "-reconnect", "1",
-        "-reconnect_streamed", "1",
-        "-reconnect_delay_max", "5",
-        *output_args,
-    ]
+    return {
+        "capture_resolution": capture_resolution,
+        "audio_input": audio_input,
+        "music_args": music_args,
+        "audio_map": audio_map,
+        "scale_filter": scale_filter,
+        "encode_args": encode_args,
+        "output_args": output_args,
+    }
+
+
+#: Loopback port the split broadcaster's capture half sends encoded video to.
+#: Each worker container has its own network namespace (bridge network), so
+#: the same port in every container never collides; it only has to differ
+#: from the recording tap (udp://127.0.0.1:23000).
+SPLIT_VIDEO_PORT = 23100
+# Default picture delay for the split broadcaster: the measured Pulse voice
+# latency (~1.75 s) less the ~50 ms the tiles take to start moving.
+SPLIT_VIDEO_DELAY_MS = 1700
+#: UDP receive FIFO for the mux half, in 188-byte TS packets: 50000 is ~9 MB,
+#: about 16 s of 4.5 Mbps video. It only fills if the mux stalls.
+SPLIT_UDP_FIFO_PACKETS = 50000
+
+
+class SplitBroadcast:
+    """Two-process broadcaster: CAPTURE (x11grab -> encode -> loopback UDP)
+    and MUX (that video, copied, + Pulse voice/music -> Twitch/tee).
+
+    WHY (measured 2026-10-09 on the roundtable, 15 s windows, 450 frames
+    expected): with any live Pulse input in the same ffmpeg as x11grab,
+    capture got 52-92 frames (voice+music) or 109-202 (voice only). That
+    was ffmpeg 4.4 AND 9, with every fragment/wallclock/input-order
+    variant. A synthetic lavfi audio input got 450, and so did video alone.
+    Twitch still showed "30 fps" because the gaps are padded, so the heads
+    froze and jumped. Splitting the processes means nothing ever makes the
+    capture wait on audio: it held 720/720 frames in the same test.
+
+    LIP SYNC: the two halves can't share ffmpeg's per-input start-time
+    normalisation (inputs open at different moments, so video vs audio
+    would drift by the UDP probe time). Both halves therefore run -copyts
+    on the WALL CLOCK, which x11grab and the pulse demuxer both stamp
+    with, minus one shared `base` chosen at spawn time (`commands(base)`).
+    So a frame and the audio captured at the same instant carry the same
+    timestamp, whichever process saw them first.
+    """
+
+    def __init__(self, rtmp_url, stream_key, resolution, display,
+                 capture_resolution=None, use_gpu=None, local_preview_url=None,
+                 music_source=None, music_duck=None, record_tap_url=None,
+                 video_port=SPLIT_VIDEO_PORT, video_delay_ms=0):
+        self.display = display
+        self.video_port = int(video_port)
+        self.video_delay_ms = max(0, int(video_delay_ms or 0))
+        self.parts = _ffmpeg_parts(rtmp_url, stream_key, resolution,
+                                   capture_resolution, use_gpu,
+                                   local_preview_url, music_source,
+                                   music_duck, record_tap_url)
+
+    def commands(self, base):
+        """(capture_cmd, mux_cmd) for the shared wall-clock `base` (seconds)."""
+        p = self.parts
+        offset = f"-{float(base):.6f}"
+        # The voice reaches the mux ~1.75 s after paplay starts it (Pulse
+        # playback -> null sink -> monitor latency, steady +1.64..+1.79 s on
+        # live roundtable lines, 2026-10-10), while the text pane and mouth
+        # start at the paplay launch. Stamping the video that much LATER
+        # holds the picture back to meet its voice; Twitch adds the same
+        # amount of stream latency, which nobody watching can see.
+        video_offset = f"{self.video_delay_ms / 1000.0 - float(base):.6f}"
+        capture = [
+            "ffmpeg",
+            "-thread_queue_size", str(video_thread_queue_size(p["capture_resolution"])),
+            "-itsoffset", video_offset,
+            "-f", "x11grab",
+            "-video_size", p["capture_resolution"],
+            "-framerate", "30",
+            "-i", self.display,
+            "-copyts",
+            *p["scale_filter"],
+            *p["encode_args"],
+            "-an",
+            # No mpegts mux preload/delay: those shift every PTS (~1.4 s),
+            # which would break the shared-base alignment with the audio.
+            "-muxdelay", "0", "-muxpreload", "0",
+            "-f", "mpegts",
+            f"udp://127.0.0.1:{self.video_port}?pkt_size=1316",
+        ]
+        audio_inputs = _offset_audio_inputs(p["audio_input"], offset)
+        music_inputs = _offset_audio_inputs(p["music_args"], offset)
+        output_args = list(p["output_args"])
+        if "-map" not in output_args:
+            # Plain single flv output: with two inputs, map explicitly.
+            output_args = ["-map", "0:v:0", "-map", p["audio_map"], *output_args]
+        mux = [
+            "ffmpeg",
+            "-copyts",
+            "-thread_queue_size", "512",
+            "-i", (f"udp://127.0.0.1:{self.video_port}?overrun_nonfatal=1"
+                   f"&fifo_size={SPLIT_UDP_FIFO_PACKETS}&buffer_size=8388608"),
+            *audio_inputs,
+            *music_inputs,
+            "-c:v", "copy",
+            # FLV's H.264 codec tag. Copied from MPEG-TS the stream keeps
+            # tag 27, and FLV under tee (no codec-tag table to remap it)
+            # rejects that: "Tag [27][0][0][0] incompatible with output
+            # codec id" -> mux exits 1 at header, crash-looping the
+            # broadcast (first roundtable deploy, 2026-10-09). Plain -f flv
+            # remaps it by itself. Both encoders here emit H.264.
+            "-tag:v", "7",
+            *AUDIO_ENCODE_ARGS,
+            *RECONNECT_ARGS,
+            *output_args,
+        ]
+        return capture, mux
+
+
+def _offset_audio_inputs(args, offset):
+    """Insert `-itsoffset <offset>` before every `-f pulse` input, so Pulse's
+    wall-clock timestamps land on the same base as the captured video. The
+    anullsrc fallback (lavfi) has no wall clock, so it is left alone.
+
+    Do NOT add `-use_wallclock_as_timestamps 1` here: measured on live
+    roundtable lines (2026-10-10) it stamps each Pulse chunk at READ time,
+    making the voice later AND jittery (+1.5..+3.7 s vs +1.64..+1.79 s
+    without), and with a small -fragment_size it garbled the audio. The
+    steady Pulse latency is compensated on the video side instead
+    (SplitBroadcast video_delay_ms)."""
+    out = []
+    i = 0
+    while i < len(args):
+        if args[i] == "-f" and i + 1 < len(args) and args[i + 1] == "pulse":
+            out += ["-itsoffset", offset]
+        out.append(args[i])
+        i += 1
+    return out
+
+
+class PairedProcess:
+    """A capture+mux ffmpeg pair behaving like one Popen for supervise_step/
+    stop_process: poll()/returncode/terminate()/wait()/kill(). Either half
+    exiting tears down the other (a mux with no video or a capture with no
+    consumer is useless) so the supervisor's normal restart path rebuilds
+    BOTH with a fresh shared timestamp base."""
+
+    def __init__(self, procs, names=("capture", "mux")):
+        self.procs = list(procs)
+        self.names = list(names)
+        self.returncode = None
+
+    def poll(self):
+        if self.returncode is not None:
+            return self.returncode
+        for name, proc in zip(self.names, self.procs):
+            code = proc.poll()
+            if code is not None:
+                log(f"WARN event=split_half_exited half={name} code={code} action=stop_other_half")
+                stop_process(self)
+                self.returncode = code
+                return code
+        return None
+
+    def terminate(self):
+        for proc in self.procs:
+            if proc.poll() is None:
+                proc.terminate()
+
+    def kill(self):
+        for proc in self.procs:
+            if proc.poll() is None:
+                proc.kill()
+
+    def wait(self, timeout=None):
+        deadline = None if timeout is None else time.monotonic() + timeout
+        codes = []
+        for proc in self.procs:
+            remaining = None if deadline is None else max(0.0, deadline - time.monotonic())
+            codes.append(proc.wait(timeout=remaining))
+        return codes[0]
+
+
+def spawn_broadcaster(cmd, now=time.time):
+    """Popen for a plain command list; a PairedProcess for a SplitBroadcast.
+    The mux starts first so it is already listening when video arrives."""
+    if isinstance(cmd, SplitBroadcast):
+        capture_cmd, mux_cmd = cmd.commands(base=now())
+        mux = subprocess.Popen(mux_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        capture = subprocess.Popen(capture_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return PairedProcess([capture, mux])
+    return subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 def decide_action(enabled, proc_running):
@@ -479,7 +687,7 @@ def supervise_step(control, worker_id, proc, ffmpeg_cmd, force_off=False):
 
     if action == "start":
         log("starting ffmpeg broadcaster")
-        proc = subprocess.Popen(ffmpeg_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        proc = spawn_broadcaster(ffmpeg_cmd)
     elif action == "stop":
         if override:
             log(f"WARN event=stop_ffmpeg reason=local_override worker_id={worker_id} "
@@ -560,6 +768,26 @@ def main():
             "startup.sh unless RECORDING_TAP_ENABLED=0; omitted = command unchanged."
         ),
     )
+    parser.add_argument(
+        "--split-capture",
+        action="store_true",
+        help=(
+            "Run the broadcaster as two ffmpeg processes (capture+encode, then "
+            "mux with Pulse audio) so live audio input can never stall screen "
+            "capture (SplitBroadcast). Set by startup.sh when "
+            "STREAM_SPLIT_CAPTURE=1; omitted = the single-process command."
+        ),
+    )
+    parser.add_argument(
+        "--split-video-delay-ms",
+        type=int,
+        default=int(os.environ.get("STREAM_SPLIT_VIDEO_DELAY_MS") or SPLIT_VIDEO_DELAY_MS),
+        help=(
+            "Split broadcaster only: stamp the video this much later so it "
+            "meets the Pulse-delayed voice (env STREAM_SPLIT_VIDEO_DELAY_MS; "
+            f"default {SPLIT_VIDEO_DELAY_MS}). 0 = no compensation."
+        ),
+    )
     args = parser.parse_args()
 
     capture_resolution = args.capture_resolution or args.resolution
@@ -569,13 +797,20 @@ def main():
     worker_id = resolve("WORKER_ID", bus_config.get("worker_id"), "worker")
     control = WorkerControl.from_config(config)
     music_source, music_duck = resolve_music_source(config)
-    ffmpeg_cmd = build_ffmpeg_cmd(
+    builder = build_ffmpeg_cmd
+    if args.split_capture:
+        def builder(*a, **kw):
+            return SplitBroadcast(*a, video_delay_ms=args.split_video_delay_ms, **kw)
+    ffmpeg_cmd = builder(
         args.rtmp_url, args.stream_key, args.resolution, args.display,
         capture_resolution=capture_resolution,
         local_preview_url=args.local_preview_url,
         music_source=music_source, music_duck=music_duck,
         record_tap_url=args.record_tap_url,
     )
+    if args.split_capture:
+        log(f"{worker_id} split broadcaster: capture -> udp://127.0.0.1:{SPLIT_VIDEO_PORT} -> mux (+audio), "
+            f"video delayed {args.split_video_delay_ms} ms to meet the voice")
     if music_source:
         log(f"{worker_id} mixing background music from {music_source} (ducked under voices)")
 

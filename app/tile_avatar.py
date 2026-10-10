@@ -291,7 +291,23 @@ def resolve_slot_character_params(config, slot):
 #: capture frames — visible judder on every head turn. 15 gives a steady
 #: 2-frame hold. (12 also only ever reached ~6fps on air because the driver
 #: slept a full interval after each render; see frame_pacer.py.)
-TILE_AVATAR_FPS = 15
+#:
+#: Raised 15 -> 30 on 2026-10-09. Once the broadcaster stopped doing its
+#: pixel-format conversion on the CPU (stream_supervisor.py), the
+#: roundtable had headroom, and on Twitch the 15fps turns and mouth moves
+#: read as choppy next to the 30fps text panes. The roundtable seats 5
+#: heads now, not 8.
+TILE_AVATAR_FPS = 30
+
+#: Idle breathing amplitude for tile heads (codec_avatar FrameSource
+#: `breath_scale`). 0 = off. At ~100 px the sway moves the head about 0.1 px
+#: a frame. Measured 2026-10-09 against the Twitch HLS: the encoder skipped
+#: that motion for most of each 2 s GOP and caught up at the keyframe, so
+#: every head sat frozen and then twitched. That happened with every NVENC
+#: preset, at every bitrate, and even at constqp 18. Solo 549x470 heads
+#: keep their sway.
+# TILE_BREATH_SCALE = 0.0
+TILE_BREATH_SCALE = 100.0
 
 #: Window background for a tile head. Matches the Solarized Dark base03 the
 #: tile frame is drawn on, so the square window reads as part of the tile
@@ -393,6 +409,7 @@ def build_tile_avatar_config(character_params, rect, fps=TILE_AVATAR_FPS,
             "transparent": bool(transparent),
             "gpu_subprocess": True,
             "fps": fps,
+            "breath_scale": TILE_BREATH_SCALE,
         },
     }
 

@@ -667,6 +667,11 @@ services:
       # The tiles render 3D avatar heads, so this container needs the GPU.
       NVIDIA_DRIVER_CAPABILITIES: graphics,compute,utility
       WORKER_ID: roundtable
+      # Two-process broadcaster (capture never waits on Pulse audio; see
+      # stream_supervisor.SplitBroadcast). Roundtable first; 0 reverts.
+      STREAM_SPLIT_CAPTURE: ${ROUNDTABLE_STREAM_SPLIT_CAPTURE:-1}
+      # Picture delay (ms) that lines the video up with the Pulse-delayed voice.
+      STREAM_SPLIT_VIDEO_DELAY_MS: ${ROUNDTABLE_STREAM_SPLIT_VIDEO_DELAY_MS:-1700}
       CAPTURE_RESOLUTION: ${CAPTURE_RESOLUTION:-1920x1080}
       FONT_SIZE: ${FONT_SIZE:-7}
       LAYOUT_PRESET: ${ROUNDTABLE_LAYOUT_PRESET:-roundtable}

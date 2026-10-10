@@ -134,7 +134,8 @@ class FrameSource:
     """
 
     def __init__(self, character_params, width=WIDTH, height=HEIGHT,
-                view_dist=3.25, angle_speed=0.0, angle_deg=15.0, background=_UNSET):
+                view_dist=3.25, angle_speed=0.0, angle_deg=15.0, background=_UNSET,
+                breath_scale=1.0):
         from codec_head import build_codec_head
         from character_schema import resolve_params
         from pixel_raster import parse_background
@@ -161,6 +162,15 @@ class FrameSource:
         self._breath_phase = random.uniform(0.0, 2 * math.pi)
         self._breath_period = BREATH_PERIOD_S * random.uniform(
             1.0 - BREATH_PERIOD_JITTER, 1.0 + BREATH_PERIOD_JITTER)
+        # Multiplier on the idle sway amplitude; 0 turns it off. Roundtable
+        # tiles use 0 (tile_avatar.TILE_BREATH_SCALE): at tile size the sway
+        # moves the head ~0.1 px a frame, which H.264 at stream bitrates
+        # codes as "no change" and then releases as a jump at each keyframe,
+        # so viewers saw frozen heads twitching every 1-2 s.
+        try:
+            self._breath_scale = max(0.0, float(breath_scale))
+        except (TypeError, ValueError):
+            self._breath_scale = 1.0
         # character_params kept (not just the built mesh) — mouth_open/
         # emotion morphing (docs/avatar_emotion_design.md) rebuilds the
         # head fresh every render_frame() call, since _add_mouth/_add_brows/
@@ -188,7 +198,7 @@ class FrameSource:
         """(yaw, pitch, dist) sinusoidal offsets for the current instant,
         using this instance's randomized phase/period."""
         phase = (time.monotonic() % self._breath_period) / self._breath_period
-        breath = math.sin(phase * 2 * math.pi + self._breath_phase)
+        breath = math.sin(phase * 2 * math.pi + self._breath_phase) * self._breath_scale
         return (breath * BREATH_YAW_RAD, breath * BREATH_PITCH_RAD,
                 breath * BREATH_DIST)
 
@@ -376,6 +386,7 @@ class CodecAvatarProvider(AvatarProvider):
         self._view_dist = cfg.get("view_dist", 3.25)
         self._angle_speed = cfg.get("angle_speed", 0.0)
         self._angle_deg = cfg.get("angle_deg", 15.0)
+        self._breath_scale = cfg.get("breath_scale", 1.0)
         # Defaults to the console grey (pixel_raster.CONSOLE_BG) so the
         # window blends into the terminal instead of punching a black
         # rectangle through the layout; `background: none` in config keeps
@@ -417,6 +428,7 @@ class CodecAvatarProvider(AvatarProvider):
                     view_dist=cfg.get("view_dist", 3.25),
                     angle_speed=cfg.get("angle_speed", 0.0),
                     background=self._source_background,
+                    breath_scale=self._breath_scale,
                 )
                 print(
                     "[avatar] codec_avatar: GPU rendering in a separate "
@@ -435,6 +447,7 @@ class CodecAvatarProvider(AvatarProvider):
                 angle_speed=cfg.get("angle_speed", 0.0),
                 angle_deg=cfg.get("angle_deg", 15.0),
                 background=self._source_background,
+                breath_scale=self._breath_scale,
             )
 
         import os
@@ -608,6 +621,7 @@ class CodecAvatarProvider(AvatarProvider):
                     view_dist=self._view_dist, angle_speed=self._angle_speed,
                     angle_deg=self._angle_deg,
                     background=getattr(self, "_source_background", self._background),
+                    breath_scale=getattr(self, "_breath_scale", 1.0),
                 )
                 try:
                     if hasattr(old_source, "close"):

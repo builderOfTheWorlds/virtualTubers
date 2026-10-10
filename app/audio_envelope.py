@@ -81,13 +81,27 @@ def compute_envelope(wav_path, rate_hz=DEFAULT_RATE_HZ):
 def sample_envelope(envelope, rate_hz, elapsed_s):
     """Envelope value at `elapsed_s` seconds into playback. 0.0 for an
     empty envelope, a negative elapsed time, or once elapsed_s has run
-    past the envelope's own length (line finished — closed mouth)."""
-    if not envelope or elapsed_s < 0:
+    past the envelope's own length (line finished — closed mouth).
+
+    Linearly interpolated between window CENTRES, not a step lookup. The
+    envelope is 20Hz and the heads render at 30fps (15 on roundtable
+    tiles), so a step lookup held each value for an alternating 1,2,1,2
+    frames and snapped the jaw between them. That read as choppy mouth
+    motion on stream even when the head itself rendered at a full 30fps.
+    At a window's centre the result is exactly that window's value."""
+    if not envelope or elapsed_s < 0 or rate_hz <= 0:
         return 0.0
-    index = int(elapsed_s * rate_hz)
-    if index >= len(envelope):
+    n = len(envelope)
+    if int(elapsed_s * rate_hz) >= n:
         return 0.0
-    return float(envelope[index])
+    pos = elapsed_s * rate_hz - 0.5
+    if pos <= 0:
+        return float(envelope[0])
+    lo = int(pos)
+    if lo >= n - 1:
+        return float(envelope[n - 1])
+    frac = pos - lo
+    return float(envelope[lo]) * (1.0 - frac) + float(envelope[lo + 1]) * frac
 
 
 __all__ = ["DEFAULT_RATE_HZ", "compute_envelope", "sample_envelope"]

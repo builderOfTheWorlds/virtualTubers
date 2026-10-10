@@ -4,6 +4,8 @@ import sys
 import wave
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
 from audio_envelope import DEFAULT_RATE_HZ, compute_envelope, sample_envelope  # noqa: E402
@@ -98,7 +100,31 @@ def test_a_zero_length_wav_returns_an_empty_envelope(tmp_path):
 def test_sample_envelope_reads_the_right_index():
     envelope = [0.1, 0.5, 0.9, 0.3]
 
-    assert sample_envelope(envelope, rate_hz=1, elapsed_s=2.0) == 0.9
+    # A window's centre returns exactly that window's value.
+    assert sample_envelope(envelope, rate_hz=1, elapsed_s=2.5) == 0.9
+
+
+def test_sample_envelope_interpolates_between_window_centres():
+    envelope = [0.1, 0.5, 0.9, 0.3]
+
+    assert sample_envelope(envelope, rate_hz=1, elapsed_s=2.0) == pytest.approx(0.7)
+    assert sample_envelope(envelope, rate_hz=1, elapsed_s=1.75) == pytest.approx(0.6)
+
+
+def test_sample_envelope_holds_the_edge_values_inside_the_clip():
+    envelope = [0.1, 0.5, 0.9, 0.3]
+
+    assert sample_envelope(envelope, rate_hz=1, elapsed_s=0.2) == 0.1
+    assert sample_envelope(envelope, rate_hz=1, elapsed_s=3.9) == 0.3
+
+
+def test_sample_envelope_changes_every_30fps_frame():
+    """The stair-step regression: a 20Hz envelope sampled at 30fps must not
+    repeat a value on consecutive frames while the envelope is moving."""
+    envelope = [i / 40 for i in range(40)]  # steadily rising
+    samples = [sample_envelope(envelope, 20, f / 30) for f in range(15, 45)]
+
+    assert all(b > a for a, b in zip(samples, samples[1:]))
 
 
 def test_sample_envelope_returns_zero_past_the_end():

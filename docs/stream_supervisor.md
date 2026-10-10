@@ -57,6 +57,25 @@ via `log-shipper`. ffmpeg's stdout/stderr is also suppressed, preventing
 its startup output (which includes the full command line with credentials)
 from being logged to container logs.
 
+**Split broadcaster (`--split-capture`, `STREAM_SPLIT_CAPTURE=1`).** It runs
+as two ffmpeg processes. CAPTURE does x11grab, then encode, then sends
+MPEG-TS to `udp://127.0.0.1:23100` with no audio. MUX takes that video with
+`-c:v copy`, adds the Pulse voice/music graph, and outputs to Twitch (and the
+tee). Measured 2026-10-09 on the roundtable, in 15 s windows where 450 frames
+were expected: any live Pulse input in the same ffmpeg as x11grab cut capture
+to 52-92 frames with voice+music, or 109-202 with voice only. That happened on
+ffmpeg 4.4 and 9 alike. Twitch still reported 30 fps (the gaps are padded),
+so the heads froze and then jumped. The split holds 30.0 fps with zero gaps.
+Both halves run `-copyts` against one wall-clock base chosen at spawn
+(`-itsoffset -<base>` on x11grab and on every Pulse input). Each frame and
+each audio sample keeps its capture-time timestamp, whichever process saw it
+first. Flash+beep test: video trails audio by ~80 ms in steady state. The
+single-process command has audio ~655 ms late. Expect ~15 s of settling after
+each start. `PairedProcess` makes the pair look like one Popen, so
+start/stop/kill-file/SIGUSR1 behave as before. If either half exits, the
+other is stopped and the normal restart rebuilds both. Enabled on the
+roundtable only (`ROUNDTABLE_STREAM_SPLIT_CAPTURE`, default 1).
+
 ## Signature
 
 ```python
@@ -131,6 +150,32 @@ assert decide_action(enabled=False, proc_running=True) == "stop"
 
 ## Changelog
 
+- v1.5.1 (2026-10-10) — Split broadcaster lip sync: the voice reached
+  the mux 1.64-1.79 s after its text and mouth (Pulse playback -> null
+  sink -> monitor latency, measured per line on live roundtable output by
+  cross-correlating each line's WAV). `SplitBroadcast(video_delay_ms=)`
+  stamps the captured video that much later. `main()` sets it from
+  `--split-video-delay-ms` / `STREAM_SPLIT_VIDEO_DELAY_MS`, default
+  `SPLIT_VIDEO_DELAY_MS = 1700`. Live result: voice vs line start went
+  from +1.65..+1.79 s to -48..+93 ms. Rejected alternative:
+  `-use_wallclock_as_timestamps 1` on the Pulse inputs made the voice
+  later and jittery (+1.5..+3.7 s), and with a small `-fragment_size` it
+  garbled the audio. +4 tests.
+- v1.5.0 (2026-10-09) — Adds `SplitBroadcast`, `PairedProcess`,
+  `spawn_broadcaster`, `--split-capture` and `STREAM_SPLIT_CAPTURE`: a
+  two-process broadcaster so Pulse audio can't stall screen capture (see
+  Overview). `build_ffmpeg_cmd` now assembles its command from
+  `_ffmpeg_parts()`; its output is byte-identical across all 64 option
+  combinations. The mux sets `-tag:v 7`: copied from MPEG-TS the video
+  keeps tag 27, which FLV under tee rejects at header, so the first live
+  deploy crash-looped the mux. +16 tests.
+- v1.4.0 (2026-10-09) — GPU path without a resize now uses `-vf hwupload_cuda`
+  (raw bgr0 to NVENC) instead of `format=nv12,hwupload_cuda`. The nv12 step
+  was a CPU swscale pass costing ~0.8 core per channel (7.0 s user CPU per
+  10 s of 1080p30 capture, vs 0.15 s now). Output is unchanged: h264 Main,
+  yuv420p, same colours. It was pushing the 2-CPU avatar workers into cgroup
+  throttling, which froze the 3D heads on air. The scale path still uses
+  nv12 because scale_cuda does not accept bgr0 in ffmpeg 4.4.
 - v1.x (2026-09-27) — `build_ffmpeg_cmd(record_tap_url=None)` / `--record-tap-url`:
   optional third tee leg `[f=mpegts:onfail=ignore]udp://…?pkt_size=1316` carrying
   the already-encoded stream to a local UDP port for replay recordings

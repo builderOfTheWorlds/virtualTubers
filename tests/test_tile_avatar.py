@@ -212,11 +212,19 @@ def test_config_always_requests_the_gpu_subprocess():
     assert cfg["codec_avatar"]["gpu_subprocess"] is True
 
 
-def test_config_carries_the_tile_framerate_not_the_provider_default():
-    """Eight simultaneous heads in one container; a tile head is a secondary
-    cue, not the frame's focal point."""
+def test_config_carries_the_tile_framerate():
+    """Tiles render at the capture rate: at 15fps every head turn and mouth
+    move stepped visibly on the roundtable stream."""
     cfg = tile_avatar.build_tile_avatar_config("gm0", (0, 0, 200, 200))
-    assert cfg["codec_avatar"]["fps"] == tile_avatar.TILE_AVATAR_FPS == 15
+    assert cfg["codec_avatar"]["fps"] == tile_avatar.TILE_AVATAR_FPS == 30
+
+
+def test_config_turns_idle_breathing_off_for_tiles():
+    """Sub-pixel idle sway at tile size is coded as 'no change' by the
+    stream encoder and released as a jump at each keyframe, so heads looked
+    frozen and twitchy on Twitch. Tiles hold still at idle instead."""
+    cfg = tile_avatar.build_tile_avatar_config("gm0", (0, 0, 200, 200))
+    assert cfg["codec_avatar"]["breath_scale"] == tile_avatar.TILE_BREATH_SCALE == 0.0
 
 
 def test_tile_framerate_divides_the_30fps_capture_evenly():

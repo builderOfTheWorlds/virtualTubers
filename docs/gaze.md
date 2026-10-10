@@ -118,6 +118,11 @@ Tiles without a 3D head (ASCII faces) ignore gaze entirely.
 
 ## Changelog
 
+- **v1.0.2** (2026-10-09): `mouth_open` interpolates the envelope (through
+  `audio_envelope.sample_envelope`) instead of reading one step. The 20 Hz
+  envelope sampled at 30/15 fps held values for uneven 1-2 frames and
+  snapped the jaw between them, so mouths looked choppy. A window's centre
+  still returns exactly that window's value.
 - **v1.0.1** (2026-10-02): Mouth invariant made explicit and a renderer bug
   fixed. Non-speaking heads' mouths were visibly moving on the live
   roundtable. `mouth_open` was already 0.0 for every non-speaker; the cause

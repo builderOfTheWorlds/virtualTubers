@@ -217,6 +217,18 @@ def test_build_ffmpeg_cmd_use_gpu_true_no_scale_needed_still_uploads_cuda():
     assert "scale_cuda" not in vf  # no resize requested, no scale_cuda needed
 
 
+def test_build_ffmpeg_cmd_gpu_no_scale_skips_cpu_pixel_conversion():
+    """No resize: bgr0 goes straight to the GPU. A `format=nv12` here is a
+    CPU swscale pass over every frame (~0.8 core per channel, measured),
+    which throttled the avatar workers and froze the 3D heads on air."""
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        cmd = build_ffmpeg_cmd(
+            "rtmp://live.twitch.tv/app", "key123", "1920x1080", ":99",
+            use_gpu=True,
+        )
+    assert cmd[cmd.index("-vf") + 1] == "hwupload_cuda"
+
+
 def test_build_ffmpeg_cmd_use_gpu_none_calls_nvenc_available():
     """The default (use_gpu=None) must defer to auto-detection, not
     silently default to either encoder."""
@@ -681,3 +693,178 @@ def test_build_ffmpeg_cmd_record_tap_does_not_change_encode_args():
     plain, tapped = _tap_cmd(), _tap_cmd(record_tap_url="udp://127.0.0.1:23000")
     cut = plain.index("-f", plain.index("-ar"))
     assert tapped[:cut] == plain[:cut]
+
+
+# ── SplitBroadcast / PairedProcess: two-process broadcaster ──────────────────
+BASE = 1791600000.25
+
+
+def _split(music_source="music.monitor", pulse=True, **kwargs):
+    with patch("stream_supervisor.pulse_monitor_available", return_value=pulse):
+        sb = ss.SplitBroadcast("rtmp://live.twitch.tv/app", "key123", "1920x1080", ":106",
+                               use_gpu=True, music_source=music_source, music_duck={}, **kwargs)
+    return sb.commands(base=BASE)
+
+
+def _before(cmd, flag):
+    return cmd[cmd.index(flag) + 1]
+
+
+def test_split_capture_never_reads_audio():
+    """The whole point: a Pulse input in the capture process stalls x11grab."""
+    capture, _ = _split()
+    assert "pulse" not in capture and "lavfi" not in capture
+    assert "-an" in capture and "-filter_complex" not in capture
+    assert capture[-1] == f"udp://127.0.0.1:{ss.SPLIT_VIDEO_PORT}?pkt_size=1316"
+
+
+def test_split_capture_stamps_video_on_the_shared_wall_clock_base():
+    capture, _ = _split()
+    assert "-copyts" in capture
+    assert capture.index("-itsoffset") < capture.index("x11grab") < capture.index("-i")
+    assert _before(capture, "-itsoffset") == f"-{BASE:.6f}"
+    # mpegts preload/delay would shift every PTS off the shared base
+    assert _before(capture, "-muxdelay") == "0" and _before(capture, "-muxpreload") == "0"
+
+
+def test_split_capture_encodes_exactly_like_the_single_process_broadcaster():
+    capture, _ = _split()
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        single = build_ffmpeg_cmd("rtmp://live.twitch.tv/app", "key123", "1920x1080", ":106",
+                                  use_gpu=True, music_source="music.monitor", music_duck={})
+    start = single.index("-vf")
+    encode = single[start:single.index("-c:a")]
+    assert capture[capture.index("-vf"):capture.index("-an")] == encode
+
+
+def test_split_mux_copies_video_and_offsets_every_pulse_input():
+    _, mux = _split()
+    assert "x11grab" not in mux and "h264_nvenc" not in mux
+    assert _before(mux, "-c:v") == "copy" and "-copyts" in mux
+    assert mux[mux.index("-i") + 1].startswith(f"udp://127.0.0.1:{ss.SPLIT_VIDEO_PORT}?")
+    for monitor in ("vout.monitor", "music.monitor"):
+        i = mux.index(monitor)
+        assert mux[i - 5:i - 1] == ["-itsoffset", f"-{BASE:.6f}", "-f", "pulse"]
+
+
+def test_split_mux_keeps_the_music_graph_and_maps_mixed_audio():
+    _, mux = _split()
+    assert "-filter_complex" in mux
+    assert mux[-7:] == ["-map", "0:v:0", "-map", "[aout]", "-f", "flv", "rtmp://live.twitch.tv/app/key123"]
+
+
+def test_split_mux_voice_only_maps_both_inputs_explicitly():
+    """Plain flv output with two inputs needs explicit maps (no auto-select)."""
+    _, mux = _split(music_source=None)
+    assert mux[-7:] == ["-map", "0:v:0", "-map", "1:a:0", "-f", "flv", "rtmp://live.twitch.tv/app/key123"]
+
+
+def test_split_mux_keeps_record_tap_and_twitch_reconnect():
+    _, mux = _split(record_tap_url="udp://127.0.0.1:23000")
+    assert "-f" in mux and "tee" in mux and "+global_header" in mux
+    assert "[f=mpegts:onfail=ignore]udp://127.0.0.1:23000?pkt_size=1316" in mux[-1]
+    assert _before(mux, "-reconnect") == "1"
+
+
+def test_split_mux_silent_fallback_gets_no_offset():
+    """anullsrc has no wall clock; offsetting it would push audio negative."""
+    _, mux = _split(music_source=None, pulse=False)
+    assert "lavfi" in mux and "-itsoffset" not in mux
+
+
+def test_split_video_port_is_configurable():
+    capture, mux = _split(video_port=23101)
+    assert capture[-1].startswith("udp://127.0.0.1:23101?")
+    assert mux[mux.index("-i") + 1].startswith("udp://127.0.0.1:23101?")
+
+
+def _proc(code=None):
+    proc = MagicMock()
+    proc.poll.return_value = code
+    proc.wait.return_value = code if code is not None else 0
+    return proc
+
+
+def test_paired_process_running_while_both_halves_run():
+    pair = ss.PairedProcess([_proc(), _proc()])
+    assert pair.poll() is None and pair.returncode is None
+
+
+def test_paired_process_one_half_exiting_stops_the_other():
+    capture, mux = _proc(), _proc(code=1)
+    pair = ss.PairedProcess([capture, mux])
+    assert pair.poll() == 1 and pair.returncode == 1
+    capture.terminate.assert_called_once()
+    mux.terminate.assert_not_called()  # already dead
+    assert pair.poll() == 1  # sticky; no second teardown
+    capture.terminate.assert_called_once()
+
+
+def test_paired_process_kills_a_half_that_ignores_terminate():
+    import subprocess
+    stuck = _proc()
+    stuck.wait.side_effect = [subprocess.TimeoutExpired("ffmpeg", 1), 0]
+    pair = ss.PairedProcess([stuck, _proc()])
+    ss.stop_process(pair)
+    stuck.terminate.assert_called_once()
+    stuck.kill.assert_called_once()
+
+
+def test_spawn_broadcaster_starts_mux_first_with_one_shared_base():
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        sb = ss.SplitBroadcast("rtmp://x/app", "k", "1920x1080", ":106", use_gpu=True)
+    with patch("stream_supervisor.subprocess.Popen") as popen:
+        pair = ss.spawn_broadcaster(sb, now=lambda: BASE)
+    assert isinstance(pair, ss.PairedProcess)
+    mux_cmd, capture_cmd = (c.args[0] for c in popen.call_args_list)
+    assert "x11grab" not in mux_cmd and "x11grab" in capture_cmd
+    assert _before(capture_cmd, "-itsoffset") == _before(mux_cmd, "-itsoffset") == f"-{BASE:.6f}"
+
+
+def test_spawn_broadcaster_plain_list_is_one_popen():
+    with patch("stream_supervisor.subprocess.Popen") as popen:
+        assert ss.spawn_broadcaster(["ffmpeg"]) is popen.return_value
+    popen.assert_called_once()
+
+
+def test_supervise_step_starts_split_broadcaster_as_a_pair(kill_control):
+    control, _ = kill_control
+    with patch("stream_supervisor.pulse_monitor_available", return_value=True):
+        sb = ss.SplitBroadcast("rtmp://x/app", "k", "1920x1080", ":106", use_gpu=True)
+    with patch("stream_supervisor.subprocess.Popen") as popen:
+        result = ss.supervise_step(control, "roundtable", None, sb)
+    assert isinstance(result, ss.PairedProcess) and popen.call_count == 2
+
+
+def test_split_mux_sets_the_flv_h264_codec_tag():
+    """Copied from MPEG-TS the video keeps tag 27, which FLV-under-tee
+    rejects at header ('Tag [27][0][0][0] incompatible'): the first live
+    deploy crash-looped the mux on exactly that."""
+    _, mux = _split(record_tap_url="udp://127.0.0.1:23000")
+    assert _before(mux, "-tag:v") == "7"
+    assert mux.index("-c:v") < mux.index("-tag:v") < mux.index("tee")
+
+
+def test_split_video_delay_stamps_the_picture_later_than_the_audio():
+    """The voice reaches the mux ~1.75 s after its text/mouth start (Pulse
+    latency); the capture's offset moves the video by video_delay_ms."""
+    capture, mux = _split(video_delay_ms=1700)
+    assert _before(capture, "-itsoffset") == f"{1.7 - BASE:.6f}"
+    assert float(_before(capture, "-itsoffset")) - float(_before(mux, "-itsoffset")) == pytest.approx(1.7)
+
+
+def test_split_video_delay_defaults_to_none_and_rejects_negative():
+    assert _before(_split()[0], "-itsoffset") == f"-{BASE:.6f}"
+    assert _before(_split(video_delay_ms=-500)[0], "-itsoffset") == f"-{BASE:.6f}"
+    assert _before(_split(video_delay_ms=None)[0], "-itsoffset") == f"-{BASE:.6f}"
+
+
+def test_split_mux_never_wallclocks_pulse():
+    """-use_wallclock_as_timestamps on the Pulse inputs made the voice later
+    and jittery on live lines (measured): keep the demuxer's own stamps."""
+    _, mux = _split()
+    assert "-use_wallclock_as_timestamps" not in mux
+
+
+def test_split_video_delay_default_matches_the_measured_latency():
+    assert 1500 <= ss.SPLIT_VIDEO_DELAY_MS <= 1900

@@ -308,11 +308,10 @@ def mouth_open(self_slot, stage, now):
         if 0 <= elapsed <= duration:
             return 0.5 + 0.5 * math.sin(elapsed * 4.5 * 2 * math.pi)
         return 0.0
-    index = int(elapsed * rate)
-    if index >= len(envelope):
-        return 0.0
+    # Interpolated, not stepped: see audio_envelope.sample_envelope.
+    from audio_envelope import sample_envelope
     try:
-        return max(0.0, min(1.0, float(envelope[index])))
+        return max(0.0, min(1.0, sample_envelope(envelope, rate, elapsed)))
     except (TypeError, ValueError):
         return 0.0
 

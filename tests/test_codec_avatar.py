@@ -319,3 +319,16 @@ def test_malformed_gaze_falls_back_to_fixed_pose():
     source = FrameSource("chadwick", width=48, height=60)
     img, _ = source.render_frame("idle", gaze="sideways")
     assert img.shape == (60, 48, 3)
+
+
+def test_breath_scale_zero_holds_the_head_still():
+    """Roundtable tiles pass breath_scale=0: sub-pixel sway at tile size is
+    turned into keyframe jumps by the stream encoder (tile_avatar.TILE_BREATH_SCALE)."""
+    source = FrameSource("chadwick", width=64, height=64, breath_scale=0.0)
+    assert source._breath_offsets() == (0.0, 0.0, 0.0)
+
+
+@pytest.mark.parametrize("scale, expected", [(None, 1.0), ("bad", 1.0), (-2, 0.0), (0.5, 0.5)])
+def test_breath_scale_is_sanitised(scale, expected):
+    source = FrameSource("chadwick", width=64, height=64, breath_scale=scale)
+    assert source._breath_scale == expected
