@@ -88,6 +88,9 @@ POSE_TTL_S = 90.0
 AUDIO_TTL_S = 600.0
 MAX_TEXT_CHARS = 1200
 CONSUME_POLL_S = 0.25
+#: How long past a line's own duration the director waits for the tile's done
+#: marker before moving on anyway (a tile that died must not stall the show).
+DONE_SLACK_S = 15.0
 #: Silent-line pacing (no TTS): about 150 words a minute, floored.
 SPOKEN_CHARS_PER_S = 15.0
 MIN_LINE_S = 2.0
@@ -123,6 +126,12 @@ def live_spool_dir(relay_dir):
 def tile_live_file(relay_dir, slot):
     """director -> tile: the ONE line this seat's tile should speak next."""
     return str(Path(relay_dir) / f"{slot}.live.json")
+
+
+def tile_done_file(relay_dir, slot):
+    """tile -> director: {line_id, at} once this seat's tile has FINISHED a line
+    (audio played to its end, gate released)."""
+    return str(Path(relay_dir) / f"{slot}.live.done.json")
 
 
 def tile_pose_file(relay_dir, slot):
@@ -502,7 +511,24 @@ class LiveDirector:
         _event("live_line_handed", seat=slot, line_id=payload["line_id"],
                voiced=payload.get("audio_path") is not None,
                duration_s=round(payload["duration"], 2))
-        self.sleep(payload["duration"] + self.settings["line_gap_s"])
+        # Wait for the tile to FINISH the line, not just for its duration from the
+        # claim: the tile starts the audio a little after claiming (voice gate,
+        # player spawn), so sleeping `duration` drifted ~0.5 s per line and the next
+        # line's TEXT appeared while the previous voice was still speaking. That
+        # drift used to be hidden by the TTS time of the next line, until prefetch
+        # removed it (2026-10-09). Falls back to the old duration-based wait if the
+        # tile never reports (older tile code, a dead tile).
+        done_path = tile_done_file(self.relay_dir, slot)
+        deadline = self.mono() + payload["duration"] + DONE_SLACK_S
+        while self.mono() < deadline:
+            done = relay_io.read_json(done_path)
+            if isinstance(done, dict) and done.get("line_id") == payload["line_id"]:
+                break
+            self.sleep(CONSUME_POLL_S)
+        else:
+            _event("live_line_done_timeout", logging.WARNING, seat=slot,
+                   line_id=payload["line_id"])
+        self.sleep(self.settings["line_gap_s"])
         return True
 
     def _next_entry(self):
@@ -685,6 +711,11 @@ def perform_live_line(payload, slot, relay_dir, state_path=None, config=None, ou
         renderer.refresh()
         if payload.get("audio_path"):
             relay_io._unlink_quietly(payload["audio_path"])
+        try:   # the director hands the next line only after this (LiveDirector.hand)
+            relay_io.atomic_write_json(tile_done_file(relay_dir, slot),
+                                       {"line_id": payload.get("line_id"), "at": time.time()})
+        except OSError as exc:
+            _event("live_done_write_failed", logging.WARNING, seat=slot, error=f"'{exc}'")
     return performed
 
 
@@ -716,6 +747,11 @@ def handle_live_once(slot, relay_dir, state_path=None, config=None, out=None):
     except Exception as exc:  # noqa: BLE001 — one bad line must never kill the tile
         _event("live_line_failed", logging.ERROR, seat=slot,
                error=f"'{type(exc).__name__}: {exc}'")
+        try:   # don't make the director wait out its slack for a line that died
+            relay_io.atomic_write_json(tile_done_file(relay_dir, slot),
+                                       {"line_id": payload.get("line_id"), "at": time.time()})
+        except OSError:
+            pass
         return False
 
 

@@ -524,3 +524,64 @@ def test_a_line_prepared_before_a_yield_airs_first_next_time(relay, fast):
     assert handed == ["one"]                         # "two" is prepared and carried
     assert director.drain_once() == 2
     assert handed == ["one", "two", "three"]
+
+
+# ── the director waits for the tile to FINISH a line (no text-before-voice drift) ──
+class FakeMono:
+    def __init__(self):
+        self.t = 0.0
+
+    def __call__(self):
+        return self.t
+
+
+def test_director_hands_the_next_line_only_after_the_tile_reports_done(relay, fast):
+    config = roundtable_config(line_gap_s=0)
+    mono = FakeMono()
+    finished_at = {}
+
+    def sleep(s):          # the tile claims at once and finishes 3 s past the duration
+        mono.t += s
+        live = Path(live_pane.tile_live_file(relay, TL))
+        if live.exists():
+            line_id = json.loads(live.read_text())["line_id"]
+            live.unlink()
+            finished_at[line_id] = mono.t + 2.0 + 3.0
+        for line_id, at in list(finished_at.items()):
+            if mono.t >= at:
+                relay_io.atomic_write_json(live_pane.tile_done_file(relay, TL), {"line_id": line_id})
+                del finished_at[line_id]
+
+    director = live_pane.LiveDirector(config, relay_dir=str(relay), tts=FakeTTS(duration=2.0),
+                                      sleep=sleep, mono=mono)
+    payload = director.prepare({"seat": TL, "text": "hello", "line_id": "L1"})
+    assert director.hand(payload) is True
+    assert 5.0 <= mono.t < 5.6        # waited for done (5 s), not just the 2 s duration
+
+
+def test_director_falls_back_when_the_tile_never_reports(relay, fast):
+    config = roundtable_config(line_gap_s=0)
+    mono = FakeMono()
+
+    def sleep(s):
+        mono.t += s
+        live = Path(live_pane.tile_live_file(relay, TL))
+        if live.exists():
+            live.unlink()             # claimed, but this (old/dead) tile never writes done
+
+    director = live_pane.LiveDirector(config, relay_dir=str(relay), tts=FakeTTS(duration=2.0),
+                                      sleep=sleep, mono=mono)
+    payload = director.prepare({"seat": TL, "text": "hello", "line_id": "L2"})
+    assert director.hand(payload) is True
+    assert 2.0 + live_pane.DONE_SLACK_S <= mono.t < 2.0 + live_pane.DONE_SLACK_S + 0.6
+
+
+def test_tile_writes_done_after_performing(relay, fast):
+    config = roundtable_config()
+    live_pane.handle_office_line("roundtable", config["agent"], office_line(TL, text="Done yet?"))
+    states = {s: str(relay / f"{s}.state.json") for s in live_pane.seat_ids()}
+    director = live_pane.LiveDirector(config, relay_dir=str(relay), tts=FakeTTS(duration=1.0),
+                                      sleep=tile_poller(relay, config, states, io.StringIO()))
+    assert director.drain_once() == 1
+    done = relay_io.read_json(live_pane.tile_done_file(relay, TL))
+    assert done and done["line_id"]
