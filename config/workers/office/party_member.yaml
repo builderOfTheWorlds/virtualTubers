@@ -144,6 +144,8 @@ avatar:
       nose_length: 0.56
       ear_size: 0.20
       build: 0.22
+      eyepatch: 1.0
+      monocle: 1.0
       accent_color: BLACK
     # Pinned geometry, identical on every tuber_base worker by design — see
     # config/workers/coder.yaml for the derivation from tuber_base.yaml.

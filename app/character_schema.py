@@ -44,7 +44,17 @@ SLIDER_DEFAULTS = {
     "nose_length": 0.4,
     "ear_size": 0.5,
     "build": 0.5,
+    # Accessories. 0 = none. Scaling to 0 collapses the geometry to zero area
+    # (the rasterizers cull it), so an un-accessorised face renders unchanged.
+    "eyepatch": 0.0,   # black eyepatch over the eye at x<0, with a strap up the forehead
+    "monocle": 0.0,    # brass-rimmed monocle over the eye at x>0
 }
+
+#: Sliders that describe an accessory rather than the face. They are optional
+#: wherever a model or a hand-written config supplies character params: an
+#: absent key means 0.0 (no accessory). Keeps existing LLM replies and cast
+#: files valid.
+OPTIONAL_SLIDERS = ("eyepatch", "monocle")
 
 #: Non-slider (enum) parameters.
 ENUM_DEFAULTS = {

@@ -42,7 +42,7 @@ TRUTH_MARKER = "GM-ONLY-TRUTH-MARKER-7f3c"
 #: The slider keys of app/character_schema.py SLIDER_DEFAULTS, spelled out so
 #: this module stays import-free.
 SLIDER_KEYS = ("head_width", "head_taper", "eye_size", "eye_spacing", "jaw_width",
-               "nose_length", "ear_size", "build")
+               "nose_length", "ear_size", "build", "eyepatch", "monocle")
 
 
 def read_yaml(path):

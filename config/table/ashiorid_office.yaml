@@ -38,7 +38,44 @@ run_id: ashiorid_office_20260929_135927_9c1b
 contracts_fixture: /data/table/fixtures/ashiorid_office_20260929_135927_9c1b.json
 only_with_active_players: true
 start_index: 0
-max_scenes: 1
+max_scenes: null   # no cap: auto play runs to the end of the story or table_run_start duration_min
+
+# Office loop fix (2026-10-10, .claude/prompts/ashiorid_office_loop_fix_plan.md).
+# Story memory: the GM + seats see what already happened (persisted in the position file).
+story_log: true
+story_max_entries: 6         # GM context
+story_max_chars: 2500
+story_seat_max_entries: 4    # seat prompts
+story_seat_max_chars: 800
+# Contract filters (load time, logged per drop). The planner retells the same events in
+# sibling leaves; collapse drops a leaf whose slots mostly repeat earlier kept leaves.
+dedupe_canon_goal: true
+collapse_redundant_leaves: true
+collapse_leaf_threshold: 0.5     # slot goal word-set similarity that counts as a repeat
+collapse_leaf_min_share: 0.5     # share of a leaf's slots that must repeat to drop it
+dedupe_near_threshold: 0.6       # near-duplicate single slots (vs the last 8 kept)
+dedupe_near_window: 8
+# Paraphrased retellings the word filters cannot see (word overlap of real repeats is
+# 0.25-0.53, same range as distinct scenes). Flagged by the local model, reviewed by hand
+# 2026-10-10. Scene ids are per run_id: rebuild this list when run_id changes.
+skip_scenes:
+  - off-hours-arc.off-hours-arc-n0-n1.off-hours-arc-n0-n1-001          # 2nd Office Manager arrival
+  - off-hours-arc.off-hours-arc-n1.off-hours-arc-n1-002                # 3rd arrival
+  - off-hours-arc.off-hours-arc-n1.off-hours-arc-n1-003                # setup again
+  - first-standup-arc.first-standup-arc-n0.first-standup-arc-n0-001    # "team gathers" (n0-002 adds the directive)
+  - first-standup-arc.first-standup-arc-n1-n0.first-standup-arc-n1-n0-002   # requirements again
+  - first-standup-arc.first-standup-arc-n1-n1.first-standup-arc-n1-n1-001   # tech plan again
+  - first-standup-arc.first-standup-arc-n1-n1.first-standup-arc-n1-n1-002   # tech plan again
+  - build-arc.build-arc-n1.build-arc-n1-001                            # 2nd lunch
+  - build-arc.build-arc-n1.build-arc-n1-002                            # analyst review again
+  - ship-arc.ship-arc-n0-n1.ship-arc-n0-n1-003                         # early wind-down (n1-004 closes the day)
+  - ship-arc.ship-arc-n1.ship-arc-n1-002                               # release notes drafted again
+# Cross-scene repeats: a seat line sharing a 6-word run with the last 2 scenes is
+# retaken; a GM opening like one of the last 3 scenes' is asked for once more.
+cross_scene_repeat: {scenes: 2, ngram: 6, gm_scenes: 3, gm_threshold: 0.5}
+# The narration's "you" is the silent Party Member: a GM direction giving "you" a spoken
+# line ('"Fair?" you ask') is asked for again, then rejected (live run 2026-10-10).
+gm_silent_you: true
 
 think_s: 60
 speak_s: 45

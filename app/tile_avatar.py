@@ -307,7 +307,7 @@ TILE_AVATAR_FPS = 30
 #: preset, at every bitrate, and even at constqp 18. Solo 549x470 heads
 #: keep their sway.
 # TILE_BREATH_SCALE = 0.0
-TILE_BREATH_SCALE = 100.0
+TILE_BREATH_SCALE = 5.0
 
 #: Window background for a tile head. Matches the Solarized Dark base03 the
 #: tile frame is drawn on, so the square window reads as part of the tile

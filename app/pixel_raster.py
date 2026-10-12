@@ -43,6 +43,9 @@ CODEC_PALETTE = np.array([
     0.16,   # MAT_BROW
     0.18,   # MAT_MOUTH
     0.55,   # MAT_HAIR
+    0.92,   # MAT_RIM    — monocle frame; bright so the metal reads
+    0.34,   # MAT_LENS   — monocle glass; dim, a lens not a hole
+    0.10,   # MAT_PATCH  — eyepatch cloth; as dark as the eye
 ], dtype=np.float32)
 
 #: Codec screen tint (the classic green CRT).

@@ -1,0 +1,82 @@
+task_id: table_office_story_log
+
+goal: |
+  Write `app/table/story_log.py`: the live agent table's running memory of the scenes
+  already played ("what has already happened"). Without it the GM and the seats see
+  only the current scene, so every scene restarts the story (the office table replayed
+  "the Office Manager arrives" scene after scene).
+
+  Pure module: no network, no disk, no DB. The GM runtime builds one StoryEntry per
+  finished scene from the arbiter's final state, keeps a StoryLog, persists
+  StoryLog.to_list() in its position JSON file, and renders StoryLog.render() into the
+  GM context. recent_lines()/recent_directions() feed a cross-scene repeat check.
+
+target_files:
+  - app/table/story_log.py
+
+test_files:
+  - tests/table/test_table_story_log.py
+
+context_files:
+  - app/table/gm_context.py      # house style (logging, _truncate_words pattern)
+
+interface: |
+  HEADING = "# What has already happened"
+
+  @dataclasses.dataclass(frozen=True)
+  class StoryEntry:
+      scene_id: str
+      goal: str = ""
+      notes: str = ""
+      state_delta: dict = field(default_factory=dict)   # compare by value; frozen dataclass is fine
+      resolved: bool = True
+      skipped: bool = False
+      lines: tuple = ()        # committed seat texts (kind "reply" or "overrule"), in order
+      directions: tuple = ()   # committed GM texts (kind "direction"), in order
+
+      def to_dict(self) -> dict      JSON-safe: lines/directions as lists, state_delta as dict copy
+      @classmethod
+      def from_dict(cls, d) -> StoryEntry
+          ValueError if d is not a Mapping, or scene_id missing / not a non-empty str.
+          Unknown keys ignored; missing keys -> defaults; lists -> tuples of str;
+          a non-dict state_delta -> {}.
+
+  def entry_from_state(state, contract, *, skipped=False, max_lines=12) -> StoryEntry
+      state: the arbiter state dict (keys may be missing): scene_id, resolved,
+      state_delta, notes, transcript = list of {"speaker", "text", "kind"}.
+      contract: dict with scene_id, canon_goal (may be missing).
+      scene_id from state, else contract. goal = contract canon_goal stripped ("" if absent).
+      notes = str(state.get("notes") or "").strip(). resolved = bool(state.get("resolved", True))
+      but None -> True. directions = texts with kind == "direction"; lines = texts of every
+      other kind; each keeps only its LAST max_lines items. Empty/blank texts skipped.
+
+  class StoryLog:
+      def __init__(self, entries=(), keep=12)    keeps only the last `keep` entries
+      entries -> tuple (property)
+      __len__
+      append(entry)                               then trims to keep
+      clear()
+      to_list() -> list[dict]
+      @classmethod from_list(cls, items, keep=12) -> StoryLog
+          items None -> empty. Bad items (not a mapping, or from_dict raising) are skipped
+          with log.warning, never raised.
+      recent_lines(n_scenes=2) -> tuple[str]
+          lines of the last n_scenes NON-skipped entries, oldest first; n_scenes <= 0 -> ().
+      recent_directions(n_scenes=3) -> tuple[str]   same for directions.
+      render(max_entries=6, max_chars=2500) -> str
+          "" when there are no entries.
+          Otherwise HEADING + "\n" + one line per entry (the last max_entries entries,
+          oldest first), lines joined by "\n":
+            normal:  "- [<scene_id>] <goal>" then " - <notes>" if notes, then
+                     " (state: k=v; k=v)" if state_delta (keys in insertion order).
+            skipped: "- [<scene_id>] skipped (not played)"
+          Never longer than max_chars: drop the OLDEST lines first. If even the newest
+          line alone does not fit, shorten that line on a word boundary ending with "…"
+          so the result fits, but always keep its "- [<scene_id>] " prefix; if the
+          heading plus that prefix plus 2 chars cannot fit, return "".
+
+notes: |
+  - Module-level `log = logging.getLogger(__name__)`; DEBUG on render (entries, chars),
+    WARNING on skipped bad items.
+  - Standard library only (dataclasses, logging, typing, collections.abc).
+  - Do not modify any other file.

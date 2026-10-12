@@ -26,7 +26,12 @@ GM_PASSES = ("direct", "adjudicate", "overrule")
 GM_KEYS = ("pack", "start_mode", "position_file", "gm_slug", "gm_seat", "pack_dir", "run_id", "contracts_fixture", "gm_forbidden_phrases",
            "only_with_active_players", "start_index", "max_scenes", "think_s", "speak_s",
            "gm_blocks_order", "auto_duration_s", "auto_pace", "auto_skip_stuck",
-           "auto_max_consecutive_stuck", "dedupe_canon_goal")
+           "auto_max_consecutive_stuck", "dedupe_canon_goal",
+           # office loop fix (2026-10-10): story memory + repeat guards + contract filters
+           "story_log", "story_keep", "story_max_entries", "story_max_chars",
+           "story_seat_max_entries", "story_seat_max_chars", "cross_scene_repeat",
+           "collapse_redundant_leaves", "collapse_leaf_threshold", "collapse_leaf_min_share",
+           "dedupe_near_threshold", "dedupe_near_window", "skip_scenes", "gm_silent_you")
 
 
 class _Dumper(yaml.SafeDumper):

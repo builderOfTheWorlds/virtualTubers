@@ -445,18 +445,26 @@ def _wrap_dialogue(lines, width):
         text = " ".join(_ANSI_RE.sub("", str(spoken or "")).split())
         if not text:
             continue
+        # A blank row separates consecutive bubbles so each sentence reads
+        # as its own block. None before the first bubble, so the newest
+        # line stays on the bottom row.
+        if rows:
+            rows.append("")
         rows.extend(textwrap.wrap(text, max(1, width)) or [""])
     return rows
 
 
 def _current_line_row_count(lines, width):
     """How many of the LAST wrapped rows belong to the newest non-empty
-    bubble (the line being spoken now). Everything above them is history."""
-    for spoken in reversed(list(lines)):
-        text = " ".join(_ANSI_RE.sub("", str(spoken or "")).split())
-        if text:
-            return len(textwrap.wrap(text, max(1, width)) or [""])
-    return 0
+    bubble (the line being spoken now), including the blank separator
+    above it when there is an earlier bubble. Everything above them is
+    history."""
+    texts = [" ".join(_ANSI_RE.sub("", str(s or "")).split()) for s in lines]
+    texts = [t for t in texts if t]
+    if not texts:
+        return 0
+    newest = len(textwrap.wrap(texts[-1], max(1, width)) or [""])
+    return newest + (1 if len(texts) > 1 else 0)
 
 
 def render_tile(slot, expression="idle", line="", status="listening", out=None,

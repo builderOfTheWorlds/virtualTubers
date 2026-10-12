@@ -67,7 +67,8 @@ def providers(monkeypatch, tmp_path):
     gm.reset_runtimes()
     monkeypatch.setattr(gm, "contracts_provider", lambda c: [
         dict(CONTRACT, scene_id=f"s{i}", order=i) for i in range(1, 7)])
-    monkeypatch.setattr(gm, "context_provider", lambda c, k: "CTX")
+    monkeypatch.setattr(gm, "context_provider", lambda c, k, **kw: "CTX")
+    monkeypatch.setattr(gm, "segments_provider", lambda c: {})
     yield
     gm.reset_runtimes()
 

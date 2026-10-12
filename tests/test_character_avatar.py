@@ -16,7 +16,7 @@ from character.avatar import (
     map_appearance_result,
     parse_response,
 )
-from character_schema import ACCENT_COLORS, PARAM_DEFAULTS, SLIDER_DEFAULTS
+from character_schema import ACCENT_COLORS, OPTIONAL_SLIDERS, PARAM_DEFAULTS, SLIDER_DEFAULTS
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 PACK = REPO / "campaigns" / "ashiorid_office"
@@ -24,6 +24,7 @@ PACK = REPO / "campaigns" / "ashiorid_office"
 GOOD = {
     "head_width": 0.8, "head_taper": 0.1, "eye_size": 0.4, "eye_spacing": 0.6,
     "jaw_width": 0.9, "nose_length": 0.3, "ear_size": 0.5, "build": 0.85,
+    "eyepatch": 0.0, "monocle": 0.0,
     "accent_color": "BLUE",
 }
 
@@ -259,24 +260,33 @@ def test_office_cast_params_are_complete_and_distinct():
     assert len(params) == 8
     for cid, p in params.items():
         assert p is not None, cid
-        assert set(p) == set(REQUIRED_KEYS)
+        assert set(REQUIRED_KEYS) <= set(p) <= set(REQUIRED_KEYS) | set(OPTIONAL_SLIDERS)
         assert p["accent_color"] in ACCENT_COLORS
     colors = [p["accent_color"] for p in params.values()]
     assert len(set(colors)) == 8
     ids = list(params)
     for i, a in enumerate(ids):
         for b in ids[i + 1:]:
-            dist = sum((params[a][k] - params[b][k]) ** 2 for k in SLIDER_DEFAULTS) ** 0.5
+            dist = sum((params[a][k] - params[b][k]) ** 2 for k in SLIDER_DEFAULTS
+                       if k not in OPTIONAL_SLIDERS) ** 0.5
             assert dist > 0.3, (a, b, dist)
 
 
 def test_office_params_file_matches_cast():
+    """The offline replies are model-style (no accessories). Each parsed reply
+    must equal its cast on every core key; accessories are the LLM's blind
+    spot and default to 0.0, so the cast may only set them to 0.0 here."""
     replies = json.loads((PACK / "profiles" / "_avatar_params.json").read_text(encoding="utf-8"))
     params = _office_params()
     for cid, reply in replies.items():
         if cid.startswith("_"):
             continue
-        assert parse_response(json.dumps(reply)) == params[cid]
+        parsed = parse_response(json.dumps(reply))
+        cast = params[cid]
+        core = set(REQUIRED_KEYS)
+        assert {k: parsed[k] for k in core} == {k: cast[k] for k in core}, cid
+        for k in OPTIONAL_SLIDERS:
+            assert parsed[k] == 0.0, cid
 
 
 def test_build_live_client_applies_overrides(tmp_path, monkeypatch):

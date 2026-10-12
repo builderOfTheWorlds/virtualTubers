@@ -127,12 +127,17 @@ def test_sliders_actually_change_the_mesh(slider):
 
 def test_faces_are_wound_outward():
     """Backface culling drops inward-wound triangles; _orient_outward
-    exists because the pieces are built by separate generators."""
+    exists because the pieces are built by separate generators.
+
+    Zero-area faces are excluded: a disabled accessory (slider 0) collapses
+    to degenerate triangles that have no orientation and are never drawn.
+    """
     verts, faces, _mats = build_codec_head("chadwick")
     tri = verts[faces]
     normals = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
+    drawn = np.linalg.norm(normals, axis=1) > 1e-9
     outward = tri.mean(axis=1) - np.array([0.0, 0.0, -0.05], dtype=np.float32)
-    dots = np.einsum("ij,ij->i", normals, outward)
+    dots = np.einsum("ij,ij->i", normals[drawn], outward[drawn])
     fraction = (dots > 0).mean()
     assert fraction > 0.95, f"only {fraction:.0%} of faces point outward"
 
@@ -148,3 +153,61 @@ def test_ring_grid_matches_the_declared_profile():
     verts = build_codec_head("chadwick")[0]
     ring_verts = len(RING_PROFILE) * SEGMENTS
     assert len(verts) > ring_verts, "feature geometry missing"
+
+
+# --- eyepatch / monocle accessories -----------------------------------------
+
+PENHALE_LIKE = {**PARAM_DEFAULTS, "head_width": 0.12, "eye_size": 0.14,
+                "eye_spacing": 0.30, "jaw_width": 0.56, "nose_length": 0.56,
+                "ear_size": 0.20, "build": 0.22}
+
+
+def _patch_faces(params):
+    from codec_head import MAT_PATCH
+    verts, faces, mats = build_codec_head(params)
+    return verts, faces, mats == MAT_PATCH
+
+
+@pytest.mark.parametrize("amount", [0.0, 0.5, 1.0])
+def test_accessory_sliders_never_change_the_face_table(amount):
+    """Morph targets need identical topology at every slider value."""
+    base = build_codec_head(PENHALE_LIKE)
+    other = build_codec_head({**PENHALE_LIKE, "eyepatch": amount, "monocle": amount})
+    assert base[0].shape == other[0].shape
+    assert np.array_equal(base[1], other[1])
+    assert np.array_equal(base[2], other[2])
+
+
+def test_eyepatch_is_wound_outward():
+    verts, faces, patch = _patch_faces({**PENHALE_LIKE, "eyepatch": 1.0})
+    tri = verts[faces[patch]]
+    normals = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
+    outward = tri.mean(axis=1) - np.array([0.0, 0.0, -0.05], dtype=np.float32)
+    facing = np.einsum("ij,ij->i", normals, outward) > 0
+    # Where the patch is lifted over the eye slot at the temple, a near-edge-on
+    # sliver can fold. Judge by area so one such sliver can't fail the test while
+    # a genuinely inverted patch (most of the area inward) still does.
+    area = np.linalg.norm(normals, axis=1)
+    fraction = area[facing].sum() / area.sum()
+    assert fraction > 0.98, f"only {fraction:.1%} of eyepatch area faces outward"
+
+
+def test_eyepatch_sits_on_the_head_and_wraps_toward_the_temple():
+    """Every sampled point is above the skull (no clipping), and the outer
+    corner reaches the side of the head, not just the front of the face."""
+    import codec_head as ch
+    params = ch.resolve_params({**PENHALE_LIKE, "eyepatch": 1.0})
+    grid = ch._sculpt(ch._flatten_face(ch._build_rings(params)), params)
+    verts, faces, patch = _patch_faces({**PENHALE_LIKE, "eyepatch": 1.0})
+    tri = verts[faces[patch]]
+    pts = np.concatenate([tri.mean(axis=1), (tri[:, 0] + tri[:, 1]) / 2])
+    gap = pts[:, 2] - ch._skull_surface_z(grid, pts[:, :2])
+    assert gap.min() > -0.005, f"eyepatch cuts into the skull by {-gap.min():.3f}"
+    assert verts[faces[patch]][:, :, 0].min() < -0.5, "patch does not reach the temple"
+
+
+def test_disabled_accessories_draw_nothing():
+    verts, faces, patch = _patch_faces({**PENHALE_LIKE, "eyepatch": 0.0, "monocle": 0.0})
+    tri = verts[faces[patch]]
+    area = np.linalg.norm(np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0]), axis=1)
+    assert area.max() < 1e-9

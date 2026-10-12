@@ -11,6 +11,8 @@ character_params:  # OB-20: scripts/generate_office_avatars.py (source: params-f
   nose_length: 0.56
   ear_size: 0.20
   build: 0.22
+  eyepatch: 1.0
+  monocle: 1.0
   accent_color: BLACK
 system_prompt: |
   You are the Party Member at Ashiorid. The visitor book, thirteen months ago, holds one entry in

@@ -59,7 +59,15 @@ rejected. `accent_color` is an enum from termgl's named palette (`RED`,
 | `nose_length` | flat nose | long protruding nose |
 | `ear_size` | small ears | large flared ears |
 | `build` | thin neck | thick neck |
+| `eyepatch` | none | black eyepatch over the left eye (x<0) with a temple strap |
+| `monocle` | none | brass-rimmed monocle with glass over the right eye (x>0) |
 | `accent_color` | — | termgl color name |
+
+`eyepatch` and `monocle` are accessories, not face shape. Both default to 0.0
+(no accessory), and they are optional wherever params are supplied: an absent
+key means 0.0, so existing cast files, LLM replies and presets stay valid.
+The LLM is never asked for them, so it won't invent an eyepatch for a
+character nobody described one for. Set them in a cast file or worker config.
 
 Missing sliders take their defaults, so a partial dict is a valid
 character: `{"eye_size": 0.9}` is a complete request.

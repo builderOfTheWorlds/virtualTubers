@@ -1,0 +1,58 @@
+task_id: table_office_contract_filter
+
+goal: |
+  Write `app/table/contract_filter.py`: pure filters that remove repeated scenes from
+  the live table's scene list before it is played. The generator's segment planner
+  writes sibling leaves that retell the same events with slightly different words
+  ("The Office Manager arrives" in three leaves of one segment); the table played all
+  of them, so the story looped. Exact-string dedupe misses these.
+
+  Input is a list of scene payload dicts (keys used: scene_id, segment_id, leaf_id,
+  canon_goal; others are carried through untouched). Order is play order. Never mutate
+  the input list or its dicts; return new lists holding the same dict objects.
+
+target_files:
+  - app/table/contract_filter.py
+
+test_files:
+  - tests/table/test_table_contract_filter.py
+
+context_files:
+  - app/table/commit_check.py    # house style; its _words tokeniser is the model
+
+interface: |
+  STOPWORDS: frozenset = frozenset({"a", "an", "the", "and", "or", "but", "of", "to",
+      "in", "on", "at", "for", "from", "with", "as", "by", "up", "is", "are", "was",
+      "be", "their", "they", "them", "its", "it", "this", "that", "then", "into",
+      "while", "so"})
+
+  def goal_words(text) -> frozenset[str]
+      lowercase; tokens = re.findall(r"[a-z0-9']+", text.lower()); drop STOPWORDS.
+      None/"" -> frozenset().
+
+  def jaccard(a, b) -> float      |a & b| / |a | b|; 0.0 if either set is empty.
+
+  def similarity(goal_a, goal_b) -> float     jaccard(goal_words(a), goal_words(b))
+
+  def dedupe_near(payloads, *, threshold=0.6, window=8) -> (kept, dropped)
+      Walk in order. A payload whose goal_words is empty is always kept and never used
+      for comparison. Otherwise compare against the goals of the last `window` KEPT
+      payloads (that have non-empty words); if the best similarity >= threshold, drop
+      it and record (dropped_scene_id, best_matching_kept_scene_id, score). Else keep.
+      dropped is a list of tuples in drop order. Empty input -> ([], []).
+
+  def collapse_leaves(payloads, *, threshold=0.5, min_share=0.5) -> (kept, dropped)
+      Group CONSECUTIVE payloads by (segment_id, leaf_id) into leaves. Within one
+      segment_id, the first leaf is always kept. For each later leaf of the same
+      segment: a slot is "repeated" when its best similarity against any slot of the
+      KEPT leaves of that segment is >= threshold. share = repeated / slots in the leaf.
+      If share >= min_share drop the whole leaf and record
+      (leaf_id, leaf_id_of_the_kept_leaf_holding_the_most_matched_slots, share);
+      ties -> the earliest kept leaf. Leaves in a different segment_id are never
+      compared. Empty input -> ([], []).
+
+notes: |
+  - Module-level `log = logging.getLogger(__name__)`; log.info one line per drop with
+    the ids and score/share; DEBUG summary counts.
+  - Standard library only (re, logging, typing).
+  - Do not modify any other file.

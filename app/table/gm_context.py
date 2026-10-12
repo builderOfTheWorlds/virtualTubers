@@ -93,12 +93,14 @@ def _block_section(name, value) -> str:
 
 
 def _assemble(gm_identity, ordered_sections, extra_sections, player_sheets,
-              segment, contract) -> str:
+              segment, contract, history=None) -> str:
     sections = [gm_identity.strip()]
     sections.extend(ordered_sections)
     sections.extend(extra_sections)
     sections.append(PLAYERS_HEADING + "\n" + "\n\n".join(
         f"## {seat}\n{sheet}" for seat, sheet in sorted(player_sheets.items())))
+    if history:     # pre-rendered and pre-capped (table.story_log.StoryLog.render)
+        sections.append(history.strip())
     if segment:
         sections.append(SEGMENT_HEADING + "\n" + render_value(segment))
     if contract:
@@ -107,7 +109,7 @@ def _assemble(gm_identity, ordered_sections, extra_sections, player_sheets,
 
 
 def build_gm_context(*, gm_blocks, gm_identity, player_sheets, segment, contract,
-                     blocks_order, max_chars=None) -> str:
+                     blocks_order, max_chars=None, history=None) -> str:
     """The GM's context (<= max_chars when given).
 
     Sections joined by a blank line, in this order:
@@ -115,6 +117,8 @@ def build_gm_context(*, gm_blocks, gm_identity, player_sheets, segment, contract
       2. for name in blocks_order if name in gm_blocks: block_heading + render_value
       3. for name in sorted(set(gm_blocks) - set(blocks_order)): same
       4. PLAYERS_HEADING, then per seat in sorted(player_sheets)
+      4b. if history: the story so far (already rendered + capped by the caller;
+          never cut here, so the caller's cap is what keeps it from overflowing)
       5. if segment: SEGMENT_HEADING + render_value(segment)
       6. if contract: CONTRACT_HEADING + render_value(contract)
 
@@ -133,7 +137,7 @@ def build_gm_context(*, gm_blocks, gm_identity, player_sheets, segment, contract
     extra_sections = [_block_section(name, gm_blocks[name]) for name in extra_names]
 
     text = _assemble(gm_identity, ordered_sections, extra_sections, player_sheets,
-                     segment, contract)
+                     segment, contract, history)
     if max_chars is None or len(text) <= max_chars:
         log.debug("gm context blocks=%d ordered=%d extra=%d sheets=%d chars=%d",
                   len(gm_blocks), len(ordered_sections), len(extra_sections),
@@ -147,7 +151,7 @@ def build_gm_context(*, gm_blocks, gm_identity, player_sheets, segment, contract
         raise ValueError(f"gm context cannot fit in {max_chars} chars")
     originals = {seat: player_sheets[seat] for seat in seats}
     fixed_len = len(_assemble(gm_identity, ordered_sections, extra_sections, {},
-                              segment, contract))
+                              segment, contract, history))
     overhead = len(text) - sum(len(v) for v in originals.values())
     budget = max_chars - overhead
     if budget < len(seats):
@@ -157,7 +161,7 @@ def build_gm_context(*, gm_blocks, gm_identity, player_sheets, segment, contract
     share = budget // len(seats)
     shortened = {seat: _truncate_words(originals[seat], share) for seat in seats}
     text = _assemble(gm_identity, ordered_sections, extra_sections, shortened,
-                     segment, contract)
+                     segment, contract, history)
     if len(text) > max_chars:
         log.error("gm context cannot fit max_chars=%d (len=%d)", max_chars, len(text))
         raise ValueError(f"gm context cannot fit in {max_chars} chars")

@@ -22,7 +22,7 @@ from pending import require
 office_profiles = require("character.generator.office_profiles",
                           "app/character/generator/office_profiles.py", wp="WP-10o")
 from character import config  # noqa: E402  (promoted in WP-03)
-from character_schema import PARAM_DEFAULTS, SLIDER_DEFAULTS  # noqa: E402
+from character_schema import OPTIONAL_SLIDERS, PARAM_DEFAULTS, SLIDER_DEFAULTS  # noqa: E402
 from office.roles import SEAT  # noqa: E402
 
 
@@ -144,8 +144,8 @@ def test_avatar_params_come_from_the_cast_character_params():
     for slug in OFFICE_SLUGS:
         cast_doc = read_yaml(OFFICE_CAST / f"{slug}.yaml")
         params = office_profiles.avatar_params(cast_doc, accent_color="YELLOW")
-        assert set(params) == set(SLIDER_DEFAULTS) | {"accent_color"}
-        assert params == {k: cast_doc["character_params"][k] for k in params}
+        assert set(params) == set(SLIDER_DEFAULTS) | {"accent_color"} | set(OPTIONAL_SLIDERS)
+        assert params == {k: cast_doc["character_params"].get(k, PARAM_DEFAULTS[k]) for k in params}
         assert params["accent_color"] == cfg.characters[slug].accent_color  # config mirrors cast
     assert set(SLIDER_KEYS) == set(SLIDER_DEFAULTS)
 

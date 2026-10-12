@@ -285,8 +285,9 @@ def handle_think_request(worker_id, agent_config, llm_client, producer, msg,
 
     try:
         brief = brief_for(agent_config, worker_id)
-        user = _render_transcript(payload.get("committed_transcript"),
-                                  table_cfg.get("seat_names"))
+        user = _with_story(payload.get("story"),
+                           _render_transcript(payload.get("committed_transcript"),
+                                              table_cfg.get("seat_names")))
         content = _llm_call(llm_client, brief + THINK_INSTRUCTION, user,
                             max_tokens, reasoning_budget)
         memory.set_intent(scene_id, round_, content)
@@ -302,8 +303,22 @@ def handle_think_request(worker_id, agent_config, llm_client, producer, msg,
            {"scene_id": scene_id, "round": round_, "seat": worker_id, "ok": ok})
 
 
+def _with_story(story, user):
+    """Prefix the earlier-scenes summary (turn payload ``story``) to a user prompt.
+
+    Office loop fix (2026-10-10): seats only saw the current scene, so every scene
+    reopened with the same greeting. The story arrives BY VALUE like the transcript.
+    """
+    story = str(story or "").strip()
+    if not story:
+        return user
+    note = (story + "\nThis scene continues from there: do not repeat greetings, "
+            "arrivals or catchphrases from earlier scenes.")
+    return note + ("\n\n" + user if user else "")
+
+
 def _speak(worker_id, agent_config, llm_client, producer, msg, table_cfg,
-           scene_id, round_, seat, transcript, instruction, extra_user=""):
+           scene_id, round_, seat, transcript, instruction, extra_user="", story=""):
     """Shared SPEAK path for turn_assignment and retake.
 
     Builds the system (brief + SPEAK instruction) and user (rendered
@@ -325,7 +340,7 @@ def _speak(worker_id, agent_config, llm_client, producer, msg, table_cfg,
             parts.append("Your private intent (only you know this):\n" + intent)
         if extra_user:
             parts.append(extra_user)
-        user = "\n\n".join(parts)
+        user = _with_story(story, "\n\n".join(parts))
         content = _llm_call(llm_client, brief + SPEAK_INSTRUCTION, user,
                             max_tokens, reasoning_budget)
         text = _strip_quotes(content)
@@ -360,7 +375,8 @@ def handle_turn_assignment(worker_id, agent_config, llm_client, producer, msg,
 
     _speak(worker_id, agent_config, llm_client, producer, msg, table_cfg,
            scene_id, round_, worker_id,
-           payload.get("committed_transcript"), payload.get("instruction"))
+           payload.get("committed_transcript"), payload.get("instruction"),
+           story=payload.get("story", ""))
 
 
 def handle_retake(worker_id, agent_config, llm_client, producer, msg,
@@ -387,4 +403,4 @@ def handle_retake(worker_id, agent_config, llm_client, producer, msg,
     _speak(worker_id, agent_config, llm_client, producer, msg, table_cfg,
            scene_id, round_, worker_id,
            stored.get("committed_transcript"), stored.get("instruction"),
-           extra_user=extra_user)
+           extra_user=extra_user, story=stored.get("story", ""))

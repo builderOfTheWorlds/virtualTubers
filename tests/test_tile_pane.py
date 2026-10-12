@@ -596,7 +596,9 @@ def test_tile_shows_the_last_lines_newest_at_the_bottom(relay):
     lines = render_tile("tuber_1", lines=["first", "second", "third"], width=width, height=height)
     rows = _dialogue_rows(lines, height)
     assert "third" in rows[-1]
-    assert "second" in rows[-2]
+    # A blank separator row sits between consecutive bubbles.
+    assert rows[-2].strip("│ ") == ""
+    assert "second" in rows[-3]
 
 
 def test_avatar_face_is_drawn_alongside_the_dialogue(relay):

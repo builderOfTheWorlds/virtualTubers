@@ -28,6 +28,7 @@ Topology stays parameter-independent (no branching on a slider value), so
 the morph-target design in docs/avatar_3d_design.md §4 still holds.
 """
 import logging
+import math
 
 import numpy as np
 
@@ -49,6 +50,9 @@ MAT_EYE = 1       # eyeball / eye slot — darkest
 MAT_BROW = 2      # eyebrow bar
 MAT_MOUTH = 3     # mouth line
 MAT_HAIR = 4      # cranium cap
+MAT_RIM = 5       # monocle frame (metal)
+MAT_LENS = 6      # monocle glass
+MAT_PATCH = 7     # eyepatch cloth and strap — black, kept apart from MAT_EYE
 
 #: Segments around the head. 20 keeps the facet count PS2-ish (~600 tris)
 #: while giving enough columns to place eyes off-center cleanly.
@@ -442,6 +446,245 @@ def _add_mouth(verts, faces, mats, params, grid, mouth_open=0.0, emotion="neutra
     ], MAT_MOUTH)
 
 
+def _surface_tri(verts, faces, mats, grid, corners, material, offset=0.02):
+    """Append one triangle whose corners are wrapped onto the head surface."""
+    base = len(verts)
+    verts.extend(_project_to_surface(grid, cx, cy, offset) for cx, cy in corners)
+    faces.append((base, base + 1, base + 2))
+    mats.append(material)
+
+
+def _eye_geometry(params):
+    """(eye_x, y_mid, half_w, half_h) of the base eye slot, before emotion.
+
+    Shared by the accessories so they sit exactly where the eyes do.
+    """
+    eye_x = _lerp(0.26, 0.42, params["eye_spacing"])
+    half_w = _lerp(0.085, 0.125, params["eye_size"])
+    half_h = _lerp(0.045, 0.070, params["eye_size"])
+    y_top = RING_PROFILE[RING_TAGS["eye_top"]][0]
+    y_low = RING_PROFILE[RING_TAGS["eye_low"]][0]
+    return eye_x, (y_top + y_low) * 0.5, half_w, half_h
+
+
+PATCH_REVERSED = True    # winding of the patch pad; set so it faces outward
+PATCH_RINGS = 4          # concentric rings of the pad (plus the centre point)
+PATCH_SEGMENTS = 24      # samples around the pad outline
+SHELL_OFFSET = 0.06      # float height off the skull; below ~0.05 perspective hides ~10% of the patch
+STRAP_HALF_WIDTH = 0.02
+#: Pad outline, as offsets from the eye centre in face units (x<0 = outer/temple
+#: side for the left eye). Read off the reference (Big Boss, MGS V): a leather
+#: pad about twice the eye's width, flat-ish across the top, lower corners
+#: rounded, leaning slightly toward the nose. Smoothed with Chaikin, so these
+#: are control points, not the final edge.
+PATCH_OUTLINE = [
+    (-0.17, 0.14),    # outer-top
+    (0.16, 0.16),     # inner-top (main strap leaves here)
+    (0.21, 0.03),     # inner
+    (0.07, -0.16),    # bottom-inner
+    (-0.12, -0.10),   # bottom-outer
+    (-0.19, 0.03),    # outer (lower strap leaves near here)
+]
+#: Main strap: from the pad's inner-top corner diagonally up and across the
+#: forehead toward the opposite side of the head, as in the reference.
+STRAP_MAIN = [(0.40, 0.36), (0.80, 0.62)]
+#: Short lower strap: from the pad's outer edge round toward the ear.
+STRAP_SIDE = [(-0.16, 0.02), (-0.27, -0.04)]
+
+
+def _skull_surface_z(grid, xy):
+    """Exact front-surface z of the piecewise-linear skull at each (x, y).
+
+    The skull is a triangle mesh; this interpolates inside the front-most
+    triangle that covers the point, instead of snapping to the nearest sample
+    (which is what made the old flat patch cut through curved skull).
+    Falls back to _front_z_at for any point no triangle covers.
+    """
+    tris = grid.reshape(-1, 3)[_grid_faces(NUM_RINGS, SEGMENTS)]
+    z = _tri_top_z(tris, xy)
+    for i in np.nonzero(~np.isfinite(z))[0]:
+        z[i] = _front_z_at(grid, xy[i, 1], xy[i, 0])
+    return z
+
+
+def _tri_top_z(tris, xy):
+    """Highest z over a (T, 3, 3) triangle set at each (x, y); -inf where none cover."""
+    a, b, c = tris[:, 0, :2], tris[:, 1, :2], tris[:, 2, :2]
+    det = (b[:, 1] - c[:, 1]) * (a[:, 0] - c[:, 0]) + (c[:, 0] - b[:, 0]) * (a[:, 1] - c[:, 1])
+    usable = np.abs(det) > 1e-9
+    safe = np.where(usable, det, 1.0)
+    px = xy[:, None, 0] - c[None, :, 0]
+    py = xy[:, None, 1] - c[None, :, 1]
+    l1 = ((b[:, 1] - c[:, 1])[None] * px + (c[:, 0] - b[:, 0])[None] * py) / safe[None]
+    l2 = ((c[:, 1] - a[:, 1])[None] * px + (a[:, 0] - c[:, 0])[None] * py) / safe[None]
+    l3 = 1.0 - l1 - l2
+    inside = (l1 >= -1e-6) & (l2 >= -1e-6) & (l3 >= -1e-6) & usable[None]
+    z = l1 * tris[None, :, 0, 2] + l2 * tris[None, :, 1, 2] + l3 * tris[None, :, 2, 2]
+    return np.where(inside, z, -np.inf).max(axis=1)
+
+
+def _shell_points(grid, xy, offset=SHELL_OFFSET, cover=None, margin=0.012):
+    """(N, 3) points on the skull at xy, pushed off along the local normal.
+
+    The normal comes from finite differences of the surface, so the accessory
+    follows the curvature of the exterior rather than a fixed depth.
+    """
+    xy = np.asarray(xy, dtype=np.float64).reshape(-1, 2)
+    z = _skull_surface_z(grid, xy)
+    eps = 1e-3
+    zx = (_skull_surface_z(grid, xy + [eps, 0.0]) - _skull_surface_z(grid, xy - [eps, 0.0])) / (2 * eps)
+    zy = (_skull_surface_z(grid, xy + [0.0, eps]) - _skull_surface_z(grid, xy - [0.0, eps])) / (2 * eps)
+    normal = np.stack([-zx, -zy, np.ones_like(zx)], axis=1)
+    normal /= np.maximum(np.linalg.norm(normal, axis=1, keepdims=True), 1e-9)
+    pts = np.column_stack([xy, z]) + offset * normal
+    # The normal offset can move a point sideways into a higher part of the
+    # skull where the surface turns steeply (the temple). Lift it until it
+    # clears the skull at its own (x, y).
+    clear = _skull_surface_z(grid, pts[:, :2]) + offset * 0.5
+    pts[:, 2] = np.maximum(pts[:, 2], clear)
+    # Features built on the skull (eye slots, brows, ears) stand proud of the
+    # skull grid and would poke through the accessory. `cover` is the (T,3,3)
+    # triangle set already in the mesh; clear it too.
+    if cover is not None and len(cover):
+        top = _tri_top_z(cover, pts[:, :2])
+        pts[:, 2] = np.where(np.isfinite(top), np.maximum(pts[:, 2], top + margin), pts[:, 2])
+    return pts
+
+
+def _chaikin_closed(points, rounds=2):
+    """Corner-cutting smoothing of a closed polygon (rounds the pad's corners)."""
+    pts = np.asarray(points, dtype=np.float64)
+    for _ in range(rounds):
+        nxt = np.roll(pts, -1, axis=0)
+        pts = np.stack([0.75 * pts + 0.25 * nxt, 0.25 * pts + 0.75 * nxt], axis=1).reshape(-1, 2)
+    return pts
+
+
+def _resample_closed(points, count):
+    """`count` points evenly spaced by arc length around a closed polygon."""
+    closed = np.vstack([points, points[:1]])
+    seg = np.linalg.norm(np.diff(closed, axis=0), axis=1)
+    t = np.concatenate([[0.0], np.cumsum(seg)])
+    targets = np.linspace(0.0, t[-1], count, endpoint=False)
+    return np.stack([np.interp(targets, t, closed[:, 0]), np.interp(targets, t, closed[:, 1])], axis=1)
+
+
+def _strap_strip(verts, grid, cover, start, targets, amount):
+    """Add a strip welded to the head from `start` through `targets`.
+
+    Returns triangle index tuples. All points scale toward `start` with
+    `amount`, so at slider 0 the strip collapses to a point.
+    """
+    way = [start] + [(start[0] + amount * (tx - start[0]), start[1] + amount * (ty - start[1]))
+                     for tx, ty in targets]
+    path = [way[0]]
+    for (ax, ay), (bx, by) in zip(way, way[1:]):
+        for t in np.linspace(0.0, 1.0, 9)[1:]:
+            path.append((ax + (bx - ax) * t, ay + (by - ay) * t))
+    path = np.asarray(path, dtype=np.float64)
+    tangent = np.gradient(path, axis=0)
+    tangent /= np.maximum(np.linalg.norm(tangent, axis=1, keepdims=True), 1e-9)
+    side = np.stack([-tangent[:, 1], tangent[:, 0]], axis=1) * (amount * STRAP_HALF_WIDTH)
+    strip = _shell_points(grid, np.stack([path + side, path - side], axis=1).reshape(-1, 2),
+                          cover=cover).reshape(-1, 2, 3)
+    base = len(verts)
+    verts.extend(tuple(q) for q in strip.reshape(-1, 3))
+    tris = []
+    for k in range(strip.shape[0] - 1):
+        a0, a1 = base + 2 * k, base + 2 * k + 1
+        b0, b1 = base + 2 * (k + 1), base + 2 * (k + 1) + 1
+        tris.append((a0, b0, b1))
+        tris.append((a0, b1, a1))
+    return tris
+
+
+def _add_eyepatch(verts, faces, mats, params, grid):
+    """Black leather eyepatch over the left eye (x<0) with two straps.
+
+    Modelled on the reference: a rounded pad, a main strap running diagonally
+    up across the forehead, and a short strap round toward the ear. Every
+    vertex is sampled on the head and floated off its surface, so the pad and
+    straps wrap the exterior. Offsets scale with the `eyepatch` slider; at 0 all
+    vertices collapse to the eye centre (zero area, culled) and the face table
+    is identical at every value.
+    """
+    amount = params["eyepatch"]
+    eye_x, y_mid, _half_w, _half_h = _eye_geometry(params)
+    cx = -eye_x
+    cover = np.asarray(verts, dtype=np.float64)[np.asarray(faces)]
+
+    outline = _resample_closed(_chaikin_closed(PATCH_OUTLINE), PATCH_SEGMENTS)
+    ring_xy = np.array([[(cx + amount * r / PATCH_RINGS * ox, y_mid + amount * r / PATCH_RINGS * oy)
+                         for ox, oy in outline] for r in range(1, PATCH_RINGS + 1)])
+    ring_3d = _shell_points(grid, ring_xy.reshape(-1, 2), cover=cover).reshape(
+        PATCH_RINGS, PATCH_SEGMENTS, 3)
+    centre_3d = _shell_points(grid, [[cx, y_mid]], cover=cover)[0]
+
+    base = len(verts)
+    verts.extend(tuple(q) for q in ring_3d.reshape(-1, 3))
+    centre = len(verts)
+    verts.append(tuple(centre_3d))
+
+    def idx(r, j):
+        return base + r * PATCH_SEGMENTS + (j % PATCH_SEGMENTS)
+
+    tris = [(centre, idx(0, j), idx(0, j + 1)) for j in range(PATCH_SEGMENTS)]
+    for r in range(PATCH_RINGS - 1):
+        for j in range(PATCH_SEGMENTS):
+            tris.append((idx(r, j), idx(r + 1, j), idx(r + 1, j + 1)))
+            tris.append((idx(r, j), idx(r + 1, j + 1), idx(r, j + 1)))
+    _emit(faces, mats, tris, MAT_PATCH, reversed_winding=PATCH_REVERSED)
+
+    main_start = (cx + amount * PATCH_OUTLINE[1][0], y_mid + amount * PATCH_OUTLINE[1][1])
+    side_start = (cx + amount * PATCH_OUTLINE[5][0], y_mid + amount * PATCH_OUTLINE[5][1])
+    _emit(faces, mats, _strap_strip(verts, grid, cover, main_start,
+                                    [(cx + x, y_mid + y) for x, y in STRAP_MAIN], amount),
+          MAT_PATCH, reversed_winding=True)
+    _emit(faces, mats, _strap_strip(verts, grid, cover, side_start,
+                                    [(cx + x, y_mid + y) for x, y in STRAP_SIDE], amount),
+          MAT_PATCH, reversed_winding=True)
+
+
+def _emit(faces, mats, tris, material, reversed_winding=False):
+    """Append triangles in a fixed winding. `reversed_winding` is chosen per
+    group by the caller: the oval (fan and rings) faces outward as built, the
+    forehead strip needs the opposite corner order."""
+    for a, b, c in tris:
+        faces.append((a, c, b) if reversed_winding else (a, b, c))
+        mats.append(material)
+
+
+MONOCLE_SEGMENTS = 12
+
+
+def _add_monocle(verts, faces, mats, params, grid):
+    """Brass-rimmed monocle over the right eye (x>0).
+
+    A ring of quads for the frame plus a fan of triangles for the glass,
+    all wrapped to the surface. The radius is scaled by the `monocle` slider,
+    so at 0 every point collapses onto the eye centre and the faces vanish.
+    """
+    amount = params["monocle"]
+    eye_x, y_mid, _half_w, _half_h = _eye_geometry(params)
+    outer = amount * 0.105
+    inner = outer * 0.78
+    offset = 0.022
+
+    def point(radius, angle):
+        return (eye_x + radius * math.cos(angle), y_mid + radius * math.sin(angle))
+
+    step = 2.0 * math.pi / MONOCLE_SEGMENTS
+    for i in range(MONOCLE_SEGMENTS):
+        a0, a1 = i * step, (i + 1) * step
+        _surface_quad(verts, faces, mats, grid, [
+            point(outer, a0), point(outer, a1),
+            point(inner, a1), point(inner, a0),
+        ], MAT_RIM, offset=offset)
+        _surface_tri(verts, faces, mats, grid, [
+            (eye_x, y_mid), point(inner, a0), point(inner, a1),
+        ], MAT_LENS, offset=offset)
+
+
 def _add_ears(verts, faces, mats, params, grid):
     """Flat angular ear plates. Cones read as horns; a plate reads as an
     ear and costs six triangles."""
@@ -462,13 +705,18 @@ def _add_ears(verts, faces, mats, params, grid):
             mats.append(MAT_SKIN)
 
 
-def _orient_outward(verts, faces, center):
+def _orient_outward(verts, faces, center, fixed_from=None):
     """Flip any face whose normal points inward.
 
     The mesh is assembled from several independently-built pieces (rings,
     caps, feature quads) whose winding conventions are easy to get subtly
     wrong. Orienting against the head's own centre afterwards makes
     backface culling reliable without hand-auditing every generator.
+
+    `fixed_from` (a face index) exempts every face from that index on. The
+    accessory faces use it: their winding is fixed by corner order, because
+    a normal-sign flip would be undefined at slider 0 (zero-area) and would
+    change the face table between slider values, breaking morph topology.
     """
     verts = np.asarray(verts, dtype=np.float32)
     faces = np.asarray(faces, dtype=np.int32)
@@ -476,6 +724,8 @@ def _orient_outward(verts, faces, center):
     normals = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
     outward = tri.mean(axis=1) - np.asarray(center, dtype=np.float32)
     flip = np.einsum("ij,ij->i", normals, outward) < 0
+    if fixed_from is not None:
+        flip[fixed_from:] = False
     faces[flip] = faces[flip][:, ::-1]
     return faces
 
@@ -551,9 +801,15 @@ def build_codec_head(params=None, mouth_open=0.0, emotion="neutral"):
     _add_brows(verts, faces, mats, params, grid, emotion=emotion)
     _add_eyes(verts, faces, mats, params, grid, emotion=emotion)
     _add_mouth(verts, faces, mats, params, grid, mouth_open=mouth_open, emotion=emotion)
+    # Everything above is oriented by normal sign. Accessories are appended
+    # after that and keep their corner-fixed winding (see _orient_outward).
+    n_oriented = len(faces)
+    _add_eyepatch(verts, faces, mats, params, grid)
+    _add_monocle(verts, faces, mats, params, grid)
 
     verts_arr = np.asarray(verts, dtype=np.float32)
-    faces_arr = _orient_outward(verts_arr, faces, center=(0.0, 0.0, -0.05))
+    faces_arr = _orient_outward(verts_arr, faces, center=(0.0, 0.0, -0.05),
+                                fixed_from=n_oriented)
     mats_arr = np.asarray(mats, dtype=np.int32)
 
     log.debug("codec head: %d verts, %d faces", len(verts_arr), len(faces_arr))

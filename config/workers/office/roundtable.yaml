@@ -170,7 +170,7 @@ roster:
     character_params: {head_width: 0.78, head_taper: 0.20, eye_size: 0.52, eye_spacing: 0.66, jaw_width: 0.32, nose_length: 0.16, ear_size: 0.40, build: 0.66, accent_color: YELLOW}
   tuber_7:   # party_member
     name: "A. Penhale"
-    character_params: {head_width: 0.12, head_taper: 0.00, eye_size: 0.14, eye_spacing: 0.30, jaw_width: 0.56, nose_length: 0.56, ear_size: 0.20, build: 0.22, accent_color: BLACK}
+    character_params: {head_width: 0.12, head_taper: 0.00, eye_size: 0.14, eye_spacing: 0.30, jaw_width: 0.56, nose_length: 0.56, ear_size: 0.20, build: 0.22, eyepatch: 1.00, monocle: 1.00, accent_color: BLACK}
 # ── END OB-20 character_params ──────────────────────────────────────────────
 
 stream:

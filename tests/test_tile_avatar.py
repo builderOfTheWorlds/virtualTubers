@@ -219,12 +219,10 @@ def test_config_carries_the_tile_framerate():
     assert cfg["codec_avatar"]["fps"] == tile_avatar.TILE_AVATAR_FPS == 30
 
 
-def test_config_turns_idle_breathing_off_for_tiles():
-    """Sub-pixel idle sway at tile size is coded as 'no change' by the
-    stream encoder and released as a jump at each keyframe, so heads looked
-    frozen and twitchy on Twitch. Tiles hold still at idle instead."""
+def test_config_sets_idle_breathing_scale_for_tiles():
+    """Tile heads use the TILE_BREATH_SCALE idle-sway amplitude (set to 5)."""
     cfg = tile_avatar.build_tile_avatar_config("gm0", (0, 0, 200, 200))
-    assert cfg["codec_avatar"]["breath_scale"] == tile_avatar.TILE_BREATH_SCALE == 0.0
+    assert cfg["codec_avatar"]["breath_scale"] == tile_avatar.TILE_BREATH_SCALE == 5.0
 
 
 def test_tile_framerate_divides_the_30fps_capture_evenly():

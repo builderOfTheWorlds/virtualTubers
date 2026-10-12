@@ -203,6 +203,8 @@ roster:
       nose_length: 0.56
       ear_size: 0.2
       build: 0.22
+      eyepatch: 1.0
+      monocle: 1.0
       accent_color: BLACK
 stream:
   rtmp_url: rtmp://localhost:1935/live

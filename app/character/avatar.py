@@ -23,6 +23,7 @@ from dataclasses import dataclass, field
 
 from character_schema import (
     ACCENT_COLORS,
+    OPTIONAL_SLIDERS,
     PARAM_DEFAULTS,
     SLIDER_DEFAULTS,
     CharacterParamError,
@@ -36,8 +37,11 @@ logging.addLevelName(TRACE, "TRACE")
 #: Total attempts: the first call plus exactly one retry.
 MAX_ATTEMPTS = 2
 
-#: Every key the model must return — the 8 sliders plus accent_color.
-REQUIRED_KEYS = tuple(SLIDER_DEFAULTS) + ("accent_color",)
+#: Every key the model must return — the sliders minus the optional accessory
+#: sliders, plus accent_color. Accessories are never asked of the model (it
+#: would invent an eyepatch on a character nobody described one for); an
+#: absent accessory key is filled with 0.0 by parse_response.
+REQUIRED_KEYS = tuple(k for k in SLIDER_DEFAULTS if k not in OPTIONAL_SLIDERS) + ("accent_color",)
 
 #: What each slider means, in words the model can map a description onto.
 #: Mirrors the table in docs/character_generator.md.
@@ -155,7 +159,12 @@ def parse_response(text):
     if extra:
         log.warning("op=parse_response dropped_keys=%s", extra)
     filtered = {k: data[k] for k in REQUIRED_KEYS}
+    # Accessory sliders are validated only when the model actually sent them;
+    # an absent one is filled with its default by resolve_params below.
+    filtered.update({k: data[k] for k in OPTIONAL_SLIDERS if k in data})
     for key in SLIDER_DEFAULTS:
+        if key not in filtered:
+            continue
         value = filtered[key]
         # bool is an int subclass; "true" as a slider is a model error.
         if isinstance(value, bool) or not isinstance(value, (int, float, str)):

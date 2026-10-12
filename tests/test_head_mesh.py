@@ -16,7 +16,7 @@ import itertools
 import numpy as np
 import pytest
 
-from character_schema import PARAM_DEFAULTS, SLIDER_DEFAULTS
+from character_schema import OPTIONAL_SLIDERS, PARAM_DEFAULTS, SLIDER_DEFAULTS
 from head_mesh import (
     SKULL_RINGS,
     SKULL_SEGMENTS,
@@ -208,10 +208,15 @@ def test_sliders_actually_change_geometry():
     assert wide[:, 0].max() > narrow[:, 0].max()
 
 
-@pytest.mark.parametrize("slider", sorted(SLIDER_DEFAULTS))
+@pytest.mark.parametrize("slider", sorted(set(SLIDER_DEFAULTS) - set(OPTIONAL_SLIDERS)))
 def test_every_slider_has_a_visible_effect(slider):
     """Each slider must move geometry between its extremes — catches a
-    slider that was added to the schema but never wired into the builder."""
+    slider that was added to the schema but never wired into the builder.
+
+    Accessory sliders (OPTIONAL_SLIDERS) are excluded: head_mesh.py is the
+    superseded smooth-sphere builder and draws no eyepatch or monocle. The
+    codec head (codec_head.py) is the one that does — see test_codec_head.py.
+    """
     low, _ = build_head_params_mesh({slider: 0.0})
     high, _ = build_head_params_mesh({slider: 1.0})
     assert not np.allclose(low, high), f"slider {slider!r} has no geometric effect"

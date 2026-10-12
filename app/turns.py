@@ -77,7 +77,8 @@ class GMUnavailable(Exception):
 class Arbiter:
     def __init__(self, contract, seats, gm, check, send, clock, *, gm_seat="tuber_0",
                  think_s=60, speak_s=45, store=None, arbiter_id="arbiter",
-                 broadcast_to="broadcast", operator_to="operator", on_commit=None, _state=None):
+                 broadcast_to="broadcast", operator_to="operator", on_commit=None, story="",
+                 _state=None):
         # broadcast_to MUST be message_bus.BROADCAST ("broadcast"): MessageConsumer.poll_new
         # drops any message whose `to` is neither the worker id nor "broadcast", so a
         # custom audience like "table" would never reach a seat (found in review).
@@ -92,6 +93,10 @@ class Arbiter:
         # on_commit(entry, scene_id): called the moment a line is committed (the
         # roundtable feed must not wait for the GM's next synchronous calls).
         self.on_commit = on_commit
+        # story: "what has already happened" text (table.story_log), sent BY VALUE to
+        # the seats in think_request / turn_assignment so they continue the story
+        # instead of restarting it each scene (office loop fix, 2026-10-10).
+        self.story = str(story or "")
         self.send = send
         self.clock = clock
         self.think_s = think_s
@@ -293,7 +298,7 @@ class Arbiter:
         self._emit("think_request", self.broadcast_to, {
             "scene_id": s["scene_id"], "round": s["round"], "seats": list(s["seats"]),
             "committed_transcript": copy.deepcopy(s["transcript"]),
-            "deadline_s": self.think_s,
+            "deadline_s": self.think_s, "story": self.story,
         })
 
     def _on_think_done(self, seat):
@@ -328,6 +333,7 @@ class Arbiter:
             "committed_transcript": copy.deepcopy(s["transcript"]),
             "instruction": (s["direction"] or {}).get("must_resolve", ""),
             "deadline_s": self.speak_s, "max_retries": s["max_retries"],
+            "story": self.story,
         }, seat=seat)
 
     def _on_reply(self, seat, payload):
@@ -382,6 +388,8 @@ class Arbiter:
             v = self._gm_call("adjudicate", copy.deepcopy(s["transcript"]), s["round"])
         except GMUnavailable:
             return
+        if v.notes:     # the story log's "what happened" for this scene
+            s["notes"] = str(v.notes)
         # REQUIRED has only verdict+notes; extra keys ride along (validated envelope).
         self._emit("adjudication", self.broadcast_to, {
             "scene_id": s["scene_id"], "round": s["round"], "verdict": v.verdict,
