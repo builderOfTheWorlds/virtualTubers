@@ -11,7 +11,7 @@
 |---|---|---|
 | Server chassis | 4U rackmount, 8-bay hot-swap (Rosewill or RackChoice) | ~$200-300 |
 | Rack | 12-25U open-frame 4-post | ~$150-350 |
-| Cooler | Air cooler (clearance not yet verified against final chassis pick) | ~$50 |
+| Cooler | **Thermalright Peerless Assassin 120 SE** (SKU 959262) | **$49.99** |
 
 This replaced an original plan to reuse `mafober`'s existing case for free — abandoned after direct measurement showed a real physical conflict. That measurement process is worth keeping on record since it's the reason this ended up a rack build at all.
 
@@ -49,9 +49,24 @@ Both are sold through Newegg rather than Micro Center.
 
 A **12-25U open-frame 4-post rack** (open frame, not an enclosed cabinet, for airflow and cabling access) — sized for the one 4U server today, with room for a switch, patch panel, and UPS as the "real rack equipment" goal builds out, without jumping straight to a 42U cabinet that eats the whole basement on day one.
 
+## Cooler: Thermalright Peerless Assassin 120 SE, not a premium option
+
+The Ryzen 9 9950X ([cpu_motherboard_ram.md](cpu_motherboard_ram.md)) is a 170W-TDP chip (up to ~200-230W PPT under all-core boost) that needs a real dual-tower air cooler, not a budget single-tower — but this is also a well-documented case in independent hardware press (GamersNexus, Hardware Unboxed) where the cheap option wins outright:
+
+- **Height: 155mm** — clears the typical 4U rackmount clearance ceiling (~160-165mm) with real margin, addressing the open item below even before the exact chassis is picked.
+- **Thermal performance**: handles the 9950X's full TDP without throttling, benchmarking within 1-2°C of the $180 Noctua NH-D15 — a premium flagship cooler at roughly 3.6x the price.
+- **24/7 duty**: S-FDB fluid-dynamic-bearing fans rated 50,000+ hours; no reported issues under sustained (non-gaming-burst) load.
+- Ruled out the 140mm variant (Peerless Assassin 140, $59.99) specifically for height — at 158mm it's too close to the 4U ceiling to risk before the exact chassis is confirmed. The premium Noctua NH-D15 G2 ($179.99) was also passed on: since this box lives in a basement rack rather than near living space, the extra quietness isn't worth the price jump for a 1-2°C thermal gain.
+
 ## Open item before ordering
 
-GPU rack servers run deep (often 26-30"+ once PSU and cabling are accounted for), and rack depth is adjustable but has a max. **Confirm the specific chassis' depth against the rack's adjustable range before ordering both** — same lesson as the Antec measurement above, not yet done for this pairing.
+GPU rack servers run deep (often 26-30"+ once PSU and cabling are accounted for), and rack depth is adjustable but has a max. **Confirm the specific chassis' depth against the rack's adjustable range before ordering both** — same lesson as the Antec measurement above, not yet done for this pairing. The cooler's 155mm height is now confirmed and should clear most 4U chassis, but re-verify against the specific chassis' published clearance once chosen.
+
+**Raised stakes as of 2026-08-03**: the build now has **three full-length PCIe cards** (RTX 5080 + a second GPU, an EVGA GTX 970 reused for VM passthrough, + the LSI HBA — see [gpu.md](gpu.md) and [storage.md](storage.md)), not two. The clearance/airflow check above needs to cover all three cards in adjacent slots, not just GPU-vs-HBA — specifically whether the 5080's cooler (triple-fan, even if "SFF"-branded) leaves enough gap for the 970 next to it without starving either card's airflow, and whether either card's cooler physically blocks reach to the third (chipset) slot for the HBA. Still not done.
+
+**Case pick may have diverged**: this doc's candidates (Rosewill 4U, RackChoice 4U) were the researched recommendation, but the actual shopping cart for this build included a **SilverStone RM52 (5U, ATX, ~$579.99)** instead — a different chassis than either candidate above. If that's the one being bought, it needs the same depth/clearance verification from scratch (bay count, GPU clearance with the drive cage installed, and now 3-card width) rather than assuming it matches the Rosewill/RackChoice research below. Not yet confirmed which chassis is final.
+
+No networking-driven slot pressure to add to this check: the motherboard has onboard 10GbE/5GbE/WiFi7 (see [cpu_motherboard_ram.md](cpu_motherboard_ram.md)), so there's no future NIC card competing for rack/case space or a PCIe slot.
 
 ## Considered and rejected: full enterprise server-grade equipment
 
@@ -67,6 +82,7 @@ Compromise, not yet acted on: a separate **$200-400 used enterprise box** (Dell 
 
 ## Related
 
-- [gpu.md](gpu.md) — the card whose physical dimensions drove this decision
+- [gpu.md](gpu.md) — the cards whose physical dimensions drove this decision, now two GPUs plus the HBA
 - [storage.md](storage.md) — the drive cage that created the original conflict
-- [power_supply.md](power_supply.md) — PSU sizing for the rack chassis
+- [power_supply.md](power_supply.md) — PSU sizing for the rack chassis, including the second GPU's power draw
+- [cpu_motherboard_ram.md](cpu_motherboard_ram.md) — onboard networking that removes any NIC-driven slot/case pressure

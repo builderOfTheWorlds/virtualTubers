@@ -1206,7 +1206,7 @@ def test_director_invites_distinct_followers_deduped_and_cues_in_order(
     assert invites[0]["payload"] == {
         "airing_id": "airing-123", "episode": "duet_ep", "cast": cast,
         "speed": 1000.0, "worker_name": "director-1", "director": "director-1",
-        "campaign": "coder",
+        "campaign": "coder", "summary": [],
     }
     cues = [m for m in producer.sent if m["type"] == "replay_cue"]
     assert [c["payload"]["scene_index"] for c in cues] == [0, 1]
@@ -1437,6 +1437,81 @@ def test_director_annotates_ownership_and_strips_unowned_audio(
     assert coder_scene["target_duration"] == pytest.approx(0.03)  # kept for pacing
 
 
+def test_director_invites_summary_workers_and_forwards_field(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    """A round-table `summary` worker joins like an ordinary follower —
+    invited, required for the ready-wait, and cued — even though `cast`
+    never names it, and the invite payload forwards `summary` verbatim."""
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory())
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-summary-1")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    cast = {"boss": "director-1", "coder": "director-1"}  # cast names nobody else
+    summary = ["workerC"]
+    request = {"episode": "duet_ep", "cast": cast, "summary": summary, "speed": 1000}
+
+    # ready_file must arrive AFTER the wait starts, like the other director
+    # tests above — simulate workerC's replay_ready landing mid-poll.
+    def fake_sleep(seconds):
+        relay_files["ready_file"].write_text(
+            json.dumps({"airing_id": "airing-summary-1", "workers": ["workerC"]}), encoding="utf-8")
+    monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
+
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is True  # only true because workerC (a summary-only member) was waited for
+    producer = holder["producer"]
+    invites = [m for m in producer.sent if m["type"] == "replay_invite"]
+    assert len(invites) == 1
+    assert invites[0]["to"] == "workerC"
+    assert invites[0]["payload"]["summary"] == summary
+    cues = [m for m in producer.sent if m["type"] == "replay_cue"]
+    assert len(cues) == 2  # one per duet_ep scene
+    assert all(c["to"] == "workerC" for c in cues)
+    ends = [m for m in producer.sent if m["type"] == "replay_end"]
+    assert len(ends) == 1
+    assert ends[0]["to"] == "workerC"
+    assert ends[0]["payload"]["reason"] == "finished"
+
+
+def test_director_self_in_summary_owns_every_scene(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    """Director listed in its own `summary` keeps every scene's audio, even
+    a speaker `cast` assigns to another worker — summary overrides cast,
+    including for the director itself (docs/duet_replay.md)."""
+    monkeypatch.setattr(replay_pane, "prepare_voiced_show", _fake_voiced_show_factory(with_audio=True))
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane, "publish_narration", lambda *a, **kw: "msg-1")
+    monkeypatch.setattr(replay_pane, "persist_narration", lambda *a, **kw: "airing-summary-2")
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    cast = {"boss": "director-1", "coder": "workerB"}
+    summary = ["director-1"]
+    request = {"episode": "duet_ep", "cast": cast, "summary": summary, "speed": 1000}
+
+    def fake_sleep(seconds):
+        relay_files["ready_file"].write_text(
+            json.dumps({"airing_id": "airing-summary-2", "workers": ["workerB"]}), encoding="utf-8")
+    monkeypatch.setattr(replay_pane.time, "sleep", fake_sleep)
+
+    ok = perform_director_request(request, duet_library, "director-1", None, "director-1",
+                                  config=_duet_config("director-1"))
+
+    assert ok is True
+    show = FakePerformer.instances[0].performed_show
+    boss_scene = next(s for s in show if s["speaker"] == "boss")
+    coder_scene = next(s for s in show if s["speaker"] == "coder")
+    assert boss_scene["owned"] is True
+    assert boss_scene["audio"] is not None
+    assert coder_scene["owned"] is True  # cast says workerB, but summary wins
+    assert coder_scene["audio"] is not None
+
+
 # ── follower path ─────────────────────────────────────────────────────────────
 def test_follower_happy_path_loads_owned_audio_and_notifies_director(
         duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
@@ -1471,6 +1546,64 @@ def test_follower_happy_path_loads_owned_audio_and_notifies_director(
     assert len(ready_msgs) == 1
     assert ready_msgs[0]["to"] == "director-1"
     assert ready_msgs[0]["payload"] == {"airing_id": "airing-77"}
+
+
+def test_follower_in_summary_owns_every_scene_regardless_of_cast(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    """A follower named in the request's `summary` owns EVERY scene's audio
+    even though `cast` only assigns it one speaker — summary overrides cast
+    (docs/duet_replay.md)."""
+    rows = _duet_rows(boss_audio=b"boss-wav-bytes", coder_audio=b"coder-wav-bytes",
+                      boss_duration=1.5, coder_duration=2.5)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    cast = {"boss": "director-1", "coder": "follower-1"}  # cast assigns only "coder" to us
+    request = {"mode": "follow", "airing_id": "airing-77", "episode": "duet_ep", "cast": cast,
+              "summary": ["follower-1"], "speed": 1000, "worker_name": "KODI-Follower",
+              "director": "director-1"}
+
+    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+                                  config=_duet_config("follower-1"))
+
+    assert ok is True
+    show = FakePerformer.instances[0].performed_show
+    assert len(show) == 2  # both boss and coder scenes present (duet_ep)
+    for scene in show:
+        assert scene["owned"] is True
+        assert scene["audio"] is not None
+
+
+def test_follower_not_in_summary_only_owns_its_own_cast_speaker(
+        duet_library, monkeypatch, fake_performer, duet_timeouts, relay_files):
+    """Regression guard: a `summary` naming some OTHER worker must not
+    change this follower's ownership at all — behaves exactly like the
+    no-summary happy path above."""
+    rows = _duet_rows(boss_audio=b"boss-wav-bytes", coder_audio=b"coder-wav-bytes",
+                      boss_duration=1.5, coder_duration=2.5)
+    monkeypatch.setattr(replay_pane.narration_store, "available", lambda: True)
+    monkeypatch.setattr(replay_pane.narration_store, "load_airing", lambda airing_id: rows)
+    holder = {}
+    monkeypatch.setattr(replay_pane, "MessageProducer", _recording_producer_ctor(holder))
+
+    cast = {"boss": "director-1", "coder": "follower-1"}
+    request = {"mode": "follow", "airing_id": "airing-77", "episode": "duet_ep", "cast": cast,
+              "summary": ["someone-else"], "speed": 1000, "worker_name": "KODI-Follower",
+              "director": "director-1"}
+
+    ok = perform_follower_request(request, duet_library, "follower-1", None, "follower-1",
+                                  config=_duet_config("follower-1"))
+
+    assert ok is True
+    show = FakePerformer.instances[0].performed_show
+    boss_scene = next(s for s in show if s["speaker"] == "boss")
+    coder_scene = next(s for s in show if s["speaker"] == "coder")
+    assert boss_scene["owned"] is False
+    assert boss_scene["audio"] is None
+    assert coder_scene["owned"] is True
+    assert coder_scene["audio"] is not None
 
 
 def test_follower_uses_campaign_from_invite_payload(

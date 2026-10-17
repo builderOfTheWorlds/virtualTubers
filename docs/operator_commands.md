@@ -142,6 +142,18 @@ demo side effects, no pipeline handoff.
   the same episode on its own stream, voicing only its own speaker(s). A
   speaker not present in `cast` defaults to the director. Full protocol,
   timeouts, and deployment requirements: docs/duet_replay.md.
+- `payload.summary` (list of strings, optional) — adds one or more
+  **summary followers**: worker ids that join the duet as a round-table
+  channel playing EVERY scene's audio (every persona's line, in that
+  persona's already-synthesized voice), instead of just the speaker(s)
+  `cast` assigns them. A worker listed in `summary` owns every scene
+  regardless of what `cast` says — `summary` membership takes precedence
+  over `cast` entirely. Must be a non-empty list of non-blank strings;
+  anything else (not a list, empty, blank/non-string entries) is rejected
+  the same way an invalid `cast` is — an `operator_reply` error and
+  nothing queued. `summary` on a request with no `cast` is a no-op (a solo
+  show already plays every persona's voice in sequence). Full protocol:
+  docs/duet_replay.md.
 
 Any worker (no role gate) queues the episode for its "Rerun Theater" pane
 and confirms with an `operator_reply`. The show only actually appears if
@@ -163,13 +175,24 @@ whole episode:
              "cast": {"boss": "manager", "coder": "coder"}}}
 ```
 
-**Duets never degrade to solo.** An invalid `cast` (not a dict, empty, or
-non-string keys/values) is rejected immediately with an `operator_reply`
-error and nothing is queued. A valid cast that later fails to come
-together — the director can't reach Kafka or the narration store, voice
-prep fails, or a follower never publishes ready within
-`REPLAY_READY_TIMEOUT_S` (default 60s) — refuses the whole airing outright
-instead of falling back to a solo show. Most refusals send a **second**
+**Duet + summary example** — same duet, plus `worker-7` joining as a
+summary follower airing a round-table channel with every persona's audio:
+
+```json
+{"to": "coder", "type": "replay_request",
+ "payload": {"episode": "2026-07-02_04-27-00_6ecdde82",
+             "cast": {"boss": "manager", "coder": "coder"},
+             "summary": ["worker-7"]}}
+```
+
+**Duets never degrade to solo.** An invalid `cast` or `summary` (not a
+dict/list, empty, or non-string keys/values/entries) is rejected
+immediately with an `operator_reply` error and nothing is queued. A valid
+cast that later fails to come together — the director can't reach Kafka or
+the narration store, voice prep fails, or a follower (cast OR summary)
+never publishes ready within `REPLAY_READY_TIMEOUT_S` (default 60s) —
+refuses the whole airing outright instead of falling back to a solo show.
+Most refusals send a **second**
 `operator_reply` with `{"error": "..."}` once the director gives up
 (distinct from the initial "queued" reply); the one exception is a
 director with no Kafka producer at all, which can't send anything further

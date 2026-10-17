@@ -1,5 +1,10 @@
 # VTubers Project — Weekly Simulation-Loop Show
 
+> This is the raw brainstorm scratchpad. The cleaned-up, current-state
+> version lives in [`docs/story_time_loop_concept.md`](../docs/story_time_loop_concept.md),
+> and the first story built on it is outlined in
+> [`docs/dnd_campaign_pilot_outline.md`](../docs/dnd_campaign_pilot_outline.md).
+
 ## Stakeholder Summary
 
 We're developing a new format for our AI VTuber streaming platform: a **weekly, 24/7 continuous stream** built around a single-player-cast simulation that resets every week. Each "loop" plays out as a scripted, branching interactive story, with the cast, genre, and world potentially changing week to week — a hacker campaign one week, a fantasy campaign the next — all tied together by an overarching sci-fi premise: the characters are trapped inside a simulation that keeps resetting, and are slowly uncovering the truth.

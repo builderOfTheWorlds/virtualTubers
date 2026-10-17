@@ -124,6 +124,12 @@ $Type    = "replay_request"
 # aired once and gotten cached to Postgres.
 $Payload = '{"episode": "test_worker_roundtable", "cast": {"manager": "worker-5", "coder": "worker-1", "coder-native": "worker-2", "coder-opencode": "worker-3", "coder-aider": "worker-4", "tester": "worker-6"}, "narration": "reuse"}'
 
+# Same test_worker_roundtable duet, plus worker-7 as a summary follower
+# (docs/duet_replay.md): worker-7 airs the round-table channel, playing
+# EVERY persona's audio, while workers 1-6 keep voicing only their own
+# individually cast persona.
+# $Payload = '{"episode": "test_worker_roundtable", "cast": {"manager": "worker-5", "coder": "worker-1", "coder-native": "worker-2", "coder-opencode": "worker-3", "coder-aider": "worker-4", "tester": "worker-6"}, "summary": ["worker-7"], "narration": "reuse"}'
+
 
 # $Payload = '{
 #     "episode": "harry_potter_ch1_doorstep_delivery",

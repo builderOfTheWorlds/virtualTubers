@@ -30,10 +30,12 @@
 | **ashiorid** | 2014 | Intel i5-4590 | 4C/4T | 8 GB | Intel HD 4600 (QuickSync) | 24/7 Debian. WireGuard site-to-site, HomeAssistant, qBittorrent, Portainer. Disk **94% full**. |
 | **mafober** | 2012 | Intel **i3-2120** | 2C/4T | 12 GB | Sandy Bridge iGPU | 24/7 Proxmox. Plex, Grafana, Prometheus, Portainer LXC. Too weak for streaming; already flagged undersized. |
 | *(storage)* | 2014 | Intel i3-4160 | 2C/4T | 8 GB DDR3 | Intel HD 4400 (QuickSync) | Unused. Useful as a RAM donor for ashiorid, or a zero-risk test bench. |
-| *(shelf)* | 2014 | — | — | — | **EVGA GTX 970 4 GB** | Maxwell NVENC. Driver EOL. Emergency spare only. |
+| *(shelf)* | 2014 | — | — | — | **EVGA GTX 970 4 GB** | Maxwell. **Repurposed 2026-08-03**: passthrough GPU for a Windows VM on the new main-server build — see below. |
 
 **Both daily drivers own an RTX 3080.** Freeing them for gaming is the driver
 behind building a dedicated box.
+
+> **Update 2026-08-03 — GTX 970 driver status corrected.** This table previously called the 970 "Driver EOL, emergency spare only." Verified against NVIDIA's actual support timeline: the last Game Ready driver for Maxwell shipped October 2025, but the architecture then moves to **quarterly security updates through October 2028** — not full end-of-life. That's well past the planning horizon for its new role: a dedicated passthrough GPU for a Windows 11 VM on the [hardware/](../hardware/) build (general-purpose use — VS Code, docs, browsing — not gaming or compute, which stays on the two daily-driver RTX 3080 boxes above). One real constraint from the same driver-timeline check: NVIDIA drops Windows 10 driver builds after October 2026, so that VM needs to be Windows 11, not 10. Full detail: [../hardware/gpu.md](../hardware/gpu.md#second-gpu-gtx-970-added-for-vm-passthrough-2026-08-03).
 
 ---
 

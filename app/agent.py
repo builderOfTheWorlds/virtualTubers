@@ -930,6 +930,21 @@ def _is_valid_cast(cast):
     return True
 
 
+def _is_valid_summary(summary):
+    """True when `summary` is a non-empty list whose entries are all
+    non-empty strings (duet replay "summary follower" contract — worker ids
+    that join the duet and play EVERY scene's audio, not just scenes cast to
+    them). Anything else — not a list, empty list, non-string/blank entries
+    — is invalid and must be rejected by handle_replay_request rather than
+    forwarded to the replay pane."""
+    if not isinstance(summary, list) or not summary:
+        return False
+    for entry in summary:
+        if not isinstance(entry, str) or not entry.strip():
+            return False
+    return True
+
+
 def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
                           state_path=None, coding_backend=None):
     """Operator lever: queue a "Rerun Theater" episode for this worker's
@@ -947,6 +962,15 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
     request file; an invalid cast is rejected with an operator_reply error
     and NOTHING is written (a half-formed duet must never reach the pane).
     Absent cast leaves solo-request behavior byte-for-byte unchanged.
+
+    Optional payload.summary (duet replay "summary follower" role): a list
+    of worker ids that should join the duet and play EVERY scene's audio (a
+    round-table channel) instead of only scenes cast to them. When present
+    it must be a non-empty list of non-empty strings (see
+    _is_valid_summary) — valid summaries are forwarded verbatim into the
+    request file; an invalid summary is rejected with an operator_reply
+    error and NOTHING is written, same as an invalid cast. Absent summary
+    leaves request behavior unchanged.
     """
     payload = msg.get("payload", {})
     episode = payload.get("episode")
@@ -967,6 +991,16 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
         ))
         return
 
+    summary = payload.get("summary")
+    if summary is not None and not _is_valid_summary(summary):
+        print(f"[agent:{worker_id}] rejected replay_request: invalid summary {summary!r}")
+        producer.send(build_message(
+            worker_id, "operator", "operator_reply",
+            {"error": "replay_request payload.summary must be a non-empty list of "
+                       "non-empty worker ids"},
+        ))
+        return
+
     request = {"episode": str(episode).strip()}
     if payload.get("speed") is not None:
         request["speed"] = payload["speed"]
@@ -981,6 +1015,9 @@ def handle_replay_request(worker_id, agent_config, llm_client, producer, msg,
     if cast is not None:
         # Already validated above — forwarded verbatim, per contract.
         request["cast"] = cast
+    if summary is not None:
+        # Already validated above — forwarded verbatim, per contract.
+        request["summary"] = summary
 
     try:
         _write_replay_request(request)

@@ -1249,6 +1249,125 @@ virtualTubers/
 
 <!-- SHARED:START -->
 <!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->
+### Added from torrentReencoder — 2026-10-17 17:52
+
+<!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->
+### Added from virtualTubers — 2026-07-12 02:32
+
+## Claude Code Hook: .venv Enforcement
+
+This project's `.claude/settings.json` includes a `PreToolUse` hook (matcher
+`Bash|PowerShell`) that blocks Claude Code from invoking the global/system
+Python directly — bare `python`, `python3`, `pip`, `pip3` — whenever a
+`.venv` directory exists at the project root. It's a no-op in projects
+without a `.venv`. Commands that go through `.venv\Scripts\...` /
+`.venv/bin/...` directly, or that activate the venv within the same command,
+are unaffected.
+
+This exists because the "always use `.venv`, never global Python" rule was
+already documented (see above and in CLAUDE.md) but was still being followed
+inconsistently when left to memory/instructions alone — a hook enforces it
+at the tool-call level instead of relying on the model to remember. Any
+project with a `.venv` can adopt the same hook; see this project's
+`.claude/settings.json` for the exact hook definition to copy.
+
+
+## Mafober Deployment Environment
+
+New projects created or cloned into the managed projects root (`projects_root` in `config.yaml`) deploy to **mafober**, a Proxmox VE homelab host that also runs the shared Docker/Portainer stack for this machine.
+
+### Connection
+
+| Item | Value |
+|------|-------|
+| Hostname | `mafober` |
+| IP Address | `192.168.1.117` |
+| Proxmox Web UI | `https://192.168.1.117:8006` |
+| Portainer (Docker mgmt) | `https://192.168.1.120:9443` |
+| SSH / SFTP | port `22` on `192.168.1.117` |
+
+### Deploying a new project
+
+1. Create a ZFS dataset under `tank_0` for the project's persistent storage (`zfs create tank_0/utilities/<project>`) rather than relying on ephemeral CT storage or named Docker volumes.
+2. `chown` the new dataset to the UID/GID the container image expects (e.g. `1000:1000` for linuxserver images, `472:472` for Grafana-style images).
+3. Add an explicit bind mount for the dataset into CT 101 (the Portainer LXC): `pct set 101 -mp<N> /tank_0/utilities/<project>,mp=/tank_0/utilities/<project>`, then `pct restart 101`. Each ZFS dataset needs its own `mp` entry — mounting a parent dataset does not expose its children.
+4. Define the stack/container in Portainer (`https://192.168.1.120:9443`) pointing at the bind-mounted path.
+5. If the project should be scraped by Prometheus or shipped logs to Grafana, register it alongside the existing dashboards/exporters on the host.
+
+### Currently deployed on mafober
+
+- **Portainer** — Docker/stack management (CT 101)
+- **Plex** — media server
+- **qBittorrent** — torrent client
+- **Grafana** — dashboards
+- **Prometheus** — metrics
+- **node_exporter** / **zfs_exporter** — host-level metrics, run directly on the Proxmox host (not containerized)
+
+### More info
+
+Full hardware specs, ZFS layout, container configs, and troubleshooting lessons learned live in `mafober/mafober_summary.md` (a sibling project directory under the managed projects root). Check there first if these details aren't enough.
+
+### Added from argyreServer — 2026-10-17 17:52
+
+<!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->
+### Added from virtualTubers — 2026-08-17 00:53
+
+<!-- SHARED ADDITIONS FROM PROJECTS WILL BE APPENDED BELOW THIS LINE -->
+### Added from virtualTubers — 2026-07-12 02:32
+
+## Claude Code Hook: .venv Enforcement
+
+This project's `.claude/settings.json` includes a `PreToolUse` hook (matcher
+`Bash|PowerShell`) that blocks Claude Code from invoking the global/system
+Python directly — bare `python`, `python3`, `pip`, `pip3` — whenever a
+`.venv` directory exists at the project root. It's a no-op in projects
+without a `.venv`. Commands that go through `.venv\Scripts\...` /
+`.venv/bin/...` directly, or that activate the venv within the same command,
+are unaffected.
+
+This exists because the "always use `.venv`, never global Python" rule was
+already documented (see above and in CLAUDE.md) but was still being followed
+inconsistently when left to memory/instructions alone — a hook enforces it
+at the tool-call level instead of relying on the model to remember. Any
+project with a `.venv` can adopt the same hook; see this project's
+`.claude/settings.json` for the exact hook definition to copy.
+
+
+## Mafober Deployment Environment
+
+New projects created or cloned into the managed projects root (`projects_root` in `config.yaml`) deploy to **mafober**, a Proxmox VE homelab host that also runs the shared Docker/Portainer stack for this machine.
+
+### Connection
+
+| Item | Value |
+|------|-------|
+| Hostname | `mafober` |
+| IP Address | `192.168.1.117` |
+| Proxmox Web UI | `https://192.168.1.117:8006` |
+| Portainer (Docker mgmt) | `https://192.168.1.120:9443` |
+| SSH / SFTP | port `22` on `192.168.1.117` |
+
+### Deploying a new project
+
+1. Create a ZFS dataset under `tank_0` for the project's persistent storage (`zfs create tank_0/utilities/<project>`) rather than relying on ephemeral CT storage or named Docker volumes.
+2. `chown` the new dataset to the UID/GID the container image expects (e.g. `1000:1000` for linuxserver images, `472:472` for Grafana-style images).
+3. Add an explicit bind mount for the dataset into CT 101 (the Portainer LXC): `pct set 101 -mp<N> /tank_0/utilities/<project>,mp=/tank_0/utilities/<project>`, then `pct restart 101`. Each ZFS dataset needs its own `mp` entry — mounting a parent dataset does not expose its children.
+4. Define the stack/container in Portainer (`https://192.168.1.120:9443`) pointing at the bind-mounted path.
+5. If the project should be scraped by Prometheus or shipped logs to Grafana, register it alongside the existing dashboards/exporters on the host.
+
+### Currently deployed on mafober
+
+- **Portainer** — Docker/stack management (CT 101)
+- **Plex** — media server
+- **qBittorrent** — torrent client
+- **Grafana** — dashboards
+- **Prometheus** — metrics
+- **node_exporter** / **zfs_exporter** — host-level metrics, run directly on the Proxmox host (not containerized)
+
+### More info
+
+Full hardware specs, ZFS layout, container configs, and troubleshooting lessons learned live in `mafober/mafober_summary.md` (a sibling project directory under the managed projects root). Check there first if these details aren't enough.
+
 ### Added from virtualTubers — 2026-07-12 02:32
 
 ## Claude Code Hook: .venv Enforcement

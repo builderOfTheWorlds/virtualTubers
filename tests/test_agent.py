@@ -692,6 +692,102 @@ def test_handle_replay_request_without_cast_is_byte_for_byte_unchanged(duet_rela
     assert "narration" in producer.sent[0]["payload"]
 
 
+@pytest.mark.parametrize(
+    "summary, expected",
+    [
+        (["worker-a"], True),
+        (["worker-a", "worker-b"], True),
+        ({"worker-a": "x"}, False),
+        ("worker-a", False),
+        (5, False),
+        (None, False),
+        ([], False),
+        ([1], False),
+        ([""], False),
+        (["   "], False),
+        (["worker-a", 2], False),
+    ],
+)
+def test_is_valid_summary_returns_expected(summary, expected):
+    assert agent._is_valid_summary(summary) is expected
+
+
+def test_handle_replay_request_forwards_valid_summary_into_request_file(duet_relay_env):
+    request_file, _, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "operator", "type": "replay_request",
+        "payload": {"episode": "ep-one", "summary": ["worker-c", "worker-d"]},
+    }
+
+    handle_replay_request("worker-a", {}, llm, producer, msg)
+
+    request = json.loads(request_file.read_text())
+    assert request["episode"] == "ep-one"
+    assert request["summary"] == ["worker-c", "worker-d"]
+    assert "cast" not in request
+    assert len(producer.sent) == 1
+    assert producer.sent[0]["type"] == "operator_reply"
+    assert "narration" in producer.sent[0]["payload"]
+
+
+@pytest.mark.parametrize(
+    "bad_summary",
+    [
+        "not-a-list",
+        {},
+        5,
+        [],
+        [1],
+        [""],
+        ["   "],
+        ["worker-c", ""],
+        ["worker-c", 5],
+    ],
+)
+def test_handle_replay_request_invalid_summary_sends_error_and_writes_nothing(duet_relay_env, bad_summary):
+    request_file, _, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "operator", "type": "replay_request",
+        "payload": {"episode": "ep-one", "summary": bad_summary},
+    }
+
+    handle_replay_request("worker-a", {}, llm, producer, msg)
+
+    assert not request_file.exists()
+    assert len(producer.sent) == 1
+    sent = producer.sent[0]
+    assert sent["to"] == "operator"
+    assert sent["type"] == "operator_reply"
+    assert "summary" in sent["payload"]["error"]
+
+
+def test_handle_replay_request_forwards_valid_cast_and_summary_together(duet_relay_env):
+    request_file, _, _ = duet_relay_env
+    producer = FakeProducer()
+    llm = FakeLLM(response="unused")
+    msg = {
+        "from": "operator", "type": "replay_request",
+        "payload": {
+            "episode": "ep-one",
+            "cast": {"boss": "worker-a", "coder": "worker-b"},
+            "summary": ["worker-c", "worker-d"],
+        },
+    }
+
+    handle_replay_request("worker-a", {}, llm, producer, msg)
+
+    request = json.loads(request_file.read_text())
+    assert request["episode"] == "ep-one"
+    assert request["cast"] == {"boss": "worker-a", "coder": "worker-b"}
+    assert request["summary"] == ["worker-c", "worker-d"]
+    assert len(producer.sent) == 1
+    assert "narration" in producer.sent[0]["payload"]
+
+
 def test_handle_replay_invite_writes_follower_request_file_with_spec_schema(duet_relay_env):
     request_file, _, _ = duet_relay_env
     producer = FakeProducer()

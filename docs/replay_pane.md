@@ -120,6 +120,31 @@ for its own cast scenes, and performs scene-by-scene as `replay_cue`
 messages authorize each one. Full protocol reference, message schemas,
 timeouts, and deployment requirements: [docs/duet_replay.md](duet_replay.md).
 
+**Summary followers — round-table ownership override (2026-08-02).** A
+`replay_request`'s optional `payload.summary` — a list of worker_id
+strings, already validated by `app/agent.py`'s `_is_valid_summary` before
+this pane ever sees the file (mirrors `_is_valid_cast`: non-empty list of
+non-blank strings; this pane trusts the file exactly as it does for
+`cast`) — names workers that join the duet like ordinary followers
+(invited, ready-waited-for, cued, ended) but **own every scene's audio
+regardless of `cast`**. `perform_director_request` unions `summary` into
+the same `followers`/`invited`/cue-target bookkeeping `cast` already
+drives — no parallel tracking — and forwards `"summary"` verbatim in the
+`replay_invite` payload, exactly like `cast`. The follower's own request
+file already carries it too, for free: `handle_replay_invite` (`app/
+agent.py`) copies the director's invite payload verbatim into the follower
+request, so any field the director puts in the invite (including
+`summary`) reaches `perform_follower_request` with no agent-side change.
+**Precedence: membership in `summary` overrides `cast` entirely**,
+including when the director itself is listed — a director or follower
+named in `summary` keeps/owns every scene's audio even for speakers `cast`
+assigns to someone else. `perform_request`'s dispatch is deliberately
+unaffected: `summary` never turns a would-be-solo request into a duet by
+itself (a `cast` that's absent or all-self, with a `summary` present,
+still resolves to a plain solo performance and the field is simply
+ignored) — only `cast` decides solo-vs-director. See
+[docs/duet_replay.md](duet_replay.md) and docs/agent.md.
+
 **Runtime persona assignment (campaign_platform_contract.md §8, docs/campaign_control.md).**
 `main()`'s idle loop also polls the agent → pane persona relay file
 (`/tmp/persona.json`, env `PERSONA_FILE`, written by `app/agent.py`'s
@@ -373,7 +398,10 @@ curl -X POST http://localhost:8090/messages \
   the error. `perform_follower_request` returns `False` (never generates
   fresh narration) on a malformed invite payload, an unreachable/missing
   narration store, an airing that no longer matches the episode's own
-  scenes, or a failed `replay_ready` publish.
+  scenes, or a failed `replay_ready` publish. `payload.summary` is trusted
+  as-is on both paths — `app/agent.py`'s `_is_valid_summary` already
+  rejected anything malformed before the request file was ever written, so
+  this pane never re-validates it (same trust boundary as `cast`).
 - **The mid-airing guard flag never blocks or delays a show.**
   `_set_airing` (called from `_airing_flag`'s set-then-`finally`-clear
   pair) catches any exception from the Redis `set`/`delete` call and just
@@ -391,6 +419,20 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- **v2.2.0** (2026-08-02): Summary followers — a `replay_request`'s
+  optional `payload.summary` (list of worker_ids, validated by `app/
+  agent.py`'s new `_is_valid_summary`) names round-table workers that join
+  a duet like ordinary followers (invited/ready-waited-for/cued/ended) but
+  own EVERY scene's audio regardless of `cast`; membership in `summary`
+  overrides `cast` entirely, including when the director itself is
+  listed. `perform_director_request` unions `summary` into the existing
+  `followers` bookkeeping (no parallel tracking) and forwards `"summary"`
+  verbatim in the `replay_invite` payload — the follower's own request
+  file gets it for free via `handle_replay_invite`'s existing verbatim
+  payload copy, no `app/agent.py` change needed for that leg.
+  `perform_request`'s solo-vs-director dispatch is unaffected: `summary`
+  alone never turns a would-be-solo request into a duet. +4 tests. See
+  docs/duet_replay.md.
 - **v2.1.0** (2026-07-26, campaign_platform_contract.md §8): Runtime persona assignment —
   `main()`'s idle loop polls the new `/tmp/persona.json` relay file (env
   `PERSONA_FILE`) alongside the existing request/stop/cue files; on a

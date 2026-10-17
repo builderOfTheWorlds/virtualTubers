@@ -606,7 +606,15 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
     degrading to a solo performance — when narration_store, the Kafka
     producer, voice preparation, or persistence isn't available, or when a
     follower never shows up in time. Returns True only when the show
-    actually aired."""
+    actually aired.
+
+    `payload.summary` (a list of worker_ids, already validated by
+    `agent._is_valid_summary`) names round-table workers that join like
+    ordinary followers — invited, ready-waited-for, cued, ended — but OWN
+    every scene's audio regardless of `cast`. Membership in `summary`
+    overrides `cast` entirely, including when the director itself is
+    listed (it then keeps every scene's audio instead of only the ones
+    `cast` assigns it)."""
     campaign = resolve_campaign(request, config)
     requested_episode = request.get("episode")
     source = resolve_episode(library, requested_episode, campaign)
@@ -639,7 +647,8 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
 
     name = str(request.get("worker_name") or worker_name)
     cast = request.get("cast") or {}
-    followers = sorted({worker_id for worker_id in cast.values()
+    summary = request.get("summary") or []
+    followers = sorted({worker_id for worker_id in list(cast.values()) + list(summary)
                         if worker_id and worker_id != self_id})
 
     producer = _build_bus_producer(config)
@@ -677,10 +686,11 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
         # worker plays its audio/speaks (Performer._perform_scene); a scene
         # this worker doesn't own has its audio stripped so it never gets
         # played here, but keeps target_duration so visual pacing still
-        # tracks the owner's timing.
+        # tracks the owner's timing. `summary` overrides `cast` entirely —
+        # a director listed in its own `summary` owns every scene.
         for scene in show:
             speaker = scene.get("speaker")
-            owned = cast.get(speaker, self_id) == self_id
+            owned = self_id in summary or cast.get(speaker, self_id) == self_id
             audio = scene.get("audio")
             scene["owned"] = owned
             if audio is not None:
@@ -691,7 +701,7 @@ def perform_director_request(request, library, worker_name, state_path, self_id,
         for follower in followers:
             payload = {"airing_id": airing_id, "episode": source.stem, "cast": cast,
                       "speed": speed, "worker_name": name, "director": self_id,
-                      "campaign": campaign}
+                      "campaign": campaign, "summary": summary}
             _safe_send(producer, build_message(self_id, follower, "replay_invite", payload))
         invited = followers
 
@@ -777,13 +787,17 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
                              default_speed=1.0, config=None):
     """Duet follower path (docs/duet_replay.md): load the SAME airing the
     director already persisted — NEVER generate fresh narration here — keep
-    audio only for the scenes cast to this worker, tell the director it's
-    ready, then perform scene-by-scene as replay_cue messages authorize each
-    one (the cue ratchet, see wait_for_scene below). Returns True only when
-    the show actually aired."""
+    audio only for the scenes cast to this worker — or every scene, when
+    this worker is listed in the request's `summary` round-table role,
+    which overrides `cast` entirely — tell the director it's ready, then
+    perform scene-by-scene as replay_cue messages authorize each one (the
+    cue ratchet, see wait_for_scene below). Returns True only when the show
+    actually aired."""
     airing_id = request.get("airing_id")
     requested_episode = request.get("episode")
     cast = request.get("cast")
+    summary = request.get("summary") or []
+    is_summary = self_id in summary
     director = request.get("director")
     if not airing_id or not requested_episode or not isinstance(cast, dict):
         print(f"[replay_pane] malformed follower request (airing_id={airing_id!r} "
@@ -843,7 +857,8 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
         try:
             show = _rebuild_scenes_from_rows(
                 episode, rows, workdir,
-                owns=lambda scene, row: cast.get(scene.get("speaker")) == self_id,
+                owns=None if is_summary else
+                    (lambda scene, row: cast.get(scene.get("speaker")) == self_id),
             )
         except Exception as exc:
             print(f"[replay_pane] follower scene rebuild failed: {exc}", file=sys.stderr)
@@ -854,7 +869,7 @@ def perform_follower_request(request, library, worker_name, state_path, self_id,
             return False
 
         for scene in show:
-            scene["owned"] = cast.get(scene.get("speaker")) == self_id
+            scene["owned"] = True if is_summary else cast.get(scene.get("speaker")) == self_id
 
         # Stale-state hygiene: clear any leftover cue from a previous show
         # BEFORE announcing readiness, so this follower can never consume a

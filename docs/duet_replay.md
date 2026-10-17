@@ -21,6 +21,12 @@ published immediately before it performs each scene. **Followers** load
 the same persisted airing, keep only the audio for scenes cast to them,
 and perform scene-by-scene as cues arrive.
 
+A duet request can also carry `payload.summary` — a list of worker ids
+that join as **summary followers**: a round-table channel that plays
+every scene's audio (every persona's already-synthesized line) instead of
+just the speaker(s) cast to it, while the regular cast workers keep
+voicing only their own speakers.
+
 Unlike solo shows, **a duet never degrades** — if anything on the director
 path fails (no narration store, no Kafka, voice prep failure, or a
 follower that never shows up), the airing does not happen at all. Solo
@@ -44,10 +50,15 @@ Source: `app/replay.py` (`Performer` hooks + scene pacing),
   someone else.
 - **follower** — any worker_id appearing in `cast`'s values that is not
   the director.
+- **summary follower** — any worker_id listed in `payload.summary`. Joins
+  the duet as a round-table channel that owns and plays audio for EVERY
+  scene, regardless of `cast` — see "Summary follower" below.
 - **owned scene** — a scene whose `cast.get(speaker, director_id)` equals
   this worker's own bus worker id. An owned scene is the only kind this
   worker plays audio for and shows the "speaking" avatar/bubble on; every
-  other scene still renders full visuals with the avatar "listening".
+  other scene still renders full visuals with the avatar "listening". A
+  `summary` worker owns every scene instead — see "Summary follower"
+  below.
 - **self id** — the bus identity used for ownership matching:
   `config.message_bus.worker_id`, else the `WORKER_ID` env var, else the
   pane's `--worker-name` (`replay_pane.resolve_self_id`).
@@ -63,15 +74,20 @@ published via `MessageProducer.send` — envelopes are the usual
 ```json
 {"airing_id": "...", "episode": "2026-07-02_04-27-00_6ecdde82",
  "cast": {"boss": "manager", "coder": "coder"},
- "speed": 1.0, "worker_name": "KODI-7", "director": "coder"}
+ "speed": 1.0, "worker_name": "KODI-7", "director": "coder",
+ "summary": ["worker-7"]}
 ```
 
-Sent once per follower, addressed to that follower's worker id.
-`worker_name` is the persona display name the director's `Performer` uses,
-so dialogue lines are labeled identically on every stream. `director` is
-the director's own bus worker id — required because the follower's relay
-file only carries this payload (not the bus envelope), and the follower
-needs it to address `replay_ready` back.
+Sent once per follower (cast AND summary), addressed to that follower's
+worker id. `worker_name` is the persona display name the director's
+`Performer` uses, so dialogue lines are labeled identically on every
+stream. `director` is the director's own bus worker id — required because
+the follower's relay file only carries this payload (not the bus
+envelope), and the follower needs it to address `replay_ready` back.
+`summary` carries the request's `payload.summary` verbatim (omitted/empty
+when the request had none) — every invited follower receives the same
+list, whether or not it's a member of it, since `handle_replay_invite`
+copies the invite payload as-is.
 
 ### 2. `replay_ready` — follower → director
 
@@ -123,11 +139,18 @@ Existing file, two new uses:
 - An operator/director request may now carry `"cast"` (validated by
   `agent._is_valid_cast`: a non-empty dict of non-empty string keys and
   values) — forwarded verbatim.
+- An operator/director request may also carry `"summary"` (validated by
+  `agent._is_valid_summary`, mirroring `_is_valid_cast`: a non-empty list
+  of non-blank strings) — forwarded verbatim. Invalid `summary` ⇒ the
+  whole request is rejected with an `operator_reply` error and nothing is
+  queued, same as invalid `cast`.
 - `handle_replay_invite` writes a **follower request**: the invite
   payload's fields (`airing_id`, `episode`, `cast`, `speed`,
-  `worker_name`, `director`) plus `"mode": "follow"`. Absent `mode` ⇒ not
-  a follower request (solo/director dispatch instead — see
-  `replay_pane.perform_request`).
+  `worker_name`, `director`, `summary`) plus `"mode": "follow"`. Absent
+  `mode` ⇒ not a follower request (solo/director dispatch instead — see
+  `replay_pane.perform_request`). `handle_replay_invite` already copies
+  invite payloads verbatim, so `summary` reaches follower request files
+  with no changes needed there.
 - The existing "don't clobber a pending request" rule applies to invites
   too: if the file already exists, the invite is dropped (logged) — the
   director's own `replay_ready` wait will then time out and refuse.
@@ -212,6 +235,15 @@ operator ──POST /messages (cast: {...})──▶ Kafka ──▶ director ag
                           last scene; each follower's Performer returns to idle too
 ```
 
+The diagram above shows a single cast follower, but `payload.summary`
+workers are invited, awaited, cued, and ended identically:
+`perform_director_request` unions `summary` ids into its followers set, so
+a summary worker gets its own `replay_invite`, is counted in the
+`replay_ready` wait (a summary worker that never replies refuses the
+ENTIRE airing, same as any cast follower — see "Refusal rule" below), gets
+its own per-scene `replay_cue`, and gets `replay_end` at the end of the
+show.
+
 Both director and follower reuse `_rebuild_scenes_from_rows` (shared with
 solo `narration: "reuse"`) to turn cached Postgres rows back into a scene
 list against the current episode script — a scene-count or `scene_kind`
@@ -248,6 +280,12 @@ message with — the refusal is stderr-log-only, and the operator only
 learns about it from the worker's container logs (it already got the
 normal "queued" `operator_reply` when the request was first accepted,
 since `agent.py` doesn't distinguish solo from duet at queue time).
+
+`payload.summary` workers get no special treatment here — they're ordinary
+members of the director's followers set (see "Flow" above), so the same
+row applies: a summary follower that never publishes `replay_ready` within
+the timeout refuses the entire airing exactly like any cast follower. No
+new refusal path or reason was added for `summary`.
 
 Solo shows (no `cast`, or a `cast` whose values are all this worker's own
 id) keep today's show-must-air degradation completely unchanged — see
@@ -327,6 +365,20 @@ None of these constants are environment-overridable except
 - Follower side: `owned = cast.get(speaker) == self_id` (no default) — a
   speaker not present in `cast` is never owned by a follower, consistent
   with defaulting to the director.
+- **`summary` overrides both of the above entirely.** A worker whose own
+  self id is in `payload.summary` owns EVERY scene, regardless of `cast`:
+  - Director side: `owned = self_id in summary or cast.get(speaker,
+    self_id) == self_id` — `summary` membership short-circuits the normal
+    `cast` check.
+  - Follower side: `_rebuild_scenes_from_rows(..., owns=None)` — the same
+    "own everything" mode already used elsewhere — with `scene["owned"] =
+    True` set on every scene.
+  - Precedence: `summary` membership wins over `cast` unconditionally,
+    including the edge case where the director itself is listed in
+    `summary` — a director normally has its audio STRIPPED for scenes cast
+    to other workers, but a summary-listed director keeps and plays every
+    scene's audio, making its own stream the round-table channel. This is
+    intentional, not an oversight.
 - A scene that isn't owned still renders full visuals and prints the `♪`
   narration line on every stream; only the avatar's "speaking" state and
   bubble, and the WAV playback, are gated by ownership. An un-owned scene
@@ -338,6 +390,53 @@ None of these constants are environment-overridable except
   there is nobody to duet with — `replay_pane.perform_request` treats it
   as a plain solo request (`any(worker_id != self_id for worker_id in
   cast.values())` is `False`).
+
+## Summary follower — the round-table channel
+
+`payload.summary` adds a worker (or several) that airs the whole episode
+as a single round-table channel — every persona's line, in that persona's
+already-synthesized voice, back to back — while the regular `cast`
+workers keep voicing only their own individual speaker(s). It's meant for
+a "highlights/full-cast" stream sitting alongside the per-persona streams,
+without needing its own TTS pass: a summary worker never resynthesizes,
+it just plays back whichever audio the director already generated for
+every speaker (same as any follower — see "Voice resolution" below).
+
+```json
+{"to": "coder", "type": "replay_request",
+ "payload": {"episode": "test_worker_roundtable",
+             "cast": {"manager": "worker-5", "coder": "worker-1",
+                       "coder-native": "worker-2", "coder-opencode": "worker-3",
+                       "coder-aider": "worker-4", "tester": "worker-6"},
+             "summary": ["worker-7"]}}
+```
+
+`worker-7` isn't in `cast` at all here — it doesn't need to be. It's
+invited as an ordinary follower (see "Flow" above), but because it's
+listed in `summary` it owns every scene instead of only the ones `cast`
+assigns it (see "Ownership & uncast-speaker defaulting" above).
+
+Two things to know before relying on this in production:
+
+- **`summary` without a duet `cast` is a no-op.** `replay_pane.perform_request`
+  only looks at `cast` to decide solo vs. director dispatch — a `summary`
+  field on an otherwise-solo request is silently ignored. This isn't a
+  bug: a solo show already plays every persona's voice in sequence on its
+  one stream, so there's nothing for a round-table channel to add.
+- **Known v1 limitation: the catch-up burst plays unpaced audio.** Because
+  a summary follower owns every scene, falling 2+ scenes behind the
+  director's cue triggers the same fast-forward catch-up rule as any
+  follower (see "Cue ratchet & fast-forward rule" above) — but since it
+  owns every one of those backlogged scenes (not just its own), it plays
+  ALL of their audio back-to-back with no pacing between them. That's a
+  real, audible artifact (a rapid-fire burst of dialogue) rather than a
+  silent skip, and it's accepted as-is for v1.
+
+The summary channel rides the exact same `replay_cue` ratchet as every
+other follower, so it stays scene-locked with the rest of the cast — same
+scene-level (not frame-accurate) sync as the rest of this protocol; see
+"Deployment requirements" below for what it needs to run (nothing beyond
+what any follower already needs).
 
 ## Voice resolution: the director's config decides every speaker's audio
 
@@ -398,6 +497,8 @@ which cached scenes get copied into a follower's workdir). Practically:
   section). It introduces no new Python dependency: `app/narration_store.py`
   and `psycopg2-binary` were already added when narration caching landed
   (`docs/narration_store.md`).
+- **A summary follower (`payload.summary`) needs exactly what any cast
+  follower needs — no additional deployment requirements.**
 - **Every cast worker (director AND every follower) needs:**
   - `LAYOUT_PRESET=replay` (or `layout.preset: replay` in its config) so
     its replay pane actually runs — a worker with a different layout
@@ -451,6 +552,23 @@ curl -X POST http://localhost:8090/messages \
 pane shows `replay_invite` → `manager`, then `replay_ready` ← `manager`,
 then a `replay_cue` per scene to `manager`, and finally `replay_end`
 (`reason: "finished"`) once the episode is done.
+
+**With a summary follower added** — same duet, plus `worker-7` airing a
+round-table channel with every persona's audio (see "Summary follower"
+above):
+
+```bash
+curl -X POST http://localhost:8090/messages \
+  -H "Content-Type: application/json" \
+  -d '{"to": "coder", "type": "replay_request",
+       "payload": {"episode": "2026-07-02_04-27-00_6ecdde82",
+                    "cast": {"boss": "manager", "coder": "coder"},
+                    "summary": ["worker-7"]}}'
+```
+
+`worker-7` is invited, awaited, and cued exactly like `manager` above —
+the only difference is it owns and plays every scene instead of just
+`"boss"` or `"coder"`.
 
 ## Security invariants
 
@@ -510,10 +628,11 @@ Deployment requirements above).
 - `docs/replay.md` — the `Performer` class, `on_scene_start`/
   `wait_for_scene` hooks, scene pacing (`owned`/`target_duration`).
 - `docs/replay_pane.md` — director/follower request handling, dispatch.
-- `docs/agent.md` — the four relay handlers, `cast` validation.
+- `docs/agent.md` — the four relay handlers, `cast`/`summary` validation.
 - `docs/narration_store.md` — `load_airing`, `message_id` on
   `load_latest_airing` rows.
-- `docs/operator_commands.md` — the `cast` field on `replay_request`.
+- `docs/operator_commands.md` — the `cast` and `summary` fields on
+  `replay_request`.
 - `docs/revoice.md` — the narration pass every duet airing's audio and
   text ultimately comes from (unchanged by this feature).
 - `docs/tts_client.md` — `voice.speakers`/`voice.model_path` resolution;
@@ -522,6 +641,20 @@ Deployment requirements above).
 
 ## Changelog
 
+- **v1.2.0** (2026-08-02): Added `payload.summary` — a list of worker ids
+  that join a duet as **summary followers**: a round-table channel owning
+  and playing EVERY scene's audio (`_is_valid_summary` validation,
+  `replay_invite`'s `summary` field, director-side `owned = self_id in
+  summary or cast.get(speaker, self_id) == self_id`, follower-side
+  `_rebuild_scenes_from_rows(..., owns=None)` "own everything" mode).
+  `summary` membership overrides `cast` entirely. Threaded identically to
+  cast followers everywhere else: invited, counted in the `replay_ready`
+  wait (so an unresponsive summary follower refuses the whole airing, no
+  new refusal path), cued per scene, and sent `replay_end`. A `summary`
+  field on a solo (no-`cast`) request is silently ignored — dispatch still
+  only looks at `cast`. No new deployment requirements. Known v1
+  limitation: the cue-ratchet catch-up burst plays a summary follower's
+  entire backlog of scenes' audio back-to-back, unpaced.
 - **v1.1.0** (2026-07-20): Documented (no protocol change) how voice
   resolution actually works in a duet — the director's own
   `voice.speakers` map voices every cast member, never the cast worker's

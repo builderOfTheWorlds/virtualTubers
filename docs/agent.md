@@ -65,10 +65,12 @@ Four more handlers (`replay_invite`/`replay_ready`/`replay_cue`/
 Rerun Theater airings, `docs/duet_replay.md`) from the bus into small local
 JSON files `app/replay_pane.py` polls — any role, no LLM call, nothing
 sent back onto the bus. `handle_replay_request` additionally validates an
-optional `payload.cast` (a `{speaker: worker_id}` map) before forwarding
-it into the request file: an invalid cast is rejected with an
-`operator_reply` error and nothing is written, so a half-formed duet can
-never reach the pane. See "Duet replay relay handlers" below.
+optional `payload.cast` (a `{speaker: worker_id}` map) and an optional
+`payload.summary` (a list of worker ids for the "summary follower"
+round-table role — see below) before forwarding either into the request
+file: an invalid cast or summary is rejected with an `operator_reply`
+error and nothing is written, so a half-formed duet can never reach the
+pane. See "Duet replay relay handlers" below.
 
 **Runtime persona assignment (campaign_platform_contract.md §8, docs/campaign_control.md).**
 `main()`'s tick loop re-reads this worker's assigned persona every tick,
@@ -148,6 +150,8 @@ def handle_viewer_joined(worker_id: str, agent_config: dict, llm_client, produce
 
 def _is_valid_cast(cast) -> bool
 
+def _is_valid_summary(summary) -> bool
+
 def handle_replay_invite(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
 
 def handle_replay_ready(worker_id: str, agent_config: dict, llm_client, producer: MessageProducer, msg: dict, state_path: str | None = None) -> None
@@ -218,6 +222,17 @@ def _load_persona_doc(campaign: str, speaker: str, campaigns_dir=None) -> dict |
   error and the request file is never written. A valid cast is forwarded
   into the request file verbatim, unchanged from what the operator sent.
   Absent `cast` leaves solo-request behavior byte-for-byte unchanged.
+- `payload.summary` (`handle_replay_request`, optional) — a list of worker
+  ids for the duet replay "summary follower" round-table role: workers
+  listed here join the duet and play EVERY scene's audio, instead of only
+  scenes cast to them. Validated by `_is_valid_summary` (must be a
+  non-empty list of non-empty strings); a present-but-invalid summary is
+  rejected with an `operator_reply` error and the request file is never
+  written, same as an invalid cast. A valid summary is forwarded into the
+  request file verbatim. Absent `summary` leaves request behavior
+  unchanged. This handler only validates and forwards the field —
+  `app/replay_pane.py` owns actually playing the round-table audio for
+  listed workers.
 - `airing_id` / `scene_index` / `reason` (the four duet relay handlers,
   `handle_replay_invite`/`handle_replay_ready`/`handle_replay_cue`/
   `handle_replay_end`) — any role, no gate. Each does nothing but relay its
@@ -271,6 +286,8 @@ def _load_persona_doc(campaign: str, speaker: str, campaigns_dir=None) -> dict |
   duet relay handlers, a relay-file write instead of a Kafka publish).
 - `_is_valid_cast` — `bool`: `True` only for a non-empty dict whose keys
   and values are all non-empty strings.
+- `_is_valid_summary` — `bool`: `True` only for a non-empty list whose
+  entries are all non-empty strings.
 - `_decide_test_outcome` — `(passed, severity)`: `(True, None)` on pass,
   otherwise `(False, severity)` with severity drawn from `BUG_SEVERITIES`
   weighted by `BUG_SEVERITY_WEIGHTS`. Factored out (not inlined in the
@@ -389,6 +406,15 @@ curl -X POST http://localhost:8090/messages \
 
 ## Changelog
 
+- v2.5.0 (2026-08-02) — `handle_replay_request` gained optional
+  `payload.summary` handling (the new `_is_valid_summary`, mirroring
+  `_is_valid_cast`'s style): a non-empty list of non-empty worker ids for
+  the duet replay "summary follower" round-table role (workers that join
+  the duet and play every scene's audio, not just scenes cast to them) is
+  forwarded verbatim into the request file; an invalid summary is rejected
+  with an `operator_reply` error and nothing is written, same as an
+  invalid cast. Agent-side validation/forwarding only — `app/replay_pane.py`
+  owns actually playing the round-table audio.
 - v2.4.0 (2026-07-26, campaign_platform_contract.md §8) — Runtime persona assignment:
   `main()`'s tick loop calls the new `resolve_persona`
   (`campaign_control.CampaignControl.get_persona` + this worker's own
