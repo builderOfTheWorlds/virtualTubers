@@ -1,0 +1,18 @@
+# Twitch login per broadcast worker, read by scripts/golive_watchdog.py for the external live check.
+# Key = worker id (WORKER_ID). A null (or empty) login means "skip the Twitch check for this worker".
+# Fill in the nulls once the user has confirmed the logins (non-secret); no restart needed, the
+# watchdog re-reads this file every pass.
+#
+# probe: a channel that is live 24/7. If it reads offline the Twitch check itself is distrusted
+# for that pass and the watchdog does nothing (GQL has returned null for everyone before).
+probe: lofigirl
+channels:
+  roundtable: null            # container worker-roundtable (:106)  TODO user: login
+  tuber_0: null               # worker-gm, GM / CEO (:105)          TODO user: login
+  tuber_1: mastermanagerchief # worker-manager (:100)
+  tuber_2: ten_g_hands        # worker-coder-native (:102)
+  tuber_3: spam_of_frogs      # worker-coder-aider (:104)
+  tuber_4: braxton_caruso     # worker-tester (:101)
+  tuber_5: burtyrenoldo       # worker-coder-opencode (:103)
+  tuber_6: the_emperor_secus  # worker-coder (:99)
+  tuber_7: null               # worker-observer / Party Member (:107)  TODO user: login (+ stream key, B9)

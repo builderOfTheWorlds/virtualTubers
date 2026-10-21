@@ -1,0 +1,12 @@
+# Runs office-watchdog.service 1 min after the timer starts, then 2 min after each pass FINISHED
+# (so a slow pass never overlaps the next; the script also holds a flock).
+[Unit]
+Description=Office broadcast watchdog, every 2 minutes
+
+[Timer]
+OnActiveSec=1min
+OnUnitInactiveSec=2min
+AccuracySec=5s
+
+[Install]
+WantedBy=timers.target

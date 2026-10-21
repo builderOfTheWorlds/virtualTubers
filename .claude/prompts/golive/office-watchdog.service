@@ -1,0 +1,19 @@
+# Office broadcast watchdog: ONE health pass (check -> bounded remediate -> log).
+# Triggered by office-watchdog.timer every 2 min. NOT installed/enabled by the build; see RUNBOOK.md.
+#
+#   install : cp office-watchdog.{service,timer} ~/.config/systemd/user/ && systemctl --user daemon-reload
+#             loginctl enable-linger $USER          # user timers keep firing without a login session
+#   go live : systemctl --user enable --now office-watchdog.timer
+#   adjust WorkingDirectory/ExecStart below if the repo is not at ~/codeProjects/virtualTubers.
+[Unit]
+Description=Office broadcast watchdog (one pass)
+Documentation=file://%h/codeProjects/virtualTubers/.claude/prompts/golive/RUNBOOK.md
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/codeProjects/virtualTubers
+ExecStart=%h/codeProjects/virtualTubers/.venv/bin/python scripts/golive_watchdog.py
+# A pass can wait for vLLM to load after `docker start` (300 s) plus table_run_start (45 s).
+TimeoutStartSec=900
+Nice=5
+# stdout goes to the journal; the durable record is ~/.local/state/office-watchdog/events.jsonl
