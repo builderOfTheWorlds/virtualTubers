@@ -31,11 +31,20 @@ common_lore: [company, office, org_chart, product, rituals]
 
 # Operator control (app/table/control.py, scripts/table_ctl.py, control panel "Live table"):
 # manual = the GM waits for a scene_request after boot and goes idle after each scene;
-# auto = plays max_scenes by itself from the persisted position (else start_index).
-start_mode: manual
+# auto = plays by itself from the persisted position (else start_index). The week run is
+# unattended: auto resumes by itself after any GM restart (position file: played set, story
+# log, ambient history), no table_run_start needed. Operator controls still work.
+start_mode: auto
 tick_rate_ms: 500
 run_id: ashiorid_office_20260929_135927_9c1b
 contracts_fixture: /data/table/fixtures/ashiorid_office_20260929_135927_9c1b.json
+# WEEK RUN (operator): the 28-block week run id goes HERE, as the only edit. While set, the
+# generator replaces run_id, points contracts_fixture at /data/table/fixtures/<week>.json (export
+# it first: scripts/export_table_fixture.py <week>; the GM container needs no generator-DB
+# credentials for the story), drops skip_scenes (curated for the old run) and gives the run its
+# own position_file, so the old run's story log cannot seed the week.
+# Keep null until told; the old run above keeps playing.
+week_run_id: null
 only_with_active_players: true
 start_index: 0
 max_scenes: null   # no cap: auto play runs to the end of the story or table_run_start duration_min
@@ -77,6 +86,47 @@ cross_scene_repeat: {scenes: 2, ngram: 6, gm_scenes: 3, gm_threshold: 0.5}
 # line ('"Fair?" you ask') is asked for again, then rejected (live run 2026-10-10).
 gm_silent_you: true
 
+# Long unattended runs (see TableRuntime). No auto_duration_s: the week ends with its last
+# block (block_clock.end_after_last_block_s), not on a timer.
+auto_pace: {words_per_s: 2.9, per_line_s: 2.2, lead_s: 25}   # models the voice queue (copied from ashiorid.yaml)
+auto_skip_stuck: true
+auto_max_consecutive_stuck: 3     # then: cool down, ambient, carry on (never halts under block_clock)
+auto_stuck_cooldown_s: 300        # doubles per further stuck scene, up to the max
+auto_stuck_cooldown_max_s: 1800
+scene_max_s: 1800                 # watchdog: a scene running longer than this counts as stuck
+
+# GOLIVE WEEK (.claude/prompts/golive_20261024_plan.md D1/A1-A3): each arc segment (order 0..27)
+# is a 6 h block in its real wall-clock window. The block's spine contracts play first (leftovers
+# of an earlier block carry over), then plot-free AMBIENT scenes until the window ends. Before
+# `anchor` (prelude from 2026-10-24 20:00) and after the last block: ambient only, forever.
+# offset_s shifts the clock for soak tests (offset_s: N makes "now" = real now + N).
+block_clock:
+  anchor: '2026-10-25T00:00:00-04:00'      # block 0 = Sunday 00:00-06:00
+  block_hours: 6
+  prelude_from: '2026-10-24T20:00:00-04:00'
+  offset_s: 0
+  tz: America/New_York                     # day phases follow the local hour
+  spine_max_attempts: 2                    # a spine scene that got stuck/interrupted is retried once
+  spine_gap_s: 0                           # idle gap before a spine scene
+  end_after_last_block_s: null             # null = the run never ends
+
+# Ambient filler (app/table/ambient_source.py). Pool: pack_scenes rows with ambient: true in the
+# generator DB (promotion stays a user step, plan A4) plus an optional YAML dir for staging/soak.
+ambient:
+  postgres: true
+  pack: ashiorid_office
+  dir: null                  # e.g. a mounted copy of .claude/prompts/office_ambient_stage
+  reload_s: 900
+  no_repeat_s: 172800        # an ambient scene does not air again within 48 h (when the pool allows)
+  rounds: {normal: 2, quiet: 1}      # off_hours and intensity: quiet scenes use the quiet rounds
+  story_log: short           # short = one clipped plot-free line (separate small budget); none = nothing
+  gap_s:                     # idle seconds between scenes, [min, max] drawn at random; quiet nights
+    off_hours: [60, 180]
+    morning: [15, 45]
+    workday: [10, 30]
+    evening: [20, 60]
+    default: 15
+
 think_s: 60
 speak_s: 45
 gm_blocks_order: [truth, secrets, unlocks, table_rules, style]
@@ -86,7 +136,7 @@ gm_forbidden_phrases: [time loop, the loop, simulation, simulated]
 think:      {max_tokens: 1024, reasoning_budget: 256}
 speak:      {max_tokens: 160,  reasoning_budget: 48}
 direct:     {max_tokens: 768,  reasoning_budget: 384}
-adjudicate: {max_tokens: 256,  reasoning_budget: 64}
+adjudicate: {max_tokens: 512,  reasoning_budget: 64}   # 256 cut the JSON (office run 2026-10-08)
 overrule:   {max_tokens: 160,  reasoning_budget: 48}
 
 roundtable:
@@ -96,11 +146,13 @@ roundtable:
     enabled: true
     table_arbiter: tuber_0
     observer_slot: tuber_7
-    max_age_s: 600          # table lines queue behind each other while voiced; 120 dropped the last seat (Nora, 2026-10-08)
+    max_age_s: 1800         # backstop only: auto_pace keeps the queue short. 120 dropped Nora (2026-10-08)
     consume_timeout_s: 20
     line_gap_s: 0.5
     spool_max: 200
   voices: {}
+
+gm_generator_db: true        # GENERATOR_POSTGRES_* env on worker-gm (ambient pool from pack_scenes)
 
 compose_base: [docker-compose.office.yml]
 compose_overlay: docker-compose.table-office.yml

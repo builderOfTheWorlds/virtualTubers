@@ -25,10 +25,13 @@ class StoryEntry:
     skipped: bool = False
     lines: tuple = dataclasses.field(default_factory=tuple)
     directions: tuple = dataclasses.field(default_factory=tuple)
+    # Plot-free filler (table.ambient_source). Kept short and in a small separate budget so a
+    # night of ambient scenes never pushes the spine's memory out of the GM context.
+    ambient: bool = False
 
     def to_dict(self) -> dict:
         """JSON-safe dict representation."""
-        return {
+        out = {
             "scene_id": self.scene_id,
             "goal": self.goal,
             "notes": self.notes,
@@ -38,6 +41,9 @@ class StoryEntry:
             "lines": list(self.lines),
             "directions": list(self.directions),
         }
+        if self.ambient:
+            out["ambient"] = True
+        return out
 
     @classmethod
     def from_dict(cls, d) -> "StoryEntry":
@@ -85,7 +91,15 @@ class StoryEntry:
             skipped=skipped,
             lines=lines,
             directions=directions,
+            ambient=bool(d.get("ambient", False)),
         )
+
+
+def _clip(text: str, limit: int) -> str:
+    text = " ".join(str(text or "").split())
+    if limit <= 0 or len(text) <= limit:
+        return text
+    return text[:limit - 1].rsplit(" ", 1)[0].rstrip(",;:- ") + "…"
 
 
 def entry_from_state(
@@ -94,6 +108,9 @@ def entry_from_state(
     *,
     skipped: bool = False,
     max_lines: int = 12,
+    ambient: bool = False,
+    max_goal_chars: int = 100,
+    max_notes_chars: int = 120,
 ) -> StoryEntry:
     """Build a StoryEntry from the arbiter state and contract.
 
@@ -140,6 +157,13 @@ def entry_from_state(
     if len(directions) > max_lines:
         directions = directions[-max_lines:]
 
+    if ambient:
+        # SHORT entry, no story state: the scene was plot-free by contract.
+        return StoryEntry(
+            scene_id=scene_id, goal=_clip(goal, max_goal_chars), notes=_clip(notes, max_notes_chars),
+            state_delta={}, resolved=True, skipped=skipped, lines=tuple(lines),
+            directions=tuple(directions), ambient=True)
+
     return StoryEntry(
         scene_id=scene_id,
         goal=goal,
@@ -153,13 +177,29 @@ def entry_from_state(
 
 
 class StoryLog:
-    """A log of StoryEntry objects, keeping only the last `keep` entries."""
+    """A log of StoryEntry objects, keeping only the last `keep` entries.
 
-    def __init__(self, entries: Sequence[StoryEntry] = (), keep: int = 12) -> None:
+    Ambient entries have their own small budget (`ambient_keep`) and are dropped first, so
+    they never evict spine entries from the memory the GM and seats see."""
+
+    def __init__(self, entries: Sequence[StoryEntry] = (), keep: int = 12,
+                 ambient_keep: int = 4) -> None:
         self._keep = keep
+        self._ambient_keep = ambient_keep
         self._entries: list[StoryEntry] = list(entries)
-        if len(self._entries) > keep:
-            self._entries = self._entries[-keep:]
+        self._trim()
+
+    def _trim(self) -> None:
+        ambient = [e for e in self._entries if e.ambient]
+        drop = len(ambient) - self._ambient_keep
+        if drop > 0:
+            gone = {id(e) for e in ambient[:drop]}
+            self._entries = [e for e in self._entries if id(e) not in gone]
+        spine = [e for e in self._entries if not e.ambient]
+        over = len(spine) - self._keep
+        if over > 0:
+            gone = {id(e) for e in spine[:over]}
+            self._entries = [e for e in self._entries if id(e) not in gone]
 
     @property
     def entries(self) -> tuple[StoryEntry, ...]:
@@ -170,8 +210,7 @@ class StoryLog:
 
     def append(self, entry: StoryEntry) -> None:
         self._entries.append(entry)
-        if len(self._entries) > self._keep:
-            self._entries = self._entries[-self._keep:]
+        self._trim()
 
     def clear(self) -> None:
         self._entries.clear()
@@ -180,13 +219,13 @@ class StoryLog:
         return [e.to_dict() for e in self._entries]
 
     @classmethod
-    def from_list(cls, items: Optional[list], keep: int = 12) -> "StoryLog":
+    def from_list(cls, items: Optional[list], keep: int = 12, ambient_keep: int = 4) -> "StoryLog":
         """Create a StoryLog from a list of dicts.
 
         Bad items are skipped with a warning.
         """
         if items is None:
-            return cls(keep=keep)
+            return cls(keep=keep, ambient_keep=ambient_keep)
         entries: list[StoryEntry] = []
         for item in items:
             try:
@@ -198,7 +237,7 @@ class StoryLog:
             except (ValueError, TypeError) as exc:
                 log.warning("Skipping bad item in from_list: %s", exc)
                 continue
-        return cls(entries=entries, keep=keep)
+        return cls(entries=entries, keep=keep, ambient_keep=ambient_keep)
 
     def recent_lines(self, n_scenes: int = 2) -> tuple[str]:
         """Lines of the last n_scenes NON-skipped entries, oldest first."""
@@ -222,18 +261,29 @@ class StoryLog:
             result.extend(e.directions)
         return tuple(result)
 
-    def render(self, max_entries: int = 6, max_chars: int = 2500) -> str:
-        """Render the log as a human-readable string."""
+    def render(self, max_entries: int = 6, max_chars: int = 2500, ambient_entries: int = 1) -> str:
+        """Render the log as a human-readable string.
+
+        The last `max_entries` SPINE entries plus the last `ambient_entries` ambient ones
+        (one short plot-free line each), oldest first. Ambient entries never take a spine
+        entry's place."""
         if not self._entries or max_entries <= 0:
             return ""
 
-        # Take the last max_entries entries, oldest first
-        entries_to_render = self._entries[-max_entries:] if len(self._entries) >= max_entries else self._entries
+        spine = [e for e in self._entries if not e.ambient]
+        keep_ids = {id(e) for e in spine[-max_entries:]}
+        if ambient_entries > 0:
+            keep_ids |= {id(e) for e in [e for e in self._entries if e.ambient][-ambient_entries:]}
+        entries_to_render = [e for e in self._entries if id(e) in keep_ids]
+        if not entries_to_render:
+            return ""
 
         lines: list[str] = []
         for e in entries_to_render:
             if e.skipped:
                 line = f"- [{e.scene_id}] skipped (not played)"
+            elif e.ambient:
+                line = f"- [{e.scene_id}] (ambient office life, no plot) {e.notes or e.goal}"
             else:
                 line = f"- [{e.scene_id}] {e.goal}"
                 if e.notes:

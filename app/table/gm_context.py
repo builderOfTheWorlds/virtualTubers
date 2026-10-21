@@ -23,6 +23,13 @@ log = logging.getLogger(__name__)
 PLAYERS_HEADING = "# The players (every sheet; only you see all of them)"
 SEGMENT_HEADING = "# The current arc segment"
 CONTRACT_HEADING = "# This scene's contract"
+AMBIENT_HEADING = "# This is an AMBIENT scene (plot-free)"
+AMBIENT_NOTE = (
+    "This scene is background office life between story beats. Do not advance, reveal or "
+    "resolve the story: nothing is decided, announced, discovered, promised or changed that "
+    "would matter later, and nobody arrives, leaves or falls out for good. Keep it small, "
+    "in the moment and in character; the scene ends when the moment has played out, with "
+    "nothing to settle.")
 
 
 def block_heading(name) -> str:
@@ -105,6 +112,8 @@ def _assemble(gm_identity, ordered_sections, extra_sections, player_sheets,
         sections.append(SEGMENT_HEADING + "\n" + render_value(segment))
     if contract:
         sections.append(CONTRACT_HEADING + "\n" + render_value(contract))
+        if isinstance(contract, Mapping) and contract.get("ambient"):
+            sections.append(AMBIENT_HEADING + "\n" + AMBIENT_NOTE)
     return "\n\n".join(sections)
 
 

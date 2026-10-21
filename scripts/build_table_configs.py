@@ -31,7 +31,10 @@ GM_KEYS = ("pack", "start_mode", "position_file", "gm_slug", "gm_seat", "pack_di
            "story_log", "story_keep", "story_max_entries", "story_max_chars",
            "story_seat_max_entries", "story_seat_max_chars", "cross_scene_repeat",
            "collapse_redundant_leaves", "collapse_leaf_threshold", "collapse_leaf_min_share",
-           "dedupe_near_threshold", "dedupe_near_window", "skip_scenes", "gm_silent_you")
+           "dedupe_near_threshold", "dedupe_near_window", "skip_scenes", "gm_silent_you",
+           # unattended week (2026-10-21): wall-clock blocks + ambient fill + stuck cooldown
+           "block_clock", "ambient", "auto_stuck_cooldown_s", "auto_stuck_cooldown_max_s",
+           "story_ambient_keep", "scene_max_s")
 
 
 class _Dumper(yaml.SafeDumper):
@@ -69,6 +72,16 @@ def table_block(cfg, seat, names):
         block["seat_of"] = _seat_of(cfg["seats"])
         block["forbidden_phrases"] = copy.deepcopy(cfg.get("forbidden_phrases", {}))
         block["silent_seats"] = list(cfg.get("silent_seats", []))
+        week = cfg.get("week_run_id")
+        if week:
+            # The week run replaces the old run: its fixture (scripts/export_table_fixture.py
+            # <week>; the GM container needs no generator-DB credentials for the story), no
+            # curated skip list (it names the old run's scenes), a position file of its own
+            # (the old run's story log must not seed the week).
+            block["run_id"] = week
+            block["contracts_fixture"] = f"/data/table/fixtures/{week}.json"
+            block.pop("skip_scenes", None)
+            block.setdefault("position_file", f"/data/world-state/table_{cfg['pack']}_{week}_position.json")
         block["auto_advance"] = cfg.get("auto_advance", True)
         for p in GM_PASSES:
             block[p] = copy.deepcopy(cfg[p])
@@ -143,7 +156,17 @@ def _build_compose(cfg, table_cfg_path, out_dir):
              "", "services:"]
     for seat in cfg["seats"]:
         lines += [f"  {seat['service']}:", "    environment:", "      <<: *table-llm-env",
-                  f"      WORKER_ID: {seat['seat']}", "    volumes:",
+                  f"      WORKER_ID: {seat['seat']}"]
+        if seat["seat"] == cfg["gm_seat"] and cfg.get("gm_generator_db"):
+            # The GM reads the ambient scene pool (pack_scenes) from the generator Postgres.
+            # Read-only at connect time (app/table/arc_source.connect_generator); the password
+            # is optional here so a missing one only disables the DB source (ambient.dir still works).
+            lines += ["      GENERATOR_POSTGRES_HOST: ${TABLE_GENERATOR_DB_HOST:-host.docker.internal}",
+                      "      GENERATOR_POSTGRES_PORT: ${TABLE_GENERATOR_DB_PORT:-5455}",
+                      "      GENERATOR_POSTGRES_DB: ${GENERATOR_POSTGRES_DB:-generation}",
+                      "      GENERATOR_POSTGRES_USER: ${GENERATOR_POSTGRES_USER:-generation}",
+                      "      GENERATOR_POSTGRES_PASSWORD: ${GENERATOR_POSTGRES_PASSWORD:-}"]
+        lines += ["    volumes:",
                   f"      - ${{REPO_ROOT:-.}}/{rel_out}/{seat['slug']}.yaml:/config/worker.yaml:ro",
                   "      - ${REPO_ROOT:-.}/campaigns:/data/campaigns:ro",
                   "      - ${REPO_ROOT:-.}/config/character.yaml:/config/character.yaml:ro"]

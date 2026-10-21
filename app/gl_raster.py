@@ -125,6 +125,23 @@ _available = None
 #: triangles is a few KB per frame; correctness is not negotiable here.
 _mesh_cache = {}
 
+#: Hard cap on cached (VAO + 3 buffers + FBO) entries. A character has ONE
+#: topology and one output size, so the live key set is a single entry; the
+#: cap is only a guard so an unexpected caller (varying triangle counts or
+#: sizes) can never grow GPU/host memory without bound over a 7-day run. The
+#: oldest entry is released EXPLICITLY on eviction — dropping the Python
+#: reference alone leaves the GL object alive until GC finalizes it.
+_MESH_CACHE_MAX = 8
+
+
+def _release_mesh_entry(entry):
+    """Free every GL object of one cache entry. Never raises."""
+    for obj in entry:
+        try:
+            obj.release()
+        except Exception:  # noqa: BLE001 — teardown only; context may be gone
+            pass
+
 
 def _mesh_vertex_data(verts, faces, materials):
     """Per-vertex (positions, flat normals, material ids) as float32 bytes
@@ -169,6 +186,9 @@ def _get_mesh_gpu_objects(ctx, prog, verts, faces, materials, width, height):
     fbo = ctx.simple_framebuffer((width, height))
 
     entry = (vao, pos_buf, normal_buf, mat_buf, fbo)
+    while len(_mesh_cache) >= _MESH_CACHE_MAX:
+        oldest = next(iter(_mesh_cache))
+        _release_mesh_entry(_mesh_cache.pop(oldest))
     _mesh_cache[key] = entry
     return entry
 

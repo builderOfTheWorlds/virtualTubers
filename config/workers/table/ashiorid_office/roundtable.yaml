@@ -25,7 +25,7 @@ agent:
     enabled: true
     table_arbiter: tuber_0
     observer_slot: tuber_7
-    max_age_s: 600
+    max_age_s: 1800
     consume_timeout_s: 20
     line_gap_s: 0.5
     spool_max: 200

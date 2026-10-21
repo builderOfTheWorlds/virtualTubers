@@ -14,6 +14,11 @@ services:
     environment:
       <<: *table-llm-env
       WORKER_ID: tuber_0
+      GENERATOR_POSTGRES_HOST: ${TABLE_GENERATOR_DB_HOST:-host.docker.internal}
+      GENERATOR_POSTGRES_PORT: ${TABLE_GENERATOR_DB_PORT:-5455}
+      GENERATOR_POSTGRES_DB: ${GENERATOR_POSTGRES_DB:-generation}
+      GENERATOR_POSTGRES_USER: ${GENERATOR_POSTGRES_USER:-generation}
+      GENERATOR_POSTGRES_PASSWORD: ${GENERATOR_POSTGRES_PASSWORD:-}
     volumes:
       - ${REPO_ROOT:-.}/config/workers/table/ashiorid_office/ceo.yaml:/config/worker.yaml:ro
       - ${REPO_ROOT:-.}/campaigns:/data/campaigns:ro

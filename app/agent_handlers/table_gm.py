@@ -17,11 +17,12 @@ here sleeps or waits: the ``Arbiter`` is step-driven. A hook never raises.
 """
 import json
 import logging
+import random
 import re
 import time
 from typing import Callable, Optional
 
-from table import commit_check, control, protocol
+from table import ambient_source, block_clock, commit_check, control, protocol
 from turns import (
     ADJUDICATING,
     ABORTED,
@@ -54,6 +55,22 @@ _DIRECTION_INSTRUCTION = (
     "Never repeat or paraphrase a line already in the transcript. "
     "Keep it to at most 120 words. Address the seated players by their names and "
     "never speak for them. Begin your reply with the narration only (no 'GM:' label)."
+)
+
+# Ambient office scenes (table.ambient_source) are plot-free filler between the story blocks.
+_AMBIENT_DIRECTION_INSTRUCTION = (
+    "This is an AMBIENT, plot-free scene of ordinary office life. Narrate what happens NEXT in "
+    "the small moment the scene contract describes. Do not advance or resolve the story: "
+    "nothing is decided, announced, discovered or changed that matters later. "
+    "Never repeat or paraphrase a line already in the transcript. "
+    "Keep it to at most 90 words. Address the seated players by their names and "
+    "never speak for them. Begin your reply with the narration only (no 'GM:' label)."
+)
+_AMBIENT_MUST_RESOLVE = ("Keep it light and in the moment. Nothing needs to be settled, decided "
+                         "or announced; do not move the story forward.")
+_AMBIENT_ADJUDICATE_INSTRUCTION = (
+    "This is an AMBIENT, plot-free scene: nothing to resolve and no story state may change. "
+    "Set resolved to true once the small moment has played out, and state_delta to {}. "
 )
 
 _ADJUDICATE_INSTRUCTION = (
@@ -190,7 +207,9 @@ class LLMGM:
 
     # ------------------------------------------------------------------ GMPort
     def direct(self, contract, transcript, round, _note=None):
-        system = self._context_fn(contract) + "\n\n" + _DIRECTION_INSTRUCTION
+        ambient = bool(contract.get("ambient"))
+        system = self._context_fn(contract) + "\n\n" + (
+            _AMBIENT_DIRECTION_INSTRUCTION if ambient else _DIRECTION_INSTRUCTION)
         if _note:
             system += "\n" + _note
         phrases = self._budgets.get("gm_forbidden_phrases", ())
@@ -247,10 +266,14 @@ class LLMGM:
         expects = [s for s in contract.get("participants", []) if s != self._gm_seat]
         must = contract.get("must_resolve") or []
         must_resolve = "; ".join(must) if must else (contract.get("canon_goal") or "")
+        if ambient:
+            must_resolve = _AMBIENT_MUST_RESOLVE
         return Direction(text=text, expects=expects, must_resolve=must_resolve)
 
     def adjudicate(self, contract, transcript, round):
-        system = self._context_fn(contract) + "\n\n" + _ADJUDICATE_INSTRUCTION
+        ambient = bool(contract.get("ambient"))
+        system = self._context_fn(contract) + "\n\n" + (
+            _AMBIENT_ADJUDICATE_INSTRUCTION if ambient else "") + _ADJUDICATE_INSTRUCTION
         user = _render_transcript(transcript, self._seat_names)
         user = (user + "\n" if user else "") + f"Round {round}."
         max_tokens, reasoning = _budget(self._budgets, "adjudicate")
@@ -273,6 +296,8 @@ class LLMGM:
         resolved = bool(obj.get("resolved", False))
         state_delta = obj.get("state_delta")
         state_delta = state_delta if isinstance(state_delta, dict) else {}
+        if ambient:
+            state_delta = {}        # a plot-free scene never writes story state
         return Verdict(verdict=verdict, retake_seat=retake_seat, notes=notes,
                        state_delta=state_delta, resolved=resolved)
 
@@ -490,6 +515,14 @@ def segment_view(segments, contract):
     return view
 
 
+def ambient_pool_provider(agent_config):
+    """Production default: the ambient scene pool (Postgres pack_scenes and/or a YAML dir,
+    table.ambient). Tests replace this."""
+    table_cfg = agent_config.get("table", {})
+    return ambient_source.load_pool(table_cfg.get("ambient") or {},
+                                    default_pack=str(table_cfg.get("pack") or ""))
+
+
 _CHAR_CONN = None
 _LORE_CACHE = {}
 
@@ -583,16 +616,33 @@ class TableRuntime:
                              instead of waiting for an operator; after
                              auto_max_consecutive_stuck (default 3) skips in a row
                              the table halts (model likely down) and stays stuck.
+
+    Unattended week (table.block_clock set; golive plan D1/A1-A3, app/table/block_clock.py):
+      The story's arc segments are wall-clock blocks. Between scenes the runtime asks
+      block_clock.plan_next what to play: the block's spine contracts first (an earlier
+      block's leftovers carry over), then plot-free AMBIENT scenes (table.ambient) until the
+      window ends; before the anchor and after the last block it plays ambient only. The
+      played set, per-scene attempts and the ambient history persist in the position file, so
+      a GM restart resumes by itself (start_mode auto, no operator). A scene running longer
+      than table.scene_max_s (default 1800) counts as stuck. Differences from the
+      plain auto mode: a stuck scene never halts the table (after auto_max_consecutive_stuck
+      in a row it cools down auto_stuck_cooldown_s, doubling up to auto_stuck_cooldown_max_s,
+      then plays an ambient scene and carries on; a skipped spine scene is retried later, at
+      most block_clock.spine_max_attempts times); there is no end unless
+      block_clock.end_after_last_block_s is set. Ambient scenes never touch the spine position
+      or story state and leave only a short story-log entry.
     """
 
     def __init__(self, worker_id, agent_config, llm_client, producer, *,
-                 clock=time.monotonic, store=None):
+                 clock=time.monotonic, store=None, wall=time.time, rng=None):
         self.worker_id = worker_id
         self.agent_config = agent_config
         self.llm_client = llm_client
         self.producer = producer
         self.clock = clock
         self.store = store
+        self.wall = wall                # epoch seconds: the block clock and ambient history
+        self._rng = rng or random.Random()
         self.table_cfg = agent_config.get("table", {})
         self.mode = self.table_cfg.get("start_mode", "auto")
         self.position_file = self.table_cfg.get("position_file") or \
@@ -612,8 +662,27 @@ class TableRuntime:
         self._air_until = None          # modelled end of the roundtable voice queue
         self._consecutive_stuck = 0
         self._skipped_scene = None
+        self._scene_started_at = None
         self._halted = False
         self._said = set()              # once-only log keys
+        # Unattended week: block scheduler + ambient fill (see class doc). All of it is
+        # inert when table.block_clock is unset, so the D&D table behaves as before.
+        self._block = block_clock.BlockClock.from_config(self.table_cfg.get("block_clock"))
+        bc = self.table_cfg.get("block_clock") or {}
+        self._spine_max_attempts = int(bc.get("spine_max_attempts", 2))
+        self._ambient_cfg = dict(self.table_cfg.get("ambient") or {})
+        self._pool = None
+        self._pool_next_load = None
+        self._layout_cache = None
+        self._layout_retry_at = 0.0
+        self._cooldown_until = None
+        self._gap_until = None
+        self._force_ambient = False
+        self._deferred = set()          # spine scenes that got stuck since the last good scene
+        self._stuck_total = 0
+        self._played, self._attempts = set(), {}
+        self._ambient_history, self._last_speakers, self._last_ambient_id = [], (), None
+        self._load_unattended()
         # P4.1: committed lines -> roundtable live transcript (table.live_feed)
         from table import live_feed
         self._feed = (live_feed.CommitPublisher(worker_id, producer.send)
@@ -644,6 +713,18 @@ class TableRuntime:
             self._once("duration", "table auto run time budget reached (%ss); no new scenes",
                        duration)
             return True
+        if self._block is not None and self._block.finished(self.wall(), self._layout()[2]):
+            self._once("clock-end", "table block clock run is over; no new scenes")
+            return True
+        if self._cooldown_until is not None:
+            if now < self._cooldown_until:
+                return True
+            self._cooldown_until = None
+            log.warning("table stuck cooldown over; playing an ambient scene first")
+        if self._gap_until is not None:
+            if now < self._gap_until:
+                return True
+            self._gap_until = None
         pace = self.table_cfg.get("auto_pace")
         if pace and self._air_until is not None:
             ready_at = self._air_until - float(pace.get("lead_s", 15.0))
@@ -672,7 +753,8 @@ class TableRuntime:
                 items = json.load(fh).get("story")
         except (OSError, ValueError, AttributeError):
             items = None
-        story = story_log.StoryLog.from_list(items, keep=keep)
+        story = story_log.StoryLog.from_list(
+            items, keep=keep, ambient_keep=int(self.table_cfg.get("story_ambient_keep", 4)))
         if len(story):
             log.info("table story restored entries=%d file=%s", len(story), self.position_file)
         return story
@@ -720,7 +802,12 @@ class TableRuntime:
         if not skipped and state.get("resolved") is False and not any(
                 e.get("kind") == "reply" for e in state.get("transcript") or []):
             skipped = True      # ended before any seat spoke (operator skip / stop)
-        entry = story_log.entry_from_state(state, contract, skipped=skipped)
+        ambient = bool(contract.get("ambient"))
+        if ambient and (skipped or self._ambient_cfg.get("story_log", "short") in ("none", False)):
+            self._save_position(self.last_index, scene_id)      # a plot-free scene leaves no trace
+            return
+        entry = story_log.entry_from_state(state, contract, skipped=skipped, ambient=ambient,
+                                           max_lines=6 if ambient else 12)
         self.story.append(entry)
         self._context_cache.clear()
         log.info("table story += scene=%s skipped=%s entries=%d", scene_id, skipped, len(self.story))
@@ -731,12 +818,231 @@ class TableRuntime:
             import relay_io
             import os
             os.makedirs(os.path.dirname(self.position_file) or ".", exist_ok=True)
-            relay_io.atomic_write_json(self.position_file,
-                                       {"index": index, "scene_id": scene_id, "at": time.time(),
-                                        "story": self.story.to_list()
-                                        if getattr(self, "story", None) is not None else []})
+            doc = {"index": index, "scene_id": scene_id, "at": time.time(),
+                   "story": self.story.to_list()
+                   if getattr(self, "story", None) is not None else []}
+            if getattr(self, "_block", None) is not None:
+                doc.update(self._unattended_doc())
+            relay_io.atomic_write_json(self.position_file, doc)
         except Exception as exc:  # noqa: BLE001 - a lost position must not stop the table
             log.warning("table position not saved file=%s: %s", self.position_file, exc)
+
+    # ------------------------------------------------------------------ unattended week
+    def _load_unattended(self):
+        """Restore the played set, attempts and ambient history from the position file."""
+        try:
+            with open(self.position_file, encoding="utf-8") as fh:
+                doc = json.load(fh)
+        except (OSError, ValueError, AttributeError):
+            doc = {}
+        if not isinstance(doc, dict):
+            doc = {}
+        played = doc.get("played")
+        if isinstance(played, list):
+            self._played = {str(x) for x in played}
+        else:       # a position file from before the block clock: the story log knows the spine
+            self._played = {e.scene_id for e in self.story.entries if not e.ambient}
+        attempts = doc.get("attempts")
+        if isinstance(attempts, dict):
+            self._attempts = {str(k): int(v) for k, v in attempts.items()
+                              if isinstance(v, (int, float))}
+        history = doc.get("ambient_history")
+        if isinstance(history, list):
+            self._ambient_history = [{"id": str(h["id"]), "at": float(h.get("at") or 0)}
+                                     for h in history if isinstance(h, dict) and h.get("id")]
+        speakers = doc.get("last_speakers")
+        self._last_speakers = tuple(str(x) for x in speakers) if isinstance(speakers, list) else ()
+        self._last_ambient_id = doc.get("last_ambient_id") or None
+        total = doc.get("stuck_total")
+        self._stuck_total = int(total) if isinstance(total, (int, float)) else 0
+        if self._block is not None and (self._played or self._ambient_history):
+            log.info("table unattended state restored played=%d ambient_history=%d stuck_total=%d",
+                     len(self._played), len(self._ambient_history), self._stuck_total)
+
+    def _unattended_doc(self):
+        window = float(self._ambient_cfg.get("no_repeat_s", ambient_source.DEFAULT_NO_REPEAT_S))
+        cutoff = self.wall() - 2 * window
+        history = [h for h in self._ambient_history if h["at"] >= cutoff][-2000:]
+        return {"played": sorted(self._played), "attempts": dict(self._attempts),
+                "ambient_history": history, "last_speakers": list(self._last_speakers),
+                "last_ambient_id": self._last_ambient_id, "stuck_total": self._stuck_total}
+
+    def _load_segments(self):
+        if self._segments is None:
+            try:
+                self._segments = segments_provider(self.agent_config)
+            except Exception as exc:  # noqa: BLE001 - the segment is context, not required
+                log.warning("table segments not loaded: %s", exc)
+                self._segments = {}
+        return self._segments
+
+    def _layout(self):
+        """(spine_blocks, spine_index, n_blocks): the spine contract ids per block (arc segment
+        order = block index), scene_id -> contract index, and the number of blocks.
+
+        Cached once the contracts load. While they cannot load (generator DB down at boot)
+        this is an EMPTY layout, retried every 30 s: the table plays ambient meanwhile and
+        picks the spine (with carry-over) up as soon as the story is readable."""
+        if self._layout_cache is not None:
+            return self._layout_cache
+        empty = ([], {}, 0)
+        if self.wall() < self._layout_retry_at:
+            return empty
+        try:
+            contracts = self.contracts
+        except Exception as exc:  # noqa: BLE001
+            self._layout_retry_at = self.wall() + 30
+            log.error("table story contracts not loadable, playing ambient only until they are: %s",
+                      exc)
+            return empty
+        order = list(self._load_segments() or {})
+        for c in contracts:
+            seg = str(c.get("segment_id"))
+            if seg not in order:
+                order.append(seg)
+        blocks = block_clock.group_spine(contracts, block_clock.block_map_from_segments(order))
+        index = {c.get("scene_id"): i for i, c in enumerate(contracts)}
+        self._layout_cache = (blocks, index, len(order))
+        log.info("table block layout blocks=%d spine_per_block=%s", len(order),
+                 [len(b) for b in blocks])
+        return self._layout_cache
+
+    def _decide(self):
+        """block_clock.plan_next for now: spine contract or ambient, with the block status."""
+        blocks, _, n_blocks = self._layout()
+        done = set(self._played)
+        for sid, n in self._attempts.items():       # tried too often: give the scene up
+            if n >= self._spine_max_attempts and sid not in done:
+                self._once(f"giveup:{sid}", "table gives up spine scene=%s after %d attempts",
+                           sid, n)
+                done.add(sid)
+        return block_clock.plan_next(self._block, blocks, done, self.wall(),
+                                     defer=self._deferred, n_blocks=n_blocks)
+
+    def _ambient_pool(self):
+        """The ambient pool, loaded lazily and refreshed every ambient.reload_s (a failed
+        refresh keeps the old pool; an empty/failed one is retried within a minute)."""
+        now = self.wall()
+        if self._pool is None or (self._pool_next_load is not None and now >= self._pool_next_load):
+            reload_s = float(self._ambient_cfg.get("reload_s", 900))
+            try:
+                pool = ambient_pool_provider(self.agent_config)
+                self._pool = pool
+                self._pool_next_load = now + (reload_s if len(pool) else min(60.0, reload_s))
+                log.info("table ambient pool loaded scenes=%d", len(pool))
+            except Exception as exc:  # noqa: BLE001 - the story must not depend on filler
+                log.warning("table ambient pool not loaded: %s", exc)
+                self._pool_next_load = now + min(60.0, reload_s)
+                if self._pool is None:
+                    self._pool = ambient_source.AmbientPool()
+        return self._pool
+
+    def _make_ambient(self, phase):
+        """An ambient SceneContract payload for `phase`, or None when nothing can be played."""
+        pool = self._ambient_pool()
+        if not pool:
+            return None
+        now = self.wall()
+        pick = pool.pick(
+            phase, now_ts=now, history=self._ambient_history,
+            seat_of=self.table_cfg.get("seat_of", {}), active_seats=self.table_cfg.get("seats", []),
+            last_speakers=self._last_speakers,
+            no_repeat_s=float(self._ambient_cfg.get("no_repeat_s", ambient_source.DEFAULT_NO_REPEAT_S)),
+            rng=self._rng)
+        if pick is None:
+            return None
+        if pick.fell_back:
+            self._once(f"ambient-fallback:{phase}",
+                       "table ambient: no scene for phase=%s, borrowing from other phases", phase)
+        if pick.relaxed:
+            self._once(f"ambient-relaxed:{phase}:{int(now // 3600)}",
+                       "table ambient: every %s scene aired inside the no-repeat window; reusing "
+                       "the least recently used", phase)
+        sid = f"ambient.{ambient_source.safe_id(pick.scene.id)}.t{int(now)}"
+        contract = ambient_source.to_contract(
+            pick.scene, pick.participants, phase=phase, run_id=str(self.table_cfg.get("run_id") or ""),
+            scene_id=sid, rounds=self._ambient_cfg.get("rounds"))
+        return contract.to_payload()
+
+    def _gap_for(self, decision):
+        """Seconds of quiet before the next scene (per phase; spine uses block_clock.spine_gap_s)."""
+        if decision.kind == block_clock.SPINE:
+            spec = (self.table_cfg.get("block_clock") or {}).get("spine_gap_s", 0)
+        else:
+            gaps = self._ambient_cfg.get("gap_s") or {}
+            spec = gaps.get(decision.phase, gaps.get("default", 0))
+        if isinstance(spec, (list, tuple)) and len(spec) == 2:
+            lo, hi = float(spec[0]), float(spec[1])
+            return self._rng.uniform(min(lo, hi), max(lo, hi))
+        return float(spec or 0)
+
+    def _finish_block_scene(self, final):
+        """Book-keeping for a finished scene in block mode (before the story log append)."""
+        contract = final.get("contract") or {}
+        sid = final.get("scene_id")
+        stuck_skipped = sid == self._skipped_scene
+        speakers = tuple(sorted({e.get("speaker") for e in final.get("transcript") or []
+                                 if e.get("kind") == "reply" and e.get("speaker")}))
+        if contract.get("ambient"):
+            self._ambient_history.append({"id": str(contract.get("ambient_id") or sid),
+                                          "at": self.wall()})
+            self._last_ambient_id = contract.get("ambient_id") or sid
+            if not stuck_skipped:
+                self._last_speakers = speakers
+        elif stuck_skipped:
+            # not played: retried after the next good scene (attempts caps the retries)
+            self._deferred.add(sid)
+        else:
+            self._played.add(sid)
+            self._attempts.pop(sid, None)
+            self._deferred.discard(sid)
+        if not stuck_skipped:
+            self._deferred.clear()
+        if self.mode == "auto" and self.table_cfg.get("auto_advance", True):
+            try:
+                gap = self._gap_for(self._decide())
+            except Exception as exc:  # noqa: BLE001 - a gap is a nicety
+                log.warning("table gap not computed: %s", exc)
+                gap = 0.0
+            if gap > 0:
+                base = max(self.clock(), self._air_until or 0.0)
+                self._gap_until = base + gap
+        self._save_position(self.last_index, sid)
+
+    def _block_status(self):
+        """The block-clock view for /table/status: block, phase, spine left, carry-over,
+        ambient pool, last ambient id, stuck counters."""
+        limit = int(self.table_cfg.get("auto_max_consecutive_stuck", 3))
+        out = {"enabled": self._block is not None}
+        if self._block is None:
+            return out
+        d = self._decide()
+        blocks, _, n_blocks = self._layout()
+        out.update({
+            "index": d.block, "of": n_blocks, "window": d.window, "phase": d.phase,
+            "effective_now": d.effective, "offset_s": self._block.offset_s,
+            "spine_in_block": len(blocks[d.block]) if 0 <= d.block < len(blocks) else 0,
+            "spine_remaining": d.spine_remaining, "carry_over": d.carry_over_count,
+            "dropped_after_end": d.dropped_after_end,
+            "next_kind": d.kind, "next_spine_scene": d.scene_id,
+            "playing": ("ambient" if (self.arbiter is not None and self.running()
+                                      and self.arbiter.state["contract"].get("ambient"))
+                        else "spine" if self.running() else None),
+            "ambient_pool": None if self._pool is None else len(self._pool),
+            "ambient_pool_phase": (None if self._pool is None
+                                   else len(self._pool.for_phase(d.phase))),
+            "last_ambient_id": self._last_ambient_id,
+            "ambient_played": len(self._ambient_history),
+            "spine_played": len(self._played),
+            "stuck": {"consecutive": self._consecutive_stuck, "total": self._stuck_total,
+                      "limit": limit,
+                      "cooldown_s": (0.0 if self._cooldown_until is None
+                                     else round(max(0.0, self._cooldown_until - self.clock()), 1))},
+        })
+        if 0 <= d.block:
+            start, end = self._block.window(d.block)
+            out["block_start"], out["block_end"] = start.isoformat(), end.isoformat()
+        return out
 
     # ------------------------------------------------------------------ lazy
     @property
@@ -747,13 +1053,9 @@ class TableRuntime:
         return self._contracts
 
     def _segment_for(self, contract):
-        if self._segments is None:
-            try:
-                self._segments = segments_provider(self.agent_config)
-            except Exception as exc:  # noqa: BLE001 - the segment is context, not required
-                log.warning("table segments not loaded: %s", exc)
-                self._segments = {}
-        return segment_view(self._segments, contract)
+        if contract.get("ambient"):
+            return None         # plot-free: no arc segment in the GM's context
+        return segment_view(self._load_segments(), contract)
 
     def _context(self, contract):
         # Cleared whenever the story grows (_record_scene), so a replayed scene never
@@ -775,7 +1077,11 @@ class TableRuntime:
 
     def _start(self, index):
         """Build and start the arbiter for contracts[index]. Returns True when started."""
-        contract = self.contracts[index]
+        return self._launch(self.contracts[index], index)
+
+    def _launch(self, contract, index=None):
+        """Build and start the arbiter for `contract`. `index` is the spine position (None for
+        an ambient scene, which never moves the position). Returns True when started."""
         cross = self.table_cfg.get("cross_scene_repeat") or {}
         gm = LLMGM(self.llm_client, self._context,
                    seat_names=self.table_cfg.get("seat_names", {}), budgets=self.table_cfg,
@@ -795,8 +1101,14 @@ class TableRuntime:
             return False
         # Keep the arbiter even if start() fails: it stays in DIRECTING and its own
         # tick() retries the GM call (review fix: re-creating it re-sent scene_start).
-        self.arbiter, self.index, self.last_index = arbiter, index, index
-        self._save_position(index, contract.get("scene_id"))
+        self.arbiter = arbiter
+        self._scene_started_at = self.clock()
+        if index is not None:
+            self.index, self.last_index = index, index
+        if self._block is not None and not contract.get("ambient"):
+            sid = contract.get("scene_id")
+            self._attempts[sid] = self._attempts.get(sid, 0) + 1
+        self._save_position(self.last_index, contract.get("scene_id"))
         try:
             arbiter.start()
         except GMUnavailable as exc:
@@ -812,6 +1124,8 @@ class TableRuntime:
             return
         if self._auto_blocked():
             return
+        if self._block is not None:
+            return self._ensure_started_block()
         limit = self.table_cfg.get("max_scenes")
         while self.index < len(self.contracts) and (limit is None or self.auto_played < int(limit)):
             index = self.index
@@ -822,24 +1136,87 @@ class TableRuntime:
                 return
             self.index = index + 1            # skip a contract that cannot be built
 
+    def _ensure_started_block(self):
+        """Block-clock auto mode: the next scene is whatever block_clock.plan_next says."""
+        self._ambient_pool()
+        d = self._decide()
+        if d.kind == block_clock.AMBIENT or self._force_ambient:
+            contract = self._make_ambient(d.phase)
+            if contract is not None and self._launch(contract):
+                self._force_ambient = False
+                self._last_ambient_id = contract.get("ambient_id")
+                self._note_started()
+                log.info("table ambient scene=%s block=%s phase=%s window=%s seats=%s rounds=%s",
+                         contract["scene_id"], d.block, d.phase, d.window,
+                         contract["participants"], contract["max_rounds"])
+                return
+            if d.kind == block_clock.AMBIENT:
+                self._once(f"no-ambient:{d.phase}",
+                           "table has NO ambient scene to play (phase=%s pool=%d); idle, retrying",
+                           d.phase, len(self._pool or ()))
+                return
+            # a stuck cooldown asked for ambient but there is none: play the spine instead
+        index = self._layout()[1].get(d.scene_id)
+        if index is None:
+            return
+        if self._start(index):
+            self._note_started()
+            log.info("table spine scene=%s block=%s carry_over=%s remaining=%d",
+                     d.scene_id, d.block, d.carry_over, d.spine_remaining)
+            return
+        self._played.add(d.scene_id)        # a contract that cannot be built is given up
+
+    def _note_started(self):
+        self.auto_played += 1
+        if self._auto_started_at is None:
+            self._auto_started_at = self.clock()
+
     def _skip_if_stuck(self):
         """Auto mode: skip a stuck scene so an unattended run keeps going."""
-        if (self.mode != "auto" or not self.table_cfg.get("auto_skip_stuck", True)
-                or not self.running() or not self.arbiter.state.get("stuck")):
+        if self.mode != "auto" or not self.running():
+            return
+        # Unattended (block clock): never wait for an operator, whatever auto_skip_stuck says.
+        if not self.table_cfg.get("auto_skip_stuck", True) and self._block is None:
+            return
+        if not self.arbiter.state.get("stuck") and not self._overtime():
             return
         limit = int(self.table_cfg.get("auto_max_consecutive_stuck", 3))
-        if self._consecutive_stuck >= limit:
+        if self._consecutive_stuck >= limit and self._block is None:
             if not self._halted:
                 self._halted = True
                 log.error("table halted: %d stuck scenes in a row (is the model up?) scene=%s",
                           self._consecutive_stuck, self.arbiter.state["scene_id"])
             return
         self._consecutive_stuck += 1
-        log.warning("table auto-skip stuck scene=%s phase=%s (%d in a row)",
+        self._stuck_total += 1
+        log.warning("table auto-skip stuck scene=%s phase=%s (%d in a row, %d total)",
                     self.arbiter.state["scene_id"], self.arbiter.state["phase"],
-                    self._consecutive_stuck)
+                    self._consecutive_stuck, self._stuck_total)
         self._skipped_scene = self.arbiter.state["scene_id"]
         self._end_running("auto: scene stuck")
+        if self._block is not None and self._consecutive_stuck >= limit:
+            # Unattended: never halt. Cool down (model/GM probably down), then probe with an
+            # ambient scene; every further failure doubles the cooldown up to the cap.
+            base = float(self.table_cfg.get("auto_stuck_cooldown_s", 300))
+            cap = float(self.table_cfg.get("auto_stuck_cooldown_max_s", 1800))
+            cool = min(cap, base * 2 ** min(self._consecutive_stuck - limit, 10))
+            self._cooldown_until = self.clock() + cool
+            self._force_ambient = True
+            log.error("TABLE STUCK x%d in a row (total %d); cooling down %.0fs, then ambient, "
+                      "then carrying on (is the model up?)",
+                      self._consecutive_stuck, self._stuck_total, cool)
+
+    def _overtime(self):
+        """Block-clock watchdog: a scene running longer than table.scene_max_s (default 30 min;
+        null disables) counts as stuck, whatever phase the arbiter is waiting in."""
+        if self._block is None or self._scene_started_at is None:
+            return False
+        limit = self.table_cfg.get("scene_max_s", 1800)
+        if not limit or self.clock() - self._scene_started_at < float(limit):
+            return False
+        log.error("table scene=%s ran over scene_max_s=%ss; treating it as stuck",
+                  self.arbiter.state["scene_id"], limit)
+        return True
 
     def _end_running(self, note):
         """End the running scene through the arbiter's own operator_override path."""
@@ -865,8 +1242,13 @@ class TableRuntime:
         duration = float(self._duration_s) if self._duration_s else None
         limit = self.table_cfg.get("max_scenes")
         out_of_time = bool(duration and elapsed is not None and elapsed >= duration)
-        out_of_scenes = self.next_index() >= len(self.contracts) or \
-            (limit is not None and self.auto_played >= int(limit))
+        if self._block is not None:
+            # the week is wall-clock bound: running out of spine just means ambient
+            out_of_time = out_of_time or self._block.finished(self.wall(), self._layout()[2])
+            out_of_scenes = limit is not None and self.auto_played >= int(limit)
+        else:
+            out_of_scenes = self.next_index() >= len(self.contracts) or \
+                (limit is not None and self.auto_played >= int(limit))
         return {
             "active": self.mode == "auto" and not self._halted
                       and not out_of_time and not out_of_scenes,
@@ -884,6 +1266,11 @@ class TableRuntime:
         nxt = self.next_index()
         state = self.arbiter.state if self.arbiter is not None else {}
         extra = {}
+        if self._block is not None:
+            try:
+                extra["block"] = self._block_status()
+            except Exception as exc:  # noqa: BLE001 - status must always answer
+                extra["block"] = {"enabled": True, "error": str(exc)}
         if scenes:      # on request only (operator UI picker): keeps the polled status small
             extra["scenes"] = [{"index": i, "scene_id": c.get("scene_id"),
                                 "goal": str(c.get("canon_goal") or "")[:140]}
@@ -897,12 +1284,30 @@ class TableRuntime:
             "round": state.get("round") if self.running() else None,
             "phase": state.get("phase") if self.running() else None,
             "index": self.last_index,
-            "next_scene_id": self.contracts[nxt]["scene_id"] if nxt < len(self.contracts) else None,
-            "total": len(self.contracts),
+            "next_scene_id": self._status_next(nxt),
+            "total": len(self._contracts_or_empty()),
             "mode": self.mode,
             "result": result,
             "error": error,
         }
+
+    def _contracts_or_empty(self):
+        if self._block is None:
+            return self.contracts
+        try:
+            return self.contracts
+        except Exception:  # noqa: BLE001 - generator DB down: status still answers
+            return []
+
+    def _status_next(self, nxt):
+        contracts = self._contracts_or_empty()
+        if self._block is not None:
+            try:
+                d = self._decide()
+                return d.scene_id if d.kind == block_clock.SPINE else f"ambient:{d.phase}"
+            except Exception:  # noqa: BLE001
+                return None
+        return contracts[nxt]["scene_id"] if nxt < len(contracts) else None
 
     def _reply(self, msg, result, error="", scenes=False):
         from message_bus import build_message
@@ -968,7 +1373,14 @@ class TableRuntime:
         self.auto_played = 0
         self._auto_started_at = None
         self._halted, self._consecutive_stuck = False, 0
+        self._cooldown_until, self._gap_until, self._force_ambient = None, None, False
         self._said.discard("duration")
+        if self._block is not None:     # the spine position IS the played set
+            if target == 0:
+                self._played, self._attempts, self._deferred = set(), {}, set()
+            elif start != "next":
+                self._played = {c.get("scene_id") for c in self.contracts[:target]}
+                self._attempts, self._deferred = {}, set()
         if target == 0:     # a fresh story: forget what "already happened"
             if self.running():  # the old run's last scene must not seed the new story
                 self._discard_scene = self.arbiter.state["scene_id"]
@@ -1013,6 +1425,12 @@ class TableRuntime:
             final = self.arbiter.state
             if final["scene_id"] != self._skipped_scene:
                 self._consecutive_stuck = 0     # a scene finished on its own
+            if self._block is not None:
+                try:
+                    self._finish_block_scene(final)
+                except Exception as exc:  # noqa: BLE001 - never stop the table
+                    log.warning("table block bookkeeping failed scene=%s: %s",
+                                final.get("scene_id"), exc)
             try:
                 self._record_scene(final)
             except Exception as exc:  # noqa: BLE001 - memory must never stop the table
@@ -1034,21 +1452,21 @@ def reset_runtimes():
     _RUNTIMES.clear()
 
 
-def _make_runtime(worker_id, agent_config, llm_client, producer, clock):
-    rt = TableRuntime(worker_id, agent_config, llm_client, producer, clock=clock)
+def _make_runtime(worker_id, agent_config, llm_client, producer, clock, wall=time.time):
+    rt = TableRuntime(worker_id, agent_config, llm_client, producer, clock=clock, wall=wall)
     _RUNTIMES[worker_id] = rt
     return rt
 
 
 def table_gm_idle_tick(worker_id, agent_config, llm_client, producer, state_path=None, *,
-                       clock=time.monotonic):
+                       clock=time.monotonic, wall=time.time):
     """IDLE_TICK_HOOKS["table_gm"]: tick the GM runtime. Never raises."""
     try:
         if (agent_config or {}).get("role") != ROLE:
             return
         rt = _RUNTIMES.get(worker_id)
         if rt is None:
-            rt = _make_runtime(worker_id, agent_config, llm_client, producer, clock)
+            rt = _make_runtime(worker_id, agent_config, llm_client, producer, clock, wall)
         rt.tick()
     except Exception as exc:  # noqa: BLE001 - a hook must never raise
         log.warning("table_gm_idle_tick failed worker=%s: %s", worker_id, exc)

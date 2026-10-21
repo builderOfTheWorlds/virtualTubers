@@ -505,10 +505,35 @@ class TileAvatar:
             if gaze is not None:
                 extra["gaze"] = gaze
             self._provider.render_tick(expression, None, **extra)
-            return True
         except Exception as exc:  # noqa: BLE001 — see the class docstring
             self._fail(f"render failed ({type(exc).__name__}: {exc})")
             return False
+        self._drain_window_events()
+        return True
+
+    def _drain_window_events(self):
+        """Pump and discard this head's SDL/X11 events. Best-effort, never
+        raises, and never marks the head failed.
+
+        WHY (memory leak, measured 2026-10-21 with scripts/tile_leak_probe.py
+        and A/B runs): nothing in a tile ever ran an SDL event loop. With the
+        head's SHAPE-clipped window (window_shape.py) over an xterm, every
+        `display.flip()` made the process grow ~0.5 KB per frame, forever
+        (4-10 GiB per tile after 3.8 days at TILE_AVATAR_FPS). Growth was
+        flat without SHAPE and flat with a per-frame event pump, so the
+        unpumped SDL/X11 connection is what accumulated. `pygame.event.clear()`
+        pumps SDL and drops the events — a tile head has no input to handle.
+
+        Must run on the thread that owns the window, which is this one:
+        TileAvatarDriver builds and ticks the head on a single thread.
+        """
+        pygame = getattr(self._provider, "_pygame", None)
+        if pygame is None:
+            return
+        try:
+            pygame.event.clear()
+        except Exception:  # noqa: BLE001 — housekeeping; a head never dies of it
+            pass
 
     def close(self):
         """Best-effort teardown: stop the GPU subprocess and drop the

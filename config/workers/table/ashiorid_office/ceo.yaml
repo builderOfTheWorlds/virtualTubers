@@ -33,7 +33,7 @@ agent:
   max_context_tokens: 8000
   table:
     pack: ashiorid_office
-    start_mode: manual
+    start_mode: auto
     gm_slug: ceo
     gm_seat: tuber_0
     pack_dir: /data/campaigns/ashiorid_office
@@ -55,6 +55,12 @@ agent:
     - unlocks
     - table_rules
     - style
+    auto_pace:
+      words_per_s: 2.9
+      per_line_s: 2.2
+      lead_s: 25
+    auto_skip_stuck: true
+    auto_max_consecutive_stuck: 3
     dedupe_canon_goal: true
     story_log: true
     story_max_entries: 6
@@ -84,6 +90,42 @@ agent:
     - ship-arc.ship-arc-n0-n1.ship-arc-n0-n1-003
     - ship-arc.ship-arc-n1.ship-arc-n1-002
     gm_silent_you: true
+    block_clock:
+      anchor: '2026-10-25T00:00:00-04:00'
+      block_hours: 6
+      prelude_from: '2026-10-24T20:00:00-04:00'
+      offset_s: 0
+      tz: America/New_York
+      spine_max_attempts: 2
+      spine_gap_s: 0
+      end_after_last_block_s: null
+    ambient:
+      postgres: true
+      pack: ashiorid_office
+      dir: null
+      reload_s: 900
+      no_repeat_s: 172800
+      rounds:
+        normal: 2
+        quiet: 1
+      story_log: short
+      gap_s:
+        off_hours:
+        - 60
+        - 180
+        morning:
+        - 15
+        - 45
+        workday:
+        - 10
+        - 30
+        evening:
+        - 20
+        - 60
+        default: 15
+    auto_stuck_cooldown_s: 300
+    auto_stuck_cooldown_max_s: 1800
+    scene_max_s: 1800
     seats:
     - tuber_1
     - tuber_2
@@ -130,7 +172,7 @@ agent:
       max_tokens: 768
       reasoning_budget: 384
     adjudicate:
-      max_tokens: 256
+      max_tokens: 512
       reasoning_budget: 64
     overrule:
       max_tokens: 160

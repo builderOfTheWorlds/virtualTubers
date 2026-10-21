@@ -45,6 +45,9 @@ CONTRACT_FIELDS = (
     "scene_ref",
 )
 _OPTIONAL = {"max_rounds": 4, "max_retries_per_turn": 2, "scene_ref": ""}
+# Ambient (plot-free filler) scenes carry these extra payload keys; they are ABSENT from a
+# spine contract's payload so spine payloads stay exactly CONTRACT_FIELDS.
+AMBIENT_FIELDS = ("ambient", "ambient_id", "day_phase", "intensity")
 _TUPLE_FIELDS = ("participants", "lore", "must_resolve", "expected_beats")
 _INT_FIELDS = ("order", "max_rounds", "max_retries_per_turn")
 
@@ -71,6 +74,11 @@ class SceneContract:
     max_rounds: int = 4
     max_retries_per_turn: int = 2
     scene_ref: str = ""
+    # Ambient filler (table.ambient_source): nothing to resolve, must not change story state.
+    ambient: bool = False
+    ambient_id: str = ""        # the pack scene this was made from (scene_id is unique per airing)
+    day_phase: str = ""
+    intensity: str = ""
 
     def to_payload(self) -> Dict[str, Any]:
         """JSON-safe dict (tuples -> lists); used as scene_start.contract."""
@@ -78,6 +86,9 @@ class SceneContract:
         for name in CONTRACT_FIELDS:
             value = getattr(self, name)
             out[name] = list(value) if name in _TUPLE_FIELDS else value
+        if self.ambient:
+            for name in AMBIENT_FIELDS:
+                out[name] = getattr(self, name)
         return out
 
     @classmethod
@@ -101,6 +112,11 @@ class SceneContract:
             elif not isinstance(value, str):
                 raise ContractError(f"contract field {name!r} must be a str")
             kwargs[name] = value
+        if payload.get("ambient"):
+            kwargs["ambient"] = True
+            for name in AMBIENT_FIELDS[1:]:
+                if isinstance(payload.get(name), str):
+                    kwargs[name] = payload[name]
         return cls(**kwargs)
 
 

@@ -637,6 +637,14 @@ class CodecAvatarProvider(AvatarProvider):
         surf = self._pygame.surfarray.make_surface(pixels.transpose(1, 0, 2))
         self._screen.blit(surf, (0, 0))
         self._pygame.display.flip()
+        # Pump + drop the window's SDL/X11 events every frame. Unpumped, a
+        # SHAPE-clipped window flipped at 30 fps grew ~1 KB/frame (~116 MB/h;
+        # roundtable tiles hit 4-10 GiB in 3.8 days). See tile_avatar
+        # TileAvatar._pump_events and tests/test_tile_pane_memory.py.
+        try:
+            self._pygame.event.clear()
+        except Exception:  # noqa: BLE001 - housekeeping; a head never dies of it
+            pass
         # Bubble captions have no home in this pixel window yet — the
         # tmux-grid bordered box (avatar_display.build_bubble_box) that
         # termgl_avatar.py draws assumes a character grid underneath it,
