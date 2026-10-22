@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-whiteboard-woes
+title: Whiteboard Woes
+ambient: true
+prompt: Just before noon in the Kitchen. Nora has found Julian's whiteboard again, propped against the
+  fridge and crowding the lunch table. She asks him, gently but firmly, to find it a new home. Julian
+  smiles, says he'll take care of it, and even offers her a mint from the bowl. But as she turns to the
+  espresso machine, he only taps the pen and gazes at the whiteboard, not moving to shift it. Will the
+  whiteboard linger in the kitchen until lunch?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

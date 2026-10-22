@@ -1,0 +1,18 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-tagline-rehearsal
+title: Tagline Rehearsal
+ambient: true
+prompt: The small hours in Julian's darkened office. The plant on his desk is the only witness as Julian
+  quietly practices a new tagline three different ways, searching for the right tone and emphasis. The
+  empty office is silent except for his low voice. Which version will he choose to pitch in the morning?
+lore: []
+day_phase: off_hours
+intensity: quiet
+seats:
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

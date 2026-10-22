@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-plain-terms
+title: Plain Terms
+ambient: true
+prompt: After lunch in the CEO's glass-walled office, Graham hands Maren a memo from Corvane National
+  Bank, asking her to unpack the jargon into plain language. Maren reads it through twice, then lays out
+  the key points in her numbered list style, pausing between each one. Graham nods, but his logistics
+  metaphors keep trying to route around her direct terms. Is the bank asking for more than they've said,
+  or is Maren stripping away more than she should?
+lore:
+- clients
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

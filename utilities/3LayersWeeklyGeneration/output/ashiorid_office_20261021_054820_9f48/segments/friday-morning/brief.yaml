@@ -1,0 +1,124 @@
+segment_id: friday-morning
+order: 21
+loop: 0
+hours: 6
+synopsis: 'Standup: the regulator''s first questions arrive. The CEO decides the pilot
+  goes ahead if the Friday demo is clean. The Analyst counts the open risks out loud.'
+continuity_in: The Office Manager arrives at 05:30 and starts polishing the Moonwell
+  room table.
+continuity_out: The Analyst leaves the Moonwell room with a printout of the open risks.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: friday-morning-n0-n1-001
+  kind: ambient
+  prompt: The team assembles for the daily standup in the Moonwell room.
+  lore:
+  - office
+  - rituals
+  participants:
+  - analyst
+  - ceo
+  - engineer
+  - marketing
+  - office_manager
+  - tech_lead
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: friday-morning-n0-n1
+- slot_id: friday-morning-n0-n1-002
+  kind: spine
+  scene_ref: first-standup
+  participants:
+  - analyst
+  - ceo
+  - engineer
+  - marketing
+  - tech_lead
+  - tester
+  node_id: friday-morning-n0-n1
+- slot_id: friday-morning-n0-n1-003
+  kind: ambient
+  prompt: The Analyst prints out the list of open risks and hands it to the CEO.
+  lore:
+  - product
+  participants:
+  - analyst
+  - ceo
+  sensitivity: none
+  depends_on: []
+  node_id: friday-morning-n0-n1
+- slot_id: friday-morning-n0-n1-004
+  kind: ambient
+  prompt: The CEO nods, satisfied with the demo. "We proceed with the pilot on Friday."
+  lore:
+  - company
+  participants:
+  - ceo
+  sensitivity: tone
+  depends_on: []
+  node_id: friday-morning-n0-n1
+- slot_id: friday-morning-n0-n1-005
+  kind: ambient
+  prompt: The Analyst counts out the open risks one by one, voice steady.
+  lore:
+  - product
+  participants:
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: friday-morning-n0-n1
+- slot_id: friday-morning-n0-n1-006
+  kind: ambient
+  prompt: The team breaks up, each absorbed in their own thoughts about the risks
+    and the looming pilot.
+  lore:
+  - office
+  - rumours
+  participants:
+  - analyst
+  - ceo
+  - engineer
+  - marketing
+  - tech_lead
+  - tester
+  sensitivity: tone
+  depends_on: []
+  node_id: friday-morning-n0-n1
+nodes:
+- node_id: friday-morning
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: friday-morning-n0
+  parent_id: friday-morning
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: friday-morning-n0-n0
+  parent_id: friday-morning-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 0
+- node_id: friday-morning-n0-n1
+  parent_id: friday-morning-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 6
+- node_id: friday-morning-n1
+  parent_id: friday-morning
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0

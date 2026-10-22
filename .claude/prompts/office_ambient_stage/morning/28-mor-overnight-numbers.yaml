@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-overnight-numbers
+title: Overnight Numbers
+ambient: true
+prompt: It's 06:20 and Owen is at his desk with the overnight test log, carefully noting the totals in
+  his notebook. Fourteen of fifteen passed. The one that failed is always the same. Theo, already deep
+  into his first cup of coffee, hovers nearby, listening. Both know this is the fourth morning in a row
+  with the same numbers. Owen closes the log and caps his pen. Is there something Theo isn't saying, or
+  is he just not asking the right question?
+lore: []
+day_phase: morning
+intensity: normal
+seats:
+- tester
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

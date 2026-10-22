@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-clashing-descriptions
+title: Clashing Descriptions
+ambient: true
+prompt: In the Moonwell room around 10:37, Julian has asked yet again for a simple explanation of a rule's
+  effect. Theo and Maren both answer at the same time but their descriptions contradict. Julian leans
+  back, tapping his pen, and Maren glares. Theo raises his hands in a joke-apology but his smile is tense.
+  Who will change their story first, and how will they explain the difference?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- marketing
+- analyst
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

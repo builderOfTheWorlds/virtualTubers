@@ -1,0 +1,24 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-the-ceo-s-questions
+title: The CEO's Questions
+ambient: true
+prompt: In the Moonwell room on a quiet morning, Graham has called Maren and Brody in early for a quick
+  alignment meeting. He's asked each of them to give him one key takeaway about the afternoon's work in
+  a single sentence, and now waits expectantly, index card at the ready. Maren looks up from her notes,
+  pen poised; Brody taps the latency graph on his second monitor twice before turning to Graham. What
+  will each of them say in response to Graham's request for a concise summary of the day ahead?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- analyst
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

@@ -1,0 +1,179 @@
+thursday-morning:
+  node_id: thursday-morning
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The regulator opens an audit after Corvane reports the miss. The CEO asks
+    whethe
+  summary: The regulator opens an audit after Corvane reports the miss. The CEO asks
+    whether the Saturday pilot is still possible. The spy rumour turns into an accusation
+    at the coffee machine.
+  continuity_in: The coffee machine is warm before anyone arrives.
+  continuity_out: The Analyst takes the audit request to their desk and starts preparing
+    evidence.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - thursday-morning-n0
+  - thursday-morning-n1
+  slots: null
+thursday-morning-n0:
+  node_id: thursday-morning-n0
+  parent_id: thursday-morning
+  order: 0
+  depth: 1
+  title: Regulator Opens Audit After Corvane Reports Miss
+  summary: The regulator opens an audit after Corvane reports the miss. The coffee
+    machine is warm before anyone arrives.
+  continuity_in: The coffee machine is warm before anyone arrives.
+  continuity_out: The CEO asks whether the Saturday pilot is still possible.
+  target_words: 450
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: thursday-morning-n0-001
+    kind: ambient
+    prompt: The coffee machine is warm before anyone arrives.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-morning-n0-002
+    kind: ambient
+    prompt: The analyst arrives early and starts preparing for the audit.
+    lore:
+    - company
+    - office
+    participants:
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-morning-n0-003
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - engineer
+    - tech_lead
+    - analyst
+    - marketing
+    - tester
+  - slot_id: thursday-morning-n0-004
+    kind: ambient
+    prompt: The CEO asks whether the Saturday pilot is still possible.
+    lore:
+    - company
+    - product
+    participants:
+    - ceo
+    - tech_lead
+    sensitivity: tone
+    depends_on: []
+thursday-morning-n1:
+  node_id: thursday-morning-n1
+  parent_id: thursday-morning
+  order: 1
+  depth: 1
+  title: Spy Rumor Turns into Accusation at Coffee Machine
+  summary: The CEO asks whether the Saturday pilot is still possible. The spy rumor
+    turns into an accusation at the coffee machine.
+  continuity_in: The CEO asks whether the Saturday pilot is still possible.
+  continuity_out: The Analyst takes the audit request to their desk and starts preparing
+    evidence.
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - thursday-morning-n1-n0
+  - thursday-morning-n1-n1
+  slots: null
+thursday-morning-n1-n0:
+  node_id: thursday-morning-n1-n0
+  parent_id: thursday-morning-n1
+  order: 0
+  depth: 2
+  title: CEO Asks About Saturday Pilot
+  summary: The CEO asks whether the Saturday pilot is still possible, given the recent
+    issues and regulator audit.
+  continuity_in: The CEO arrives and immediately asks about the status of the Saturday
+    pilot.
+  continuity_out: The team leader gives an uncertain update on the pilot's feasibility.
+  target_words: 225
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: thursday-morning-n1-n0-001
+    kind: ambient
+    prompt: The CEO arrives and immediately asks about the status of the Saturday
+      pilot.
+    lore:
+    - company
+    - product
+    participants:
+    - ceo
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-morning-n1-n0-002
+    kind: ambient
+    prompt: The team leader gives an uncertain update on the pilot's feasibility given
+      the recent issues and regulator audit.
+    lore:
+    - product
+    - company
+    - office
+    participants:
+    - tech_lead
+    - ceo
+    - engineer
+    - tester
+    sensitivity: tone
+    depends_on: []
+  - slot_id: thursday-morning-n1-n0-003
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - tech_lead
+    - engineer
+    - tester
+    - marketing
+    - office_manager
+  - slot_id: thursday-morning-n1-n0-004
+    kind: ambient
+    prompt: The CEO expresses frustration and disappointment at the potential delay
+      to the launch timeline.
+    lore:
+    - company
+    - product
+    participants:
+    - ceo
+    - tech_lead
+    sensitivity: tone
+    depends_on: []
+thursday-morning-n1-n1:
+  node_id: thursday-morning-n1-n1
+  parent_id: thursday-morning-n1
+  order: 1
+  depth: 2
+  title: Spy Accusation at Coffee Machine
+  summary: The rumor about a corporate spy turns into an open accusation between two
+    employees at the coffee machine.
+  continuity_in: Two employees begin arguing loudly by the coffee machine.
+  continuity_out: The argument escalates until one accuses the other of being a corporate
+    spy.
+  target_words: 375
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots: []

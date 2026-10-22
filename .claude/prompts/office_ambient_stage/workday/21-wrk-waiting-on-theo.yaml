@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-waiting-on-theo
+title: Waiting on Theo
+ambient: true
+prompt: Just after noon on the Open Floor. Owen stands with arms crossed by Theo's desk, waiting for a
+  pull request. Theo, facing away from Owen, is in the middle of a quick, unrelated story, hands gesticulating.
+  Owen gives him a flat, deadpan look, but doesn't interrupt. Theo's screen is open to the repo, but the
+  tab with the diff is not the active one. Will Theo notice Owen's impatience and switch tabs, or keep
+  talking?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- tester
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

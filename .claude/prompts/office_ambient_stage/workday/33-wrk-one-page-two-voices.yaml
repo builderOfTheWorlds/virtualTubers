@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-one-page-two-voices
+title: One Page, Two Voices
+ambient: true
+prompt: Lunchtime at the kitchen table. Julian has drafted a one-page prospect sheet and reads it out
+  loud in his marketing voice. Graham stands behind him, nodding along but adding the occasional logistics
+  metaphor under his breath. Julian tries to incorporate each one but loses his place. Graham picks up
+  the paper and speaks it as one piece, all the way through. Julian watches, wondering how much of his
+  own words will survive the next draft. Whose voice will the prospect hear?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- marketing
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

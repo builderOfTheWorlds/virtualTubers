@@ -1,0 +1,192 @@
+monday-morning:
+  node_id: monday-morning
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Halvard's due-diligence list lands overnight, asking about learned scoring
+    and e
+  summary: Halvard's due-diligence list lands overnight, asking about learned scoring
+    and explainability. The CEO wants answers by Friday. The spy rumour about the
+    Party Member resurfaces.
+  continuity_in: The Office Manager arrives early to find the Party Member already
+    at his desk.
+  continuity_out: The Analyst starts mapping Halvard's questions to Fraud-Stop features.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - monday-morning-n0
+  - monday-morning-n1
+  slots: null
+monday-morning-n0:
+  node_id: monday-morning-n0
+  parent_id: monday-morning
+  order: 0
+  depth: 1
+  title: Halvard's Due Diligence List Arrives
+  summary: Halvard's due-diligence list arrives overnight, asking about learned scoring
+    and explainability. The CEO wants answers by Friday.
+  continuity_in: The Office Manager arrives early to find the Party Member already
+    at his desk.
+  continuity_out: The Analyst starts reviewing Halvard's questions.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: monday-morning-n0-001
+    kind: ambient
+    prompt: The office is quiet as the Party Member works alone at his desk. The Party
+      Member looks up at the sound of the Office Manager arriving.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: monday-morning-n0-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester
+  - slot_id: monday-morning-n0-003
+    kind: ambient
+    prompt: The Analyst starts mapping Halvard's questions to Fraud-Stop features,
+      prioritizing learned scoring and explainability.
+    lore:
+    - product
+    participants:
+    - analyst
+    sensitivity: none
+    depends_on: []
+monday-morning-n1:
+  node_id: monday-morning-n1
+  parent_id: monday-morning
+  order: 1
+  depth: 1
+  title: Spy Rumor Resurfaces About the Party Member
+  summary: The spy rumor about the Party Member resurfaces, causing concern among
+    the team.
+  continuity_in: The Analyst starts reviewing Halvard's questions.
+  continuity_out: The Analyst starts mapping Halvard's questions to Fraud-Stop features.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - monday-morning-n1-n0
+  - monday-morning-n1-n1
+  slots: null
+monday-morning-n1-n0:
+  node_id: monday-morning-n1-n0
+  parent_id: monday-morning-n1
+  order: 0
+  depth: 2
+  title: Halvard's Due-Diligence List Arrives
+  summary: Halvard's due-diligence list arrives overnight, asking about learned scoring
+    and explainability. The CEO wants answers by Friday.
+  continuity_in: The Office Manager arrives early to find the Party Member already
+    at his desk.
+  continuity_out: The Analyst starts reviewing Halvard's questions.
+  target_words: 233
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: monday-morning-n1-n0-001
+    kind: ambient
+    prompt: The Office Manager arrives early to find the Party Member already at his
+      desk, hard at work.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: monday-morning-n1-n0-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester
+monday-morning-n1-n1:
+  node_id: monday-morning-n1-n1
+  parent_id: monday-morning-n1
+  order: 1
+  depth: 2
+  title: Spy Rumor Resurfaces About the Party Member
+  summary: The spy rumor about the Party Member resurfaces, causing concern among
+    the team.
+  continuity_in: The Analyst starts reviewing Halvard's questions.
+  continuity_out: The Analyst starts mapping Halvard's questions to Fraud-Stop features.
+  target_words: 467
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: monday-morning-n1-n1-001
+    kind: ambient
+    prompt: The Office Manager arrives early to find the Party Member already at his
+      desk.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: monday-morning-n1-n1-002
+    kind: ambient
+    prompt: The Analyst starts reviewing Halvard's questions, trying to map them to
+      Fraud-Stop's features.
+    lore:
+    - product
+    - company
+    participants:
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: monday-morning-n1-n1-003
+    kind: ambient
+    prompt: The spy rumor about the Party Member resurfaces, causing concern among
+      the team.
+    lore:
+    - rumours
+    participants:
+    - analyst
+    - engineer
+    - tech_lead
+    - tester
+    sensitivity: tone
+    depends_on: []
+  - slot_id: monday-morning-n1-n1-004
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester

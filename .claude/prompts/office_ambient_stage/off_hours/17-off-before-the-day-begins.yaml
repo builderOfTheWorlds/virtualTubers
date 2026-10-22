@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-before-the-day-begins
+title: Before the Day Begins
+ambient: true
+prompt: The kitchen is quiet and still in the early morning hours, only the soft hum of the espresso machine
+  breaking the silence. Nora, the office manager, is already at the counter, her sleeves rolled up and
+  ready for the day ahead. The coffee machine is just starting to heat up, the rich aroma of freshly ground
+  beans beginning to fill the room. As the first light of dawn creeps through the windows, Nora takes
+  a moment to gather her thoughts and prepare for another busy day at the office. What will she tackle
+  first on her list today?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

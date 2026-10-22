@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-numbers-tell-stories
+title: Numbers Tell Stories
+ambient: true
+prompt: Late afternoon on the Open Floor. Julian has spun his chair to face Owen and asks what a clean
+  run result means to someone buying Fraud-Stop. Owen taps his keyboard, then replies with a single number,
+  no qualifiers. Julian wants the story behind the number. Owen wants to get through the last few tests
+  before the end of day. What does a number need to say 'good'?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- marketing
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

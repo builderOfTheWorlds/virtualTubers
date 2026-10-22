@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-and-then-what
+title: And Then What?
+ambient: true
+prompt: The Open Floor, just before 08:00. Maren is at her desk with last week's change on the screen
+  and a numbered list of questions. She's asking Theo to explain one line. Theo, back from standup and
+  chewing a protein bar, starts a fast, jumpy explanation that keeps saying 'and then' and 'so'. Maren
+  listens intently but looks unsatisfied. Is there a hidden 'why' in all the 'and thens'?
+lore:
+- office
+- rituals
+day_phase: morning
+intensity: normal
+seats:
+- analyst
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

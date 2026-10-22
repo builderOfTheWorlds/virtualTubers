@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-deadpan-delivery
+title: Deadpan Delivery
+ambient: true
+prompt: Just after lunch in the Kitchen. Owen sits at the old table with his spare laptop open and a fresh
+  espresso delivered by Nora. He logs it as '1' on a card, flat and deadpan. Nora watches, bright and
+  brisk, ready to solve any problem, then leaves him to it. Does Nora find Owen's deadpan delivery amusing
+  or exasperating?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- tester
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

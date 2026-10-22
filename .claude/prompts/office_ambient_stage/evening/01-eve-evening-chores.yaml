@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-evening-chores
+title: Evening Chores
+ambient: true
+prompt: Late evening in the Kitchen. Nora is brightly restocking the snack shelf and setting out the first
+  cups for tomorrow's early arrival. Anselm is nearby, within earshot, either at a desk or in a doorway.
+  He could easily be drawn into conversation as Nora goes about her cheerful evening routine of preparing
+  for the next day. The quiet night shift is winding down.
+lore:
+- office
+- rituals
+day_phase: evening
+intensity: normal
+seats:
+- office_manager
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

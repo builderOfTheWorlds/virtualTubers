@@ -1,0 +1,193 @@
+wednesday-off-hours:
+  node_id: wednesday-off-hours
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Overnight, a burst of card fraud at Corvane slips past Fraud-Stop. The Party
+    Mem
+  summary: Overnight, a burst of card fraud at Corvane slips past Fraud-Stop. The
+    Party Member notices and makes a note, but does not alert anyone else.
+  continuity_in: The floor is dark and empty.
+  continuity_out: The Party Member's notebook contains a new page of observations
+    about the fraud.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - wednesday-off-hours-n0
+  - wednesday-off-hours-n1
+  slots: null
+wednesday-off-hours-n0:
+  node_id: wednesday-off-hours-n0
+  parent_id: wednesday-off-hours
+  order: 0
+  depth: 1
+  title: Fraud-Stop fails to detect card fraud
+  summary: Late at night, a burst of fraudulent card transactions at Corvane goes
+    unnoticed by the Fraud-Stop system.
+  continuity_in: The floor is dark and empty, with no suspicious activity detected.
+  continuity_out: Multiple fraudulent transactions have been processed without raising
+    any alerts.
+  target_words: 450
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: wednesday-off-hours-n0-001
+    kind: ambient
+    prompt: The Party Member sits alone at their desk, reviewing transaction logs
+      from the night.
+    lore:
+    - office
+    - product
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-off-hours-n0-002
+    kind: ambient
+    prompt: The Party Member notices a pattern of suspicious transactions that slipped
+      through undetected.
+    lore:
+    - product
+    - clients
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-off-hours-n0-003
+    kind: ambient
+    prompt: The Party Member makes careful notes about the fraudulent activity in
+      their notebook.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-off-hours-n0-004
+    kind: ambient
+    prompt: The Party Member wonders if they should alert someone, but ultimately
+      decides to stay quiet for now.
+    lore:
+    - rumours
+    - company
+    participants:
+    - party_member
+    sensitivity: tone
+    depends_on: []
+wednesday-off-hours-n1:
+  node_id: wednesday-off-hours-n1
+  parent_id: wednesday-off-hours
+  order: 1
+  depth: 1
+  title: Party Member discovers the undetected fraud
+  summary: The Party Member, reviewing records the next day, notices the fraudulent
+    transactions that slipped through undetected overnight.
+  continuity_in: The Party Member begins their daily review of the previous day's
+    card transactions and fraud detection logs.
+  continuity_out: The Party Member's notebook contains a new page of observations
+    about the undetected fraud, but no one else has been informed.
+  target_words: 600
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - wednesday-off-hours-n1-n0
+  - wednesday-off-hours-n1-n1
+  slots: null
+wednesday-off-hours-n1-n0:
+  node_id: wednesday-off-hours-n1-n0
+  parent_id: wednesday-off-hours-n1
+  order: 0
+  depth: 2
+  title: Party Member reviews the previous day's transactions
+  summary: The Party Member sits down at their desk and begins reviewing the card
+    transactions and fraud detection logs from the previous night, looking for any
+    anomalies or issues that need to be investigated further.
+  continuity_in: The Party Member arrives at work and boots up their computer, ready
+    to start the day.
+  continuity_out: The Party Member notices a cluster of suspicious transactions that
+    were not flagged by the fraud detection system.
+  target_words: 257
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: wednesday-off-hours-n1-n0-001
+    kind: ambient
+    prompt: The Party Member arrives at work and settles in at their desk, ready to
+      begin reviewing the previous day's card transactions and fraud detection logs.
+    lore:
+    - office
+    - rituals
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-off-hours-n1-n0-002
+    kind: ambient
+    prompt: As the Party Member methodically works through the transaction records,
+      they notice a cluster of suspicious charges that were not flagged by the fraud
+      detection system.
+    lore:
+    - product
+    - company
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+wednesday-off-hours-n1-n1:
+  node_id: wednesday-off-hours-n1-n1
+  parent_id: wednesday-off-hours-n1
+  order: 1
+  depth: 2
+  title: Party Member documents the undetected fraud
+  summary: The Party Member makes detailed notes in their notebook about the suspicious
+    transactions, including timestamps, card numbers, merchant details, and the amounts
+    involved. They flag the transactions for further review but do not yet alert anyone
+    else on the team.
+  continuity_in: The Party Member notices a cluster of suspicious transactions that
+    were not flagged by the fraud detection system.
+  continuity_out: The Party Member's notebook contains a new page of observations
+    about the undetected fraud, but no one else has been informed.
+  target_words: 343
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: wednesday-off-hours-n1-n1-001
+    kind: ambient
+    prompt: The Party Member pores over the transaction logs, flagging suspicious
+      charges.
+    lore:
+    - office
+    - product
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-off-hours-n1-n1-002
+    kind: ambient
+    prompt: The Party Member jots down notes about the fraud in their notebook.
+    lore:
+    - office
+    - company
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-off-hours-n1-n1-003
+    kind: ambient
+    prompt: The Party Member's notebook now contains a detailed record of the undetected
+      fraud.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []

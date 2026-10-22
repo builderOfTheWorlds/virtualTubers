@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-rule-explanation-rehearsal
+title: Rule Explanation Rehearsal
+ambient: true
+prompt: Deep into the small hours in the Small Room, with the door closed. Theo is rehearsing a clear
+  explanation of a coding rule for tomorrow's lunchtime meeting, scribbling notes on a whiteboard. This
+  is the third time he's tried to get it right and he's running out of metaphors. If the words won't come,
+  will a picture do? And if a picture won't do, then what?
+lore:
+- office
+- product
+day_phase: off_hours
+intensity: quiet
+seats:
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

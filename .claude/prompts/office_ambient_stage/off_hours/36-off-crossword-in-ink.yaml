@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-crossword-in-ink
+title: Crossword in Ink
+ambient: true
+prompt: Before dawn on the Open Floor, the streetlights outside the window are still on. Maren sits at
+  her desk in the near-dark, a newspaper crossword under her fingertips. She fills in each answer with
+  a firm stroke of her pen, never needing to erase. Her coffee is black and cooling untouched beside her.
+  She pauses now and then to consider a clue, but never for long. Does she ever get stuck or guess, or
+  does she always know?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

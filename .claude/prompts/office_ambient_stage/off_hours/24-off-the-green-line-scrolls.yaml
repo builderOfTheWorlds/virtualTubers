@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-the-green-line-scrolls
+title: The Green Line Scrolls
+ambient: true
+prompt: In the dark early hours, Brody stands behind Owen's chair, arms folded, watching the test suite
+  progress on the screen. The green line inches down, run after run. Owen has his feet up on the desk,
+  hands clasped behind his head, eyes half-closed. Neither speaks. The tests look good so far - but they
+  both know it's not over till the last green line hits bottom. Will the suite finish clean, or will Brody
+  tap the graph and turn to Owen with a single raised eyebrow?
+lore: []
+day_phase: off_hours
+intensity: quiet
+seats:
+- tech_lead
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

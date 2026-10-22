@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-after-the-meeting
+title: After the Meeting
+ambient: true
+prompt: Late in the working day, the Moonwell room is quiet. Maren gathers her printouts from the meeting,
+  tapping her red pen against the stack. Nora efficiently straightens chairs and collects used cups, humming
+  a soft tune. The room is almost back in order when Nora pauses, a stray paper in hand. She glances at
+  Maren, her usual briskness softened by a hint of concern. Does the paper belong to Maren, or was it
+  left behind by someone else?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

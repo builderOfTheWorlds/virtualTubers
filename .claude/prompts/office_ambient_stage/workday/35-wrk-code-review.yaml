@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-code-review
+title: Code Review
+ambient: true
+prompt: 'Brody is at his desk on the Open Floor, split-screen: Theo''s pull request on the left, the familiar
+  latency graph on the right. Theo hovers, trying to read the Tech Lead''s face as he scrolls through
+  the code. Is Brody seeing what Theo sees, or something else? Theo fidgets, torn between defending his
+  work and wanting to dash off and start the next thing. Brody taps the graph twice, then turns to Theo.
+  What does Brody think of the code?'
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

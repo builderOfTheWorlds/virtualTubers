@@ -1,0 +1,24 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-evening-test-run
+title: Evening Test Run
+ambient: true
+prompt: The evening shift on the Open Floor. Owen, Brody and Theo watch the 18:00 test suite start, a
+  single word from Owen setting it in motion. The room is still, save for the hum of machines and the
+  occasional tap from Brody's monitor. Theo breaks the silence with a quip about the tests running slower
+  than usual, but the joke falls flat. Owen checks the latency graph, Brody stares at the screen, Theo
+  shifts in his seat. Will this run pass or fail?
+lore:
+- office
+- product
+day_phase: evening
+intensity: normal
+seats:
+- tester
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.2

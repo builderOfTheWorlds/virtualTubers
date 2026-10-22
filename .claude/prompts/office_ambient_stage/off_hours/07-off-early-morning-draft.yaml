@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-early-morning-draft
+title: Early Morning Draft
+ambient: true
+prompt: The Open Floor is dark and quiet. Julian has come in early and is tapping out a draft release
+  note at his desk for an as-yet nonexistent feature. The keys are clacking softly. The rest of the office
+  is locked and empty around him. A tagline is trying to shape itself in his head. Does starting with
+  the release note put the cart before the horse, or is it the right way to pull the team forward?
+lore:
+- office
+- rituals
+day_phase: off_hours
+intensity: quiet
+seats:
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

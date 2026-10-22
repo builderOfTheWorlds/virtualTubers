@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-waking-up
+title: Waking Up
+ambient: true
+prompt: In the dimly lit Moonwell room at 08:30, Maren is carefully pinning a crisp diagram to the cork
+  wall while Julian taps his foot and stares at the screen, willing it to wake up. The slow machine's
+  faint hum fills the silence between them. Maren glances over, but says nothing about the wait. Is the
+  diagram complete, or just the starting point?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- analyst
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

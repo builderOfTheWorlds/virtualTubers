@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-staging-trouble
+title: Staging Trouble
+ambient: true
+prompt: Just after the morning standup. Theo is in the Server Closet with his laptop open, connecting
+  a cable to the staging rack. Owen is at his desk right outside the door, trying to ignore the muted
+  beeping and clicking coming from inside. Theo calls out that he might need another pair of eyes on this
+  soon. Owen doesn't look up from his screen. Is Theo just being extra-cautious, or does he really need
+  help?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- engineer
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

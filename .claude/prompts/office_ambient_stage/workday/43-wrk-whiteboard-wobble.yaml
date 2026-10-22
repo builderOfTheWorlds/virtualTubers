@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-whiteboard-wobble
+title: Whiteboard Wobble
+ambient: true
+prompt: Late morning. Julian is at the whiteboard, carefully moving Ostry Mercantile's card back to 'stable'
+  with a soft squeak. Graham watches from the doorway of the Glass Box, arms crossed. The change means
+  another deal has stalled. They both know it, but neither says it. Julian's pen hovers, ready to add
+  a question mark. Graham clears his throat, then steps back into his office. Is now the time for a difficult
+  conversation?
+lore:
+- clients
+- office
+day_phase: workday
+intensity: normal
+seats:
+- marketing
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

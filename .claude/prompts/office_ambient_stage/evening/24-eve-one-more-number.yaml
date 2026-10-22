@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-one-more-number
+title: One More Number
+ambient: true
+prompt: 'Late on the Open Floor, the last test of the day has just completed. Owen reads out the result
+  in a flat voice: a single number. He writes it down in a log. The room is nearly empty, but Anselm Brody
+  is still at his desk, within earshot. He looks up at the sound of Owen''s voice. Does the number mean
+  anything? Is there anything left to be said before they go home?'
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- tester
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.2

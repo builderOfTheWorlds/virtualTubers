@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-weather-talk
+title: Weather Talk
+ambient: true
+prompt: Early morning, the stairs between the second and third floor. Brody is sitting on the steps, tapping
+  the latency graph on his second monitor. Nora comes down with his second coffee, black with one, and
+  perches beside him. They both look out the window at the grey sky and talk about the rain that's expected.
+  Nora calls it 'soft weather' and hopes it'll hold off for her walk home. Brody just nods. Are they really
+  talking about the weather?
+lore:
+- product
+day_phase: morning
+intensity: normal
+seats:
+- office_manager
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

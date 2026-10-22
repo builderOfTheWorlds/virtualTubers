@@ -1,0 +1,20 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-overnight-totals
+title: Overnight Totals
+ambient: true
+prompt: Pre-dawn in the Moonwell room, emergency light casting shadows. Owen sits alone at the round table,
+  the spare laptop open in front of him. He reads numbers from the screen, his voice flat and even, jotting
+  down each one on a small card. When he reaches the final figure, he taps the card twice, then once more.
+  Is this the end of the run, or just the end of a chapter?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-nightly-rounds
+title: Nightly Rounds
+ambient: true
+prompt: The Open Floor is dark, the only light coming from Nora's torch as she makes her late night rounds.
+  She wipes down the desks, humming a tune under her breath. As she approaches the Party Member's corner
+  desk, she takes extra care to clean around it without disturbing them, the emergency light casting a
+  soft glow on their silent figure. Why does Nora take such care to maintain order in the office, even
+  in the middle of the night?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- office_manager
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-overheard-and-understood
+title: Overheard and Understood
+ambient: true
+prompt: Late morning. Maren has taken a call with Pellbridge in the Small Room, door almost closed. She
+  is writing numbered points on a pad, speaking in low, structured tones. Julian, at the nearest desk
+  outside, is half-listening, smooth chin propped on one hand. He's mentally fitting Maren's words into
+  taglines and customer images, turning fraud into trust. Does he knock? Is it wrong to overhear? And
+  what does Maren see when she turns around?
+lore:
+- clients
+- office
+day_phase: workday
+intensity: normal
+seats:
+- analyst
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

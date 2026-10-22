@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-one-more-thing
+title: One More Thing
+ambient: true
+prompt: Late evening on the Open Floor. Theo has packed and unpacked his bag three times, unable to leave
+  until he finishes his last task. He's muttering about test data as he works. Julian is loitering in
+  the doorway, trying out taglines for a new ad campaign. He glances over at Theo's screen and asks if
+  he needs a hand. Theo looks torn between his promise to finish and the pull of the elevator home. Will
+  Julian's offer of help be enough to keep Theo at his desk?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- engineer
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

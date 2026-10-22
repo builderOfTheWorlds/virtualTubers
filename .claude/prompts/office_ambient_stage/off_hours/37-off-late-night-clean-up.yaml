@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-night-clean-up
+title: Late Night Clean-Up
+ambient: true
+prompt: In the still of the night on the darkened Open Floor, Theo sorts through his accumulation of sticky
+  notes, arranging the discarded 'easy' ones into a neat pile. The quiet is broken only by the hum of
+  servers and the occasional rustle of paper. As he works, Theo reflects on the day's challenges and wonders
+  whether he'll face similar obstacles tomorrow. Will the tasks ahead prove as difficult as those he's
+  already tackled, or will they turn out to be surprisingly simple?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

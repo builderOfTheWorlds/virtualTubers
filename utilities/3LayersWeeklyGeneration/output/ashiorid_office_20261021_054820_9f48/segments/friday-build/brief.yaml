@@ -1,0 +1,193 @@
+segment_id: friday-build
+order: 22
+loop: 0
+hours: 6
+synopsis: The Engineer and Tester work toward the 17:00 demo. Marketing rehearses
+  the pitch. The Analyst files the regulator's questions as bugs.
+continuity_in: The Analyst leaves the Moonwell room with a printout of the open risks.
+continuity_out: The Engineer presents the week's work at the Friday demo in the Moonwell
+  room.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: friday-build-n0-n0-001
+  kind: ambient
+  prompt: The Engineer and Tester work urgently to prepare for the 17:00 demo. They
+    triage bugs, fix critical issues, and get the system into a presentable state.
+  lore:
+  - product
+  - office
+  participants:
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n0-n0
+- slot_id: friday-build-n0-n0-002
+  kind: ambient
+  prompt: The Engineer and Tester focus on the most important items to ensure a successful
+    demo, with the clock ticking down to 17:00.
+  lore:
+  - product
+  - company
+  participants:
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n0-n0
+- slot_id: friday-build-n0-n0-003
+  kind: ambient
+  prompt: The Marketing team rehearses their pitch for the demo, highlighting the
+    key benefits and features of the product.
+  lore:
+  - product
+  - company
+  participants:
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n0-n0
+- slot_id: friday-build-n0-n0-004
+  kind: ambient
+  prompt: The Analyst files the regulator's questions as bugs in the system, ensuring
+    they are tracked and addressed before launch.
+  lore:
+  - product
+  - company
+  participants:
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n0-n0
+- slot_id: friday-build-n0-n1-001
+  kind: ambient
+  prompt: The Engineer and Tester scramble to fix bugs and polish the demo.
+  lore:
+  - office
+  - product
+  participants:
+  - engineer
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n0-n1
+- slot_id: friday-build-n0-n1-002
+  kind: ambient
+  prompt: Marketing rehearses their pitch, focusing on key benefits and addressing
+    potential concerns from regulators.
+  lore:
+  - product
+  - clients
+  participants:
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n0-n1
+- slot_id: friday-build-n0-n1-003
+  kind: ambient
+  prompt: The Analyst files the regulator's questions as bugs in the tracking system
+    for Engineering to address.
+  lore:
+  - company
+  - product
+  participants:
+  - analyst
+  - engineer
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n0-n1
+- slot_id: friday-build-n1-001
+  kind: ambient
+  prompt: The Marketing lead runs through the key points of the pitch, highlighting
+    the system's benefits and unique selling points. The Analyst looks up from filing
+    bugs to listen.
+  lore:
+  - product
+  - company
+  participants:
+  - analyst
+  - marketing
+  sensitivity: tone
+  depends_on: []
+  node_id: friday-build-n1
+- slot_id: friday-build-n1-002
+  kind: ambient
+  prompt: The Engineer and Tester discuss last-minute tweaks to the demo as they set
+    up in the Moonwell room. The Marketing lead rehearses under their breath.
+  lore:
+  - office
+  - product
+  participants:
+  - engineer
+  - tester
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n1
+- slot_id: friday-build-n1-003
+  kind: ambient
+  prompt: The Analyst finishes filing the last of the regulator's questions as bugs.
+    The Marketing lead does a final run-through of the pitch.
+  lore:
+  - company
+  - product
+  participants:
+  - analyst
+  - marketing
+  sensitivity: tone
+  depends_on: []
+  node_id: friday-build-n1
+- slot_id: friday-build-n1-004
+  kind: ambient
+  prompt: The team gathers in the Moonwell room as the clock approaches 17:00. The
+    Engineer takes their place at the front, ready to present.
+  lore:
+  - office
+  - rituals
+  participants:
+  - ceo
+  - engineer
+  - analyst
+  - tester
+  - marketing
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: friday-build-n1
+nodes:
+- node_id: friday-build
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: friday-build-n0
+  parent_id: friday-build
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: friday-build-n0-n0
+  parent_id: friday-build-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4
+- node_id: friday-build-n0-n1
+  parent_id: friday-build-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 3
+- node_id: friday-build-n1
+  parent_id: friday-build
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

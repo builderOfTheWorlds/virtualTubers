@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-shift-progress
+title: Late Shift Progress
+ambient: true
+prompt: Deep into the night, the Server Closet hums. Brody and Theo loiter in the doorway, watching a
+  slow progress bar inch across the screen during a routine deploy to staging. The room's cold and loud
+  enough to make conversation a chore. Brody taps his foot, twice. Theo glances at his watch, then back
+  at the screen. Neither man wants to be here, but the deploy needs eyes. Will the progress bar creep
+  to completion, or will it stall and need a restart?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-closing-tickets
+title: Closing Tickets
+ambient: true
+prompt: Late in the Glass Box, Graham reads from his screen in a steady rhythm, closing tickets with decisive
+  comments. Brody is just outside the door, listening and tapping the edge of his second monitor twice,
+  as if keeping time. The names of bugs and features are punctuated by the clack of keys. As Graham's
+  voice rises on a question about a late fix, Brody steps closer. Will he speak up or walk away?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- ceo
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.2

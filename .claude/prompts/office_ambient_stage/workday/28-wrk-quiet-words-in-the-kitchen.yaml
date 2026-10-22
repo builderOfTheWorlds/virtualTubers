@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-quiet-words-in-the-kitchen
+title: Quiet Words in the Kitchen
+ambient: true
+prompt: It's just after 10:30 in the kitchen. Nora has a finger on a list and is speaking quietly to Brody
+  about emptying the recycling bin streams properly for once. Brody taps the latency graph on his monitor
+  twice and listens, hands in pockets, saying less than usual. The air is still. He's been working on
+  the learned-scoring branch all week, but neither mentions it directly. Nora frowns and touches her hair.
+  What isn't being said?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

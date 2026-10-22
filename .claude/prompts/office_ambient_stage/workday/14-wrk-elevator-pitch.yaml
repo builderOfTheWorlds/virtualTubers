@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-elevator-pitch
+title: Elevator Pitch
+ambient: true
+prompt: Late afternoon at Brody's window desk. Julian approaches, smooth and practiced, with a question
+  he's rehearsed, but hesitates, loses his place, and begins again. Brody waits, fingers steepled, eyes
+  on the latency graph that's tapping out its slow heartbeat. Julian wants the pitch to be just right,
+  but Brody is running out of today for this. What does Julian really need to know? Is it about the words,
+  or about how they land?
+lore:
+- product
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

@@ -1,0 +1,199 @@
+tuesday-morning:
+  node_id: tuesday-morning
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'Standup: the CEO asks Corvane for a reference for Halvard. The Tech Lead
+    warns t'
+  summary: 'Standup: the CEO asks Corvane for a reference for Halvard. The Tech Lead
+    warns the velocity rule is being pushed hard by Corvane''s volume.'
+  continuity_in: The Office Manager arrives early to find the printout.
+  continuity_out: The Tech Lead warns about the velocity rule.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - tuesday-morning-n0
+  - tuesday-morning-n1
+  slots: null
+tuesday-morning-n0:
+  node_id: tuesday-morning-n0
+  parent_id: tuesday-morning
+  order: 0
+  depth: 1
+  title: Standup meeting begins
+  summary: The team gathers for the daily standup meeting. The CEO asks Corvane for
+    a reference for Halvard, the new hire.
+  continuity_in: The Office Manager arrives early to find the printout.
+  continuity_out: The Tech Lead speaks up about the velocity rule.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - tuesday-morning-n0-n0
+  - tuesday-morning-n0-n1
+  slots: null
+tuesday-morning-n1:
+  node_id: tuesday-morning-n1
+  parent_id: tuesday-morning
+  order: 1
+  depth: 1
+  title: Tech Lead warns about velocity rule
+  summary: The Tech Lead warns that the velocity rule is being pushed hard by Corvane's
+    volume of work. The team discusses the issue.
+  continuity_in: The Tech Lead speaks up about the velocity rule.
+  continuity_out: The Tech Lead warns about the velocity rule.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: tuesday-morning-n1-001
+    kind: ambient
+    prompt: The Tech Lead speaks up about the velocity rule.
+    lore:
+    - office
+    - rituals
+    participants:
+    - tech_lead
+    - ceo
+    - engineer
+    - analyst
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-morning-n1-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - tech_lead
+    - ceo
+    - engineer
+    - analyst
+    - tester
+  - slot_id: tuesday-morning-n1-003
+    kind: ambient
+    prompt: The team discusses the implications of pushing the velocity rule.
+    lore:
+    - office
+    - company
+    participants:
+    - ceo
+    - tech_lead
+    - engineer
+    - analyst
+    - tester
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-morning-n1-004
+    kind: ambient
+    prompt: The Tech Lead warns about the velocity rule.
+    lore:
+    - office
+    - rituals
+    participants:
+    - tech_lead
+    - ceo
+    - engineer
+    - analyst
+    - tester
+    sensitivity: none
+    depends_on: []
+tuesday-morning-n0-n0:
+  node_id: tuesday-morning-n0-n0
+  parent_id: tuesday-morning-n0
+  order: 0
+  depth: 2
+  title: CEO asks about Halvard reference
+  summary: The CEO asks Corvane if he has prepared the reference letter for Halvard,
+    the new hire. Corvane confirms he has it ready to go.
+  continuity_in: The team gathers for the daily standup meeting.
+  continuity_out: The Tech Lead speaks up about the velocity rule.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: tuesday-morning-n0-n0-001
+    kind: ambient
+    prompt: The team gathers for the daily standup meeting. The CEO asks Corvane if
+      he has prepared the reference letter for Halvard, the new hire.
+    lore:
+    - office
+    - rituals
+    participants:
+    - ceo
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-morning-n0-n0-002
+    kind: ambient
+    prompt: Corvane confirms to the CEO that he has the reference letter for Halvard
+      ready to go. The Tech Lead speaks up about the velocity rule.
+    lore:
+    - office
+    participants:
+    - analyst
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-morning-n0-n0-003
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - analyst
+    - tech_lead
+  - slot_id: tuesday-morning-n0-n0-004
+    kind: ambient
+    prompt: The Tech Lead warns that the velocity rule is being pushed hard by Corvane's
+      volume of work. The team continues with the rest of the standup meeting.
+    lore:
+    - office
+    - rituals
+    participants:
+    - tech_lead
+    - engineer
+    sensitivity: tone
+    depends_on: []
+tuesday-morning-n0-n1:
+  node_id: tuesday-morning-n0-n1
+  parent_id: tuesday-morning-n0
+  order: 1
+  depth: 2
+  title: Tech Lead warns about velocity rule
+  summary: The Tech Lead cautions that the team's velocity is being pushed to the
+    limit by Corvane's high volume of work. He reminds everyone to stay focused on
+    sustainable practices.
+  continuity_in: The CEO asks Corvane for a reference for Halvard.
+  continuity_out: The standup meeting concludes.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: tuesday-morning-n0-n1-001
+    kind: ambient
+    prompt: The Tech Lead speaks up, concerned about the team's velocity.
+    lore:
+    - office
+    - org_chart
+    participants:
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-morning-n0-n1-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - tech_lead
+    - analyst
+    - engineer
+    - tester
+    - marketing

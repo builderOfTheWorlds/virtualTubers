@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-morning-delivery
+title: Morning Delivery
+ambient: true
+prompt: The Open Floor, a few minutes past nine. Graham strides over to Theo's desk, wanting an early
+  update on the docking status. Theo, fingers still on the keys, looks up with a grin and gives a rosy
+  report on how the container's being unloaded. But Graham's logistics metaphors are precise, and Theo's
+  cheerful version starts to sound vague even to him. Does Theo have his facts straight, or is he just
+  telling the CEO what he thinks he wants to hear?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

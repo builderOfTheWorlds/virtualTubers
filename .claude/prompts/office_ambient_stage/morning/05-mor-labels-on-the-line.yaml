@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-labels-on-the-line
+title: Labels on the Line
+ambient: true
+prompt: Early morning by the Kitchen door. Nora is taping up a notice about using the fridge labels properly,
+  smoothing it flat with both hands as if that will make the words stick. Brody is close enough to overhear,
+  and she catches his eye with a smile that asks him to back her up on this one. He raises an eyebrow
+  and taps his latency graph, but doesn't argue. Whose job is it, really, to police the labels? And what
+  happens if the food spoils anyway?
+lore:
+- office
+- product
+day_phase: morning
+intensity: normal
+seats:
+- office_manager
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

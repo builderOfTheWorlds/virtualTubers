@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-stable-for-whom
+title: Stable for Whom?
+ambient: true
+prompt: Late afternoon huddle by Julian's whiteboard. Graham is pointing a marker at a list of features
+  for Ostry Mercantile, his logistics metaphors speeding up. Maren has her eyebrows raised, her numbered
+  points on a sticky note. Julian is nodding, saying 'stable' like it's a tagline. The whiteboard's corners
+  are scuffed where the marker hit too hard. Is stability what Ostry wants, what they need, or what they're
+  already paying for?
+lore:
+- clients
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- marketing
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

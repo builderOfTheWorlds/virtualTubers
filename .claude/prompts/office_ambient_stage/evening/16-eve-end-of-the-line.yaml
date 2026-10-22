@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-end-of-the-line
+title: End of the Line
+ambient: true
+prompt: Late evening in the Moonwell room. Maren is collating the last printouts of the day into neat
+  piles, each one with a green-ink plan note clipped on top. Graham stands in the doorway, half-turned
+  to leave, but Maren's methodical tidying has caught his eye. He can see the care in her work, the numbered
+  points, the 'for whom?' circled in red at the top of each page. His logistics brain is itching to draw
+  a flowchart. Will he ask about her process, or just admire the order from afar?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- analyst
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.1

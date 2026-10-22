@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-before-dawn
+title: Before Dawn
+ambient: true
+prompt: In the pre-dawn small hours, Graham stands alone in his darkened Glass Box office. The blinds
+  are open and he gazes absently at the pale rectangle of the projection screen and the empty, darkened
+  street below. His thoughts turn to logistics and the tasks ahead as the company approaches another day.
+  The stillness is broken only by the distant hum of servers. What will the next shift bring, and how
+  will he steer the ship?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

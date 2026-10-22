@@ -1,0 +1,160 @@
+segment_id: tuesday-off-hours
+order: 8
+loop: 0
+hours: 6
+synopsis: The Office Manager finds a printout of Halvard's questions, dated before
+  they were sent. She puts it back.
+continuity_in: The Office Manager turns out the lights.
+continuity_out: The Office Manager arrives early to find the printout.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: tuesday-off-hours-n0-001
+  kind: ambient
+  prompt: The Office Manager finishes up for the day and turns out the lights as she
+    leaves the office.
+  lore:
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-off-hours-n0
+- slot_id: tuesday-off-hours-n0-002
+  kind: ambient
+  prompt: The next morning, the Office Manager arrives early to find a printout of
+    Halvard's questions, dated before they were sent. She puts it back.
+  lore:
+  - office
+  - company
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-off-hours-n0
+- slot_id: tuesday-off-hours-n0-003
+  kind: ambient
+  prompt: The Office Manager reflects on the strange printout and wonders who could
+    have sent it and why.
+  lore:
+  - rumours
+  - company
+  participants:
+  - office_manager
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-off-hours-n0
+- slot_id: tuesday-off-hours-n1-n0-001
+  kind: ambient
+  prompt: The Office Manager arrives at the office early the next morning, before
+    anyone else is there.
+  lore:
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-off-hours-n1-n0
+- slot_id: tuesday-off-hours-n1-n0-002
+  kind: ambient
+  prompt: The Office Manager finds a mysterious printout on her desk, containing Halvard's
+    questions, dated before they were sent.
+  lore:
+  - office
+  - rumours
+  participants:
+  - office_manager
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-off-hours-n1-n0
+- slot_id: tuesday-off-hours-n1-n0-003
+  kind: ambient
+  prompt: The Office Manager puts the printout back where she found it, looking troubled.
+  lore:
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-off-hours-n1-n0
+- slot_id: tuesday-off-hours-n1-n1-001
+  kind: ambient
+  prompt: The Office Manager arrives early to the office, preparing for the day ahead.
+  lore:
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-off-hours-n1-n1
+- slot_id: tuesday-off-hours-n1-n1-002
+  kind: ambient
+  prompt: The Office Manager finds a mysterious printout on her desk, perplexed by
+    its contents and date.
+  lore:
+  - rumours
+  - office
+  participants:
+  - office_manager
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-off-hours-n1-n1
+- slot_id: tuesday-off-hours-n1-n1-003
+  kind: ambient
+  prompt: The Office Manager ponders the implications of the printout as she begins
+    her workday.
+  lore:
+  - rumours
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-off-hours-n1-n1
+- slot_id: tuesday-off-hours-n1-n1-004
+  kind: ambient
+  prompt: The Office Manager decides to put the printout back where she found it,
+    for now.
+  lore:
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-off-hours-n1-n1
+nodes:
+- node_id: tuesday-off-hours
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: tuesday-off-hours-n0
+  parent_id: tuesday-off-hours
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 3
+- node_id: tuesday-off-hours-n1
+  parent_id: tuesday-off-hours
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: tuesday-off-hours-n1-n0
+  parent_id: tuesday-off-hours-n1
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 3
+  slots: 3
+- node_id: tuesday-off-hours-n1-n1
+  parent_id: tuesday-off-hours-n1
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4

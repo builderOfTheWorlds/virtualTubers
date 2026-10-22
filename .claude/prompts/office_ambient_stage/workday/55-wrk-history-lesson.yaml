@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-history-lesson
+title: History Lesson
+ambient: true
+prompt: The Open Floor just after noon. Theo, leaning over the back of his chair, has asked Brody about
+  an odd function in the code. Brody, hands behind his head, is giving Theo the history of why it exists,
+  all the way from the first line written. Theo keeps trying to nod and smile, but his eyes are glazing
+  over. Does Brody notice that Theo is more interested in the lunch menu?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.5

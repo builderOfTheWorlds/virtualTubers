@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-nightcap
+title: Nightcap
+ambient: true
+prompt: Just past midnight in the dimly lit Kitchen. Nora hums softly to herself as she methodically finishes
+  wiping down the counters and shelves after the long day, her figure illuminated only by the single light
+  over the stove. Her tasks are unhurried and precise, a final act of care for the space before heading
+  out for the night. The stillness of the office is punctuated by the gentle sounds of her cleaning. Is
+  there a special satisfaction in these last quiet moments of the day?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

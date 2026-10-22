@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-evening-lull
+title: Evening Lull
+ambient: true
+prompt: Late evening by the window on the Open Floor. Maren and Brody are sharing a quiet moment, each
+  with a glass of water. Maren's planner is full of numbered points; Brody's latency graph is green. The
+  day's work is mostly done, but the silence is comfortable, not empty. Maren gazes out at the darkening
+  street, then glances at Brody. Is there something more to say, or is the quiet enough?
+lore:
+- office
+- product
+day_phase: evening
+intensity: normal
+seats:
+- analyst
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

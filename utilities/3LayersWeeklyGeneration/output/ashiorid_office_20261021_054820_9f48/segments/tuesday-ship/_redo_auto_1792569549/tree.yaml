@@ -1,0 +1,145 @@
+tuesday-ship:
+  node_id: tuesday-ship
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A rushed rules release goes out late to hit the pilot schedule; the Tester
+    flags
+  summary: A rushed rules release goes out late to hit the pilot schedule; the Tester
+    flags one amount-outlier test as 'amber, not red'. Nobody stops the release.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The release goes out with an amber test.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - tuesday-ship-n0
+  - tuesday-ship-n1
+  slots: null
+tuesday-ship-n0:
+  node_id: tuesday-ship-n0
+  parent_id: tuesday-ship
+  order: 0
+  depth: 1
+  title: Rushed Rules Release
+  summary: The team scrambles to get the rules release out on schedule, despite it
+    being late. The Tester flags an amount-outlier test as 'amber, not red', but the
+    release goes out anyway.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The release goes out with an amber test.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - tuesday-ship-n0-n0
+  - tuesday-ship-n0-n1
+  slots: null
+tuesday-ship-n1:
+  node_id: tuesday-ship-n1
+  parent_id: tuesday-ship
+  order: 1
+  depth: 1
+  title: Amber Test Concerns
+  summary: The Tester flags one amount-outlier test as 'amber, not red', raising concerns
+    about the release. However, the release goes out as scheduled with the amber test.
+  continuity_in: The team scrambles to get the rules release out on schedule, despite
+    it being late.
+  continuity_out: The release goes out with an amber test.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+tuesday-ship-n0-n0:
+  node_id: tuesday-ship-n0-n0
+  parent_id: tuesday-ship-n0
+  order: 0
+  depth: 2
+  title: Scrambling to Meet the Schedule
+  summary: The team works frantically to complete the rules release in time for the
+    pilot schedule, cutting corners and skipping some best practices in the process.
+    The Tester is under pressure to sign off on the release.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The Tester flags an amount-outlier test as 'amber, not red'.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: tuesday-ship-n0-n0-001
+    kind: ambient
+    prompt: The team is working late into the night to get the rules release ready
+      for the pilot schedule. The Tester is under pressure to sign off on the release,
+      despite some tests not passing with flying colors.
+    lore:
+    - office
+    - product
+    participants:
+    - tester
+    - engineer
+    - analyst
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-ship-n0-n0-002
+    kind: ambient
+    prompt: The office is buzzing with activity as everyone scrambles to complete
+      their tasks for the rules release. The CEO is seen pacing nervously, checking
+      in with each team member to ensure things are on track.
+    lore:
+    - office
+    - company
+    participants:
+    - ceo
+    - tech_lead
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-ship-n0-n0-003
+    kind: ambient
+    prompt: The Tester brings up concerns about one of the amount-outlier tests that
+      is flagged as 'amber, not red'. However, with the pilot schedule looming, the
+      decision is made to proceed with the release as is.
+    lore:
+    - product
+    - rumours
+    participants:
+    - tester
+    - engineer
+    - analyst
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-ship-n0-n0-004
+    kind: ambient
+    prompt: As the release goes out, there is a mix of relief and apprehension in
+      the office. Some team members celebrate the successful release, while others
+      quietly express concerns about the amber test and the potential consequences.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    - engineer
+    - marketing
+    sensitivity: tone
+    depends_on: []
+tuesday-ship-n0-n1:
+  node_id: tuesday-ship-n0-n1
+  parent_id: tuesday-ship-n0
+  order: 1
+  depth: 2
+  title: Amber Test Overlooked
+  summary: Despite the Tester's concerns about the amber test result, the release
+    goes out as scheduled. The team decides that the outlier is not severe enough
+    to halt the release, and they are eager to meet the pilot deadline.
+  continuity_in: The Tester flags an amount-outlier test as 'amber, not red'.
+  continuity_out: The release goes out with an amber test.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots: []

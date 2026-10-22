@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-logistics-of-a-metaphor
+title: Logistics of a Metaphor
+ambient: true
+prompt: Late morning. Graham is at his desk in the Glass Box, reading a folded index card and practicing
+  a logistics metaphor under his breath. Nora is tidying nearby, within earshot. He's said it four ways
+  now, each more tortured than the last. She could offer to help, or she could leave him to it. Does she
+  step in, or let him find his own way to the end of the thought?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-past-lights-out
+title: Past Lights-Out
+ambient: true
+prompt: The small hours on the dimly lit Open Floor. Nora has found Theo still at his desk, long after
+  the lights-out hour. She holds the key to the server closet, the spare desk light in her other hand.
+  Theo is apologetic, but not quite ready to leave. His screen is still on, with an uncommitted change
+  open. She wants the floor clear so she can finish up and go home. He wants a few more minutes. Can she
+  wait, or will he have to wrap up for the night?
+lore:
+- office
+- rituals
+day_phase: off_hours
+intensity: quiet
+seats:
+- office_manager
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

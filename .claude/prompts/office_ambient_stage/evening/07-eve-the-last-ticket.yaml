@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-the-last-ticket
+title: The Last Ticket
+ambient: true
+prompt: 'Late evening in the Glass Box. Graham is at his standing desk, scanning the last test results
+  with a red pen. Nora has brought him a cup of tea and is counting on her fingers: one, the team is fine;
+  two, his wife will worry; three, he needs his rest. Graham wants to be there when the last ticket closes,
+  to thank each person. Nora wants him home and safe by midnight. How can they both get what they want
+  tonight?'
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- ceo
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

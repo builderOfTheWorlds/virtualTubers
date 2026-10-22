@@ -1,0 +1,24 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-corvane-correspondence
+title: Corvane Correspondence
+ambient: true
+prompt: Just after 07:00 in Reception. Maren is waiting by the printer, her fingers drumming a precise
+  rhythm on the edge of Nora's desk. Nora has the printer's light on and is listening more than looking,
+  ready to collate and distribute. The paper emerges and Nora hands it over with a smile that doesn't
+  reach her eyes. Maren scans the first page, nods, then sets it face down on the desk. Both women know
+  what it means for a message like this to come on paper, not the portal. What will they do now that Corvane
+  has made their request formal?
+lore:
+- clients
+- office
+day_phase: morning
+intensity: normal
+seats:
+- analyst
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-pitching-in-the-glass-box
+title: Pitching in the Glass Box
+ambient: true
+prompt: Late afternoon in the CEO's office. Julian stands across the desk from Graham, pitching a new
+  tagline for the upcoming release. Graham listens, nodding slightly, but then asks if the slogan will
+  resonate with their clients at Malmont Savings & Trust. Julian pauses, considering whether to revise
+  on the spot or push back. The CEO's warm smile hides a readiness to make the call himself. Will Julian
+  stick to his guns or adjust course?
+lore:
+- clients
+day_phase: workday
+intensity: normal
+seats:
+- marketing
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

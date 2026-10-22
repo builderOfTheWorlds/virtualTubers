@@ -1,0 +1,20 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-third-point
+title: Third Point
+ambient: true
+prompt: Late afternoon. Maren sits at her desk, reading her plan aloud to herself, each point numbered
+  and structured. She stops at the third point, crosses something out, and writes a new ending. Graham
+  stands nearby in the doorway, listening. He's about to ask if she's ready to hand it over, but she looks
+  up first. Is it perfect yet, or still needs work?
+lore: []
+day_phase: workday
+intensity: normal
+seats:
+- analyst
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

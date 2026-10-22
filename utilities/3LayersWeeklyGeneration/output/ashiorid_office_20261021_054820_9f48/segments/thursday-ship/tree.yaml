@@ -1,0 +1,245 @@
+thursday-ship:
+  node_id: thursday-ship
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The fix is re-released with the full test pass. Marketing rewrites the launch
+    ar
+  summary: The fix is re-released with the full test pass. Marketing rewrites the
+    launch around honesty and explainable verdicts. Garbage collection, quieter than
+    usual.
+  continuity_in: The Tech Lead posts the new release checklist to the channel and
+    asks for a full test run.
+  continuity_out: The Office Manager turns off the floor lights from the panel at
+    her station.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - thursday-ship-n0
+  - thursday-ship-n1
+  slots: null
+thursday-ship-n0:
+  node_id: thursday-ship-n0
+  parent_id: thursday-ship
+  order: 0
+  depth: 1
+  title: Full Test Pass and Release
+  summary: The development team completes a full test pass on the fix and re-releases
+    it. The Tech Lead coordinates the testing effort and release process.
+  continuity_in: The Tech Lead posts the new release checklist to the channel and
+    asks for a full test run.
+  continuity_out: Marketing begins rewriting the launch messaging around honesty and
+    explainable verdicts.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - thursday-ship-n0-n0
+  - thursday-ship-n0-n1
+  slots: null
+thursday-ship-n1:
+  node_id: thursday-ship-n1
+  parent_id: thursday-ship
+  order: 1
+  depth: 1
+  title: Marketing Rewrites Launch Messaging
+  summary: The marketing team rewrites the product launch messaging to focus on honesty
+    and explainable verdicts, in light of the issues discovered during testing. They
+    work to craft clear, transparent communication about the fix and its impact.
+  continuity_in: Marketing begins rewriting the launch messaging around honesty and
+    explainable verdicts.
+  continuity_out: The Office Manager turns off the floor lights from the panel at
+    her station as the team wraps up work for the day.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: thursday-ship-n1-001
+    kind: ambient
+    prompt: The marketing team discusses how to reframe the product launch messaging
+      to focus on honesty and transparency.
+    lore:
+    - product
+    - company
+    participants:
+    - marketing
+    - analyst
+    sensitivity: tone
+    depends_on: []
+  - slot_id: thursday-ship-n1-002
+    kind: ambient
+    prompt: The office manager begins turning off lights as people wrap up work for
+      the day.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n1-003
+    kind: ambient
+    prompt: The engineer and tester chat about the re-released fix and full test pass.
+    lore:
+    - product
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n1-004
+    kind: ambient
+    prompt: The CEO stops by the marketing team's area to check in on the updated
+      launch messaging.
+    lore:
+    - company
+    participants:
+    - ceo
+    - marketing
+    sensitivity: tone
+    depends_on: []
+thursday-ship-n0-n0:
+  node_id: thursday-ship-n0-n0
+  parent_id: thursday-ship-n0
+  order: 0
+  depth: 2
+  title: Full Test Pass
+  summary: The development team completes a full test pass on the fix. The Tech Lead
+    coordinates the testing effort.
+  continuity_in: The Tech Lead posts the new release checklist to the channel and
+    asks for a full test run.
+  continuity_out: The development team signs off on the full test pass and hands off
+    to Marketing.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: thursday-ship-n0-n0-001
+    kind: ambient
+    prompt: The Tech Lead posts the new release checklist to the channel and asks
+      for a full test run.
+    lore:
+    - product
+    - company
+    participants:
+    - tech_lead
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n0-n0-002
+    kind: ambient
+    prompt: The development team discusses the release checklist and test plan in
+      the channel.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n0-n0-003
+    kind: ambient
+    prompt: The development team completes the full test pass and signs off on the
+      results.
+    lore:
+    - product
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n0-n0-004
+    kind: ambient
+    prompt: The development team hands off the signed-off test results to Marketing
+      for the launch.
+    lore:
+    - company
+    - product
+    participants:
+    - tech_lead
+    - marketing
+    sensitivity: none
+    depends_on: []
+thursday-ship-n0-n1:
+  node_id: thursday-ship-n0-n1
+  parent_id: thursday-ship-n0
+  order: 1
+  depth: 2
+  title: Marketing Rewrite
+  summary: Marketing rewrites the launch messaging around honesty and explainable
+    verdicts. They work on new copy and explainers.
+  continuity_in: Marketing begins rewriting the launch messaging around honesty and
+    explainable verdicts.
+  continuity_out: Marketing completes the messaging rewrite and hands off to the Office
+    Manager for the launch.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: thursday-ship-n0-n1-001
+    kind: ambient
+    prompt: The Tech Lead posts the new release checklist to the channel and asks
+      for a full test run.
+    lore:
+    - product
+    - rituals
+    participants:
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n0-n1-002
+    kind: ambient
+    prompt: Marketing begins rewriting the launch messaging around honesty and explainable
+      verdicts.
+    lore:
+    - company
+    - product
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n0-n1-003
+    kind: ambient
+    prompt: The development team completes a full test pass on the fix and re-releases
+      it.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n0-n1-004
+    kind: ambient
+    prompt: Marketing completes the messaging rewrite and hands off to the Office
+      Manager for the launch.
+    lore:
+    - company
+    - product
+    participants:
+    - marketing
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-ship-n0-n1-005
+    kind: ambient
+    prompt: The Office Manager turns off the floor lights from the panel at her station.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []

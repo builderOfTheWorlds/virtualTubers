@@ -101,3 +101,14 @@ Is the limited output due to a limited variety of source material in the ashiori
 If we genrate a full weeks worth of content for this campaign I fear it would not be a good story. 
 I was hoping that the 3-layer-generator would be at least able to setup a large weekly arc that we could fill in the blanks. 
 Can you as the opus5.5 model be used with teh 3-layer-generator for a test week based ont eh ashiorid_office campaign pack?
+
+
+
+
+narrator to have different voice when hes describing a NPC character talking, the regular gm voice would be something like "and dr.bob says "well ill be darned" then the rocks fell" so thatnt instead of reading "well ill be darned" in the regular gm voide it would read it in a different voice
+
+
+Thinking status
+
+
+

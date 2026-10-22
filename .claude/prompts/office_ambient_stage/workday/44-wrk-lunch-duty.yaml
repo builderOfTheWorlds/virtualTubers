@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-lunch-duty
+title: Lunch Duty
+ambient: true
+prompt: Just before lunchtime in the Open Floor. Nora is standing by the Party Member's corner desk, going
+  through a list of names on a clipboard. Brody has ambled over and is watching her write, arms crossed.
+  They're having a low, private conversation about whose turn it is to pick up sandwiches today. The Party
+  Member sits motionless in his usual spot, notebook closed, pen still. Is Nora about to delegate, or
+  will she handle it herself?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- party_member
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

@@ -1,0 +1,143 @@
+saturday-build:
+  node_id: saturday-build
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The Halvard pilot goes live at noon. The Tester and Engineer watch the first
+    rea
+  summary: The Halvard pilot goes live at noon. The Tester and Engineer watch the
+    first real verdicts come in. Marketing sends the launch announcement.
+  continuity_in: The CEO opens the regulator email and frowns.
+  continuity_out: The first flagged Halvard transaction is caught correctly.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - saturday-build-n0
+  - saturday-build-n1
+  slots: null
+saturday-build-n0:
+  node_id: saturday-build-n0
+  parent_id: saturday-build
+  order: 0
+  depth: 1
+  title: Halvard Pilot Launch
+  summary: The Halvard pilot goes live at noon. The Tester and Engineer watch the
+    first real verdicts come in.
+  continuity_in: The CEO opens the regulator email and frowns.
+  continuity_out: The Tester and Engineer see the first Halvard verdicts.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - saturday-build-n0-n0
+  - saturday-build-n0-n1
+  slots: null
+saturday-build-n1:
+  node_id: saturday-build-n1
+  parent_id: saturday-build
+  order: 1
+  depth: 1
+  title: Launch Announcement
+  summary: Marketing sends the launch announcement email to customers and media.
+  continuity_in: The Tester and Engineer see the first Halvard verdicts.
+  continuity_out: The first flagged Halvard transaction is caught correctly.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: saturday-build-n1-001
+    kind: ambient
+    prompt: The Engineer and Tester watch the first real Halvard verdicts come in.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-build-n1-002
+    kind: ambient
+    prompt: Marketing sends the launch announcement email to customers and media.
+    lore:
+    - company
+    - clients
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-build-n1-003
+    kind: ambient
+    prompt: The CEO opens the regulator email and frowns.
+    lore:
+    - company
+    - office
+    participants:
+    - ceo
+    sensitivity: tone
+    depends_on: []
+  - slot_id: saturday-build-n1-004
+    kind: ambient
+    prompt: The first flagged Halvard transaction is caught correctly.
+    lore:
+    - product
+    participants:
+    - tester
+    sensitivity: none
+    depends_on: []
+saturday-build-n0-n0:
+  node_id: saturday-build-n0-n0
+  parent_id: saturday-build-n0
+  order: 0
+  depth: 2
+  title: Halvard Pilot Launch
+  summary: The Halvard pilot goes live at noon. The Tester and Engineer watch the
+    first real verdicts come in. Marketing sends the launch announcement.
+  continuity_in: The CEO opens the regulator email and frowns.
+  continuity_out: The Tester and Engineer see the first Halvard verdicts.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots: []
+saturday-build-n0-n1:
+  node_id: saturday-build-n0-n1
+  parent_id: saturday-build-n0
+  order: 1
+  depth: 2
+  title: First Halvard Transaction Flagged
+  summary: The first flagged Halvard transaction is caught correctly.
+  continuity_in: The Tester and Engineer see the first Halvard verdicts.
+  continuity_out: The first flagged Halvard transaction is caught correctly.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: saturday-build-n0-n1-001
+    kind: ambient
+    prompt: The Tester and Engineer watch the first real Halvard verdicts come in.
+    lore:
+    - product
+    participants:
+    - tester
+    - engineer
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-build-n0-n1-002
+    kind: ambient
+    prompt: Marketing sends the launch announcement.
+    lore:
+    - company
+    - rituals
+    participants:
+    - marketing
+    sensitivity: none
+    depends_on: []

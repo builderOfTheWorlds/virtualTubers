@@ -1,0 +1,24 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-end-of-the-ship-watch
+title: End of the Ship Watch
+ambient: true
+prompt: Late on a quiet evening, Nora is tidying the Kitchen, wiping down the table and emptying the four
+  bins in turn. She switches off the temperamental espresso machine with a firm click. Anselm is nearby,
+  at the threshold of the Kitchen or seated at his desk on the Open Floor, within earshot. He taps his
+  latency graph twice, then catches Nora's eye. The long day is nearly done; the office is almost still.
+  Is there something left undone, or a thought to share before the last few minutes?
+lore:
+- office
+- rituals
+- product
+day_phase: evening
+intensity: normal
+seats:
+- office_manager
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.1

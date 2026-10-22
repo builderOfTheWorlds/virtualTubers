@@ -1,0 +1,165 @@
+segment_id: thursday-off-hours
+order: 16
+loop: 0
+hours: 6
+synopsis: The Party Member writes late into the night. The Office Manager leaves extra
+  coffee out for the morning. Nobody sleeps well.
+continuity_in: The CEO stares at the countdown to Halvard, defeated.
+continuity_out: The coffee machine is warm before anyone arrives.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: thursday-off-hours-n0-n0-001
+  kind: ambient
+  prompt: The Party Member types furiously, the clacking of keys filling the late
+    night silence of the office.
+  lore:
+  - office
+  - rituals
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-off-hours-n0-n0
+- slot_id: thursday-off-hours-n0-n0-002
+  kind: ambient
+  prompt: The Office Manager quietly places a fresh pot of coffee and some snacks
+    by the Party Member's desk for the morning.
+  lore:
+  - office
+  - rituals
+  participants:
+  - office_manager
+  - party_member
+  sensitivity: tone
+  depends_on: []
+  node_id: thursday-off-hours-n0-n0
+- slot_id: thursday-off-hours-n0-n0-003
+  kind: ambient
+  prompt: The Party Member pauses for a moment, rubbing tired eyes, but their determination
+    remains strong.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: tone
+  depends_on: []
+  node_id: thursday-off-hours-n0-n0
+- slot_id: thursday-off-hours-n0-n0-004
+  kind: ambient
+  prompt: The office is still and quiet, the only sound the occasional rustle of papers
+    or clicking of a mouse as the Party Member works on.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-off-hours-n0-n0
+- slot_id: thursday-off-hours-n0-n1-001
+  kind: ambient
+  prompt: The Party Member types furiously, the clicking of the keyboard filling the
+    late-night office.
+  lore:
+  - office
+  - rituals
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-off-hours-n0-n1
+- slot_id: thursday-off-hours-n0-n1-002
+  kind: ambient
+  prompt: The Office Manager notices the Party Member's dedication and decides to
+    leave extra coffee for the morning.
+  lore:
+  - office
+  - company
+  participants:
+  - office_manager
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-off-hours-n0-n1
+- slot_id: thursday-off-hours-n1-001
+  kind: ambient
+  prompt: The Party Member writes late into the night, determined to finish their
+    work.
+  lore:
+  - office
+  - rituals
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-off-hours-n1
+- slot_id: thursday-off-hours-n1-002
+  kind: ambient
+  prompt: The Office Manager notices the Party Member's late night and decides to
+    leave extra coffee out for the morning.
+  lore:
+  - office
+  - rituals
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-off-hours-n1
+- slot_id: thursday-off-hours-n1-003
+  kind: ambient
+  prompt: The Party Member finally rests, leaving a stack of papers on the desk.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-off-hours-n1
+- slot_id: thursday-off-hours-n1-004
+  kind: ambient
+  prompt: The coffee machine is warm before anyone arrives in the morning, a thoughtful
+    gesture from the Office Manager.
+  lore:
+  - office
+  - rituals
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-off-hours-n1
+nodes:
+- node_id: thursday-off-hours
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: thursday-off-hours-n0
+  parent_id: thursday-off-hours
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: thursday-off-hours-n0-n0
+  parent_id: thursday-off-hours-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4
+- node_id: thursday-off-hours-n0-n1
+  parent_id: thursday-off-hours-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 2
+- node_id: thursday-off-hours-n1
+  parent_id: thursday-off-hours
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

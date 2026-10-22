@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-end-of-the-watch
+title: End of the Watch
+ambient: true
+prompt: Late on a Friday, the Glass Box glows with the last light. Maren sits across from Graham, walking
+  him through the agenda for next week's clients. Graham nods and makes small adjustments, his logistics
+  metaphors blending into a road map for the week. The Party Member sits silently in the corner, a still
+  point amid the activity. Is there anything from today that needs to be carried over to tomorrow's list?
+lore:
+- office
+- rituals
+day_phase: evening
+intensity: normal
+seats:
+- analyst
+- ceo
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.1

@@ -1,0 +1,143 @@
+segment_id: thursday-build
+order: 18
+loop: 0
+hours: 6
+synopsis: The Analyst prepares the audit evidence; the Engineer adds the missing test;
+  the Tech Lead rewrites the release checklist. Halvard asks, before anyone told them,
+  about 'the Corvane incident'.
+continuity_in: The Analyst takes the audit request to their desk and starts preparing
+  evidence.
+continuity_out: The Tech Lead posts the new release checklist to the channel and asks
+  for a full test run.
+carry_in:
+  regulator-audit-open: true
+carry_out:
+  regulator-audit-open: true
+slots:
+- slot_id: thursday-build-n1-n0-001
+  kind: ambient
+  prompt: The Analyst takes the audit request to their desk and starts preparing evidence.
+  lore:
+  - office
+  participants:
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-build-n1-n0
+- slot_id: thursday-build-n1-n0-002
+  kind: ambient
+  prompt: The Engineer notices a missing test case and quickly adds it.
+  lore:
+  - product
+  participants:
+  - engineer
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-build-n1-n0
+- slot_id: thursday-build-n1-n0-003
+  kind: ambient
+  prompt: The Tech Lead rewrites the release checklist to be more comprehensive.
+  lore:
+  - company
+  participants:
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-build-n1-n0
+- slot_id: thursday-build-n1-n0-004
+  kind: ambient
+  prompt: Halvard asks about 'the Corvane incident' before anyone else mentions it.
+  lore:
+  - rumours
+  participants:
+  - party_member
+  sensitivity: tone
+  depends_on: []
+  node_id: thursday-build-n1-n0
+- slot_id: thursday-build-n1-n1-001
+  kind: ambient
+  prompt: The Tech Lead frowns at the current release checklist on their screen, dissatisfied
+    with its thoroughness.
+  lore:
+  - office
+  - org_chart
+  - rituals
+  participants:
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-build-n1-n1
+- slot_id: thursday-build-n1-n1-002
+  kind: ambient
+  prompt: The Tech Lead opens a new document and starts drafting a more comprehensive
+    release checklist from scratch.
+  lore:
+  - office
+  - product
+  - rituals
+  participants:
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-build-n1-n1
+- slot_id: thursday-build-n1-n1-003
+  kind: ambient
+  prompt: The Tech Lead pauses their writing to glance over at the Analyst's desk,
+    noticing them hard at work on the audit evidence.
+  lore:
+  - office
+  - org_chart
+  participants:
+  - tech_lead
+  - analyst
+  sensitivity: tone
+  depends_on: []
+  node_id: thursday-build-n1-n1
+- slot_id: thursday-build-n1-n1-004
+  kind: ambient
+  prompt: The Tech Lead refocuses on their checklist, methodically going through each
+    potential release issue and adding it to the document.
+  lore:
+  - product
+  - rituals
+  participants:
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: thursday-build-n1-n1
+nodes:
+- node_id: thursday-build
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: thursday-build-n0
+  parent_id: thursday-build
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 0
+- node_id: thursday-build-n1
+  parent_id: thursday-build
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: thursday-build-n1-n0
+  parent_id: thursday-build-n1
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 4
+- node_id: thursday-build-n1-n1
+  parent_id: thursday-build-n1
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4

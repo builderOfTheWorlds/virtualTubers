@@ -1,0 +1,173 @@
+segment_id: sunday-ship
+order: 3
+loop: 0
+hours: 6
+synopsis: 'The first ship of the week goes smoothly: a small release, no incidents.
+  Marketing previews the Halvard launch copy and gets a thumbs-up from the CEO. At
+  23:30, the Tester runs the final test suite while the Office Manager does her rounds.
+  The Engineer heads home feeling good about the pilot progress.'
+continuity_in: The Tester starts the final test run.
+continuity_out: The Office Manager turns out the lights. The Party Member is still
+  there.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: sunday-ship-n0-n0-001
+  kind: ambient
+  prompt: The Tester starts the final test run for the week's first release.
+  lore:
+  - product
+  - office
+  participants:
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n0-n0
+- slot_id: sunday-ship-n0-n0-002
+  kind: ambient
+  prompt: The Office Manager begins her evening rounds of the office.
+  lore:
+  - office
+  - rituals
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n0-n0
+- slot_id: sunday-ship-n0-n0-003
+  kind: ambient
+  prompt: The Tester monitors the progress of the final test suite.
+  lore:
+  - product
+  participants:
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n0-n0
+- slot_id: sunday-ship-n0-n0-004
+  kind: ambient
+  prompt: The Office Manager turns out the lights as she completes her rounds.
+  lore:
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n0-n0
+- slot_id: sunday-ship-n0-n1-001
+  kind: ambient
+  prompt: Marketing presents the Halvard launch copy to the CEO and gets an enthusiastic
+    thumbs-up.
+  lore:
+  - company
+  - product
+  participants:
+  - marketing
+  - ceo
+  sensitivity: tone
+  depends_on: []
+  node_id: sunday-ship-n0-n1
+- slot_id: sunday-ship-n0-n1-002
+  kind: ambient
+  prompt: The Tester starts the final automated test suite as the office winds down
+    for the night.
+  lore:
+  - office
+  - rituals
+  participants:
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n0-n1
+- slot_id: sunday-ship-n0-n1-003
+  kind: ambient
+  prompt: The Office Manager does her final rounds, turning out lights and locking
+    up the empty office.
+  lore:
+  - office
+  - rituals
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n0-n1
+- slot_id: sunday-ship-n1-001
+  kind: ambient
+  prompt: The Tester watches the final tests complete successfully, feeling a sense
+    of accomplishment.
+  lore:
+  - office
+  participants:
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n1
+- slot_id: sunday-ship-n1-002
+  kind: ambient
+  prompt: Marketing shares the CEO's thumbs-up on the launch copy with the rest of
+    the team.
+  lore:
+  - company
+  participants:
+  - marketing
+  - engineer
+  - tester
+  sensitivity: tone
+  depends_on: []
+  node_id: sunday-ship-n1
+- slot_id: sunday-ship-n1-003
+  kind: ambient
+  prompt: The Engineer packs up, eager to head home after a successful day.
+  lore:
+  - office
+  participants:
+  - engineer
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n1
+- slot_id: sunday-ship-n1-004
+  kind: ambient
+  prompt: The Office Manager begins her final rounds, turning out lights as she goes.
+  lore:
+  - office
+  participants:
+  - office_manager
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-ship-n1
+nodes:
+- node_id: sunday-ship
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: sunday-ship-n0
+  parent_id: sunday-ship
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: sunday-ship-n0-n0
+  parent_id: sunday-ship-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4
+- node_id: sunday-ship-n0-n1
+  parent_id: sunday-ship-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 3
+- node_id: sunday-ship-n1
+  parent_id: sunday-ship
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

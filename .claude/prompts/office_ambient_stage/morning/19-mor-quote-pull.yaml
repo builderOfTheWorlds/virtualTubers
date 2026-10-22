@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-quote-pull
+title: Quote Pull
+ambient: true
+prompt: Morning in the Moonwell room. Julian is at the whiteboard, writing and erasing. He wants a client
+  quote for the new campaign and thinks Maren has one he can use. Maren is facing him, tapping her pen
+  against her notebook, asking about the quote's source and purpose. Julian keeps using phrases like 'trusted
+  partner' and 'cutting-edge solutions'; Maren keeps asking 'which client are we talking about here?'
+  and 'what exactly are we promising them?'
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- marketing
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

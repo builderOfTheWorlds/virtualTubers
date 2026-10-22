@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-shift-learning
+title: Late Shift Learning
+ambient: true
+prompt: Deep in the night, the Open Floor is dark and silent. Only the latency graph glows, illuminating
+  Brody at his desk. He is engrossed in an old technical manual, slowly turning the worn pages, absorbing
+  the outdated diagrams and terminology. The green light of the graph flickers with each page turn. What
+  forgotten knowledge is he seeking at this late hour?
+lore:
+- office
+- product
+day_phase: off_hours
+intensity: quiet
+seats:
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

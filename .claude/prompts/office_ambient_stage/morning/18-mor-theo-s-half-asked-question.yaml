@@ -1,0 +1,24 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-theo-s-half-asked-question
+title: Theo's Half-Asked Question
+ambient: true
+prompt: Just after the 06:00 standup on the Open Floor. Brody has completed his morning ritual of tapping
+  the latency graph twice and taken his seat. Theo, sitting across from him, has started to ask something
+  about yesterday's deployment but trailed off, seemingly unsure how to phrase it. Brody is waiting, impassive.
+  Theo fidgets with a pen, trying to find the right words for a question that feels harder than it should
+  be. Will he find a way to ask it, or let it go unsaid?
+lore:
+- office
+- rituals
+- product
+day_phase: morning
+intensity: normal
+seats:
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

@@ -1,0 +1,20 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-night-biscuits
+title: Late Night Biscuits
+ambient: true
+prompt: Deep in the small hours on the Open Floor, the only light is from the test rig. Theo and Owen
+  sit waiting for a long run to finish, sharing a packet of biscuits in the dark. Owen watches the numbers
+  scroll by. Theo's jokes are falling flat. What could be taking so long?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- engineer
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

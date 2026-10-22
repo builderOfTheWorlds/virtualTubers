@@ -102,3 +102,46 @@ evening 17-24.
   Live check: raw GQL user(login){stream{createdAt}} primary, decapi second.
   WS5 echoed 6+4-char key fragments in its transcript
   (~/.hermes/cache/delegation/live/deleg_202d128f/task-0.log).
+- Wed 03:05 WS1-WS4 done; committed 24b45e0 (code+tests+drivers; user's
+  CLAUDE.md/todo.md edits left uncommitted). Suite 4415 passed.
+  WS1: config 14 ACTIVE, run ashiorid_office_20261021_054820_9f48, arc 28/28
+       verified (artifact 798). Segments running in unit office-golive-gen,
+       chunk of 4 = ~43 min -> ETA all 28 ~07:30 Wed.
+       Quality issues to audit: sunday-morning says pilot already live (wrong);
+       first briefs all kind 'ambient', prompts restate synopsis, sibling
+       leaves repeat; first-standup is the only pinned spine scene, so every
+       morning pins it; several off-hours blocks end with 'Office Manager
+       arrives early' (arrival-loop risk).
+  WS2: block clock + ambient + unattended in. Operator steps: set
+       week_run_id in config/table/ashiorid_office.yaml, export fixture
+       (scripts/export_table_fixture.py <run>), rebuild configs. Empty ambient
+       pool = silent table (logs 'no ambient scene to play'). GM container needs
+       GENERATOR_POSTGRES_PASSWORD in .env for the pack_scenes read (or use
+       ambient.dir on /data/campaigns). Perf note: Arbiter makes all 6 seats
+       think every round even in 2-seat ambient scenes (app/turns.py).
+  WS3: was 401-blocked. Cause: the vLLM container took VLLM_API_KEY from the
+       Hermes shell env (overrides the deployment .env) -> keys differ.
+       Restarted office-ambient-author with AMBIENT_LLM_KEY from the container
+       env; accepting ~1.5-2 scenes/min -> 150 by ~04:30. Fix the deployment
+       key mismatch next vLLM start (run compose with `env -u VLLM_API_KEY`).
+  WS4: leak = unpumped pygame/SDL events on SHAPE-clipped windows (~1 KB/frame).
+       Fixed in tile_avatar + (orchestrator) codec_avatar.py for solo heads.
+       Needs image rebuild + live RSS check at t0/+1h/+6h.
+       Open: TILE_BREATH_SCALE is 5.0 (commit 5f06abe set it deliberately?);
+       skill says 0 avoids NVENC freeze. Ask user.
+- Wed 03:10 WS6 watchdog+runbook dispatched (Sonnet, deleg_c9ba73b8).
+  NEXT (after 07:30): WS7 contract audit + targeted rebrief (Sonnet);
+  then switchover: stop vllm-hermes3-70b, start vllm-agents
+  (`env -u VLLM_API_KEY docker compose up -d`), rebuild vtube-worker, export
+  fixture, set week_run_id, promote ambient (USER approval), bring up office
+  stack, soak with block_clock.offset_s.
+- Wed 03:20 WS6 done, committed b85e17e (84 tests). Units NOT installed;
+  install at T-30m Sat per .claude/prompts/golive/RUNBOOK.md. Notes:
+  /table/status on :8082 is HTML; watchdog uses table_ctl's message-api
+  protocol. Alert sink is a no-op (event log only) - wire a Hermes gateway
+  delivery if the user wants pings. `touch ~/.local/state/office-watchdog/PAUSE`
+  before any manual stop or the watchdog undoes it within 2 min.
+  Open: virtualtubers-tts-gpu-1 exited 2 weeks ago - confirm workers don't
+  need it. Memory now 113/121 used, 7 GiB available (hermes3-70b at 0.70 +
+  stack); do NOT start anything else until generation ends.
+  Ambient author: 32 accepted by 03:14 (~2/min).

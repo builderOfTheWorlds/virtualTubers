@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-three-pairs-of-eyes
+title: Three Pairs of Eyes
+ambient: true
+prompt: Early in the day on the Open Floor. Theo has just finished a tricky piece of work and is looking
+  at it with satisfaction. Maren and Brody are standing on either side of him, both reading the same line
+  intently. Theo glances from one to the other, wondering what they see there. Maren's finger hovers;
+  Brody taps his foot. Are they seeing the same thing, or is this going to be a long morning of 'for whom?'?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- analyst
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.5

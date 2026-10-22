@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-acceptance-numbers
+title: Acceptance Numbers
+ambient: true
+prompt: In the Moonwell room after lunch. Maren slides a list of acceptance points across to Owen, who
+  reads each one carefully, twice. He answers with a series of flat, measured numbers. Maren taps her
+  pen and nods at each one, numbering the air. The slow screen flickers. Are the numbers enough, or does
+  Owen have something else in mind?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- analyst
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

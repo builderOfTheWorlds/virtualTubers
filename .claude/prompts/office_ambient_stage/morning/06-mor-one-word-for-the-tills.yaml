@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-one-word-for-the-tills
+title: One Word for the Tills
+ambient: true
+prompt: 08:10 in the Moonwell room. Theo has the slow screen open to the REVIEW flowchart and is tapping
+  a marker on the whiteboard. Julian is leaning on the back of a chair, frowning at the customer images
+  on his tablet. They are trying to find one word that captures how a verdict from Fraud-Stop makes a
+  person at a checkout feel. Theo wants 'safe'; Julian thinks 'smart'. Both sound too abstract to the
+  other. Can they find a single word that feels real?
+lore:
+- office
+- product
+day_phase: morning
+intensity: normal
+seats:
+- marketing
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

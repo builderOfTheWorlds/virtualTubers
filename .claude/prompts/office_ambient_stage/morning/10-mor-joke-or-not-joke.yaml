@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-joke-or-not-joke
+title: Joke or Not Joke
+ambient: true
+prompt: Morning on the Open Floor. Owen has just handed Theo a test request form with an unexpected number
+  on it. Theo's first instinct is to make a joke about it. Owen, impassive, hands it back and waits for
+  the second joke that always follows. Theo hesitates, unsure if the first one landed or not, and if Owen
+  is setting him up for the real punchline. Is the test request going to be a problem, or just a chance
+  to riff?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- tester
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

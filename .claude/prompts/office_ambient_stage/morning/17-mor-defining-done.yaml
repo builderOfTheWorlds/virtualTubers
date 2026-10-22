@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-defining-done
+title: Defining Done
+ambient: true
+prompt: In the Glass Box, the morning sun slants through the blinds. Graham, behind the desk, has asked
+  Maren to define 'done' in a single sentence. Maren, standing, has given an answer and Graham has asked
+  her to repeat it, but slower. The sentence matters. Maren is thinking of who needs to hear it. Graham
+  is checking it against an index card. What makes a sentence good enough for clients, or for the team?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- ceo
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

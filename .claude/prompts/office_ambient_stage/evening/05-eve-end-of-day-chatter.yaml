@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-end-of-day-chatter
+title: End-of-Day Chatter
+ambient: true
+prompt: Late in the evening on the Open Floor. Theo is tidying up his desk, organizing the sticky notes
+  on his monitor, the crossed-out 'easy' ones in a neat stack. Julian is wrapping up at the desk nearby,
+  within earshot. As they wind down, Julian can't help but overhear Theo's little ritual. Is there a story
+  behind those crossed-out notes, or just a busy day?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- engineer
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

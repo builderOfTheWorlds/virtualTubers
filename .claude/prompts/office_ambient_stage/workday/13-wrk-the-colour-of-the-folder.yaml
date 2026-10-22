@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-the-colour-of-the-folder
+title: The Colour of the Folder
+ambient: true
+prompt: Late afternoon in Reception. Maren has asked Nora to find a client folder from the post tray cabinet.
+  Nora, ever-organised, needs to know the colour of the folder before she can fetch it. Maren, precise
+  in her own way, lists off the client's name, the folder's tab title, and the date it was filed, but
+  not the colour. Nora starts her standard speech about why colour-coding matters; Maren interrupts to
+  ask if the date is enough. Is there one right way to keep things in order?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- analyst
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

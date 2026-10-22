@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-late-light
+title: Late Light
+ambient: true
+prompt: Evening has settled over the Open Floor. Brody sits at his desk under a pool of lamplight, fingers
+  resting on the merge button for the last pull request of the day. He hesitates, as if hearing a faint
+  wrong note. Nora moves briskly past the doorway, tidying up for the night. She pauses at the threshold
+  when she sees him there, a question in her raised eyebrows. Will Brody say what he's hearing, or will
+  he let the day end on that uncertain note?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- tech_lead
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.2

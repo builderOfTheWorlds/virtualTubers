@@ -1,0 +1,225 @@
+wednesday-build:
+  node_id: wednesday-build
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The Engineer and Tester trace the cause of the fraud miss to the rushed
+    release '
+  summary: The Engineer and Tester trace the cause of the fraud miss to the rushed
+    release from the previous day. The Tech Lead takes responsibility for the decision
+    to ship.
+  continuity_in: The CEO assigns the Engineer and Tester to investigate the fraud
+    miss.
+  continuity_out: The Tech Lead takes full responsibility for the fraud miss in front
+    of the team.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - wednesday-build-n0
+  - wednesday-build-n1
+  slots: null
+wednesday-build-n0:
+  node_id: wednesday-build-n0
+  parent_id: wednesday-build
+  order: 0
+  depth: 1
+  title: Investigation Begins
+  summary: The Engineer and Tester begin their investigation into the fraud miss,
+    starting from the most recent changes.
+  continuity_in: The CEO assigns the Engineer and Tester to investigate the fraud
+    miss.
+  continuity_out: The Engineer and Tester identify the rushed release from the previous
+    day as the likely cause.
+  target_words: 394
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: wednesday-build-n0-001
+    kind: ambient
+    prompt: The Engineer and Tester begin their investigation by reviewing recent
+      code changes.
+    lore:
+    - product
+    - company
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-build-n0-002
+    kind: ambient
+    prompt: The Engineer and Tester identify the rushed release from the previous
+      day as the likely cause of the fraud miss.
+    lore:
+    - product
+    - company
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-build-n0-003
+    kind: ambient
+    prompt: The Tech Lead takes responsibility for the decision to ship the rushed
+      release.
+    lore:
+    - company
+    - org_chart
+    participants:
+    - tech_lead
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-build-n0-004
+    kind: ambient
+    prompt: The Tech Lead apologizes to the team for the fraud miss and promises to
+      prevent future rushed releases.
+    lore:
+    - company
+    - rituals
+    participants:
+    - tech_lead
+    - engineer
+    - tester
+    sensitivity: tone
+    depends_on: []
+wednesday-build-n1:
+  node_id: wednesday-build-n1
+  parent_id: wednesday-build
+  order: 1
+  depth: 1
+  title: Tech Lead Takes Responsibility
+  summary: The Tech Lead admits to the team that the decision to rush the release
+    was theirs, and takes full responsibility for the resulting fraud miss.
+  continuity_in: The Engineer and Tester identify the rushed release as the cause
+    of the fraud miss.
+  continuity_out: The Tech Lead takes full responsibility for the fraud miss in front
+    of the team.
+  target_words: 656
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - wednesday-build-n1-n0
+  - wednesday-build-n1-n1
+  slots: null
+wednesday-build-n1-n0:
+  node_id: wednesday-build-n1-n0
+  parent_id: wednesday-build-n1
+  order: 0
+  depth: 2
+  title: Tech Lead Admits Responsibility
+  summary: The Tech Lead acknowledges that the decision to rush the release was their
+    call, and accepts full blame for the fraud miss that resulted.
+  continuity_in: The Engineer and Tester trace the fraud miss cause to the rushed
+    release from the previous day.
+  continuity_out: The Tech Lead takes full responsibility for the fraud miss in front
+    of the team.
+  target_words: 437
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: wednesday-build-n1-n0-001
+    kind: ambient
+    prompt: The Engineer and Tester pore over the code and release notes from the
+      previous day.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-build-n1-n0-002
+    kind: ambient
+    prompt: The Tech Lead arrives and asks what they've found. The Engineer and Tester
+      explain the rushed release likely caused the fraud miss.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-build-n1-n0-003
+    kind: ambient
+    prompt: The Tech Lead takes full responsibility for the decision to rush the release,
+      apologizing to the Engineer and Tester.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-build-n1-n0-004
+    kind: ambient
+    prompt: The Tech Lead says they will take full blame in front of the whole team
+      later, to shield the Engineer and Tester from any fallout.
+    lore:
+    - office
+    participants:
+    - engineer
+    - tester
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+wednesday-build-n1-n1:
+  node_id: wednesday-build-n1-n1
+  parent_id: wednesday-build-n1
+  order: 1
+  depth: 2
+  title: Team Reaction
+  summary: The team reacts with surprise and concern to the Tech Lead's admission
+    of responsibility for the fraud miss.
+  continuity_in: The Tech Lead admits to the team that the decision to rush the release
+    was theirs.
+  continuity_out: The Tech Lead takes full responsibility for the fraud miss in front
+    of the team.
+  target_words: 219
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: wednesday-build-n1-n1-001
+    kind: ambient
+    prompt: The Tech Lead takes a deep breath and addresses the team.
+    lore:
+    - office
+    - org_chart
+    participants:
+    - tech_lead
+    - engineer
+    - tester
+    - analyst
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: wednesday-build-n1-n1-002
+    kind: ambient
+    prompt: The team reacts with shock and concern to the Tech Lead's admission.
+    lore:
+    - office
+    - rumours
+    participants:
+    - engineer
+    - tester
+    - analyst
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []

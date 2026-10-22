@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-the-board-line
+title: The Board Line
+ambient: true
+prompt: Late morning. Graham stands at the Glass Box window, coffee forgotten, practicing a line for the
+  board. Brody is nearby, ostensibly absorbed in code or a log file. It's not clear if Graham is aware
+  of him. Graham mouths the words, then shakes his head and tries a new phrasing. Brody taps the latency
+  graph, twice, but doesn't look up. Will Graham say it out loud? Is Brody listening?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

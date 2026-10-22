@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-morning-check
+title: Morning Check
+ambient: true
+prompt: 'It''s early and the Moonwell room is set for the day: eight chairs squared to the table, six
+  pins in the cork wall, the slow screen on and showing its test pattern. Nora is doing her checks, counting
+  under her breath and touching each pin. Brody is nearby at his desk, eyes on his second monitor, but
+  he turns when Nora speaks. Is the room ready for the bank visit? Or does Nora have a change to suggest?'
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- office_manager
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

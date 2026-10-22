@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-shift-chill
+title: Late Shift Chill
+ambient: true
+prompt: Deep night in the Server Closet, cold light on faces. A temperature alert brought Brody and Nora
+  to the keypad, and now they're peering at the green light, considering. The hum of the machines fills
+  the small space. Brody taps the latency graph, a habit. Nora keeps a hand on the door frame, ready.
+  They both know this blip could mean anything, or nothing. Is the room too cold, or is the machine too
+  warm?
+lore:
+- office
+- product
+day_phase: off_hours
+intensity: quiet
+seats:
+- tech_lead
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

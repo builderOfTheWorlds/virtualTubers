@@ -1,0 +1,222 @@
+wednesday-ship:
+  node_id: wednesday-ship
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The team rolls back the faulty release and ships a hotfix. Marketing pauses
+    the '
+  summary: The team rolls back the faulty release and ships a hotfix. Marketing pauses
+    the planned launch campaign. The CEO reflects on the day's events after everyone
+    else has left.
+  continuity_in: The Tech Lead takes full responsibility for the fraud miss in front
+    of the team.
+  continuity_out: The CEO is left alone in the office, staring at the Halvard countdown.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - wednesday-ship-n0
+  - wednesday-ship-n1
+  slots: null
+wednesday-ship-n0:
+  node_id: wednesday-ship-n0
+  parent_id: wednesday-ship
+  order: 0
+  depth: 1
+  title: Rollback and Hotfix
+  summary: The engineering team scrambles to roll back the faulty release and ship
+    a hotfix to prevent further fraud. Tension and stress are high as they work against
+    the clock.
+  continuity_in: The Tech Lead takes full responsibility for the fraud miss in front
+    of the team.
+  continuity_out: The hotfix is successfully deployed and the immediate fraud risk
+    is contained.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - wednesday-ship-n0-n0
+  - wednesday-ship-n0-n1
+  slots: null
+wednesday-ship-n1:
+  node_id: wednesday-ship-n1
+  parent_id: wednesday-ship
+  order: 1
+  depth: 1
+  title: Launch Campaign Paused
+  summary: The marketing team makes the difficult decision to pause the planned launch
+    campaign in light of the fraud incident. They work to adjust messaging and timing.
+  continuity_in: The hotfix is successfully deployed and the immediate fraud risk
+    is contained.
+  continuity_out: The CEO reflects on the day's events after everyone else has left.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: wednesday-ship-n1-001
+    kind: ambient
+    prompt: The team scrambles to roll back the faulty release and deploy a hotfix.
+      Tense moments as they wait to see if it resolves the fraud issue.
+    lore:
+    - product
+    - office
+    participants:
+    - analyst
+    - engineer
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-ship-n1-002
+    kind: ambient
+    prompt: The marketing team discusses the implications of the fraud incident on
+      the launch campaign. They reluctantly decide to pause the campaign.
+    lore:
+    - company
+    - clients
+    participants:
+    - marketing
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-ship-n1-003
+    kind: ambient
+    prompt: The CEO checks in with the team leads to assess the situation. They assure
+      the CEO the hotfix has contained the fraud risk for now.
+    lore:
+    - company
+    - product
+    participants:
+    - ceo
+    - tech_lead
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-ship-n1-004
+    kind: ambient
+    prompt: After everyone leaves for the day, the CEO sits alone in the office, reflecting
+      on the day's events and their impact on the company's future.
+    lore:
+    - office
+    - company
+    participants:
+    - ceo
+    sensitivity: tone
+    depends_on: []
+wednesday-ship-n0-n0:
+  node_id: wednesday-ship-n0-n0
+  parent_id: wednesday-ship-n0
+  order: 0
+  depth: 2
+  title: Rollback
+  summary: The engineering team works quickly to rollback the faulty release that
+    allowed the fraud to occur. They communicate with impacted stakeholders to assess
+    the damage.
+  continuity_in: The Tech Lead takes full responsibility for the fraud miss in front
+    of the team.
+  continuity_out: The rollback is complete, but the fraudsters have already made off
+    with a significant sum.
+  target_words: 270
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: wednesday-ship-n0-n0-001
+    kind: ambient
+    prompt: The engineering team scrambles to roll back the faulty release and ship
+      a hotfix.
+    lore:
+    - office
+    - product
+    participants:
+    - engineer
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-ship-n0-n0-002
+    kind: ambient
+    prompt: The CEO informs key stakeholders about the rollback and delayed launch.
+    lore:
+    - company
+    - clients
+    participants:
+    - ceo
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-ship-n0-n0-003
+    kind: ambient
+    prompt: The team reflects on the day's events after the rollback and hotfix are
+      complete.
+    lore:
+    - office
+    - rumours
+    participants:
+    - engineer
+    - analyst
+    - tester
+    - tech_lead
+    sensitivity: tone
+    depends_on: []
+wednesday-ship-n0-n1:
+  node_id: wednesday-ship-n0-n1
+  parent_id: wednesday-ship-n0
+  order: 1
+  depth: 2
+  title: Hotfix Deployment
+  summary: The team scrambles to develop, test and deploy a hotfix to plug the security
+    hole exploited by the fraudsters. Marketing puts the launch campaign on hold.
+  continuity_in: The rollback is complete, but the fraudsters have already made off
+    with a significant sum.
+  continuity_out: The hotfix is successfully deployed and the immediate fraud risk
+    is contained. Marketing has paused the launch.
+  target_words: 360
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: wednesday-ship-n0-n1-001
+    kind: ambient
+    prompt: The team scrambles to develop, test and deploy a hotfix to plug the security
+      hole exploited by the fraudsters. Tension and stress are high as they work against
+      the clock.
+    lore:
+    - office
+    - product
+    participants:
+    - analyst
+    - engineer
+    - tester
+    sensitivity: tone
+    depends_on: []
+  - slot_id: wednesday-ship-n0-n1-002
+    kind: ambient
+    prompt: Marketing puts the launch campaign on hold as the engineering team works
+      to contain the fraud risk. The CEO is kept informed of the situation.
+    lore:
+    - company
+    - clients
+    participants:
+    - marketing
+    - ceo
+    sensitivity: tone
+    depends_on: []
+  - slot_id: wednesday-ship-n0-n1-003
+    kind: ambient
+    prompt: The hotfix is successfully deployed and the immediate fraud risk is contained.
+      The team takes a moment to breathe and reflect on the day's events.
+    lore:
+    - office
+    - rituals
+    participants:
+    - analyst
+    - engineer
+    - tester
+    - tech_lead
+    sensitivity: tone
+    depends_on: []

@@ -1,0 +1,71 @@
+2026-10-21 01:48:19,931 INFO state: arc round 1 (have 0/28)
+2026-10-21 01:48:19,999 WARNING active config is [10], activating 14
+2026-10-21 01:48:20,097 INFO submitted arc job job_20261021T054820_ea0c3e run=ashiorid_office_20261021_054820_9f48 segments=None
+2026-10-21 01:52:40,365 INFO arc plan now has 4 segments
+2026-10-21 01:56:20,610 INFO arc plan now has 8 segments
+2026-10-21 01:59:40,860 INFO arc plan now has 12 segments
+2026-10-21 02:03:21,163 INFO arc plan now has 16 segments
+2026-10-21 02:07:01,526 INFO arc plan now has 20 segments
+2026-10-21 02:10:41,898 INFO arc plan now has 24 segments
+2026-10-21 02:14:02,249 INFO arc plan now has 28 segments
+2026-10-21 02:14:02,250 INFO job job_20261021T054820_ea0c3e completed result={'segments': 28, 'duration_s': 1521.641906} error=None
+2026-10-21 02:14:02,275 INFO arc round 1 -> job completed, plan has 28/28
+2026-10-21 02:14:02,292 INFO state: segment pass 1 chunk0 round 1 bad=4
+2026-10-21 02:14:02,370 INFO submitted segment job job_20261021T061402_24d950 run=ashiorid_office_20261021_054820_9f48 segments=['sunday-off-hours', 'sunday-morning', 'sunday-build', 'sunday-ship']
+2026-10-21 02:45:44,212 INFO job job_20261021T061402_24d950 completed result={'segments': 4, 'duration_s': 1884.460569} error=None
+2026-10-21 02:45:44,306 INFO state: segment pass 1 chunk1 round 1 bad=4
+2026-10-21 02:45:44,384 INFO submitted segment job job_20261021T064544_5931ef run=ashiorid_office_20261021_054820_9f48 segments=['monday-off-hours', 'monday-morning', 'monday-build', 'monday-ship']
+2026-10-21 03:11:45,835 INFO job job_20261021T064544_5931ef completed result={'segments': 4, 'duration_s': 1550.85383} error=None
+2026-10-21 03:11:45,896 INFO state: segment pass 1 chunk2 round 1 bad=4
+2026-10-21 03:11:46,040 INFO submitted segment job job_20261021T071146_d4abc3 run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-off-hours', 'tuesday-morning', 'tuesday-build', 'tuesday-ship']
+2026-10-21 03:46:08,016 INFO job job_20261021T071146_d4abc3 completed result={'segments': 4, 'duration_s': 2042.565424} error=None
+2026-10-21 03:46:08,141 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 03:46:08,141 INFO state: segment pass 1 chunk2 round 2 bad=1
+2026-10-21 03:46:08,261 INFO submitted segment job job_20261021T074608_c7899e run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 03:59:09,017 INFO job job_20261021T074608_c7899e completed result={'segments': 1, 'duration_s': 763.227995} error=None
+2026-10-21 03:59:09,122 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 03:59:09,122 INFO state: segment pass 1 chunk2 round 3 bad=1
+2026-10-21 03:59:09,248 INFO submitted segment job job_20261021T075909_b9300a run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 04:12:30,039 INFO job job_20261021T075909_b9300a completed result={'segments': 1, 'duration_s': 783.66981} error=None
+2026-10-21 04:12:30,154 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 04:12:30,154 INFO state: segment pass 1 chunk2 round 4 bad=1
+2026-10-21 04:12:30,298 INFO submitted segment job job_20261021T081230_4ebacd run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 04:23:50,951 INFO job job_20261021T081230_4ebacd completed result={'segments': 1, 'duration_s': 667.34685} error=None
+2026-10-21 04:23:51,054 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 04:23:51,055 INFO state: segment pass 1 chunk2 round 5 bad=1
+2026-10-21 04:23:51,179 INFO submitted segment job job_20261021T082351_d64b3f run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 04:36:51,921 INFO job job_20261021T082351_d64b3f completed result={'segments': 1, 'duration_s': 768.645045} error=None
+2026-10-21 04:36:52,064 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 04:36:52,064 INFO state: segment pass 1 chunk2 round 6 bad=1
+2026-10-21 04:36:52,194 INFO submitted segment job job_20261021T083652_480130 run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 04:50:53,039 INFO job job_20261021T083652_480130 completed result={'segments': 1, 'duration_s': 839.809256} error=None
+2026-10-21 04:50:53,073 INFO state: segment pass 1 chunk3 round 1 bad=4
+2026-10-21 04:50:53,210 INFO submitted segment job job_20261021T085053_6667de run=ashiorid_office_20261021_054820_9f48 segments=['wednesday-off-hours', 'wednesday-morning', 'wednesday-build', 'wednesday-ship']
+2026-10-21 05:23:35,109 INFO job job_20261021T085053_6667de completed result={'segments': 4, 'duration_s': 1943.45022} error=None
+2026-10-21 05:23:35,205 INFO state: segment pass 1 chunk4 round 1 bad=4
+2026-10-21 05:23:35,278 INFO submitted segment job job_20261021T092335_438aab run=ashiorid_office_20261021_054820_9f48 segments=['thursday-off-hours', 'thursday-morning', 'thursday-build', 'thursday-ship']
+2026-10-21 06:02:57,590 INFO job job_20261021T092335_438aab completed result={'segments': 4, 'duration_s': 2355.818905} error=None
+2026-10-21 06:02:57,681 INFO state: segment pass 1 chunk5 round 1 bad=4
+2026-10-21 06:02:57,761 INFO submitted segment job job_20261021T100257_1798d4 run=ashiorid_office_20261021_054820_9f48 segments=['friday-off-hours', 'friday-morning', 'friday-build', 'friday-ship']
+2026-10-21 06:43:00,063 INFO job job_20261021T100257_1798d4 completed result={'segments': 4, 'duration_s': 2385.298334} error=None
+2026-10-21 06:43:00,153 INFO state: segment pass 1 chunk6 round 1 bad=4
+2026-10-21 06:43:00,226 INFO submitted segment job job_20261021T104300_f2ff34 run=ashiorid_office_20261021_054820_9f48 segments=['saturday-off-hours', 'saturday-morning', 'saturday-build', 'saturday-ship']
+2026-10-21 07:21:02,442 INFO job job_20261021T104300_f2ff34 completed result={'segments': 4, 'duration_s': 2266.896965} error=None
+2026-10-21 07:21:02,502 ERROR PROBLEM: segment pass 1: 1 segments still bad
+2026-10-21 07:21:02,702 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 07:21:02,702 INFO state: segment pass 2 chunk2 round 1 bad=1
+2026-10-21 07:21:02,774 INFO submitted segment job job_20261021T112102_989d87 run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 07:33:43,531 INFO job job_20261021T112102_989d87 completed result={'segments': 1, 'duration_s': 748.397352} error=None
+2026-10-21 07:33:43,637 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 07:33:43,637 INFO state: segment pass 2 chunk2 round 2 bad=1
+2026-10-21 07:33:43,717 INFO submitted segment job job_20261021T113343_45e5cf run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 07:47:04,485 INFO job job_20261021T113343_45e5cf completed result={'segments': 1, 'duration_s': 793.618366} error=None
+2026-10-21 07:47:04,560 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 07:47:04,560 INFO state: segment pass 2 chunk2 round 3 bad=1
+2026-10-21 07:47:04,639 INFO submitted segment job job_20261021T114704_1ecf07 run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 08:01:05,485 INFO job job_20261021T114704_1ecf07 completed result={'segments': 1, 'duration_s': 832.609907} error=None
+2026-10-21 08:01:05,587 INFO moved aside tuesday-ship (rc=0 )
+2026-10-21 08:01:05,587 INFO state: segment pass 2 chunk2 round 4 bad=1
+2026-10-21 08:01:05,671 INFO submitted segment job job_20261021T120105_04e162 run=ashiorid_office_20261021_054820_9f48 segments=['tuesday-ship']
+2026-10-21 08:14:26,467 INFO job job_20261021T120105_04e162 completed result={'segments': 1, 'duration_s': 789.732588} error=None
+2026-10-21 08:14:27,022 INFO state: done

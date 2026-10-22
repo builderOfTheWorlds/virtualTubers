@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-night-carton-controversy
+title: Late-Night Carton Controversy
+ambient: true
+prompt: After midnight in the Kitchen. Maren is hunting for her oat milk in the dark, muttering about
+  process and consistency. Nora is tidying up around her, humming. The carton is back in its proper spot,
+  but Maren can't find it by touch. Her fingers are grazing the other cartons and she's starting to get
+  flustered. Nora knows exactly where it is, but will she step in, or let Maren figure it out on her own?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- analyst
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

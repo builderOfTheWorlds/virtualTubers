@@ -1,0 +1,743 @@
+{
+  "started": "2026-10-21T01:48:19",
+  "config_id": 14,
+  "run": "ashiorid_office_20261021_054820_9f48",
+  "state": "done",
+  "jobs": [
+    {
+      "id": "job_20261021T054820_ea0c3e",
+      "stage": "arc",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": null,
+      "status": "completed",
+      "submitted": "2026-10-21T01:48:20",
+      "t0": 1792561700.0977983,
+      "progress": null,
+      "finished": "2026-10-21T02:14:02",
+      "wall_s": 1542.2,
+      "result": {
+        "segments": 28,
+        "duration_s": 1521.641906
+      },
+      "n_artifacts": 1,
+      "error": null
+    },
+    {
+      "id": "job_20261021T061402_24d950",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "sunday-off-hours",
+        "sunday-morning",
+        "sunday-build",
+        "sunday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T02:14:02",
+      "t0": 1792563242.3709533,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "sunday-ship-n0-n1",
+        "updated_at": "2026-10-21T06:45:16.499405+00:00"
+      },
+      "finished": "2026-10-21T02:45:44",
+      "wall_s": 1901.8,
+      "result": {
+        "segments": 4,
+        "duration_s": 1884.460569
+      },
+      "n_artifacts": 8,
+      "error": null
+    },
+    {
+      "id": "job_20261021T064544_5931ef",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "monday-off-hours",
+        "monday-morning",
+        "monday-build",
+        "monday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T02:45:44",
+      "t0": 1792565144.384178,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "monday-ship-n1-n0",
+        "updated_at": "2026-10-21T07:10:55.372967+00:00"
+      },
+      "finished": "2026-10-21T03:11:45",
+      "wall_s": 1561.5,
+      "result": {
+        "segments": 4,
+        "duration_s": 1550.85383
+      },
+      "n_artifacts": 8,
+      "error": null
+    },
+    {
+      "id": "job_20261021T071146_d4abc3",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-off-hours",
+        "tuesday-morning",
+        "tuesday-build",
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T03:11:46",
+      "t0": 1792566706.0410166,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n0-n0",
+        "updated_at": "2026-10-21T07:41:50.696567+00:00"
+      },
+      "finished": "2026-10-21T03:46:08",
+      "wall_s": 2062.0,
+      "result": {
+        "segments": 4,
+        "duration_s": 2042.565424
+      },
+      "n_artifacts": 8,
+      "error": null
+    },
+    {
+      "id": "job_20261021T074608_c7899e",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T03:46:08",
+      "t0": 1792568768.2614818,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n0-n0",
+        "updated_at": "2026-10-21T07:56:52.993212+00:00"
+      },
+      "finished": "2026-10-21T03:59:09",
+      "wall_s": 780.8,
+      "result": {
+        "segments": 1,
+        "duration_s": 763.227995
+      },
+      "n_artifacts": 2,
+      "error": null
+    },
+    {
+      "id": "job_20261021T075909_b9300a",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T03:59:09",
+      "t0": 1792569549.2484372,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n0-n0",
+        "updated_at": "2026-10-21T08:08:35.415737+00:00"
+      },
+      "finished": "2026-10-21T04:12:30",
+      "wall_s": 800.8,
+      "result": {
+        "segments": 1,
+        "duration_s": 783.66981
+      },
+      "n_artifacts": 2,
+      "error": null
+    },
+    {
+      "id": "job_20261021T081230_4ebacd",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T04:12:30",
+      "t0": 1792570350.2987607,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n1-n1",
+        "updated_at": "2026-10-21T08:21:36.662547+00:00"
+      },
+      "finished": "2026-10-21T04:23:50",
+      "wall_s": 680.7,
+      "result": {
+        "segments": 1,
+        "duration_s": 667.34685
+      },
+      "n_artifacts": 2,
+      "error": null
+    },
+    {
+      "id": "job_20261021T082351_d64b3f",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T04:23:51",
+      "t0": 1792571031.1798127,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n0-n1",
+        "updated_at": "2026-10-21T08:32:15.729419+00:00"
+      },
+      "finished": "2026-10-21T04:36:51",
+      "wall_s": 780.7,
+      "result": {
+        "segments": 1,
+        "duration_s": 768.645045
+      },
+      "n_artifacts": 2,
+      "error": null
+    },
+    {
+      "id": "job_20261021T083652_480130",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T04:36:52",
+      "t0": 1792571812.1941965,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n1",
+        "updated_at": "2026-10-21T08:47:25.583162+00:00"
+      },
+      "finished": "2026-10-21T04:50:53",
+      "wall_s": 840.8,
+      "result": {
+        "segments": 1,
+        "duration_s": 839.809256
+      },
+      "n_artifacts": 2,
+      "error": null
+    },
+    {
+      "id": "job_20261021T085053_6667de",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "wednesday-off-hours",
+        "wednesday-morning",
+        "wednesday-build",
+        "wednesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T04:50:53",
+      "t0": 1792572653.2109838,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "wednesday-ship-n0-n0",
+        "updated_at": "2026-10-21T09:23:12.458233+00:00"
+      },
+      "finished": "2026-10-21T05:23:35",
+      "wall_s": 1961.9,
+      "result": {
+        "segments": 4,
+        "duration_s": 1943.45022
+      },
+      "n_artifacts": 8,
+      "error": null
+    },
+    {
+      "id": "job_20261021T092335_438aab",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "thursday-off-hours",
+        "thursday-morning",
+        "thursday-build",
+        "thursday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T05:23:35",
+      "t0": 1792574615.27844,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "thursday-ship-n0-n0",
+        "updated_at": "2026-10-21T09:59:37.983036+00:00"
+      },
+      "finished": "2026-10-21T06:02:57",
+      "wall_s": 2362.3,
+      "result": {
+        "segments": 4,
+        "duration_s": 2355.818905
+      },
+      "n_artifacts": 8,
+      "error": null
+    },
+    {
+      "id": "job_20261021T100257_1798d4",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "friday-off-hours",
+        "friday-morning",
+        "friday-build",
+        "friday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T06:02:57",
+      "t0": 1792576977.7611377,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "friday-ship-n0-n1",
+        "updated_at": "2026-10-21T10:38:48.276479+00:00"
+      },
+      "finished": "2026-10-21T06:43:00",
+      "wall_s": 2402.3,
+      "result": {
+        "segments": 4,
+        "duration_s": 2385.298334
+      },
+      "n_artifacts": 8,
+      "error": null
+    },
+    {
+      "id": "job_20261021T104300_f2ff34",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "saturday-off-hours",
+        "saturday-morning",
+        "saturday-build",
+        "saturday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T06:43:00",
+      "t0": 1792579380.2267237,
+      "progress": {
+        "done": 3,
+        "total": 5,
+        "last_node": "saturday-ship-n1",
+        "updated_at": "2026-10-21T11:19:16.325136+00:00"
+      },
+      "finished": "2026-10-21T07:21:02",
+      "wall_s": 2282.2,
+      "result": {
+        "segments": 4,
+        "duration_s": 2266.896965
+      },
+      "n_artifacts": 8,
+      "error": null
+    },
+    {
+      "id": "job_20261021T112102_989d87",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T07:21:02",
+      "t0": 1792581662.774576,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n0-n1",
+        "updated_at": "2026-10-21T11:29:57.454434+00:00"
+      },
+      "finished": "2026-10-21T07:33:43",
+      "wall_s": 760.8,
+      "result": {
+        "segments": 1,
+        "duration_s": 748.397352
+      },
+      "n_artifacts": 2,
+      "error": null
+    },
+    {
+      "id": "job_20261021T113343_45e5cf",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T07:33:43",
+      "t0": 1792582423.7179132,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n0-n1",
+        "updated_at": "2026-10-21T11:44:45.137843+00:00"
+      },
+      "finished": "2026-10-21T07:47:04",
+      "wall_s": 800.8,
+      "result": {
+        "segments": 1,
+        "duration_s": 793.618366
+      },
+      "n_artifacts": 2,
+      "error": null
+    },
+    {
+      "id": "job_20261021T114704_1ecf07",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T07:47:04",
+      "t0": 1792583224.6393323,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n1",
+        "updated_at": "2026-10-21T11:58:07.825785+00:00"
+      },
+      "finished": "2026-10-21T08:01:05",
+      "wall_s": 840.8,
+      "result": {
+        "segments": 1,
+        "duration_s": 832.609907
+      },
+      "n_artifacts": 2,
+      "error": null
+    },
+    {
+      "id": "job_20261021T120105_04e162",
+      "stage": "segment",
+      "run": "ashiorid_office_20261021_054820_9f48",
+      "segments": [
+        "tuesday-ship"
+      ],
+      "status": "completed",
+      "submitted": "2026-10-21T08:01:05",
+      "t0": 1792584065.6720295,
+      "progress": {
+        "done": 4,
+        "total": 5,
+        "last_node": "tuesday-ship-n0-n0",
+        "updated_at": "2026-10-21T12:12:52.635930+00:00"
+      },
+      "finished": "2026-10-21T08:14:26",
+      "wall_s": 800.8,
+      "result": {
+        "segments": 1,
+        "duration_s": 789.732588
+      },
+      "n_artifacts": 2,
+      "error": null
+    }
+  ],
+  "arc_growth": [
+    {
+      "t": "2026-10-21T01:52:40",
+      "elapsed_s": 260,
+      "segments": 4
+    },
+    {
+      "t": "2026-10-21T01:56:20",
+      "elapsed_s": 481,
+      "segments": 8
+    },
+    {
+      "t": "2026-10-21T01:59:40",
+      "elapsed_s": 681,
+      "segments": 12
+    },
+    {
+      "t": "2026-10-21T02:03:21",
+      "elapsed_s": 901,
+      "segments": 16
+    },
+    {
+      "t": "2026-10-21T02:07:01",
+      "elapsed_s": 1122,
+      "segments": 20
+    },
+    {
+      "t": "2026-10-21T02:10:41",
+      "elapsed_s": 1342,
+      "segments": 24
+    },
+    {
+      "t": "2026-10-21T02:14:02",
+      "elapsed_s": 1542,
+      "segments": 28
+    }
+  ],
+  "chunks": {
+    "chunk0": {
+      "segments": [
+        "sunday-off-hours",
+        "sunday-morning",
+        "sunday-build",
+        "sunday-ship"
+      ],
+      "briefs": {
+        "sunday-off-hours": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "sunday-morning": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "sunday-build": {
+          "slots": 9,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "sunday-ship": {
+          "slots": 11,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        }
+      },
+      "pass": 2
+    },
+    "chunk1": {
+      "segments": [
+        "monday-off-hours",
+        "monday-morning",
+        "monday-build",
+        "monday-ship"
+      ],
+      "briefs": {
+        "monday-off-hours": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "monday-morning": {
+          "slots": 9,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "monday-build": {
+          "slots": 9,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "monday-ship": {
+          "slots": 9,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        }
+      },
+      "pass": 2
+    },
+    "chunk2": {
+      "segments": [
+        "tuesday-off-hours",
+        "tuesday-morning",
+        "tuesday-build",
+        "tuesday-ship"
+      ],
+      "briefs": {
+        "tuesday-off-hours": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "tuesday-morning": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "tuesday-build": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "tuesday-ship": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        }
+      },
+      "pass": 2
+    },
+    "chunk3": {
+      "segments": [
+        "wednesday-off-hours",
+        "wednesday-morning",
+        "wednesday-build",
+        "wednesday-ship"
+      ],
+      "briefs": {
+        "wednesday-off-hours": {
+          "slots": 9,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "wednesday-morning": {
+          "slots": 11,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "wednesday-build": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "wednesday-ship": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        }
+      },
+      "pass": 2
+    },
+    "chunk4": {
+      "segments": [
+        "thursday-off-hours",
+        "thursday-morning",
+        "thursday-build",
+        "thursday-ship"
+      ],
+      "briefs": {
+        "thursday-off-hours": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "thursday-morning": {
+          "slots": 8,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "thursday-build": {
+          "slots": 8,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "thursday-ship": {
+          "slots": 13,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        }
+      },
+      "pass": 2
+    },
+    "chunk5": {
+      "segments": [
+        "friday-off-hours",
+        "friday-morning",
+        "friday-build",
+        "friday-ship"
+      ],
+      "briefs": {
+        "friday-off-hours": {
+          "slots": 9,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "friday-morning": {
+          "slots": 6,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "friday-build": {
+          "slots": 11,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "friday-ship": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        }
+      },
+      "pass": 2
+    },
+    "chunk6": {
+      "segments": [
+        "saturday-off-hours",
+        "saturday-morning",
+        "saturday-build",
+        "saturday-ship"
+      ],
+      "briefs": {
+        "saturday-off-hours": {
+          "slots": 10,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "saturday-morning": {
+          "slots": 8,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "saturday-build": {
+          "slots": 6,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        },
+        "saturday-ship": {
+          "slots": 9,
+          "needs_rebrief": false,
+          "unresolved_nodes": 0
+        }
+      },
+      "pass": 2
+    }
+  },
+  "problems": [
+    "2026-10-21T07:21:02 segment pass 1: 1 segments still bad"
+  ],
+  "updated": "2026-10-21T08:14:27",
+  "elapsed_h": 6.44,
+  "planned_segments": 28,
+  "segment_ids": [
+    "sunday-off-hours",
+    "sunday-morning",
+    "sunday-build",
+    "sunday-ship",
+    "monday-off-hours",
+    "monday-morning",
+    "monday-build",
+    "monday-ship",
+    "tuesday-off-hours",
+    "tuesday-morning",
+    "tuesday-build",
+    "tuesday-ship",
+    "wednesday-off-hours",
+    "wednesday-morning",
+    "wednesday-build",
+    "wednesday-ship",
+    "thursday-off-hours",
+    "thursday-morning",
+    "thursday-build",
+    "thursday-ship",
+    "friday-off-hours",
+    "friday-morning",
+    "friday-build",
+    "friday-ship",
+    "saturday-off-hours",
+    "saturday-morning",
+    "saturday-build",
+    "saturday-ship"
+  ],
+  "final": {
+    "arc_segments": 28,
+    "briefs_ok": 28
+  }
+}

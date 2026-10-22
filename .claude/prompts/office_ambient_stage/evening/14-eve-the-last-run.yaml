@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-the-last-run
+title: The Last Run
+ambient: true
+prompt: Late in the day on the Open Floor. Owen sits with his back to the room, watching the progress
+  bar on the big screen. Brody stands behind him, silent except for the occasional tap on the latency
+  graph. The last full test run of the day grinds on. In the lull, both hear the old pipes knocking in
+  the walls. The air is still. The release notes wait in a window, unsaved. Brody wonders if Owen's numbers
+  will be good enough. Owen wonders if Brody will stay late to write the notes himself.
+lore:
+- office
+- product
+day_phase: evening
+intensity: normal
+seats:
+- tech_lead
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.1

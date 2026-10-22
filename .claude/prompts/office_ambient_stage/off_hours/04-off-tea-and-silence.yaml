@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-tea-and-silence
+title: Tea and Silence
+ambient: true
+prompt: Deep night in the kitchen. Brody lingers by the door while Nora makes him a last tea of the day.
+  She moves brightly in the quiet dark, her every small action efficient and kind. The tea is a small
+  ritual of comfort between them. They have worked together so long that the silence is friendly and full,
+  needing no words. Is it the tea, or the night, or just their long habit that makes the silence easy?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- office_manager
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

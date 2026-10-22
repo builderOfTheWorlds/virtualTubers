@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-red-light-dead-of-night
+title: Red Light, Dead of Night
+ambient: true
+prompt: Deep in the small hours, the Open Floor is dark and silent. Owen sits at his desk, frowning at
+  a red light on his spare laptop. He taps the screen twice, checks the time, taps again. The Party Member's
+  corner desk is a silent presence behind him, the emergency light above it glowing steady and bright.
+  Why is Owen here now, and what is making the laptop blink red?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- party_member
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

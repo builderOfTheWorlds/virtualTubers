@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-silent-pacing
+title: Silent Pacing
+ambient: true
+prompt: Just after lunch, Brody completes a slow silent circuit of the Open Floor, examining each screen
+  in turn before returning to his window desk. Theo watches this procession from the doorway to the Kitchen,
+  half-smiling, half-wondering. The Tech Lead's pace is measured and his face unreadable, but Theo can't
+  tell if it's a routine check, a hunt for something specific, or just a break from his own code. Is it
+  wise to ask, or wiser to stay quiet?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

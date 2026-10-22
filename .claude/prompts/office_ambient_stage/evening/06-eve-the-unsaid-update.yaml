@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-the-unsaid-update
+title: The Unsaid Update
+ambient: true
+prompt: It's late in the Glass Box. Brody stands by the window, giving Graham a low-key rundown of the
+  day's code changes. Brody's voice is steady and Graham nods along, ticking off items on a folded card.
+  But the latency graph isn't mentioned, even once. The green line has been dipping in and out of the
+  orange all day. Graham taps the card against his palm. Is there a reason the graph isn't part of the
+  report tonight?
+lore:
+- office
+- product
+day_phase: evening
+intensity: normal
+seats:
+- tech_lead
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

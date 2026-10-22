@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-teatime-quiet
+title: Teatime Quiet
+ambient: true
+prompt: Late afternoon in the Kitchen. The temperamental espresso machine is silent, and a pot of tea
+  steeps between Brody and Nora. They sit across from each other at the old table, the kind of quiet two
+  long-timers share. Brody taps the latency graph on his second monitor twice before turning to the tea.
+  Nora has brought down a tin of her special biscuits. The slow end-of-day peace is broken only by the
+  clink of cups and the distant hum of the Server Closet. How long until the peace breaks?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

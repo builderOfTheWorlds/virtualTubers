@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-tagline-trouble
+title: Tagline Trouble
+ambient: true
+prompt: Evening on the Open Floor. Julian is at his desk rewriting a release note, crossing out his usual
+  upbeat tagline and replacing it with something plain and factual. Maren is nearby, by the Moonwell room
+  door, with her coat on ready to leave but not quite gone. She glances over at the sound of Julian's
+  pen. Is it worth a comment, or is it fine for a tagline to be dull, if it's accurate?
+lore:
+- office
+- rituals
+day_phase: evening
+intensity: normal
+seats:
+- marketing
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

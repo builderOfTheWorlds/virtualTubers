@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-one-more-check
+title: One More Check
+ambient: true
+prompt: Late evening, the Open Floor is almost empty. Brody taps the latency graph twice, then puts on
+  his coat. He hesitates, takes it off and sits back down. Theo, at a nearby desk, glances over but stays
+  quiet. Brody seems torn between leaving on time and double-checking something that's nagging him. Is
+  there a problem only he can see, or is it just another late night?
+lore:
+- office
+- product
+day_phase: evening
+intensity: normal
+seats:
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.1

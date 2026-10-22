@@ -1,0 +1,20 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-night-annotations
+title: Late-Night Annotations
+ambient: true
+prompt: In the small hours on the Open Floor, the darkness is broken by a single desk lamp. Maren sits
+  at her desk, methodically annotating a client document in red, green and blue ink. Her notes are structured
+  and numbered, each point asking 'for whom?' the change would matter. She pauses, pen hovering, considering
+  an insight that might change everything for someone. Who benefits, and who pays?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-docs-debate
+title: Docs Debate
+ambient: true
+prompt: The Open Floor, early morning. Maren and Brody are standing by the whiteboard, having a courteous
+  disagreement about whether to prioritize writing requirements or designing the solution first for the
+  next feature. Maren argues that knowing the end goal is crucial; Brody counters that getting the details
+  right is more important. Both make good points, but neither seems ready to concede. Who will give in
+  first, or will they find a compromise?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- analyst
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

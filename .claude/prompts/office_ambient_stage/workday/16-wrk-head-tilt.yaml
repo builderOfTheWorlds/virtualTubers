@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-head-tilt
+title: Head Tilt
+ambient: true
+prompt: A moment of calm after lunch on the Open Floor. Brody stands by his desk, head cocked to one side
+  as he studies the latency graph with narrowed eyes. Theo, alerted by the unusual stillness, watches
+  from the doorway to the Server Closet. Brody's silent scrutiny makes him restless. Is the graph hiding
+  something, or is Brody just thinking?
+lore:
+- office
+- rituals
+- product
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

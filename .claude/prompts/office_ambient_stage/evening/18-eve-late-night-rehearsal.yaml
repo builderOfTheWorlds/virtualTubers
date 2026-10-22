@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-late-night-rehearsal
+title: Late-Night Rehearsal
+ambient: true
+prompt: Evening in the Kitchen. Theo and Julian have stayed late to grab supper from the snack shelf and
+  rehearse a question they plan to bring up at lunch tomorrow. They munch on crisps as they bounce ideas
+  off each other, trying to find the perfect way to phrase their query. Theo's jokes punctuate the discussion,
+  while Julian smooths over the rough edges. The topic is still undecided, but they're determined to make
+  it engaging for the whole team. What question will they land on?
+lore:
+- office
+- rituals
+day_phase: evening
+intensity: normal
+seats:
+- engineer
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.1

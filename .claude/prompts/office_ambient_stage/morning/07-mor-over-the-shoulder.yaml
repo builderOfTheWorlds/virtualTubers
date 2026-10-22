@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-over-the-shoulder
+title: Over the Shoulder
+ambient: true
+prompt: Early morning on the Open Floor. Theo is deep in the code, typing away with focus. The Party Member
+  is at his usual corner desk, silent and still, but his body is angled slightly towards Theo's screen.
+  Sensing the attention, Theo casually closes a browser tab with a click, then resumes typing as if nothing
+  happened. Did the Party Member see something he shouldn't have?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- engineer
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

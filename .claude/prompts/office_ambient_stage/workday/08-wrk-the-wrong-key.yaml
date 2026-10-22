@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-the-wrong-key
+title: The Wrong Key
+ambient: true
+prompt: Just after 11:00 in the hallway, near the Server Closet. Nora tries the roof key in the unlabelled
+  grey door, with no luck. She drops it back on the ring without comment. Theo, at his desk just around
+  the corner, has heard the rattle and miss. He's surprised - he thought all doors were done. He starts
+  to ask a question, but stops. Should he offer to look, or leave her to it? Is there a right key, or
+  is the door just not for them?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

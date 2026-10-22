@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-watching-the-test
+title: Watching the Test
+ambient: true
+prompt: Late lunchtime on the Open Floor. Theo and Owen sit back to back, a test running on Owen's screen.
+  The Party Member stands nearby, looking at the wall, hands behind his back. Owen drums his fingers;
+  Theo pretends not to watch the progress bar. The room is quiet except for the hum of the servers. The
+  Party Member has not moved in minutes. What will they do if it fails again?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- engineer
+- tester
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.5

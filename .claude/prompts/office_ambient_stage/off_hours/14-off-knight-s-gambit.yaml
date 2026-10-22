@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-knight-s-gambit
+title: Knight's Gambit
+ambient: true
+prompt: Late at night on the Open Floor, only the glow from the servers and the street lights outside.
+  Theo sits alone in the darkness, a game of chess set up against his keyboard, with a few biscuits beside
+  him. He's made one move and now he's waiting, in a game where his opponent will never play. Is there
+  a move that will turn the tide, or is he just playing out the string?
+lore:
+- office
+- rituals
+day_phase: off_hours
+intensity: quiet
+seats:
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

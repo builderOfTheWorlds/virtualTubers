@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-night-quiet-floor
+title: Late Night, Quiet Floor
+ambient: true
+prompt: The dark Open Floor is nearly silent, lit only by pools of lamplight around Maren and Brody, the
+  last two left working. Maren, at her desk, is making careful, structured notes on a printout. Brody
+  is in his chair, tapping the latency graph, then watching the dark windows. They know each other's presence
+  but work without speaking, each in their own world. Is it companionable or awkward, this unspoken late-night
+  work?
+lore:
+- office
+- product
+day_phase: off_hours
+intensity: quiet
+seats:
+- analyst
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

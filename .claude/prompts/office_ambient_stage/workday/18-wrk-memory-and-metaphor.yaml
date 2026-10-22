@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-memory-and-metaphor
+title: Memory and Metaphor
+ambient: true
+prompt: Late morning in the Glass Box. Brody is in the visitor's chair, telling a story about the early
+  days of Fraud-Stop in his slow, dry way. Graham, at his standing desk, listens intently, hands clasped
+  behind his back. The story done, Graham nods, then asks Brody to diagnose the current bottleneck in
+  the software release process. Brody taps his latency graph twice. Is the past a guide or a trap?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

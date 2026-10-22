@@ -1,0 +1,19 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-night-sorting
+title: Late Night Sorting
+ambient: true
+prompt: Nearly 03:00 and Maren is still at her desk, quietly organizing printouts into three neat piles
+  with colored tabs. The rest of the office is dark and empty, but she seems focused and methodical in
+  the solitude of the late hour. She pauses occasionally to read a page, then places it deliberately on
+  the appropriate stack. What is she trying to piece together from all this printed data?
+lore: []
+day_phase: off_hours
+intensity: quiet
+seats:
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

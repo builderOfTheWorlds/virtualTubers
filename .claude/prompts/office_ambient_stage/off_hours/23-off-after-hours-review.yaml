@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-after-hours-review
+title: After Hours Review
+ambient: true
+prompt: Late night in the Glass Box. Graham is sitting at his desk under a pool of lamplight, absorbed
+  in his index card. Nora has just knocked and entered with a small stack of papers. She reminds him that
+  the floor lights are already off for the night. Graham looks up, a little startled. Is he forgetting
+  something else? Nora doesn't mind staying late, but she's wondering if there's a reason for this midnight
+  review.
+lore:
+- office
+- rituals
+day_phase: off_hours
+intensity: quiet
+seats:
+- ceo
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

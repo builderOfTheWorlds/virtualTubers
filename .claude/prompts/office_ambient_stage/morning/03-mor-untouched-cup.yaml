@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-untouched-cup
+title: Untouched Cup
+ambient: true
+prompt: Early morning in the kitchen. Nora hums as she pours the last of the coffee into a clean mug,
+  then places it on a coaster by the Party Member's silent form. His notebook is closed, his pen aligned.
+  The emergency light glints off his glasses. She's already turning away to start on the snack shelf.
+  Will today be the day he drinks it?
+lore:
+- office
+- rituals
+day_phase: morning
+intensity: normal
+seats:
+- office_manager
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

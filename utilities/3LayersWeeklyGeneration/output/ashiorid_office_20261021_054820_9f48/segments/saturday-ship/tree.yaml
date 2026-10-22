@@ -1,0 +1,178 @@
+saturday-ship:
+  node_id: saturday-ship
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The pilot holds. The audit is still open. The week ends at midnight with
+    garbage
+  summary: The pilot holds. The audit is still open. The week ends at midnight with
+    garbage collection and lights out.
+  continuity_in: The first flagged Halvard transaction is caught correctly.
+  continuity_out: The Office Manager turns off the floor lights from the panel at
+    her station.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - saturday-ship-n0
+  - saturday-ship-n1
+  slots: null
+saturday-ship-n0:
+  node_id: saturday-ship-n0
+  parent_id: saturday-ship
+  order: 0
+  depth: 1
+  title: The pilot holds
+  summary: The pilot holds. The audit is still open.
+  continuity_in: The first flagged Halvard transaction is caught correctly.
+  continuity_out: The week is nearing its end.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: saturday-ship-n0-001
+    kind: ambient
+    prompt: The engineer checks the logs one last time before the end of the week.
+    lore:
+    - office
+    participants:
+    - engineer
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-ship-n0-002
+    kind: ambient
+    prompt: The analyst looks over the flagged Halvard transaction, satisfied that
+      the system caught it.
+    lore:
+    - company
+    - product
+    participants:
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-ship-n0-003
+    kind: ambient
+    prompt: The office manager makes her final rounds, turning off lights and prepping
+      the office for garbage collection.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+saturday-ship-n1:
+  node_id: saturday-ship-n1
+  parent_id: saturday-ship
+  order: 1
+  depth: 1
+  title: Midnight garbage collection and lights out
+  summary: The week ends at midnight with garbage collection and lights out.
+  continuity_in: The week is nearing its end.
+  continuity_out: The Office Manager turns off the floor lights from the panel at
+    her station.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - saturday-ship-n1-n0
+  - saturday-ship-n1-n1
+  slots: null
+saturday-ship-n1-n0:
+  node_id: saturday-ship-n1-n0
+  parent_id: saturday-ship-n1
+  order: 0
+  depth: 2
+  title: Garbage collection
+  summary: The automated garbage collection system activates at midnight to clean
+    the office.
+  continuity_in: The week is nearing its end and the pilot is still holding.
+  continuity_out: The garbage collection finishes and the office is clean.
+  target_words: 233
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: saturday-ship-n1-n0-001
+    kind: ambient
+    prompt: The garbage collection system activates with a whir, compactors and scrubbers
+      emerging from the walls and floor.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-ship-n1-n0-002
+    kind: ambient
+    prompt: The office manager watches the garbage collection, making sure it completes
+      successfully before lights out.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+saturday-ship-n1-n1:
+  node_id: saturday-ship-n1-n1
+  parent_id: saturday-ship-n1
+  order: 1
+  depth: 2
+  title: Lights out
+  summary: The Office Manager turns off the floor lights from the panel at her station
+    at midnight.
+  continuity_in: The garbage collection has finished.
+  continuity_out: The office is dark and quiet for the weekend.
+  target_words: 467
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: saturday-ship-n1-n1-001
+    kind: ambient
+    prompt: The Office Manager methodically empties the last of the trash cans into
+      the garbage cart.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-ship-n1-n1-002
+    kind: ambient
+    prompt: The Office Manager wheels the garbage cart to the service elevator and
+      presses the call button.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-ship-n1-n1-003
+    kind: ambient
+    prompt: The Office Manager swipes her badge at the panel and flips the master
+      switch to turn off the floor lights.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-ship-n1-n1-004
+    kind: ambient
+    prompt: The Office Manager takes the elevator back down to the darkened office
+      floor.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []

@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-night-shift-vigil
+title: Night Shift Vigil
+ambient: true
+prompt: Late night in the Server Closet, lit by a torch. The door is propped open with a wedge of folded
+  card. Brody and Nora stand either side of the humming grey box, watching it intently. They have done
+  this before in the small hours. Brody holds the torch steady; Nora has one hand on the wall, ready to
+  flip the breaker if the green light goes red. It's not their job, but whose is it? The box hums on.
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- tech_lead
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

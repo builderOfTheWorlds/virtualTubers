@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-quiet-night-clean-machine
+title: Quiet Night, Clean Machine
+ambient: true
+prompt: Late night in the Kitchen. The floor is dark and empty, but Nora is in, up on a stool with a lamp
+  and her kit, carefully descaling the old espresso machine. She does this job alone, on her own time,
+  once a quarter, without fail. The water is draining through now, drop by slow drop, and she is watching
+  each one fall into the sink. Is this just good maintenance, or does she think the coffee matters more
+  than anyone else knows?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-morning-espresso
+title: Morning Espresso
+ambient: true
+prompt: In the Kitchen at 06:20, Nora has made the first three espressos. She hands Graham his black coffee
+  with a bright smile. Brody's sits waiting, untouched, on the side. The office is quiet but for the espresso
+  machine's last hiss and Nora's brisk footsteps as she checks the snack shelf. Who took their coffee
+  already? What about the one still waiting?
+lore:
+- office
+- rituals
+day_phase: morning
+intensity: normal
+seats:
+- office_manager
+- ceo
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-questionable-estimates
+title: Questionable Estimates
+ambient: true
+prompt: Late morning on the Open Floor. Theo has just written 'two days if no one asks questions' on a
+  sticky note, under a crossed-out 'easy'. Julian, at a nearby desk, overhears and is trying to decide
+  whether to ask about the project or let Theo focus. Theo is quiet for now, but it doesn't usually last.
+  Is the estimate serious, or just a way to fend off interruptions? How much does Marketing need to know?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- engineer
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

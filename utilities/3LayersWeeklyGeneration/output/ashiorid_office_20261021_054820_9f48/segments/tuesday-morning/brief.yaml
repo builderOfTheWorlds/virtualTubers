@@ -1,0 +1,170 @@
+segment_id: tuesday-morning
+order: 9
+loop: 0
+hours: 6
+synopsis: 'Standup: the CEO asks Corvane for a reference for Halvard. The Tech Lead
+  warns the velocity rule is being pushed hard by Corvane''s volume.'
+continuity_in: The Office Manager arrives early to find the printout.
+continuity_out: The Tech Lead warns about the velocity rule.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: tuesday-morning-n0-n0-001
+  kind: ambient
+  prompt: The team gathers for the daily standup meeting. The CEO asks Corvane if
+    he has prepared the reference letter for Halvard, the new hire.
+  lore:
+  - office
+  - rituals
+  participants:
+  - ceo
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-morning-n0-n0
+- slot_id: tuesday-morning-n0-n0-002
+  kind: ambient
+  prompt: Corvane confirms to the CEO that he has the reference letter for Halvard
+    ready to go. The Tech Lead speaks up about the velocity rule.
+  lore:
+  - office
+  participants:
+  - analyst
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-morning-n0-n0
+- slot_id: tuesday-morning-n0-n0-003
+  kind: spine
+  scene_ref: first-standup
+  participants:
+  - ceo
+  - analyst
+  - tech_lead
+  node_id: tuesday-morning-n0-n0
+- slot_id: tuesday-morning-n0-n0-004
+  kind: ambient
+  prompt: The Tech Lead warns that the velocity rule is being pushed hard by Corvane's
+    volume of work. The team continues with the rest of the standup meeting.
+  lore:
+  - office
+  - rituals
+  participants:
+  - tech_lead
+  - engineer
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-morning-n0-n0
+- slot_id: tuesday-morning-n0-n1-001
+  kind: ambient
+  prompt: The Tech Lead speaks up, concerned about the team's velocity.
+  lore:
+  - office
+  - org_chart
+  participants:
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-morning-n0-n1
+- slot_id: tuesday-morning-n0-n1-002
+  kind: spine
+  scene_ref: first-standup
+  participants:
+  - ceo
+  - tech_lead
+  - analyst
+  - engineer
+  - tester
+  - marketing
+  node_id: tuesday-morning-n0-n1
+- slot_id: tuesday-morning-n1-001
+  kind: ambient
+  prompt: The Tech Lead speaks up about the velocity rule.
+  lore:
+  - office
+  - rituals
+  participants:
+  - tech_lead
+  - ceo
+  - engineer
+  - analyst
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-morning-n1
+- slot_id: tuesday-morning-n1-002
+  kind: spine
+  scene_ref: first-standup
+  participants:
+  - tech_lead
+  - ceo
+  - engineer
+  - analyst
+  - tester
+  node_id: tuesday-morning-n1
+- slot_id: tuesday-morning-n1-003
+  kind: ambient
+  prompt: The team discusses the implications of pushing the velocity rule.
+  lore:
+  - office
+  - company
+  participants:
+  - ceo
+  - tech_lead
+  - engineer
+  - analyst
+  - tester
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-morning-n1
+- slot_id: tuesday-morning-n1-004
+  kind: ambient
+  prompt: The Tech Lead warns about the velocity rule.
+  lore:
+  - office
+  - rituals
+  participants:
+  - tech_lead
+  - ceo
+  - engineer
+  - analyst
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-morning-n1
+nodes:
+- node_id: tuesday-morning
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: tuesday-morning-n0
+  parent_id: tuesday-morning
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: tuesday-morning-n0-n0
+  parent_id: tuesday-morning-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4
+- node_id: tuesday-morning-n0-n1
+  parent_id: tuesday-morning-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 2
+- node_id: tuesday-morning-n1
+  parent_id: tuesday-morning
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-paper-trail
+title: Paper Trail
+ambient: true
+prompt: Late morning in Reception. Graham is by Nora's station, trying to print without success. He asks
+  her where to find more paper. Nora briskly lists three potential locations, ending with a rule about
+  checking the level before leaving for the day. Graham nods, but seems more puzzled by the office logistics
+  than the missing supplies. Is the printer the problem, or just a symptom of something larger?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-for-whom
+title: For Whom?
+ambient: true
+prompt: Early morning in the Moonwell room. Julian is rehearsing a tagline for the upcoming release and
+  reads it out with a smile. Maren, pencil poised over a fresh sheet of paper, looks up and asks him directly
+  who the message is meant for. Julian repeats the tagline, but more slowly, as if that will make it clearer.
+  Maren taps the pencil against the paper, waiting for an answer. Can Julian explain the tagline's target,
+  or will he need to go back to the drawing board?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- marketing
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

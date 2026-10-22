@@ -1,0 +1,20 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-night-lift
+title: Late-Night Lift
+ambient: true
+prompt: 'The dark and silent Open Floor. 04:05. Theo has stayed late to try to explain what Fraud-Stop
+  actually does, using metaphors out loud to an empty room. He''s trying a new one: the software is like
+  a lift that only takes you to the right floor. He paces between desks, his footsteps muffled by the
+  carpet. Is the metaphor any good? Will it work on the prospect tomorrow?'
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

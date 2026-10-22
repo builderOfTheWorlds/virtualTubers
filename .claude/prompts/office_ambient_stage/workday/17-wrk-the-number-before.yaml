@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-the-number-before
+title: The Number Before
+ambient: true
+prompt: Brody taps the latency graph twice and stops at Owen's desk first thing. The Tester is expecting
+  him and has the number for the suite ready. Brody listens without expression, then nods once and goes
+  to his own desk. Owen watches him go, then writes the number on a card and pins it up. Did Brody need
+  to hear it from Owen, or was this about something else?
+lore:
+- product
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

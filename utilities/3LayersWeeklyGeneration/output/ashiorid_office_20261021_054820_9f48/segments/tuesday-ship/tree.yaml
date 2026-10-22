@@ -1,0 +1,214 @@
+tuesday-ship:
+  node_id: tuesday-ship
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A rushed rules release goes out late to hit the pilot schedule; the Tester
+    flags
+  summary: A rushed rules release goes out late to hit the pilot schedule; the Tester
+    flags one amount-outlier test as 'amber, not red'. Nobody stops the release.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The release goes out with an amber test.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - tuesday-ship-n0
+  - tuesday-ship-n1
+  slots: null
+tuesday-ship-n0:
+  node_id: tuesday-ship-n0
+  parent_id: tuesday-ship
+  order: 0
+  depth: 1
+  title: Rushed release goes out late
+  summary: The team scrambles to get the rules release out the door to meet the pilot
+    schedule. It goes out late, but the Tester flags one amount-outlier test as 'amber,
+    not red' instead of stopping the release.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The release goes out late with an amber test.
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - tuesday-ship-n0-n0
+  - tuesday-ship-n0-n1
+  slots: null
+tuesday-ship-n1:
+  node_id: tuesday-ship-n1
+  parent_id: tuesday-ship
+  order: 1
+  depth: 1
+  title: Amber test does not stop release
+  summary: Despite the Tester flagging an amber test result, nobody stops the release
+    from going out. The pilot moves forward with the known issue.
+  continuity_in: The release goes out late with an amber test.
+  continuity_out: The release goes out with an amber test.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: tuesday-ship-n1-001
+    kind: ambient
+    prompt: The Tester explains the amber test result to the team.
+    lore:
+    - product
+    - office
+    participants:
+    - tester
+    - engineer
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-ship-n1-002
+    kind: ambient
+    prompt: The team debates whether to stop the release for the amber test.
+    lore:
+    - product
+    - company
+    participants:
+    - tester
+    - engineer
+    - tech_lead
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-ship-n1-003
+    kind: ambient
+    prompt: The decision is made to proceed with the release despite the amber test.
+    lore:
+    - product
+    - company
+    participants:
+    - tech_lead
+    - ceo
+    - tester
+    - engineer
+    - analyst
+    sensitivity: none
+    depends_on: []
+tuesday-ship-n0-n0:
+  node_id: tuesday-ship-n0-n0
+  parent_id: tuesday-ship-n0
+  order: 0
+  depth: 2
+  title: Scrambling to release on schedule
+  summary: The team works frantically to complete the rules release in time to meet
+    the pilot schedule. Marketing has gotten a lukewarm maybe from Corvane to proceed.
+    The release looks like it will be late.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The release is still not ready and looks like it will miss the pilot
+    schedule.
+  target_words: 280
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: tuesday-ship-n0-n0-001
+    kind: ambient
+    prompt: The team is frantically trying to finish the rules release to meet the
+      pilot schedule deadline. Marketing has gotten a lukewarm maybe from Corvane
+      to proceed. The release looks like it will be late.
+    lore:
+    - company
+    - product
+    participants:
+    - analyst
+    - engineer
+    - tech_lead
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-ship-n0-n0-002
+    kind: ambient
+    prompt: The office is a buzz of activity as everyone scrambles to get their part
+      of the release done. There's a palpable sense of urgency and stress in the air.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - engineer
+    - tester
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-ship-n0-n0-003
+    kind: ambient
+    prompt: The CEO paces nervously outside the tech lead's office, demanding frequent
+      updates on the release progress. The tech lead is trying to focus on reviewing
+      the final changes.
+    lore:
+    - company
+    - org_chart
+    participants:
+    - ceo
+    - tech_lead
+    sensitivity: tone
+    depends_on: []
+tuesday-ship-n0-n1:
+  node_id: tuesday-ship-n0-n1
+  parent_id: tuesday-ship-n0
+  order: 1
+  depth: 2
+  title: Amber test doesn't stop late release
+  summary: The Tester flags one amount-outlier test as 'amber, not red' instead of
+    stopping the release. With the release already late, the team decides to go ahead
+    and ship it with the amber test rather than delaying further.
+  continuity_in: The release is still not ready and looks like it will miss the pilot
+    schedule.
+  continuity_out: The release goes out late with an amber test.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: tuesday-ship-n0-n1-001
+    kind: ambient
+    prompt: The Tester flags one amount-outlier test as 'amber, not red'. The release
+      is already late.
+    lore:
+    - product
+    participants:
+    - tester
+    - engineer
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-ship-n0-n1-002
+    kind: ambient
+    prompt: The team debates whether to stop the release for the amber test or ship
+      it late as-is.
+    lore:
+    - company
+    participants:
+    - tester
+    - engineer
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-ship-n0-n1-003
+    kind: ambient
+    prompt: With the pilot schedule looming, the team decides to go ahead and release
+      with the amber test.
+    lore:
+    - product
+    - company
+    participants:
+    - tech_lead
+    - engineer
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-ship-n0-n1-004
+    kind: ambient
+    prompt: The release goes out late, with the amber test results filed but not blocking
+      release.
+    lore:
+    - product
+    participants:
+    - office_manager
+    - engineer
+    sensitivity: none
+    depends_on: []

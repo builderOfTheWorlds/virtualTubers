@@ -1,0 +1,179 @@
+monday-ship:
+  node_id: monday-ship
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A reasons-text change for explainability goes out. Marketing rehearses the
+    Halva
+  summary: A reasons-text change for explainability goes out. Marketing rehearses
+    the Halvard pitch on the Office Manager. Lights out.
+  continuity_in: A reasons-text change for explainability is ready to go out.
+  continuity_out: The Office Manager turns out the lights.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - monday-ship-n0
+  - monday-ship-n1
+  slots: null
+monday-ship-n0:
+  node_id: monday-ship-n0
+  parent_id: monday-ship
+  order: 0
+  depth: 1
+  title: Explainability reasons-text change goes out
+  summary: The updated reasons-text for explainability is sent out
+  continuity_in: A reasons-text change for explainability is ready to go out
+  continuity_out: Marketing starts rehearsing the Halvard pitch on the Office Manager
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: monday-ship-n0-001
+    kind: ambient
+    prompt: The updated reasons-text for explainability is sent out
+    lore:
+    - product
+    participants:
+    - analyst
+    - engineer
+    sensitivity: none
+    depends_on: []
+  - slot_id: monday-ship-n0-002
+    kind: ambient
+    prompt: Marketing starts rehearsing the Halvard pitch on the Office Manager
+    lore:
+    - company
+    - rituals
+    participants:
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: monday-ship-n0-003
+    kind: ambient
+    prompt: The Office Manager turns out the lights
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+monday-ship-n1:
+  node_id: monday-ship-n1
+  parent_id: monday-ship
+  order: 1
+  depth: 1
+  title: Marketing rehearses Halvard pitch
+  summary: Marketing rehearses the Halvard pitch on the Office Manager. Lights out.
+  continuity_in: Marketing starts rehearsing the Halvard pitch on the Office Manager
+  continuity_out: The Office Manager turns out the lights
+  target_words: 700
+  target_slots: 7
+  kind: branch
+  forced: false
+  children:
+  - monday-ship-n1-n0
+  - monday-ship-n1-n1
+  slots: null
+monday-ship-n1-n0:
+  node_id: monday-ship-n1-n0
+  parent_id: monday-ship-n1
+  order: 0
+  depth: 2
+  title: Marketing rehearses pitch
+  summary: Marketing rehearses the Halvard pitch on the Office Manager.
+  continuity_in: Marketing starts rehearsing the Halvard pitch on the Office Manager
+  continuity_out: Marketing finishes rehearsing the pitch
+  target_words: 467
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: monday-ship-n1-n0-001
+    kind: ambient
+    prompt: Marketing starts rehearsing the Halvard pitch on the Office Manager.
+    lore:
+    - product
+    - office
+    participants:
+    - marketing
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: monday-ship-n1-n0-002
+    kind: ambient
+    prompt: Marketing describes the key features and benefits of Halvard to the Office
+      Manager.
+    lore:
+    - product
+    participants:
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: monday-ship-n1-n0-003
+    kind: ambient
+    prompt: The Office Manager asks Marketing some clarifying questions about Halvard's
+      capabilities.
+    lore:
+    - product
+    - office
+    participants:
+    - marketing
+    - office_manager
+    sensitivity: tone
+    depends_on: []
+  - slot_id: monday-ship-n1-n0-004
+    kind: ambient
+    prompt: Marketing finishes rehearsing the pitch and thanks the Office Manager
+      for their time.
+    lore:
+    - office
+    participants:
+    - marketing
+    - office_manager
+    sensitivity: none
+    depends_on: []
+monday-ship-n1-n1:
+  node_id: monday-ship-n1-n1
+  parent_id: monday-ship-n1
+  order: 1
+  depth: 2
+  title: Lights out
+  summary: The Office Manager turns out the lights.
+  continuity_in: The Office Manager is done with work for the day
+  continuity_out: The office is dark and empty
+  target_words: 233
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: monday-ship-n1-n1-001
+    kind: ambient
+    prompt: A reasons-text change for explainability is ready to go out.
+    lore:
+    - product
+    - company
+    participants:
+    - analyst
+    - engineer
+    sensitivity: none
+    depends_on: []
+  - slot_id: monday-ship-n1-n1-002
+    kind: ambient
+    prompt: Marketing rehearses the Halvard pitch on the Office Manager.
+    lore:
+    - product
+    - company
+    - office
+    participants:
+    - marketing
+    - office_manager
+    sensitivity: none
+    depends_on: []

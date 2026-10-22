@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-last-light-in-the-office
+title: Last Light in the Office
+ambient: true
+prompt: It's late on a long day. In the dim light of the Glass Box, Graham is muttering the first sentence
+  of tomorrow's logistics metaphor to himself. Nora, tidying up nearby, hears his voice and looks over.
+  She smiles at his concentration, but says nothing. Graham has his back to her, his index card held up
+  in the half-darkness. Will she offer a second opinion, or let him work?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- ceo
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

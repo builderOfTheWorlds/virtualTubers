@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-company-values
+title: Company Values
+ambient: true
+prompt: Julian is in Reception with a draft of the new company values page for the website. He's asking
+  Nora for a quote from the printed card they all got at the last meeting. She reads out the fourth value
+  twice, slowly and firmly. Julian is typing it up but misses a word. Is 'love' too strong for a company
+  value? Or just strong enough?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- marketing
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

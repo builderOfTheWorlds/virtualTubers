@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-last-one-out
+title: Last One Out
+ambient: true
+prompt: It's almost midnight in the quiet Kitchen. Nora is carefully locking the espresso machine for
+  the night and has asked Theo, not for the first time, when he plans to leave. Theo, at the table with
+  a half-empty glass of water and a single open tab, looks up with a familiar promise to 'just need a
+  few more minutes' on his face. The question hanging in the air is whether those minutes will turn into
+  another hour.
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- office_manager
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

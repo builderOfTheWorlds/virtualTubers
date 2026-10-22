@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-coffee-machine-conversation
+title: Coffee Machine Conversation
+ambient: true
+prompt: Early on a weekday morning in the Kitchen. The coffee machine is hissing and steaming. Brody is
+  tapping the edge of his latency graph, Nora is wiping down the table, and Graham is reading a logistics
+  article on his phone. None of them quite say what they came for, but each has an unasked question about
+  the day ahead. The coffee finishes with a splutter. Who will speak first?
+lore:
+- office
+- product
+day_phase: morning
+intensity: normal
+seats:
+- tech_lead
+- office_manager
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

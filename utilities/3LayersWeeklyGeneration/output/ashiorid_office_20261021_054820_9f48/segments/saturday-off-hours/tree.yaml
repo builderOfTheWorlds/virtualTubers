@@ -1,0 +1,194 @@
+saturday-off-hours:
+  node_id: saturday-off-hours
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The Party Member watches the dashboard in the dark office, noting the overnight '
+  summary: The Party Member watches the dashboard in the dark office, noting the overnight
+    transaction patterns in the notebook.
+  continuity_in: The Office Manager has turned off the floor lights from the panel
+    at her station.
+  continuity_out: The Party Member makes a note about an odd spike in one account's
+    transactions.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - saturday-off-hours-n0
+  - saturday-off-hours-n1
+  slots: null
+saturday-off-hours-n0:
+  node_id: saturday-off-hours-n0
+  parent_id: saturday-off-hours
+  order: 0
+  depth: 1
+  title: Watching the Dashboard
+  summary: The Party Member sits in the dark office, intently watching the dashboard
+    display the overnight transaction patterns.
+  continuity_in: The Office Manager has turned off the floor lights from the panel
+    at her station, leaving the Party Member in dim light.
+  continuity_out: The Party Member notices an odd spike in one account's transactions.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - saturday-off-hours-n0-n0
+  - saturday-off-hours-n0-n1
+  slots: null
+saturday-off-hours-n1:
+  node_id: saturday-off-hours-n1
+  parent_id: saturday-off-hours
+  order: 1
+  depth: 1
+  title: Noting the Transaction Patterns
+  summary: The Party Member jots down observations about the overnight transaction
+    patterns in their notebook.
+  continuity_in: The Party Member notices an odd spike in one account's transactions.
+  continuity_out: The Party Member makes a note about the unusual activity in the
+    account.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: saturday-off-hours-n1-001
+    kind: ambient
+    prompt: The Party Member's eyes scan the dashboard, noting the ebb and flow of
+      transactions through the night.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-off-hours-n1-002
+    kind: ambient
+    prompt: The Party Member jots down observations about the overnight transaction
+      patterns in their notebook.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-off-hours-n1-003
+    kind: ambient
+    prompt: The Party Member notices an odd spike in one account's transactions, flagging
+      it in the notebook.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-off-hours-n1-004
+    kind: ambient
+    prompt: The Party Member makes a note about the unusual activity in the account,
+      wondering what could be causing it.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+saturday-off-hours-n0-n0:
+  node_id: saturday-off-hours-n0-n0
+  parent_id: saturday-off-hours-n0
+  order: 0
+  depth: 2
+  title: Watching Closely
+  summary: The Party Member's eyes are glued to the dashboard, absorbing every detail
+    of the overnight transaction patterns.
+  continuity_in: The Party Member sits down at the dashboard, ready to analyze the
+    data.
+  continuity_out: The Party Member notices an unusual spike in one account's transactions.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: saturday-off-hours-n0-n0-001
+    kind: ambient
+    prompt: The Party Member's eyes dart across the dashboard, absorbing the overnight
+      transaction patterns.
+    lore:
+    - office
+    - product
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-off-hours-n0-n0-002
+    kind: ambient
+    prompt: The Party Member jots down notes about the typical ebb and flow of transactions
+      in the notebook.
+    lore:
+    - office
+    - company
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-off-hours-n0-n0-003
+    kind: ambient
+    prompt: The Party Member pauses, their brow furrowing at an unusual spike in one
+      account's transactions.
+    lore:
+    - product
+    - office
+    participants:
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: saturday-off-hours-n0-n0-004
+    kind: ambient
+    prompt: The Party Member makes a detailed note about the odd transaction pattern,
+      including timestamps and amounts.
+    lore:
+    - company
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+saturday-off-hours-n0-n1:
+  node_id: saturday-off-hours-n0-n1
+  parent_id: saturday-off-hours-n0
+  order: 1
+  depth: 2
+  title: Noting Patterns
+  summary: The Party Member jots down observations about the transaction patterns
+    in their notebook.
+  continuity_in: The Party Member spots an odd spike in one account's transactions.
+  continuity_out: The Party Member makes a final note about the unusual activity.
+  target_words: 210
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: saturday-off-hours-n0-n1-001
+    kind: ambient
+    prompt: The Party Member's eyes scan the dashboard, noting the ebb and flow of
+      transactions through the night.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-off-hours-n0-n1-002
+    kind: ambient
+    prompt: The Party Member jots down a few observations in their notebook, highlighting
+      an unusual spike in one account's activity.
+    lore:
+    - office
+    - company
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []

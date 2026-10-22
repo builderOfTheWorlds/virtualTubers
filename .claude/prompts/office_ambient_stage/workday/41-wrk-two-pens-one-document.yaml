@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-two-pens-one-document
+title: Two Pens, One Document
+ambient: true
+prompt: Late afternoon at Brody's desk on the Open Floor. Brody and Maren are marking up a document draft,
+  their red and blue pens moving in silence. They've both circled the same heading and are now debating
+  its wording in quiet, formal tones, each trying to convince without conceding. Maren writes 'for whom?'
+  in the margin. Brody taps the graph twice, then once more. Whose ink will have the final say?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-dock-block
+title: Dock Block
+ambient: true
+prompt: 07:40 in the Glass Box. Graham has tickets open on his laptop and is asking Brody, in his clipped
+  CEO voice, what the holdup is with the morning's deployment. Brody is taking his time answering, as
+  he does, fingers tented on the glass desk. He's seen this before. Is it a container ship or a dinghy
+  circling the harbor? The clock is ticking; the words are few.
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- ceo
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

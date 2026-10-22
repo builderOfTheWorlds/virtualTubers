@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-dark-kitchen-rehearsal
+title: Dark Kitchen Rehearsal
+ambient: true
+prompt: Deep night in the kitchen, only the fridge hums. Julian is pacing by the espresso machine, practicing
+  a question he will take to Brody in the morning light. The words sound hollow in the empty room. He
+  tries it again, slower, as if Brody were there already. But the tech lead's window desk is dark and
+  quiet. Is this the right question? Will it reach Brody in the right way?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- marketing
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

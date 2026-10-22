@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-first-light
+title: First Light
+ambient: true
+prompt: Dawn light seeps through the blinds as Nora prepares the Open Floor for the coming day. She sets
+  out cups at each desk, her brisk movements softened by the quiet. Last of all, she places a cup at the
+  Party Member's corner desk, though it will remain untouched. As the room brightens, the silent figure
+  in the corner is more shadow than man. Why does Nora persist in this small kindness to an empty chair?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- office_manager
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Expressive Voices (Chatterbox) — Pipeline</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#020617;color:#e2e8f0;font-family:'JetBrains Mono',monospace;padding:24px}
+h1{font-size:18px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#34d399;animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+.sub{color:#94a3b8;font-size:12px;margin-bottom:16px}
+.cardwrap{border:1px solid #1e293b;border-radius:10px;overflow:hidden}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:8px;padding:12px;font-size:11px}
+.card h3{font-size:12px;margin:0 0 8px;display:flex;gap:8px;align-items:center}
+.cd{width:8px;height:8px;border-radius:50%}
+ul{margin:0;padding:0;list-style:none;line-height:1.7;color:#cbd5e1}
+footer{color:#475569;font-size:10px;margin-top:14px}
+</style></head><body>
+<h1><span class="dot"></span>Expressive Voices (Chatterbox) — Recording to Livestream</h1>
+<div class="sub">Mate records moods &rarr; argyre builds per-mood reference clips &rarr; tts-chatterbox renders each line with an emotion &rarr; cached in Postgres &rarr; existing Performer / Pulse / ffmpeg path to Twitch</div>
+<div class="cardwrap">
+<svg viewBox="0 0 1290 800" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/></pattern>
+<marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#64748b"/></marker>
+</defs>
+<rect width="1290" height="800" fill="url(#grid)"/>
+<g stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#a)"><path d="M 260 121 L 292 121"/><path d="M 512 121 L 544 121"/><path d="M 260 291 L 292 291"/><path d="M 512 291 L 544 291"/><path d="M 764 291 L 796 291"/><path d="M 654 167 L 654 206 L 150 206 L 150 245"/><path d="M 260 471 L 292 471"/><path d="M 512 471 L 544 471"/><path d="M 764 471 L 796 471"/><path d="M 260 666 L 292 666"/><path d="M 512 666 L 544 666"/><path d="M 764 666 L 796 666"/><path d="M 1016 666 L 1048 666"/><path d="M 906 517 L 906 568 L 150 568 L 150 620"/></g>
+<g stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="5,4" fill="none" marker-end="url(#a)"><path d="M 906 337 L 906 381 L 402 381 L 402 425"/><path d="M 442 425 L 442 411 L 1158 411 L 1158 425"/></g>
+<text x="410" y="376" fill="#fbbf24" font-size="8">POST /synthesize</text><text x="948" y="407" fill="#fbbf24" font-size="8">on service error</text>
+<rect x="25" y="585" width="1258" height="147" rx="12" fill="none" stroke="#34d399" stroke-dasharray="8,4"/><text x="1268" y="605" fill="#34d399" font-size="11" text-anchor="end">STAGE E  LIVE AIRING (code path unchanged)</text>
+<rect x="25" y="390" width="1258" height="147" rx="12" fill="none" stroke="#a78bfa" stroke-dasharray="8,4"/><text x="40" y="410" fill="#a78bfa" font-size="11" text-anchor="start">STAGE D  SHOW PREP (offline, per airing)</text>
+<rect x="25" y="210" width="1006" height="147" rx="12" fill="none" stroke="#fbbf24" stroke-dasharray="8,4"/><text x="1016" y="230" fill="#fbbf24" font-size="11" text-anchor="end">STAGE B + C  ARGYRE GB10 (LAN only): voices + synthesis service</text>
+<rect x="25" y="40" width="502" height="147" rx="12" fill="none" stroke="#22d3ee" stroke-dasharray="8,4"/><text x="40" y="60" fill="#22d3ee" font-size="11" text-anchor="start">STAGE A  MATE'S MACHINE (Australia): capture</text>
+<rect x="40" y="75" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="40" y="75" width="220" height="92" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<circle cx="56" cy="95" r="9" fill="#22d3ee"/>
+<text x="56" y="99" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">1</text>
+<text x="72" y="99" fill="#e2e8f0" font-size="12">Consent signed</text>
+<text x="252" y="87" fill="#22d3ee" font-size="7" text-anchor="end">MATE</text>
+<text x="52" y="121" fill="#94a3b8" font-size="9">VOICE_CONSENT.md</text>
+<text x="52" y="135" fill="#94a3b8" font-size="9">scope: expressive synthesis,</text>
+<text x="52" y="149" fill="#94a3b8" font-size="9">6 Twitch channels, revocable</text>
+<rect x="292" y="75" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="292" y="75" width="220" height="92" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<circle cx="308" cy="95" r="9" fill="#22d3ee"/>
+<text x="308" y="99" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">2</text>
+<text x="324" y="99" fill="#e2e8f0" font-size="12">Record in moods</text>
+<text x="504" y="87" fill="#22d3ee" font-size="7" text-anchor="end">MATE</text>
+<text x="304" y="121" fill="#94a3b8" font-size="9">pilot_50 + emotion set:</text>
+<text x="304" y="135" fill="#94a3b8" font-size="9">~10 lines x 6 moods, performed</text>
+<text x="304" y="149" fill="#94a3b8" font-size="9">'Number N' + 'again' method</text>
+<rect x="544" y="75" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="544" y="75" width="220" height="92" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+<circle cx="560" cy="95" r="9" fill="#94a3b8"/>
+<text x="560" y="99" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">3</text>
+<text x="576" y="99" fill="#e2e8f0" font-size="12">Shared folder</text>
+<text x="756" y="87" fill="#94a3b8" font-size="7" text-anchor="end">SHARED</text>
+<text x="556" y="121" fill="#94a3b8" font-size="9">batch WAVs up, samples down</text>
+<text x="556" y="135" fill="#94a3b8" font-size="9">no argyre port exposed</text>
+<text x="556" y="149" fill="#94a3b8" font-size="9">mate has veto on samples</text>
+<rect x="796" y="75" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="796" y="75" width="220" height="92" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+<circle cx="812" cy="95" r="9" fill="#94a3b8"/>
+<text x="812" y="99" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">G2</text>
+<text x="828" y="99" fill="#e2e8f0" font-size="12">Gate G2: accent test</text>
+<text x="1008" y="87" fill="#94a3b8" font-size="7" text-anchor="end">SHARED</text>
+<text x="808" y="121" fill="#94a3b8" font-size="9">10 s clip -> Chatterbox,</text>
+<text x="808" y="135" fill="#94a3b8" font-size="9">before big recording starts</text>
+<text x="808" y="149" fill="#94a3b8" font-size="9">tier 1 vs tier 2 decision</text>
+<rect x="40" y="245" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="40" y="245" width="220" height="92" rx="6" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/>
+<circle cx="56" cy="265" r="9" fill="#818cf8"/>
+<text x="56" y="269" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">4</text>
+<text x="72" y="269" fill="#e2e8f0" font-size="12">Splitter + QC</text>
+<text x="252" y="257" fill="#818cf8" font-size="7" text-anchor="end">UNCHANGED</text>
+<text x="52" y="291" fill="#94a3b8" font-size="9">whisper finds 'number N',</text>
+<text x="52" y="305" fill="#94a3b8" font-size="9">keeps last take, cuts clips</text>
+<text x="52" y="319" fill="#94a3b8" font-size="9">clipping / noise / WER checks</text>
+<rect x="292" y="245" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="292" y="245" width="220" height="92" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+<circle cx="308" cy="265" r="9" fill="#34d399"/>
+<text x="308" y="269" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">5</text>
+<text x="324" y="269" fill="#e2e8f0" font-size="12">Curate reference clips</text>
+<text x="504" y="257" fill="#34d399" font-size="7" text-anchor="end">NEW</text>
+<text x="304" y="291" fill="#94a3b8" font-size="9">best 5-15 s clip per mood</text>
+<text x="304" y="305" fill="#94a3b8" font-size="9">per voice; manifest file</text>
+<text x="304" y="319" fill="#94a3b8" font-size="9">human listen + mate approves</text>
+<rect x="544" y="245" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="544" y="245" width="220" height="92" rx="6" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+<circle cx="560" cy="265" r="9" fill="#fbbf24"/>
+<text x="560" y="269" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">6</text>
+<text x="576" y="269" fill="#e2e8f0" font-size="12">voices.yaml registry</text>
+<text x="756" y="257" fill="#fbbf24" font-size="7" text-anchor="end">CHANGED</text>
+<text x="556" y="291" fill="#94a3b8" font-size="9">provider: chatterbox</text>
+<text x="556" y="305" fill="#94a3b8" font-size="9">ref_clips: {neutral, angry..}</text>
+<text x="556" y="319" fill="#94a3b8" font-size="9">voice_registry --verify</text>
+<rect x="796" y="245" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="796" y="245" width="220" height="92" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+<circle cx="812" cy="265" r="9" fill="#34d399"/>
+<text x="812" y="269" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">7</text>
+<text x="828" y="269" fill="#e2e8f0" font-size="12">tts-chatterbox service</text>
+<text x="1008" y="257" fill="#34d399" font-size="7" text-anchor="end">NEW</text>
+<text x="808" y="291" fill="#94a3b8" font-size="9">shared GPU process, /synthesize</text>
+<text x="808" y="305" fill="#94a3b8" font-size="9">{text, voice, emotion} -> WAV</text>
+<text x="808" y="319" fill="#94a3b8" font-size="9">ASR check + retry on garble</text>
+<rect x="40" y="425" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="40" y="425" width="220" height="92" rx="6" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+<circle cx="56" cy="445" r="9" fill="#fbbf24"/>
+<text x="56" y="449" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">8</text>
+<text x="72" y="449" fill="#e2e8f0" font-size="12">LLM line + emotion tag</text>
+<text x="252" y="437" fill="#fbbf24" font-size="7" text-anchor="end">CHANGED</text>
+<text x="52" y="471" fill="#94a3b8" font-size="9">revoice.narrate_scene picks 1</text>
+<text x="52" y="485" fill="#94a3b8" font-size="9">emotion from a FIXED list;</text>
+<text x="52" y="499" fill="#94a3b8" font-size="9">unknown -> neutral (in code)</text>
+<rect x="292" y="425" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="292" y="425" width="220" height="92" rx="6" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+<circle cx="308" cy="445" r="9" fill="#fbbf24"/>
+<text x="308" y="449" fill="#020617" font-size="10" font-weight="600" text-anchor="middle">9</text>
+<text x="324" y="449" fill="#e2e8f0" font-size="12">tts_client backend</text>
+<text x="504" y="437" fill="#fbbf24" font-size="7" text-anchor="end">CHANGED</text>
+<text x="304" y="471" fill="#94a3b8" font-size="9">new 'chatterbox' in _BACKENDS</text>
+<text x="304" y="485" fill="#94a3b8" font-size="9">synthesize(text, emotion)</text>
+<text x="304" y="499" fill="#94a3b8" font-size="9">scene hash includes emotion</text>
+<rect x="544" y="425" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="544" y="425" width="220" height="92" rx="6" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/>
+<circle cx="560" cy="445" r="9" fill="#818cf8"/>
+<text x="560" y="449" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">10</text>
+<text x="576" y="449" fill="#e2e8f0" font-size="12">Per-scene checkpoint</text>
+<text x="756" y="437" fill="#818cf8" font-size="7" text-anchor="end">UNCHANGED</text>
+<text x="556" y="471" fill="#94a3b8" font-size="9">WAV + measured duration to</text>
+<text x="556" y="485" fill="#94a3b8" font-size="9">voice_prep_checkpoint, so a</text>
+<text x="556" y="499" fill="#94a3b8" font-size="9">crash resumes, not restarts</text>
+<rect x="796" y="425" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="796" y="425" width="220" height="92" rx="6" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/>
+<circle cx="812" cy="445" r="9" fill="#818cf8"/>
+<text x="812" y="449" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">11</text>
+<text x="828" y="449" fill="#e2e8f0" font-size="12">voiced_narration</text>
+<text x="1008" y="437" fill="#818cf8" font-size="7" text-anchor="end">UNCHANGED</text>
+<text x="808" y="471" fill="#94a3b8" font-size="9">finished airing saved to the</text>
+<text x="808" y="485" fill="#94a3b8" font-size="9">app Postgres with WAV bytes</text>
+<text x="808" y="499" fill="#94a3b8" font-size="9">replays use narration: reuse</text>
+<rect x="1048" y="425" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="1048" y="425" width="220" height="92" rx="6" fill="rgba(76,5,25,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+<circle cx="1064" cy="445" r="9" fill="#fb7185"/>
+<text x="1064" y="449" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">12</text>
+<text x="1080" y="449" fill="#e2e8f0" font-size="12">Piper fallback</text>
+<text x="1260" y="437" fill="#fb7185" font-size="7" text-anchor="end">FALLBACK</text>
+<text x="1060" y="471" fill="#94a3b8" font-size="9">if service is down the show</text>
+<text x="1060" y="485" fill="#94a3b8" font-size="9">still airs; voice will differ</text>
+<text x="1060" y="499" fill="#94a3b8" font-size="9">from the cloned one</text>
+<rect x="40" y="620" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="40" y="620" width="220" height="92" rx="6" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/>
+<circle cx="56" cy="640" r="9" fill="#818cf8"/>
+<text x="56" y="644" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">13</text>
+<text x="72" y="644" fill="#e2e8f0" font-size="12">replay.Performer</text>
+<text x="252" y="632" fill="#818cf8" font-size="7" text-anchor="end">UNCHANGED</text>
+<text x="52" y="666" fill="#94a3b8" font-size="9">visuals paced to measured WAV</text>
+<text x="52" y="680" fill="#94a3b8" font-size="9">length (target_duration), so</text>
+<text x="52" y="694" fill="#94a3b8" font-size="9">slow synth = prep time only</text>
+<rect x="292" y="620" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="292" y="620" width="220" height="92" rx="6" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/>
+<circle cx="308" cy="640" r="9" fill="#818cf8"/>
+<text x="308" y="644" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">14</text>
+<text x="324" y="644" fill="#e2e8f0" font-size="12">voice_gate</text>
+<text x="504" y="632" fill="#818cf8" font-size="7" text-anchor="end">UNCHANGED</text>
+<text x="304" y="666" fill="#94a3b8" font-size="9">one voice at a time via</text>
+<text x="304" y="680" fill="#94a3b8" font-size="9">flock seat files; no overlap</text>
+<text x="304" y="694" fill="#94a3b8" font-size="9">(N=1 default)</text>
+<rect x="544" y="620" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="544" y="620" width="220" height="92" rx="6" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/>
+<circle cx="560" cy="640" r="9" fill="#818cf8"/>
+<text x="560" y="644" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">15</text>
+<text x="576" y="644" fill="#e2e8f0" font-size="12">audio_player</text>
+<text x="756" y="632" fill="#818cf8" font-size="7" text-anchor="end">UNCHANGED</text>
+<text x="556" y="666" fill="#94a3b8" font-size="9">plays the cached WAV</text>
+<text x="556" y="680" fill="#94a3b8" font-size="9">paplay into the Pulse sink</text>
+<rect x="796" y="620" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="796" y="620" width="220" height="92" rx="6" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/>
+<circle cx="812" cy="640" r="9" fill="#818cf8"/>
+<text x="812" y="644" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">16</text>
+<text x="828" y="644" fill="#e2e8f0" font-size="12">PulseAudio sink 'vout'</text>
+<text x="1008" y="632" fill="#818cf8" font-size="7" text-anchor="end">UNCHANGED</text>
+<text x="808" y="666" fill="#94a3b8" font-size="9">null sink shared with the</text>
+<text x="808" y="680" fill="#94a3b8" font-size="9">screen capture on that worker</text>
+<rect x="1048" y="620" width="220" height="92" rx="6" fill="#0f172a"/>
+<rect x="1048" y="620" width="220" height="92" rx="6" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/>
+<circle cx="1064" cy="640" r="9" fill="#818cf8"/>
+<text x="1064" y="644" fill="#020617" font-size="8" font-weight="600" text-anchor="middle">17</text>
+<text x="1080" y="644" fill="#e2e8f0" font-size="12">ffmpeg -> Twitch</text>
+<text x="1260" y="632" fill="#818cf8" font-size="7" text-anchor="end">UNCHANGED</text>
+<text x="1060" y="666" fill="#94a3b8" font-size="9">stream_supervisor mixes vout</text>
+<text x="1060" y="680" fill="#94a3b8" font-size="9">+ screen, pushes RTMP to the</text>
+<text x="1060" y="694" fill="#94a3b8" font-size="9">channel; verify live, not logs</text>
+<rect x="50" y="765" width="14" height="14" rx="3" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/><text x="72" y="776" fill="#94a3b8" font-size="10">new component</text><rect x="265" y="765" width="14" height="14" rx="3" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/><text x="287" y="776" fill="#94a3b8" font-size="10">existing, modified</text><rect x="480" y="765" width="14" height="14" rx="3" fill="rgba(30,27,75,0.45)" stroke="#818cf8" stroke-width="1.5"/><text x="502" y="776" fill="#94a3b8" font-size="10">existing, unchanged</text><rect x="695" y="765" width="14" height="14" rx="3" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/><text x="717" y="776" fill="#94a3b8" font-size="10">mate's side</text><rect x="910" y="765" width="14" height="14" rx="3" fill="rgba(76,5,25,0.4)" stroke="#fb7185" stroke-width="1.5"/><text x="932" y="776" fill="#94a3b8" font-size="10">fallback path</text><path d="M 1130 772 L 1170 772" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#a)"/><text x="1178" y="776" fill="#94a3b8" font-size="10">runtime call</text>
+</svg>
+</div>
+<div class="cards"><div class="card"><h3><span class="cd" style="background:#fbbf24"></span>Decision gates (cheapest first)</h3><ul><li>G1 bake-off: tuned Piper vs Kokoro vs Chatterbox</li><li>G2 accent test: 10 s of the mate's voice</li><li>G3 GB10 speed + memory beside vllm-agents</li><li>G4 pilot QC pass rate >= 90%</li><li>G5 mate approves, user judges stream fit</li><li>Tier 2 (only if G2 fails): fine-tune on 1-2 h</li></ul></div><div class="card"><h3><span class="cd" style="background:#fb7185"></span>Risks</h3><ul><li>aarch64 / sm_121 PyTorch build (main unknown)</li><li>13 GB free beside vLLM; OOM history</li><li>Zero-shot accent drift on AU vowels</li><li>Hallucinated syllables: ASR check + retry</li><li>Perth watermark in every clip</li><li>Convincing clone: consent scope must be explicit</li></ul></div><div class="card"><h3><span class="cd" style="background:#34d399"></span>Changed vs old Aussie plan</h3><ul><li>Piper fine-tune dropped (flat prosody stays)</li><li>Guide flips: 'perform it' replaces 'don't perform'</li><li>Added emotion set + per-mood reference clips</li><li>Added per-line emotion tag in the LLM step</li><li>Reused: consent, splitter + QC, shared folder</li><li>Reused: registry, checkpoints, voice_gate, Twitch path</li></ul></div></div>
+<footer>PLAN ONLY, nothing built. Source: .claude/prompts/chatterbox_expressive_voices_plan.md (2026-10-12). Supersedes aussie_voice_pack_plan.html.</footer>
+</body></html>

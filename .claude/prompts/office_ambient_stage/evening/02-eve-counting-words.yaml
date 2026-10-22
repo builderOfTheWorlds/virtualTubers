@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-counting-words
+title: Counting Words
+ambient: true
+prompt: Evening in the Moonwell room. Julian, relaxed and loose-tied, reads a draft release note out loud,
+  his voice finding the tagline. Owen sits across the table, feet flat, hands folded, listening hard.
+  When Julian finishes, Owen gives him the word count, digit by digit, and taps his pen once. Julian looks
+  at the paper again, smiling, and Owen's pen waits. Is a shorter note better, or just shorter?
+lore:
+- office
+- rituals
+day_phase: evening
+intensity: normal
+seats:
+- marketing
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.0

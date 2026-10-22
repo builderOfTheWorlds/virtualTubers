@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-ferry-bouncer-lift
+title: Ferry, Bouncer, Lift
+ambient: true
+prompt: After lunch on the Open Floor, Julian perches on the edge of Theo's desk with a smile. Theo has
+  a new analogy for how Fraud-Stop works, and Julian wants to hear it. Theo starts gesticulating - a ferry
+  across a river, a bouncer outside a club, a lift going up a shaft. Is the customer the ferryman, the
+  clubber, or the executive on the top floor?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- engineer
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

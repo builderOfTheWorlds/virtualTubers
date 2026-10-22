@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-shift
+title: Late Shift
+ambient: true
+prompt: In the dark, silent Open Floor, Owen sits alone at a spare laptop, watching the overnight tests
+  inch forward. The soft glow of the screen reflects in his glasses as he quietly counts each passing
+  test under his breath, his flat affect hiding any hint of anxiety or excitement. The empty room amplifies
+  the hum of the servers and the clicking of the keyboard. How many tests will pass this time? And what
+  will he do if one fails?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

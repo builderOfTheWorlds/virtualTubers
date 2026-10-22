@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-short-and-shorter
+title: Short and Shorter
+ambient: true
+prompt: Late afternoon in the Moonwell room. Maren has asked Theo for a clear reason behind a recent DECLINE
+  result. Theo, feeling cornered, starts with a long explanation, but Maren cuts him off, asking for just
+  three points. He writes them down, but she wants them shorter. He shortens them, but she wants them
+  shorter still. Now they are staring at three very short lines of text and Theo is fighting the urge
+  to add a joke about brevity. What will be lost or gained as the reasons get more concise?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- analyst
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

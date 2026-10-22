@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-pipeline-and-post
+title: Pipeline and Post
+ambient: true
+prompt: It's after standup on a brisk morning. Julian is running his finger down his pipeline whiteboard,
+  mouthing names and numbers. Nora has the day's letters laid out in a precise row and is tapping them
+  into order with a click of her tongue. She seems to think Julian is missing something obvious. He seems
+  to think the answers are all in his head. Will the mail go out before lunch, or after?
+lore:
+- rituals
+day_phase: morning
+intensity: normal
+seats:
+- marketing
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

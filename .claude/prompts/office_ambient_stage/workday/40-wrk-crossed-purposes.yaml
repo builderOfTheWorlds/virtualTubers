@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-crossed-purposes
+title: Crossed Purposes
+ambient: true
+prompt: Early afternoon. Sunlight crosses Maren's desk as she pencils careful notes on a Corvane printout,
+  each one a question or a concern, numbered. Julian, at the next desk, turns in his chair, sensing an
+  opening to float a new tagline, to share a customer image that came in overnight. They are both working,
+  but in different directions, each thinking they know what's best for Corvane. How will they find a way
+  to work together?
+lore:
+- clients
+day_phase: workday
+intensity: normal
+seats:
+- analyst
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

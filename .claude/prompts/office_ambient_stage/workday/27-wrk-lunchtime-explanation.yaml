@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-lunchtime-explanation
+title: Lunchtime Explanation
+ambient: true
+prompt: Lunchtime around the kitchen table. Julian has asked Theo what the product actually does, in simple
+  terms. Theo starts to explain but keeps getting bogged down in the details. Each time, Owen interjects
+  with a single number that seems to be the answer, but doesn't help. Julian is trying to find a tagline
+  in there somewhere. Theo is starting to wonder if he could explain it at all. Owen is eating quietly
+  and seems content to let the other two talk. Is there a simple explanation for what Fraud-Stop does?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- engineer
+- marketing
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

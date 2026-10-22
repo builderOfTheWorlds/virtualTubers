@@ -1,0 +1,19 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-quarter-turn
+title: Quarter Turn
+ambient: true
+prompt: The small hours in the darkened office. Julian has stayed late again. He finishes his smoothie,
+  rinses the cup and sets it in the sink. Then he goes to his desk, where the plant is thirsty but Julian
+  knows better than to water it. He gives the pot a quarter turn and looks at it critically. Is it enough
+  to show he cares? Or too much?
+lore: []
+day_phase: off_hours
+intensity: quiet
+seats:
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

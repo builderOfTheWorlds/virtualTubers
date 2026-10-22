@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-three-desks-three-docs
+title: Three Desks, Three Docs
+ambient: true
+prompt: Lunchtime on the Open Floor. Brody, Theo and Maren have each opened a document - a pull request,
+  a requirement, and a design doc - and are considering them in turn. Brody starts in the middle, scanning
+  the requirement with a furrowed brow. Theo chuckles as he scrolls, ready with a quip. Maren has her
+  red pen out, prepared to ask 'for whom?' each change is meant. The documents sit, waiting for them to
+  align. Will they agree on what needs to be done?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- tech_lead
+- engineer
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

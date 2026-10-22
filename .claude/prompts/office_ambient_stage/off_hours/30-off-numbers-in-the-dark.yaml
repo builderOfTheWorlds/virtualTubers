@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-numbers-in-the-dark
+title: Numbers in the Dark
+ambient: true
+prompt: Pre-dawn on the Open Floor, the desks are dark but for the glow of Owen's screen. Theo has stayed
+  late and is now jittery with tiredness, making weak puns about the overnight test results. Owen reads
+  the totals aloud, his voice flat and even in the dark. Each time Theo jokes, Owen gives a number back,
+  as if scoring him. The room is quiet but for their voices. Is the data good enough to leave, or is there
+  more to say?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- engineer
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

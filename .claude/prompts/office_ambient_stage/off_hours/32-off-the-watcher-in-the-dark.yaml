@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-the-watcher-in-the-dark
+title: The Watcher in the Dark
+ambient: true
+prompt: Late night on the Open Floor, the lights are out and the room is dark. Brody sits alone at his
+  desk, the only light coming from the glow of the latency graph on his monitor. He stares at it, transfixed,
+  as if he's watching something important happen. Why is he still here, watching the graph, when everyone
+  else has gone home? What is he looking for?
+lore:
+- office
+- rituals
+- product
+day_phase: off_hours
+intensity: quiet
+seats:
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

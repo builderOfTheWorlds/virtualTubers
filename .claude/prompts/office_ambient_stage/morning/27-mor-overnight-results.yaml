@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-overnight-results
+title: Overnight Results
+ambient: true
+prompt: 'Early morning in the Glass Box. Owen is reporting the overnight test suite results to Brody:
+  a number of tests passed and another number failed, stated flatly with no embellishment. Brody listens
+  without expression, his eyes flicking between Owen and the latency graph on his screen. Neither seems
+  inclined to speculate or react. Is there something in the numbers that needs saying out loud?'
+lore:
+- office
+- product
+day_phase: morning
+intensity: normal
+seats:
+- tester
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.2

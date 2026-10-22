@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-client-story
+title: Client Story
+ambient: true
+prompt: It's 08:25 on the Open Floor. Julian has his chair turned to face Graham, who is standing beside
+  him. Julian is gesturing with one hand as he describes a customer's experience at checkout, while Graham
+  nods along, occasionally interjecting with a logistics metaphor. They're discussing how to incorporate
+  this client story into their marketing strategy. Is the customer's story more important than the technical
+  details of how Fraud-Stop helped them?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- ceo
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

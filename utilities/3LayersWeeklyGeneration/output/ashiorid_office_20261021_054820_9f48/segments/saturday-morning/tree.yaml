@@ -1,0 +1,203 @@
+saturday-morning:
+  node_id: saturday-morning
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'Standup: the CEO gives the final directive before the Halvard pilot launch.
+    The '
+  summary: 'Standup: the CEO gives the final directive before the Halvard pilot launch.
+    The Office Manager hands out coffee. A regulator email arrives.'
+  continuity_in: The Party Member makes a note about an odd spike in one account's
+    transactions.
+  continuity_out: The CEO opens the regulator email and frowns.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - saturday-morning-n0
+  - saturday-morning-n1
+  slots: null
+saturday-morning-n0:
+  node_id: saturday-morning-n0
+  parent_id: saturday-morning
+  order: 0
+  depth: 1
+  title: CEO Gives Final Directive
+  summary: The CEO addresses the team at the standup meeting, giving the final directive
+    before the Halvard pilot launch. The Office Manager hands out coffee to the team
+    members.
+  continuity_in: The Party Member makes a note about an odd spike in one account's
+    transactions.
+  continuity_out: The CEO receives a regulator email and opens it, frowning at the
+    contents.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - saturday-morning-n0-n0
+  - saturday-morning-n0-n1
+  slots: null
+saturday-morning-n1:
+  node_id: saturday-morning-n1
+  parent_id: saturday-morning
+  order: 1
+  depth: 1
+  title: Regulator Email Arrives
+  summary: As the standup meeting concludes, the CEO receives an email from the regulators.
+    The CEO opens the email and frowns, hinting at potentially troubling news related
+    to the Halvard pilot launch.
+  continuity_in: The CEO gives the final directive before the Halvard pilot launch.
+  continuity_out: The CEO opens the regulator email and frowns.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: saturday-morning-n1-001
+    kind: ambient
+    prompt: The CEO wraps up the standup meeting with a final directive.
+    lore:
+    - company
+    - rituals
+    participants:
+    - ceo
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-morning-n1-002
+    kind: ambient
+    prompt: The Office Manager hands out coffee to the team.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    - analyst
+    - engineer
+    - marketing
+    - party_member
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-morning-n1-003
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester
+  - slot_id: saturday-morning-n1-004
+    kind: ambient
+    prompt: The CEO receives an email from the regulators and opens it, frowning.
+    lore:
+    - company
+    participants:
+    - ceo
+    sensitivity: none
+    depends_on: []
+saturday-morning-n0-n0:
+  node_id: saturday-morning-n0-n0
+  parent_id: saturday-morning-n0
+  order: 0
+  depth: 2
+  title: CEO Addresses Team
+  summary: The CEO gives the final directive before the Halvard pilot launch at the
+    standup meeting. The Office Manager hands out coffee to the team members.
+  continuity_in: The Party Member makes a note about an odd spike in one account's
+    transactions.
+  continuity_out: The CEO receives a regulator email and opens it, frowning at the
+    contents.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: saturday-morning-n0-n0-001
+    kind: ambient
+    prompt: The CEO addresses the team at the standup meeting, giving the final directive
+      before the Halvard pilot launch.
+    lore:
+    - company
+    - product
+    participants:
+    - ceo
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-morning-n0-n0-002
+    kind: ambient
+    prompt: The Office Manager hands out coffee to the team members.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    - analyst
+    - engineer
+    - marketing
+    - party_member
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: saturday-morning-n0-n0-003
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - ceo
+    - analyst
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester
+  - slot_id: saturday-morning-n0-n0-004
+    kind: ambient
+    prompt: The CEO receives a regulator email and opens it, frowning at the contents.
+    lore:
+    - company
+    - org_chart
+    participants:
+    - ceo
+    sensitivity: tone
+    depends_on: []
+saturday-morning-n0-n1:
+  node_id: saturday-morning-n0-n1
+  parent_id: saturday-morning-n0
+  order: 1
+  depth: 2
+  title: Regulator Email Arrives
+  summary: A regulator email arrives during the standup meeting. The CEO opens it
+    and frowns at the contents.
+  continuity_in: The CEO gives the final directive before the Halvard pilot launch
+    at the standup meeting. The Office Manager hands out coffee to the team members.
+  continuity_out: The CEO opens the regulator email and frowns.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots: []

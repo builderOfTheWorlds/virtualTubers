@@ -1,0 +1,215 @@
+friday-ship:
+  node_id: friday-ship
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The pilot build is cut and tagged. Small celebrations, one unresolved worry
+    abou
+  summary: The pilot build is cut and tagged. Small celebrations, one unresolved worry
+    about the audit. Everyone goes home late.
+  continuity_in: The Engineer presents the week's work at the Friday demo in the Moonwell
+    room.
+  continuity_out: The Office Manager turns off the floor lights from the panel at
+    her station.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - friday-ship-n0
+  - friday-ship-n1
+  slots: null
+friday-ship-n0:
+  node_id: friday-ship-n0
+  parent_id: friday-ship
+  order: 0
+  depth: 1
+  title: Cutting the Pilot Build
+  summary: The engineering team works late to cut the pilot build of the software.
+    There is a celebratory mood as they tag the build, but an unresolved issue with
+    the audit looms.
+  continuity_in: The Engineer presents the week's work at the Friday demo in the Moonwell
+    room.
+  continuity_out: The team leads discuss the audit issue and its implications for
+    the project timeline.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - friday-ship-n0-n0
+  - friday-ship-n0-n1
+  slots: null
+friday-ship-n1:
+  node_id: friday-ship-n1
+  parent_id: friday-ship
+  order: 1
+  depth: 1
+  title: Small Celebrations and Concerns
+  summary: The team members celebrate the milestone of completing the pilot build,
+    but the worry about the audit dampens the mood. They head home late after a long
+    week.
+  continuity_in: The team leads discuss the audit issue and its implications for the
+    project timeline.
+  continuity_out: The Office Manager turns off the floor lights from the panel at
+    her station.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: friday-ship-n1-001
+    kind: ambient
+    prompt: The team leads discuss the audit issue and its implications for the project
+      timeline.
+    lore:
+    - company
+    - rumours
+    participants:
+    - ceo
+    - tech_lead
+    - analyst
+    sensitivity: tone
+    depends_on: []
+  - slot_id: friday-ship-n1-002
+    kind: ambient
+    prompt: The engineer presents the week's work at the Friday demo in the Moonwell
+      room.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: friday-ship-n1-003
+    kind: ambient
+    prompt: Small celebrations break out among the team members after the successful
+      pilot build.
+    lore:
+    - rituals
+    - company
+    participants:
+    - engineer
+    - tester
+    - marketing
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: friday-ship-n1-004
+    kind: ambient
+    prompt: The Office Manager turns off the floor lights from the panel at her station
+      as everyone heads home late.
+    lore:
+    - office
+    - company
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+friday-ship-n0-n0:
+  node_id: friday-ship-n0-n0
+  parent_id: friday-ship-n0
+  order: 0
+  depth: 2
+  title: The Final Push
+  summary: The engineering team works late into the night to finish the pilot build.
+    They are focused and determined to get it done.
+  continuity_in: The team realizes they need to work late to finish the build in time
+    for the deadline.
+  continuity_out: The build is finally tagged and the team celebrates their accomplishment.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: friday-ship-n0-n0-001
+    kind: ambient
+    prompt: The team realizes they need to work late to finish the build in time for
+      the deadline.
+    lore:
+    - office
+    participants:
+    - engineer
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: friday-ship-n0-n0-002
+    kind: ambient
+    prompt: The engineers focus intently on their screens, determined to finish the
+      build.
+    lore:
+    - company
+    - product
+    participants:
+    - engineer
+    sensitivity: none
+    depends_on: []
+  - slot_id: friday-ship-n0-n0-003
+    kind: ambient
+    prompt: The tech lead checks in with each engineer, offering encouragement and
+      support.
+    lore:
+    - office
+    - org_chart
+    participants:
+    - tech_lead
+    - engineer
+    sensitivity: tone
+    depends_on: []
+  - slot_id: friday-ship-n0-n0-004
+    kind: ambient
+    prompt: The build is finally tagged and the team celebrates their accomplishment
+      with high-fives and cheers.
+    lore:
+    - office
+    - rituals
+    participants:
+    - engineer
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+friday-ship-n0-n1:
+  node_id: friday-ship-n0-n1
+  parent_id: friday-ship-n0
+  order: 1
+  depth: 2
+  title: Lingering Worries
+  summary: Despite the successful completion of the build, there is an unresolved
+    issue with the audit that is weighing on everyone's minds.
+  continuity_in: The team leads discuss the audit issue and its implications for the
+    project timeline.
+  continuity_out: The Office Manager turns off the floor lights from the panel at
+    her station.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: friday-ship-n0-n1-001
+    kind: ambient
+    prompt: The team leads discuss the audit issue and its implications for the project
+      timeline.
+    lore:
+    - company
+    - office
+    participants:
+    - tech_lead
+    - analyst
+    sensitivity: tone
+    depends_on: []
+  - slot_id: friday-ship-n0-n1-002
+    kind: ambient
+    prompt: The Office Manager turns off the floor lights from the panel at her station.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []

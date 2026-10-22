@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-glass-box-wording
+title: Glass Box Wording
+ambient: true
+prompt: Early afternoon in the Glass Box. Maren has a numbered list and wants the requirement to specify
+  the end user clearly. Brody is leaning back, tapping the desk, thinking it through. Graham keeps folding
+  his hands and unfolding them, wanting the wording that flows best. The blinds stay open on the quiet
+  street outside. Who is this change really for - the bank, their customers, or someone else?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- analyst
+- tech_lead
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

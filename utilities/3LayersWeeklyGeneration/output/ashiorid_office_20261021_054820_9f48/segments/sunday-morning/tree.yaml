@@ -1,0 +1,238 @@
+sunday-morning:
+  node_id: sunday-morning
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The CEO announces the Halvard pilot is live. The Analyst and Tech Lead break
+    it '
+  summary: 'The CEO announces the Halvard pilot is live. The Analyst and Tech Lead
+    break it down: the pilot branch is good to go, the Halvard test set is ready,
+    Saturday''s release will be a big one. The Engineer looks pensive. Marketing is
+    already drafting the announcement.'
+  continuity_in: The team gathers for standup. The CEO has a countdown on the whiteboard.
+  continuity_out: The meeting breaks. The Analyst and Tech Lead huddle, planning.
+    The Engineer heads for their desk, deep in thought.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - sunday-morning-n0
+  - sunday-morning-n1
+  slots: null
+sunday-morning-n0:
+  node_id: sunday-morning-n0
+  parent_id: sunday-morning
+  order: 0
+  depth: 1
+  title: CEO announces Halvard pilot is live
+  summary: The CEO announces to the team that the Halvard pilot is now live. The Analyst
+    and Tech Lead provide an update, confirming that the pilot branch is ready to
+    go and the Halvard test set is prepared. They emphasize that Saturday's release
+    will be a significant milestone. Meanwhile, the Engineer appears pensive, suggesting
+    they may have some concerns or additional thoughts about the project. Marketing
+    is already working on drafting an announcement about the pilot going live.
+  continuity_in: The team gathers for their daily standup meeting. The CEO has a countdown
+    written on the whiteboard, building anticipation for the pilot launch.
+  continuity_out: The standup meeting concludes. The Analyst and Tech Lead continue
+    discussing the pilot, making plans for the upcoming release. The Engineer leaves
+    the meeting, heading back to their desk with a thoughtful expression, possibly
+    contemplating the implications of the pilot or their role in the project.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - sunday-morning-n0-n0
+  - sunday-morning-n0-n1
+  slots: null
+sunday-morning-n1:
+  node_id: sunday-morning-n1
+  parent_id: sunday-morning
+  order: 1
+  depth: 1
+  title: Team reacts to Halvard pilot announcement
+  summary: The team members react to the news that the Halvard pilot is live. The
+    Analyst and Tech Lead seem excited and well-prepared, confirming that all the
+    necessary components are in place for a successful pilot launch. They highlight
+    the significance of the upcoming Saturday release. In contrast, the Engineer appears
+    deep in thought, potentially processing the implications of the pilot or considering
+    any potential challenges that may arise. Marketing is proactive, already working
+    on an announcement to share the news with stakeholders.
+  continuity_in: The CEO announces the Halvard pilot is live during the standup meeting,
+    capturing the team's attention.
+  continuity_out: The standup meeting wraps up, with team members dispersing to focus
+    on their respective tasks related to the pilot. The Analyst and Tech Lead continue
+    their discussion, making plans for the release. The Engineer, looking pensive,
+    heads back to their desk, likely to dive deeper into their work on the project.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: sunday-morning-n1-001
+    kind: ambient
+    prompt: The CEO announces the Halvard pilot is live. The Analyst and Tech Lead
+      break it down.
+    lore:
+    - product
+    participants:
+    - ceo
+    - analyst
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-morning-n1-002
+    kind: ambient
+    prompt: The Analyst confirms the pilot branch is good to go. The Tech Lead says
+      the Halvard test set is ready.
+    lore:
+    - product
+    participants:
+    - analyst
+    - tech_lead
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-morning-n1-003
+    kind: ambient
+    prompt: The Tech Lead highlights that Saturday's release will be a big one. Marketing
+      is already drafting the announcement.
+    lore:
+    - product
+    - company
+    participants:
+    - tech_lead
+    - marketing
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-morning-n1-004
+    kind: ambient
+    prompt: The Engineer looks pensive as the team discusses the Halvard pilot.
+    lore:
+    - office
+    participants:
+    - engineer
+    sensitivity: tone
+    depends_on: []
+sunday-morning-n0-n0:
+  node_id: sunday-morning-n0-n0
+  parent_id: sunday-morning-n0
+  order: 0
+  depth: 2
+  title: CEO Announces Halvard Pilot is Live
+  summary: The CEO announces to the team that the Halvard pilot is now live, marking
+    a significant milestone for the project. The Analyst and Tech Lead provide an
+    update, confirming that the pilot branch is ready to go and the Halvard test set
+    is prepared. They emphasize that Saturday's release will be a big one. Meanwhile,
+    the Engineer appears pensive, suggesting they may have some concerns or additional
+    thoughts about the project. Marketing is already working on drafting an announcement
+    about the pilot going live.
+  continuity_in: The team gathers for their daily standup meeting. The CEO has a countdown
+    written on the whiteboard, building anticipation for the pilot launch.
+  continuity_out: The standup meeting concludes. The Analyst and Tech Lead continue
+    discussing the pilot, making plans for the upcoming release.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: sunday-morning-n0-n0-001
+    kind: ambient
+    prompt: The team gathers for their daily standup meeting. The CEO has a countdown
+      written on the whiteboard, building anticipation for the Halvard pilot launch.
+    lore:
+    - office
+    - rituals
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-morning-n0-n0-002
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+  - slot_id: sunday-morning-n0-n0-003
+    kind: ambient
+    prompt: The standup meeting concludes. The Analyst and Tech Lead continue discussing
+      the Halvard pilot, making plans for the upcoming release. The Engineer heads
+      to their desk, deep in thought.
+    lore:
+    - office
+    - company
+    participants:
+    - analyst
+    - engineer
+    - tech_lead
+    sensitivity: tone
+    depends_on: []
+  - slot_id: sunday-morning-n0-n0-004
+    kind: ambient
+    prompt: Marketing is already drafting the announcement about the Halvard pilot
+      going live. They want to make sure the messaging is on point and the excitement
+      is palpable.
+    lore:
+    - company
+    - product
+    participants:
+    - marketing
+    sensitivity: tone
+    depends_on: []
+sunday-morning-n0-n1:
+  node_id: sunday-morning-n0-n1
+  parent_id: sunday-morning-n0
+  order: 1
+  depth: 2
+  title: Engineer Contemplates Pilot Implications
+  summary: As the standup meeting wraps up, the Engineer leaves the group and heads
+    back to their desk with a thoughtful expression. Their pensive demeanor suggests
+    they may be contemplating the implications of the Halvard pilot or considering
+    their role and responsibilities in the project. The Engineer's deep-in-thought
+    departure hints at potential challenges or areas for further consideration as
+    the pilot moves forward.
+  continuity_in: The Analyst and Tech Lead continue planning after the standup meeting
+    concludes.
+  continuity_out: The Engineer arrives at their desk, ready to dive into the work
+    needed for the Halvard pilot, but still deep in thought about its implications.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: sunday-morning-n0-n1-001
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - tech_lead
+    - tester
+  - slot_id: sunday-morning-n0-n1-002
+    kind: ambient
+    prompt: The Engineer returns to their desk, lost in thought about the Halvard
+      pilot.
+    lore:
+    - office
+    - product
+    participants:
+    - engineer
+    sensitivity: tone
+    depends_on: []

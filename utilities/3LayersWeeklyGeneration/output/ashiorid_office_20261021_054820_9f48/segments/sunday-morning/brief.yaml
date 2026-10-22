@@ -1,0 +1,178 @@
+segment_id: sunday-morning
+order: 1
+loop: 0
+hours: 6
+synopsis: 'The CEO announces the Halvard pilot is live. The Analyst and Tech Lead
+  break it down: the pilot branch is good to go, the Halvard test set is ready, Saturday''s
+  release will be a big one. The Engineer looks pensive. Marketing is already drafting
+  the announcement.'
+continuity_in: The team gathers for standup. The CEO has a countdown on the whiteboard.
+continuity_out: The meeting breaks. The Analyst and Tech Lead huddle, planning. The
+  Engineer heads for their desk, deep in thought.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: sunday-morning-n0-n0-001
+  kind: ambient
+  prompt: The team gathers for their daily standup meeting. The CEO has a countdown
+    written on the whiteboard, building anticipation for the Halvard pilot launch.
+  lore:
+  - office
+  - rituals
+  participants:
+  - analyst
+  - ceo
+  - engineer
+  - marketing
+  - office_manager
+  - tech_lead
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-morning-n0-n0
+- slot_id: sunday-morning-n0-n0-002
+  kind: spine
+  scene_ref: first-standup
+  participants:
+  - analyst
+  - ceo
+  - engineer
+  - marketing
+  - office_manager
+  - tech_lead
+  - tester
+  node_id: sunday-morning-n0-n0
+- slot_id: sunday-morning-n0-n0-003
+  kind: ambient
+  prompt: The standup meeting concludes. The Analyst and Tech Lead continue discussing
+    the Halvard pilot, making plans for the upcoming release. The Engineer heads to
+    their desk, deep in thought.
+  lore:
+  - office
+  - company
+  participants:
+  - analyst
+  - engineer
+  - tech_lead
+  sensitivity: tone
+  depends_on: []
+  node_id: sunday-morning-n0-n0
+- slot_id: sunday-morning-n0-n0-004
+  kind: ambient
+  prompt: Marketing is already drafting the announcement about the Halvard pilot going
+    live. They want to make sure the messaging is on point and the excitement is palpable.
+  lore:
+  - company
+  - product
+  participants:
+  - marketing
+  sensitivity: tone
+  depends_on: []
+  node_id: sunday-morning-n0-n0
+- slot_id: sunday-morning-n0-n1-001
+  kind: spine
+  scene_ref: first-standup
+  participants:
+  - analyst
+  - ceo
+  - engineer
+  - marketing
+  - office_manager
+  - tech_lead
+  - tester
+  node_id: sunday-morning-n0-n1
+- slot_id: sunday-morning-n0-n1-002
+  kind: ambient
+  prompt: The Engineer returns to their desk, lost in thought about the Halvard pilot.
+  lore:
+  - office
+  - product
+  participants:
+  - engineer
+  sensitivity: tone
+  depends_on: []
+  node_id: sunday-morning-n0-n1
+- slot_id: sunday-morning-n1-001
+  kind: ambient
+  prompt: The CEO announces the Halvard pilot is live. The Analyst and Tech Lead break
+    it down.
+  lore:
+  - product
+  participants:
+  - ceo
+  - analyst
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-morning-n1
+- slot_id: sunday-morning-n1-002
+  kind: ambient
+  prompt: The Analyst confirms the pilot branch is good to go. The Tech Lead says
+    the Halvard test set is ready.
+  lore:
+  - product
+  participants:
+  - analyst
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-morning-n1
+- slot_id: sunday-morning-n1-003
+  kind: ambient
+  prompt: The Tech Lead highlights that Saturday's release will be a big one. Marketing
+    is already drafting the announcement.
+  lore:
+  - product
+  - company
+  participants:
+  - tech_lead
+  - marketing
+  sensitivity: none
+  depends_on: []
+  node_id: sunday-morning-n1
+- slot_id: sunday-morning-n1-004
+  kind: ambient
+  prompt: The Engineer looks pensive as the team discusses the Halvard pilot.
+  lore:
+  - office
+  participants:
+  - engineer
+  sensitivity: tone
+  depends_on: []
+  node_id: sunday-morning-n1
+nodes:
+- node_id: sunday-morning
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: sunday-morning-n0
+  parent_id: sunday-morning
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: sunday-morning-n0-n0
+  parent_id: sunday-morning-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4
+- node_id: sunday-morning-n0-n1
+  parent_id: sunday-morning-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 2
+- node_id: sunday-morning-n1
+  parent_id: sunday-morning
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

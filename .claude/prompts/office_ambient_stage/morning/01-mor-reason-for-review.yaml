@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-reason-for-review
+title: Reason for Review
+ambient: true
+prompt: Just after 08:00, Maren is at her desk with the phone in her hand, frowning at the notes she took
+  during a call with Pellbridge. She's muttering to herself as she tries to make sense of their request
+  for a REVIEW reason that doesn't seem to fit any standard case. Julian, passing by with two mugs of
+  coffee, pauses at the sound of a client name and glances back at Maren. Will he offer to help, or just
+  mention the client in his next tagline draft?
+lore:
+- clients
+- product
+day_phase: morning
+intensity: normal
+seats:
+- analyst
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

@@ -1,0 +1,97 @@
+segment_id: tuesday-ship
+order: 11
+loop: 0
+hours: 6
+synopsis: A rushed rules release goes out late to hit the pilot schedule; the Tester
+  flags one amount-outlier test as 'amber, not red'. Nobody stops the release.
+continuity_in: Marketing gets a lukewarm maybe from Corvane.
+continuity_out: The release goes out with an amber test.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: tuesday-ship-n1-001
+  kind: ambient
+  prompt: The Tester runs the amount-outlier test and sees an unexpected result.
+  lore:
+  - product
+  participants:
+  - tester
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-ship-n1
+- slot_id: tuesday-ship-n1-002
+  kind: ambient
+  prompt: The Tester flags the amount-outlier test as 'amber, not red' and reports
+    to the Tech Lead.
+  lore:
+  - company
+  - org_chart
+  participants:
+  - tester
+  - tech_lead
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-ship-n1
+- slot_id: tuesday-ship-n1-003
+  kind: ambient
+  prompt: The Tech Lead considers the amber flag but decides to proceed with the release
+    to meet the pilot schedule.
+  lore:
+  - product
+  - company
+  participants:
+  - tech_lead
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-ship-n1
+- slot_id: tuesday-ship-n1-004
+  kind: ambient
+  prompt: The release goes out with the amber test, as the Tech Lead communicated
+    the decision to the team.
+  lore:
+  - office
+  - company
+  participants:
+  - tech_lead
+  - engineer
+  - analyst
+  sensitivity: none
+  depends_on: []
+  node_id: tuesday-ship-n1
+nodes:
+- node_id: tuesday-ship
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: tuesday-ship-n0
+  parent_id: tuesday-ship
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: tuesday-ship-n0-n0
+  parent_id: tuesday-ship-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 0
+- node_id: tuesday-ship-n0-n1
+  parent_id: tuesday-ship-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 0
+- node_id: tuesday-ship-n1
+  parent_id: tuesday-ship
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+needs_rebrief: true

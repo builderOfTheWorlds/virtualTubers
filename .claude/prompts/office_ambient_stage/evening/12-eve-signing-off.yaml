@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-signing-off
+title: Signing Off
+ambient: true
+prompt: Late on the Open Floor. Julian leans over the whiteboard, writing the final line of the release
+  notes on a yellow sticky note. He smooths it down, taps it twice, and steps back to read the whole column.
+  Graham, at the doorway to the Glass Box, watches from the corner of his eye. Is today's work done, or
+  is there one more thing? Julian looks over. Graham tilts his head towards the Glass Box and raises his
+  eyebrows. Is there a meeting, or just an open door?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- marketing
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.1

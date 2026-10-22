@@ -1,0 +1,164 @@
+segment_id: saturday-off-hours
+order: 24
+loop: 0
+hours: 6
+synopsis: The Party Member watches the dashboard in the dark office, noting the overnight
+  transaction patterns in the notebook.
+continuity_in: The Office Manager has turned off the floor lights from the panel at
+  her station.
+continuity_out: The Party Member makes a note about an odd spike in one account's
+  transactions.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: saturday-off-hours-n0-n0-001
+  kind: ambient
+  prompt: The Party Member's eyes dart across the dashboard, absorbing the overnight
+    transaction patterns.
+  lore:
+  - office
+  - product
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n0-n0
+- slot_id: saturday-off-hours-n0-n0-002
+  kind: ambient
+  prompt: The Party Member jots down notes about the typical ebb and flow of transactions
+    in the notebook.
+  lore:
+  - office
+  - company
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n0-n0
+- slot_id: saturday-off-hours-n0-n0-003
+  kind: ambient
+  prompt: The Party Member pauses, their brow furrowing at an unusual spike in one
+    account's transactions.
+  lore:
+  - product
+  - office
+  participants:
+  - party_member
+  sensitivity: tone
+  depends_on: []
+  node_id: saturday-off-hours-n0-n0
+- slot_id: saturday-off-hours-n0-n0-004
+  kind: ambient
+  prompt: The Party Member makes a detailed note about the odd transaction pattern,
+    including timestamps and amounts.
+  lore:
+  - company
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n0-n0
+- slot_id: saturday-off-hours-n0-n1-001
+  kind: ambient
+  prompt: The Party Member's eyes scan the dashboard, noting the ebb and flow of transactions
+    through the night.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n0-n1
+- slot_id: saturday-off-hours-n0-n1-002
+  kind: ambient
+  prompt: The Party Member jots down a few observations in their notebook, highlighting
+    an unusual spike in one account's activity.
+  lore:
+  - office
+  - company
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n0-n1
+- slot_id: saturday-off-hours-n1-001
+  kind: ambient
+  prompt: The Party Member's eyes scan the dashboard, noting the ebb and flow of transactions
+    through the night.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n1
+- slot_id: saturday-off-hours-n1-002
+  kind: ambient
+  prompt: The Party Member jots down observations about the overnight transaction
+    patterns in their notebook.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n1
+- slot_id: saturday-off-hours-n1-003
+  kind: ambient
+  prompt: The Party Member notices an odd spike in one account's transactions, flagging
+    it in the notebook.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n1
+- slot_id: saturday-off-hours-n1-004
+  kind: ambient
+  prompt: The Party Member makes a note about the unusual activity in the account,
+    wondering what could be causing it.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: saturday-off-hours-n1
+nodes:
+- node_id: saturday-off-hours
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: saturday-off-hours-n0
+  parent_id: saturday-off-hours
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: saturday-off-hours-n0-n0
+  parent_id: saturday-off-hours-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4
+- node_id: saturday-off-hours-n0-n1
+  parent_id: saturday-off-hours-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 2
+- node_id: saturday-off-hours-n1
+  parent_id: saturday-off-hours
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4

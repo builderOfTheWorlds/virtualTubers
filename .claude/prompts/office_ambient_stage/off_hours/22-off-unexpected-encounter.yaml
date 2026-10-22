@@ -1,0 +1,20 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-unexpected-encounter
+title: Unexpected Encounter
+ambient: true
+prompt: It's nearly 05:00 and the office is dark, but Julian has returned for a forgotten charger. He
+  notices the emergency light in the Party Member's corner and is surprised to see him there at this hour.
+  Julian lowers his voice instinctively, as if not to disturb the silent observer. The Party Member doesn't
+  acknowledge Julian's presence. Why is Julian whispering when he's the only one who can hear himself?
+lore: []
+day_phase: off_hours
+intensity: quiet
+seats:
+- marketing
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.2

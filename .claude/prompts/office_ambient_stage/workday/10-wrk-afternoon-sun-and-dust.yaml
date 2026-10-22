@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-afternoon-sun-and-dust
+title: Afternoon Sun and Dust
+ambient: true
+prompt: Late afternoon light slants across the Open Floor. Nora is methodically vacuuming around the Party
+  Member's corner desk, taking care not to disturb the silent figure or the items on the desk. She's humming
+  a little tune to herself as she works, occasionally pausing to adjust a cable or tidy a stack of papers.
+  The Party Member sits motionless, watching her work. How often does Nora clean around this mysterious
+  presence, and what does the Party Member think of her diligent attention?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

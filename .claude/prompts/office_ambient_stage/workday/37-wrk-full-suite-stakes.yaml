@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-full-suite-stakes
+title: Full Suite Stakes
+ambient: true
+prompt: Late morning in the Moonwell room. Owen has just finished a full test suite run and is writing
+  the pass rate on a card with his usual deadpan expression. Theo, hovering by the door, can't help but
+  try to guess the number based on Owen's poker face. The tension is palpable as they both know the implications
+  of a low pass rate. Will Theo's guesses hit the mark, or will Owen surprise them both with an unexpected
+  outcome?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- tester
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.3

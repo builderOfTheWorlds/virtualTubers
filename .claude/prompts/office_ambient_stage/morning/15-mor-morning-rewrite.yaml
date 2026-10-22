@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-morning-rewrite
+title: Morning Rewrite
+ambient: true
+prompt: Sunrise on the Open Floor. Julian is early, already at his desk rewriting copy from the day before,
+  whispering taglines to the ficus plant. Graham is nearby and overhears, but is pretending not to. The
+  release note is not due for hours and this change may be invisible to anyone outside the room. Will
+  Graham offer a word or wait for the draft to come to him?
+lore:
+- office
+- rituals
+day_phase: morning
+intensity: normal
+seats:
+- marketing
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

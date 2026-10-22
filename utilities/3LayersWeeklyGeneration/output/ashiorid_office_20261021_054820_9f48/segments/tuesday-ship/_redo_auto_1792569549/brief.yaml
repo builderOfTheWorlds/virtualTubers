@@ -1,0 +1,108 @@
+segment_id: tuesday-ship
+order: 11
+loop: 0
+hours: 6
+synopsis: A rushed rules release goes out late to hit the pilot schedule; the Tester
+  flags one amount-outlier test as 'amber, not red'. Nobody stops the release.
+continuity_in: Marketing gets a lukewarm maybe from Corvane.
+continuity_out: The release goes out with an amber test.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: tuesday-ship-n0-n0-001
+  kind: ambient
+  prompt: The team is working late into the night to get the rules release ready for
+    the pilot schedule. The Tester is under pressure to sign off on the release, despite
+    some tests not passing with flying colors.
+  lore:
+  - office
+  - product
+  participants:
+  - tester
+  - engineer
+  - analyst
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-ship-n0-n0
+- slot_id: tuesday-ship-n0-n0-002
+  kind: ambient
+  prompt: The office is buzzing with activity as everyone scrambles to complete their
+    tasks for the rules release. The CEO is seen pacing nervously, checking in with
+    each team member to ensure things are on track.
+  lore:
+  - office
+  - company
+  participants:
+  - ceo
+  - tech_lead
+  - office_manager
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-ship-n0-n0
+- slot_id: tuesday-ship-n0-n0-003
+  kind: ambient
+  prompt: The Tester brings up concerns about one of the amount-outlier tests that
+    is flagged as 'amber, not red'. However, with the pilot schedule looming, the
+    decision is made to proceed with the release as is.
+  lore:
+  - product
+  - rumours
+  participants:
+  - tester
+  - engineer
+  - analyst
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-ship-n0-n0
+- slot_id: tuesday-ship-n0-n0-004
+  kind: ambient
+  prompt: As the release goes out, there is a mix of relief and apprehension in the
+    office. Some team members celebrate the successful release, while others quietly
+    express concerns about the amber test and the potential consequences.
+  lore:
+  - office
+  - rituals
+  participants:
+  - office_manager
+  - engineer
+  - marketing
+  sensitivity: tone
+  depends_on: []
+  node_id: tuesday-ship-n0-n0
+nodes:
+- node_id: tuesday-ship
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: tuesday-ship-n0
+  parent_id: tuesday-ship
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 7
+  slots: 0
+- node_id: tuesday-ship-n0-n0
+  parent_id: tuesday-ship-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 4
+  slots: 4
+- node_id: tuesday-ship-n0-n1
+  parent_id: tuesday-ship-n0
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 3
+  slots: 0
+- node_id: tuesday-ship-n1
+  parent_id: tuesday-ship
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 3
+  slots: 0
+needs_rebrief: true

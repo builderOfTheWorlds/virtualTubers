@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-night-snack-encounter
+title: Night Snack Encounter
+ambient: true
+prompt: The kitchen is dark and quiet in the early hours of the morning. Theo, the fast-talking engineer
+  with a penchant for jokes, fumbles for a snack from the shelf. Julian, the smooth marketing guru, emerges
+  from the shadows, also seeking a late-night bite. Both try to play it cool, pretending they were just
+  about to head home. The tension is palpable as they navigate the awkward encounter, each trying to save
+  face in the darkness.
+lore:
+- office
+- rituals
+day_phase: off_hours
+intensity: quiet
+seats:
+- engineer
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.3

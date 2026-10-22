@@ -1,0 +1,88 @@
+tuesday-ship:
+  node_id: tuesday-ship
+  parent_id: null
+  order: 0
+  depth: 0
+  title: A rushed rules release goes out late to hit the pilot schedule; the Tester
+    flags
+  summary: A rushed rules release goes out late to hit the pilot schedule; the Tester
+    flags one amount-outlier test as 'amber, not red'. Nobody stops the release.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The release goes out with an amber test.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - tuesday-ship-n0
+  - tuesday-ship-n1
+  slots: null
+tuesday-ship-n0:
+  node_id: tuesday-ship-n0
+  parent_id: tuesday-ship
+  order: 0
+  depth: 1
+  title: Rushed Release Prep
+  summary: The team scrambles to prepare the rules release to meet the pilot schedule.
+    Despite the time crunch, the Tester manages to complete testing, flagging one
+    amount-outlier test as 'amber, not red'.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The release is prepared, but with an amber test result.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - tuesday-ship-n0-n0
+  - tuesday-ship-n0-n1
+  slots: null
+tuesday-ship-n1:
+  node_id: tuesday-ship-n1
+  parent_id: tuesday-ship
+  order: 1
+  depth: 1
+  title: Release Decision
+  summary: The team discusses the amber test result, but ultimately decides not to
+    halt the release to meet the pilot schedule. The release goes out with the known
+    issue.
+  continuity_in: The release is prepared, but with an amber test result.
+  continuity_out: The release goes out with an amber test.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots: []
+tuesday-ship-n0-n0:
+  node_id: tuesday-ship-n0-n0
+  parent_id: tuesday-ship-n0
+  order: 0
+  depth: 2
+  title: Scramble to Prepare Release
+  summary: The team works frantically to get the rules release ready in time to meet
+    the pilot schedule, cutting corners where possible.
+  continuity_in: Marketing gets a lukewarm maybe from Corvane.
+  continuity_out: The release is mostly prepared but the testing is rushed.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots: []
+tuesday-ship-n0-n1:
+  node_id: tuesday-ship-n0-n1
+  parent_id: tuesday-ship-n0
+  order: 1
+  depth: 2
+  title: Rushed Testing Complete
+  summary: Despite the time crunch, the Tester completes testing the release. One
+    amount-outlier test comes back 'amber, not red', but the issue is not severe enough
+    to halt the release.
+  continuity_in: The release is mostly prepared but the testing is rushed.
+  continuity_out: The release is prepared, but with an amber test result.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots: []

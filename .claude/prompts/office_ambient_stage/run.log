@@ -1,0 +1,384 @@
+01:49:14 run office_ambient_20261021_014914: quotas={'off_hours': 40, 'morning': 30, 'workday': 55, 'evening': 25} already_staged={'off_hours': 0, 'morning': 0, 'workday': 0, 'evening': 0} todo={'off_hours': 40, 'morning': 30, 'workday': 55, 'evening': 25} arrivals=0
+01:49:14 waiting for http://127.0.0.1:8092/v1 (up to 180.0 min)
+02:58:16 FATAL: server rejected the API key (HTTP 401); the key from .env / AMBIENT_LLM_KEY does not match the running container
+02:58:16 run office_ambient_20261021_025816: quotas={'off_hours': 40, 'morning': 30, 'workday': 55, 'evening': 25} already_staged={'off_hours': 0, 'morning': 0, 'workday': 0, 'evening': 0} todo={'off_hours': 40, 'morning': 30, 'workday': 55, 'evening': 25} arrivals=0
+02:58:16 waiting for http://127.0.0.1:8092/v1 (up to 180.0 min)
+02:58:16 server ready
+02:58:51 [w1] REJECT off_hours#2 a1 35s ['party_member_acts:leaves']
+02:58:57 [w0] ACCEPT off_hours#1 a1 42s off-before-dawn (run total 1, 1.44/min)
+02:59:38 [w1] ACCEPT off_hours#2 a2 47s off-night-watch (run total 2, 1.47/min)
+02:59:45 [w0] ACCEPT morning#1 a1 48s mor-reason-for-review (run total 3, 2.01/min)
+03:00:18 [w1] ACCEPT workday#1 a1 41s wrk-the-board-line (run total 4, 1.95/min)
+03:00:26 [w0] REJECT workday#2 a1 41s ['offseat_cast:Owen']
+03:00:54 [w1] ACCEPT evening#1 a1 35s eve-evening-chores (run total 5, 1.90/min)
+03:01:02 [w0] ACCEPT workday#2 a2 37s wrk-numbers-tell-stories (run total 6, 2.16/min)
+03:01:38 [w1] ACCEPT off_hours#3 a1 44s off-quiet-night-clean-machine (run total 7, 2.07/min)
+03:01:43 [w0] ACCEPT off_hours#4 a1 41s off-tea-and-silence (run total 8, 2.31/min)
+03:02:20 [w1] ACCEPT morning#2 a1 42s mor-morning-check (run total 9, 2.21/min)
+03:02:31 [w0] REJECT workday#3 a1 47s ['unknown_name:For']
+03:02:52 [w1] REJECT workday#4 a1 32s ['same_opening']
+03:03:20 [w0] ACCEPT workday#3 a2 49s wrk-short-and-shorter (run total 10, 1.97/min)
+03:03:45 [w1] REJECT workday#4 a2 52s ['plot_term:reveals']
+03:04:01 [w0] ACCEPT evening#2 a1 41s eve-counting-words (run total 11, 1.91/min)
+03:04:23 [w1] ACCEPT workday#4 a3 39s wrk-the-number (run total 12, 1.96/min)
+03:04:44 [w0] REJECT off_hours#5 a1 43s ['plot_term:finally']
+03:05:07 [w1] ACCEPT off_hours#6 a1 44s off-nightcap (run total 13, 1.90/min)
+03:05:19 [w0] ACCEPT off_hours#5 a2 35s off-late-shift-learning (run total 14, 1.98/min)
+03:05:42 [w1] ACCEPT morning#3 a1 35s mor-untouched-cup (run total 15, 2.02/min)
+03:06:05 [w0] ACCEPT workday#5 a1 45s wrk-overheard-and-understood (run total 16, 2.05/min)
+03:06:17 [w1] ACCEPT workday#6 a1 35s wrk-deadpan-delivery (run total 17, 2.12/min)
+03:06:49 [w0] REJECT evening#3 a1 44s ['plot_term:finally']
+03:06:57 [w1] ACCEPT off_hours#7 a1 40s off-early-morning-draft (run total 18, 2.07/min)
+03:07:29 [w0] ACCEPT evening#3 a2 40s eve-last-one-out (run total 19, 2.06/min)
+03:07:38 [w1] ACCEPT off_hours#8 a1 42s off-night-shift-cleaning (run total 20, 2.13/min)
+03:08:16 [w0] ACCEPT morning#4 a1 47s mor-morning-rounds (run total 21, 2.10/min)
+03:08:20 [w1] REJECT workday#7 a1 41s ['unknown_name:Tell', "unknown_name:I'll"]
+03:08:56 [w1] ACCEPT workday#7 a2 36s wrk-paper-trail (run total 22, 2.06/min)
+03:09:03 [w0] ACCEPT workday#8 a1 48s wrk-the-wrong-key (run total 23, 2.13/min)
+03:09:43 [w1] ACCEPT evening#4 a1 47s eve-one-more-thing (run total 24, 2.10/min)
+03:09:49 [w0] ACCEPT off_hours#9 a1 45s off-late-shift-progress (run total 25, 2.16/min)
+03:10:26 [w1] ACCEPT off_hours#10 a1 43s off-glass-box-at-dawn (run total 26, 2.14/min)
+03:10:34 [w0] REJECT morning#5 a1 45s ['unknown_name:So']
+03:10:57 [w1] ACCEPT workday#9 a1 31s wrk-last-step (run total 27, 2.13/min)
+03:11:20 [w0] ACCEPT morning#5 a2 46s mor-labels-on-the-line (run total 28, 2.14/min)
+03:11:39 [w1] REJECT workday#10 a1 43s ['unknown_name:Fair', 'unknown_name:Reliability']
+03:12:10 [w0] REJECT evening#5 a1 51s ['unknown_name:Love']
+03:12:24 [w1] ACCEPT workday#10 a2 45s wrk-afternoon-sun-and-dust (run total 29, 2.05/min)
+03:12:54 [w0] REJECT evening#5 a2 44s ['same_opening']
+03:13:06 [w1] ACCEPT off_hours#11 a1 42s off-late-shift-chill (run total 30, 2.02/min)
+03:13:44 [w0] REJECT evening#5 a3 50s ['unknown_name:Another', 'unknown_name:Sales', 'unknown_name:For']
+03:13:45 [w1] ACCEPT off_hours#12 a1 38s off-late-night-annotations (run total 31, 2.00/min)
+03:14:24 [w0] ACCEPT evening#5 a4 39s eve-end-of-day-chatter (run total 32, 1.98/min)
+03:14:28 [w1] REJECT morning#6 a1 44s ['unknown_name:Love']
+03:15:05 [w0] ACCEPT workday#11 a1 42s wrk-questionable-estimates (run total 33, 1.96/min)
+03:15:15 [w1] ACCEPT morning#6 a2 47s mor-one-word-for-the-tills (run total 34, 2.00/min)
+03:15:50 [w0] ACCEPT workday#12 a1 45s wrk-silent-pacing (run total 35, 1.99/min)
+03:15:58 [w1] ACCEPT evening#6 a1 43s eve-the-unsaid-update (run total 36, 2.03/min)
+03:16:32 [w0] ACCEPT off_hours#13 a1 41s off-nightly-rounds (run total 37, 2.03/min)
+03:16:37 [w1] ACCEPT off_hours#14 a1 39s off-knight-s-gambit (run total 38, 2.07/min)
+03:17:16 [w0] REJECT morning#7 a1 45s ['plot_term:confident']
+03:17:21 [w1] REJECT workday#13 a1 44s ['same_opening']
+03:17:52 [w0] ACCEPT morning#7 a2 36s mor-over-the-shoulder (run total 39, 1.99/min)
+03:17:59 [w1] REJECT workday#13 a2 38s ['unknown_name:COUNTRYMISMATCH']
+03:18:36 [w0] REJECT workday#14 a1 43s ['plot_term:realizing', 'same_opening']
+03:18:48 [w1] ACCEPT workday#13 a3 49s wrk-the-colour-of-the-folder (run total 40, 1.95/min)
+03:19:17 [w0] REJECT workday#14 a2 41s ['same_opening']
+03:19:30 [w1] ACCEPT evening#7 a1 42s eve-the-last-ticket (run total 41, 1.93/min)
+03:20:00 [w0] ACCEPT workday#14 a3 43s wrk-elevator-pitch (run total 42, 1.93/min)
+03:20:15 [w1] REJECT off_hours#15 a1 45s ['title_dup']
+03:20:31 [w0] ACCEPT off_hours#16 a1 31s off-tagline-rehearsal (run total 43, 1.93/min)
+03:20:55 [w1] ACCEPT off_hours#15 a2 40s off-rule-explanation-rehearsal (run total 44, 1.94/min)
+03:21:10 [w0] ACCEPT morning#8 a1 39s mor-pipeline-and-post (run total 45, 1.97/min)
+03:21:38 [w1] ACCEPT workday#15 a1 43s wrk-release-timing (run total 46, 1.97/min)
+03:21:49 [w0] REJECT workday#16 a1 40s ['out_of_fiction:chatting']
+03:22:23 [w1] REJECT evening#8 a1 44s ['same_opening']
+03:22:24 [w0] ACCEPT workday#16 a2 35s wrk-head-tilt (run total 47, 1.95/min)
+03:22:57 [w0] REJECT off_hours#17 a1 33s ['plot_term:secret']
+03:23:12 [w1] REJECT evening#8 a2 49s ['plot_term:for good', 'same_opening']
+03:23:47 [w0] ACCEPT off_hours#17 a2 49s off-before-the-day-begins (run total 48, 1.88/min)
+03:23:54 [w1] ACCEPT evening#8 a3 42s eve-tagline-trouble (run total 49, 1.91/min)
+03:24:23 [w0] ACCEPT off_hours#18 a1 36s off-quarter-turn (run total 50, 1.91/min)
+03:24:44 [w1] REJECT morning#9 a1 50s ['offseat_cast:Nora', 'same_opening']
+03:25:00 [w0] ACCEPT workday#17 a1 38s wrk-the-number-before (run total 51, 1.91/min)
+03:25:25 [w1] REJECT morning#9 a2 41s ['plot_term:finally', 'same_opening']
+03:25:42 [w0] ACCEPT workday#18 a1 42s wrk-memory-and-metaphor (run total 52, 1.90/min)
+03:26:05 [w1] REJECT morning#9 a3 40s ['out_of_fiction:prompt', 'same_opening']
+03:26:22 [w0] REJECT evening#9 a1 40s ['same_opening']
+03:26:47 [w1] ACCEPT morning#9 a4 41s mor-plan-review (run total 53, 1.86/min)
+03:27:08 [w0] REJECT evening#9 a2 46s ['out_of_fiction:chatting', 'same_opening']
+03:27:31 [w1] REJECT off_hours#19 a1 44s ['same_opening']
+03:27:50 [w0] ACCEPT evening#9 a3 42s eve-evening-lull (run total 54, 1.83/min)
+03:28:08 [w1] REJECT off_hours#19 a2 38s ['unknown_name:Love', 'unknown_name:She', 'arrival_cap']
+03:28:37 [w0] REJECT off_hours#20 a1 47s ['arrival_cap']
+03:28:55 [w1] REJECT off_hours#19 a3 47s ['same_opening']
+03:29:20 [w0] REJECT off_hours#20 a2 43s ['title_dup', 'same_opening']
+03:29:41 [w1] REJECT off_hours#19 a4 46s ['plot_term:secrets']
+03:29:56 [w0] ACCEPT off_hours#20 a3 36s off-late-night-espresso (run total 55, 1.74/min)
+03:30:18 [w1] ACCEPT off_hours#19 a5 37s off-late-night-sorting (run total 56, 1.75/min)
+03:30:43 [w0] REJECT morning#10 a1 47s ['same_opening']
+03:31:02 [w1] REJECT workday#19 a1 45s ['same_opening']
+03:31:25 [w0] REJECT morning#10 a2 42s ['unknown_name:For']
+03:31:42 [w1] ACCEPT workday#19 a2 40s wrk-flaky-or-faulty (run total 57, 1.70/min)
+03:32:09 [w0] ACCEPT morning#10 a3 44s mor-joke-or-not-joke (run total 58, 1.71/min)
+03:32:31 [w1] ACCEPT workday#20 a1 49s wrk-three-desks-three-docs (run total 59, 1.72/min)
+03:32:54 [w0] REJECT evening#10 a1 45s ['unknown_name:For']
+03:33:12 [w1] REJECT off_hours#21 a1 40s ['arrival_cap']
+03:33:37 [w0] REJECT evening#10 a2 43s ['same_opening']
+03:33:54 [w1] REJECT off_hours#21 a2 42s ['plot_term:finally', 'same_opening']
+03:34:17 [w0] ACCEPT evening#10 a3 40s eve-last-light-in-the-office (run total 60, 1.67/min)
+03:34:40 [w1] REJECT off_hours#21 a3 46s ['same_opening']
+03:34:55 [w0] ACCEPT off_hours#22 a1 39s off-unexpected-encounter (run total 61, 1.66/min)
+03:35:27 [w1] ACCEPT off_hours#21 a4 47s off-past-lights-out (run total 62, 1.67/min)
+03:35:32 [w0] REJECT morning#11 a1 36s ['same_opening']
+03:36:09 [w1] REJECT workday#21 a1 42s ['unknown_name:Danish']
+03:36:13 [w0] REJECT morning#11 a2 41s ['unknown_name:Pet']
+03:36:47 [w1] REJECT workday#21 a2 38s ['out_of_fiction:audience', 'same_opening']
+03:36:54 [w0] ACCEPT morning#11 a3 41s mor-year-three-s-echo (run total 63, 1.63/min)
+03:37:32 [w1] ACCEPT workday#21 a3 45s wrk-waiting-on-theo (run total 64, 1.63/min)
+03:37:38 [w0] REJECT workday#22 a1 44s ['same_opening']
+03:38:11 [w1] REJECT evening#11 a1 39s ['same_opening']
+03:38:25 [w0] ACCEPT workday#22 a2 48s wrk-teatime-quiet (run total 65, 1.62/min)
+03:38:50 [w1] ACCEPT evening#11 a2 39s eve-end-of-the-watch (run total 66, 1.63/min)
+03:39:05 [w0] ACCEPT off_hours#23 a1 40s off-after-hours-review (run total 67, 1.64/min)
+03:39:44 [w1] REJECT off_hours#24 a1 53s ['out_of_fiction:chat', "unknown_name:You're", 'unknown_name:I', 'unknown_name:She']
+03:39:53 [w0] REJECT morning#12 a1 47s ['same_opening']
+03:40:31 [w1] ACCEPT off_hours#24 a2 47s off-the-green-line-scrolls (run total 68, 1.61/min)
+03:40:33 [w0] REJECT morning#12 a2 40s ['same_opening']
+03:41:08 [w1] REJECT workday#23 a1 37s ['unknown_name:For']
+03:41:19 [w0] REJECT morning#12 a3 46s ['unknown_name:For']
+03:41:50 [w1] ACCEPT workday#23 a2 42s wrk-pruning-stale-branches (run total 69, 1.58/min)
+03:41:57 [w0] ACCEPT morning#12 a4 38s mor-coffee-machine-conversation (run total 70, 1.60/min)
+03:42:34 [w1] REJECT workday#24 a1 44s ['same_opening']
+03:42:40 [w0] REJECT evening#12 a1 43s ['same_opening']
+03:43:19 [w1] REJECT workday#24 a2 45s ['same_opening']
+03:43:20 [w0] REJECT evening#12 a2 41s ['plot_term:announces', 'notebook_opened', 'same_opening']
+03:43:53 [w1] ACCEPT workday#24 a3 34s wrk-pitching-to-the-plant (run total 71, 1.56/min)
+03:43:59 [w0] REJECT evening#12 a3 39s ['same_opening']
+03:44:30 [w1] REJECT off_hours#25 a1 36s ['same_opening']
+03:44:37 [w0] REJECT evening#12 a4 38s ['plot_term:signed', 'same_opening']
+03:45:07 [w1] REJECT off_hours#25 a2 37s ['plot_term:signs', 'plot_term:decides', 'unknown_name:GE']
+03:45:26 [w0] REJECT evening#12 a5 49s ['same_opening']
+03:45:43 [w1] REJECT off_hours#25 a3 36s ['same_opening']
+03:46:12 [w0] ACCEPT evening#12 a6 46s eve-signing-off (run total 72, 1.50/min)
+03:46:27 [w1] REJECT off_hours#25 a4 44s ['unknown_name:UNKNOWN', 'arrival_cap']
+03:46:56 [w0] REJECT off_hours#26 a1 44s ['same_opening']
+03:47:06 [w1] ACCEPT off_hours#25 a5 38s off-red-light-dead-of-night (run total 73, 1.49/min)
+03:47:48 [w0] REJECT off_hours#26 a2 52s ['same_opening']
+03:47:53 [w1] ACCEPT morning#13 a1 47s mor-dawn-patrol (run total 74, 1.49/min)
+03:48:18 [w0] ACCEPT off_hours#26 a3 30s off-late-night-biscuits (run total 75, 1.50/min)
+03:48:30 [w1] ACCEPT workday#25 a1 37s wrk-glass-box-wording (run total 76, 1.51/min)
+03:48:53 [w0] ACCEPT workday#26 a1 35s wrk-company-values (run total 77, 1.52/min)
+03:49:17 [w1] REJECT evening#13 a1 47s ['unknown_name:Yours', 'unknown_name:I', "unknown_name:I'll"]
+03:49:36 [w0] REJECT off_hours#27 a1 43s ['arrival_cap']
+03:49:57 [w1] REJECT evening#13 a2 39s ['party_member_acts:leaves', 'time_outside_phase:06:00', 'same_opening']
+03:50:16 [w0] REJECT off_hours#27 a2 40s ['same_opening']
+03:50:32 [w1] ACCEPT evening#13 a3 36s eve-last-checks-of-the-day (run total 78, 1.49/min)
+03:51:01 [w0] ACCEPT off_hours#27 a3 45s off-late-night-carton-controversy (run total 79, 1.50/min)
+03:51:19 [w1] REJECT off_hours#28 a1 46s ['title_dup']
+03:51:40 [w0] ACCEPT morning#14 a1 39s mor-dock-block (run total 80, 1.50/min)
+03:52:02 [w1] REJECT off_hours#28 a2 44s ['arrival_cap']
+03:52:22 [w0] REJECT workday#27 a1 42s ['same_opening']
+03:52:43 [w1] ACCEPT off_hours#28 a3 41s off-overnight-totals (run total 81, 1.49/min)
+03:53:11 [w0] REJECT workday#27 a2 49s ['same_opening']
+03:53:27 [w1] ACCEPT workday#28 a1 44s wrk-quiet-words-in-the-kitchen (run total 82, 1.49/min)
+03:53:57 [w0] REJECT workday#27 a3 46s ['same_opening']
+03:54:09 [w1] REJECT evening#14 a1 41s ['unknown_name:Post-its', 'same_opening']
+03:54:31 [w0] REJECT workday#27 a4 35s ['same_opening']
+03:54:58 [w1] ACCEPT evening#14 a2 49s eve-the-last-run (run total 83, 1.46/min)
+03:55:18 [w0] REJECT workday#27 a5 47s ['notebook_opened']
+03:55:31 [w1] REJECT off_hours#29 a1 33s ['plot_term:finally', 'party_member_acts:drink']
+03:56:07 [w0] ACCEPT workday#27 a6 49s wrk-lunchtime-explanation (run total 84, 1.45/min)
+03:56:11 [w1] ACCEPT off_hours#29 a2 40s off-late-night-lift (run total 85, 1.47/min)
+03:56:51 [w0] REJECT off_hours#30 a1 44s ['offseat_cast:party_member']
+03:56:52 [w1] REJECT morning#15 a1 41s ['same_opening']
+03:57:28 [w1] ACCEPT morning#15 a2 36s mor-morning-rewrite (run total 86, 1.45/min)
+03:57:31 [w0] REJECT off_hours#30 a2 40s ['plot_term:confidence']
+03:58:08 [w0] REJECT off_hours#30 a3 37s ['offseat_cast:party_member']
+03:58:12 [w1] ACCEPT workday#29 a1 43s wrk-after-the-meeting (run total 87, 1.45/min)
+03:58:52 [w0] REJECT off_hours#30 a4 44s ['unknown_name:Our', 'unknown_name:People']
+03:58:58 [w1] ACCEPT workday#30 a1 46s wrk-the-unlabelled-jar (run total 88, 1.45/min)
+03:59:36 [w0] ACCEPT off_hours#30 a5 44s off-numbers-in-the-dark (run total 89, 1.45/min)
+03:59:39 [w1] ACCEPT evening#15 a1 41s eve-double-shot-for-the-late (run total 90, 1.47/min)
+04:00:16 [w0] ACCEPT off_hours#31 a1 40s off-late-shift (run total 91, 1.47/min)
+04:00:24 [w1] REJECT off_hours#32 a1 44s ['out_of_fiction:cameras', 'title_dup']
+04:00:56 [w0] ACCEPT morning#16 a1 40s mor-client-story (run total 92, 1.47/min)
+04:01:01 [w1] ACCEPT off_hours#32 a2 38s off-the-watcher-in-the-dark (run total 93, 1.48/min)
+04:01:41 [w0] REJECT workday#31 a1 46s ['same_opening']
+04:01:43 [w1] REJECT workday#32 a1 42s ['same_opening']
+04:02:25 [w0] REJECT workday#31 a2 44s ['unknown_name:Electrical', 'unknown_name:Waste', 'unknown_name:Only']
+04:02:26 [w1] ACCEPT workday#32 a2 43s wrk-morning-delivery (run total 94, 1.46/min)
+04:03:04 [w0] ACCEPT workday#31 a3 39s wrk-clashing-descriptions (run total 95, 1.47/min)
+04:03:07 [w1] REJECT evening#16 a1 41s ['title_dup']
+04:03:51 [w0] REJECT off_hours#33 a1 47s ['title_dup']
+04:03:59 [w1] ACCEPT evening#16 a2 52s eve-end-of-the-line (run total 96, 1.46/min)
+04:04:28 [w0] REJECT off_hours#33 a2 38s ['party_member_acts:exit', 'offseat_cast:party_member', 'same_opening']
+04:04:42 [w1] ACCEPT off_hours#34 a1 44s off-late-night-quiet-floor (run total 97, 1.46/min)
+04:05:17 [w0] REJECT off_hours#33 a3 48s ['unknown_name:Another', 'arrival_cap']
+04:05:25 [w1] REJECT morning#17 a1 43s ['unknown_name:For', 'unknown_name:She']
+04:06:01 [w0] REJECT off_hours#33 a4 44s ['plot_term:secret']
+04:06:06 [w1] ACCEPT morning#17 a2 42s mor-defining-done (run total 98, 1.44/min)
+04:06:50 [w1] ACCEPT workday#33 a1 44s wrk-one-page-two-voices (run total 99, 1.44/min)
+04:06:51 [w0] REJECT off_hours#33 a5 50s ['plot_term:decides', 'same_opening']
+04:07:28 [w1] REJECT workday#34 a1 38s ['client_outcome:acceptance', 'same_opening']
+04:07:32 [w0] REJECT off_hours#33 a6 41s ['plot_term:reveal', 'notebook_opened', 'same_opening']
+04:08:04 [w1] REJECT workday#34 a2 36s ['same_opening']
+04:08:12 [w0] REJECT off_hours#33 a7 41s ['offseat_cast:Maren']
+04:08:44 [w1] REJECT workday#34 a3 40s ['plot_term:admit', 'unknown_name:English', 'same_opening']
+04:08:59 [w0] REJECT off_hours#33 a8 47s ['plot_term:secretly']
+04:08:59 [w0] SLOT FAILED off_hours#33 after 8 attempts
+04:09:27 [w1] REJECT workday#34 a4 43s ['unknown_name:For', 'unknown_name:English', 'same_opening']
+04:09:37 [w0] REJECT evening#17 a1 38s ['title_dup']
+04:10:13 [w1] REJECT workday#34 a5 46s ['same_opening']
+04:10:16 [w0] ACCEPT evening#17 a2 39s eve-one-more-check (run total 100, 1.39/min)
+04:10:53 [w1] REJECT workday#34 a6 40s ['plot_term:realizing']
+04:10:55 [w0] REJECT off_hours#35 a1 38s ['offseat_cast:party_member', 'same_opening']
+04:11:33 [w1] ACCEPT workday#34 a7 40s wrk-staging-trouble (run total 101, 1.38/min)
+04:11:43 [w0] REJECT off_hours#35 a2 48s ['plot_term:secrets', 'party_member_acts:leave', 'same_opening']
+04:12:15 [w1] ACCEPT off_hours#36 a1 42s off-crossword-in-ink (run total 102, 1.38/min)
+04:12:29 [w0] REJECT off_hours#35 a3 46s ['same_opening']
+04:12:54 [w1] REJECT morning#18 a1 39s ['out_of_fiction:chat']
+04:13:05 [w0] REJECT off_hours#35 a4 36s ['same_opening']
+04:13:38 [w1] REJECT morning#18 a2 44s ['unknown_name:This', 'unknown_name:Oh', 'unknown_name:Is']
+04:13:52 [w0] REJECT off_hours#35 a5 47s ['plot_term:finally']
+04:14:19 [w1] REJECT morning#18 a3 41s ['plot_term:announces', 'same_opening']
+04:14:27 [w0] REJECT off_hours#35 a6 34s ['title_dup']
+04:15:01 [w1] REJECT morning#18 a4 42s ['same_opening']
+04:15:07 [w0] ACCEPT off_hours#35 a7 41s off-dark-kitchen-rehearsal (run total 103, 1.34/min)
+04:15:48 [w0] REJECT workday#35 a1 41s ['unknown_name:Fair', 'same_opening']
+04:15:50 [w1] ACCEPT morning#18 a5 49s mor-theo-s-half-asked-question (run total 104, 1.34/min)
+04:16:31 [w1] REJECT workday#36 a1 41s ['unknown_name:COUNTRYMISMATCH', 'same_opening']
+04:16:34 [w0] REJECT workday#35 a2 46s ['unknown_name:For']
+04:17:07 [w1] ACCEPT workday#36 a2 37s wrk-third-point (run total 105, 1.33/min)
+04:17:20 [w0] ACCEPT workday#35 a3 46s wrk-code-review (run total 106, 1.34/min)
+04:17:48 [w1] REJECT evening#18 a1 40s ['same_opening']
+04:18:04 [w0] ACCEPT off_hours#37 a1 44s off-late-night-clean-up (run total 107, 1.34/min)
+04:18:34 [w1] ACCEPT evening#18 a2 46s eve-late-night-rehearsal (run total 108, 1.34/min)
+04:18:41 [w0] REJECT off_hours#38 a1 38s ['title_dup', 'same_opening']
+04:19:15 [w1] REJECT morning#19 a1 41s ['out_of_fiction:script']
+04:19:28 [w0] REJECT off_hours#38 a2 46s ['title_dup']
+04:19:58 [w1] ACCEPT morning#19 a2 43s mor-quote-pull (run total 109, 1.33/min)
+04:20:00 [w0] REJECT off_hours#38 a3 32s ['arrival_cap']
+04:20:40 [w1] ACCEPT workday#37 a1 42s wrk-full-suite-stakes (run total 110, 1.33/min)
+04:20:45 [w0] REJECT off_hours#38 a4 46s ['title_dup']
+04:21:23 [w1] REJECT workday#38 a1 43s ['unknown_name:The', 'time_outside_phase:17:42', 'same_opening']
+04:21:30 [w0] REJECT off_hours#38 a5 45s ['out_of_fiction:chats', 'same_opening']
+04:22:09 [w1] ACCEPT workday#38 a2 46s wrk-whiteboard-woes (run total 111, 1.32/min)
+04:22:14 [w0] ACCEPT off_hours#38 a6 44s off-night-shift-vigil (run total 112, 1.33/min)
+04:22:52 [w1] ACCEPT evening#19 a1 43s eve-footnotes-to-the-rescue (run total 113, 1.34/min)
+04:22:58 [w0] REJECT off_hours#39 a1 44s ['unknown_name:Post', 'same_opening']
+04:23:36 [w1] REJECT off_hours#40 a1 44s ['out_of_fiction:audience', 'party_member_acts:leave', 'same_opening']
+04:23:37 [w0] REJECT off_hours#39 a2 39s ['arrival_cap']
+04:24:18 [w1] ACCEPT off_hours#40 a2 42s off-night-snack-encounter (run total 114, 1.33/min)
+04:24:19 [w0] REJECT off_hours#39 a3 41s ['same_opening']
+04:25:08 [w0] REJECT off_hours#39 a4 49s ['plot_term:secret', 'party_member_acts:leave', 'same_opening']
+04:25:17 [w1] REJECT morning#20 a1 59s ['unknown_name:For']
+04:25:46 [w0] REJECT off_hours#39 a5 37s ['same_opening']
+04:25:57 [w1] REJECT morning#20 a2 41s ['same_opening']
+04:26:32 [w0] REJECT off_hours#39 a6 46s ['plot_term:signs', 'arrival_cap']
+04:26:37 [w1] REJECT morning#20 a3 40s ['same_opening']
+04:27:11 [w0] ACCEPT off_hours#39 a7 39s off-first-light (run total 115, 1.29/min)
+04:27:18 [w1] ACCEPT morning#20 a4 41s mor-sticker-shock (run total 116, 1.30/min)
+04:27:53 [w0] ACCEPT workday#39 a1 42s wrk-pitching-in-the-glass-box (run total 117, 1.31/min)
+04:28:00 [w1] REJECT workday#40 a1 42s ['same_opening']
+04:28:28 [w0] REJECT evening#20 a1 36s ['same_opening']
+04:28:47 [w1] REJECT workday#40 a2 46s ['unknown_name:For', 'unknown_name:Is']
+04:29:14 [w0] REJECT evening#20 a2 46s ['same_opening']
+04:29:29 [w1] REJECT workday#40 a3 42s ['same_opening']
+04:30:02 [w0] ACCEPT evening#20 a3 48s eve-end-of-the-ship-watch (run total 118, 1.29/min)
+04:30:12 [w1] ACCEPT workday#40 a4 44s wrk-crossed-purposes (run total 119, 1.29/min)
+04:30:47 [w0] REJECT morning#21 a1 44s ['unknown_name:And', 'unknown_name:Why']
+04:30:54 [w1] ACCEPT workday#41 a1 42s wrk-two-pens-one-document (run total 120, 1.30/min)
+04:31:24 [w0] REJECT morning#21 a2 37s ['same_opening']
+04:31:32 [w1] REJECT workday#42 a1 38s ['same_opening']
+04:32:06 [w0] REJECT morning#21 a3 42s ['same_opening']
+04:32:13 [w1] ACCEPT workday#42 a2 40s wrk-ferry-bouncer-lift (run total 121, 1.29/min)
+04:32:53 [w1] REJECT evening#21 a1 41s ['unknown_name:Zero']
+04:32:54 [w0] REJECT morning#21 a4 48s ['offseat_cast:ceo', 'time_outside_phase:09:00']
+04:33:29 [w0] REJECT morning#21 a5 35s ['notebook_opened', 'same_opening']
+04:33:37 [w1] REJECT evening#21 a2 44s ['same_opening']
+04:34:16 [w0] REJECT morning#21 a6 46s ['unknown_name:Imagine']
+04:34:19 [w1] REJECT evening#21 a3 42s ['same_opening']
+04:34:54 [w0] REJECT morning#21 a7 39s ['title_dup']
+04:35:00 [w1] REJECT evening#21 a4 41s ['title_dup']
+04:35:33 [w0] ACCEPT morning#21 a8 39s mor-docs-debate (run total 122, 1.25/min)
+04:35:47 [w1] REJECT evening#21 a5 47s ['title_dup', 'same_opening']
+04:36:16 [w0] ACCEPT morning#22 a1 43s mor-weather-talk (run total 123, 1.26/min)
+04:36:21 [w1] ACCEPT evening#21 a6 34s eve-the-silent-observer (run total 124, 1.26/min)
+04:37:02 [w1] ACCEPT workday#44 a1 42s wrk-lunch-duty (run total 125, 1.27/min)
+04:37:02 [w0] REJECT workday#43 a1 47s ['same_opening']
+04:37:39 [w1] REJECT evening#22 a1 37s ['out_of_fiction:chatting', 'title_dup', 'same_opening']
+04:37:45 [w0] ACCEPT workday#43 a2 43s wrk-whiteboard-wobble (run total 126, 1.27/min)
+04:38:25 [w1] REJECT evening#22 a2 46s ['same_opening']
+04:38:39 [w0] ACCEPT morning#23 a1 54s mor-corvane-correspondence (run total 127, 1.27/min)
+04:39:08 [w1] REJECT evening#22 a3 43s ['title_dup', 'same_opening']
+04:39:19 [w0] ACCEPT workday#45 a1 40s wrk-logistics-of-a-metaphor (run total 128, 1.27/min)
+04:39:47 [w1] REJECT evening#22 a4 39s ['same_opening']
+04:39:54 [w0] ACCEPT workday#46 a1 35s wrk-recycling-riddle (run total 129, 1.27/min)
+04:40:28 [w1] REJECT evening#22 a5 42s ['unknown_name:Thank', 'same_opening']
+04:40:32 [w0] REJECT evening#23 a1 38s ['same_opening']
+04:41:11 [w1] REJECT evening#22 a6 42s ['plot_term:finally', 'unknown_name:Go']
+04:41:18 [w0] ACCEPT evening#23 a2 46s eve-late-light (run total 130, 1.26/min)
+04:41:52 [w1] REJECT evening#22 a7 41s ['title_dup', 'same_opening']
+04:41:52 [w0] REJECT morning#24 a1 34s ['same_opening']
+04:42:31 [w1] ACCEPT evening#22 a8 39s eve-closing-tickets (run total 131, 1.26/min)
+04:42:34 [w0] REJECT morning#24 a2 42s ['unknown_name:Logistics', 'unknown_name:The']
+04:43:06 [w1] ACCEPT workday#47 a1 34s wrk-acceptance-numbers (run total 132, 1.26/min)
+04:43:13 [w0] REJECT morning#24 a3 39s ['unknown_name:One', 'unknown_name:Love']
+04:43:50 [w1] REJECT workday#48 a1 44s ['same_opening']
+04:43:52 [w0] REJECT morning#24 a4 39s ['plot_term:regulator', 'unknown_name:For', 'same_opening']
+04:44:29 [w0] REJECT morning#24 a5 37s ['unknown_name:So', 'same_opening']
+04:44:38 [w1] REJECT workday#48 a2 48s ['same_opening']
+04:45:12 [w0] REJECT morning#24 a6 44s ['same_opening']
+04:45:21 [w1] ACCEPT workday#48 a3 44s wrk-plain-terms (run total 133, 1.24/min)
+04:45:55 [w0] ACCEPT morning#24 a7 43s mor-and-then-what (run total 134, 1.24/min)
+04:46:06 [w1] REJECT evening#24 a1 45s ['unknown_name:For', 'same_opening']
+04:46:35 [w0] REJECT morning#25 a1 39s ['same_opening']
+04:46:41 [w1] REJECT evening#24 a2 35s ['out_of_fiction:chatting', 'same_opening']
+04:47:15 [w0] REJECT morning#25 a2 41s ['out_of_fiction:chat', 'same_opening']
+04:47:29 [w1] REJECT evening#24 a3 47s ['offseat_cast:party_member', 'same_opening']
+04:47:54 [w0] REJECT morning#25 a3 38s ['same_opening']
+04:47:58 [w1] REJECT evening#24 a4 30s ['title_dup', 'same_opening']
+04:48:35 [w0] REJECT morning#25 a4 41s ['same_opening']
+04:48:38 [w1] ACCEPT evening#24 a5 40s eve-one-more-number (run total 135, 1.22/min)
+04:49:11 [w0] ACCEPT morning#25 a5 37s mor-waking-up (run total 136, 1.23/min)
+04:49:21 [w1] REJECT workday#49 a1 43s ['same_opening']
+04:49:47 [w0] REJECT workday#50 a1 36s ['plot_term:decided']
+04:50:06 [w1] REJECT workday#49 a2 45s ['unknown_name:Fair']
+04:50:32 [w0] ACCEPT workday#50 a2 45s wrk-stable-for-whom (run total 137, 1.22/min)
+04:50:49 [w1] REJECT workday#49 a3 43s ['unknown_name:COUNTRYMISMATCH', 'same_opening', 'arrival_cap']
+04:51:09 [w0] REJECT evening#25 a1 37s ['title_dup', 'same_opening']
+04:51:36 [w1] REJECT workday#49 a4 47s ['same_opening']
+04:51:50 [w0] REJECT evening#25 a2 42s ['same_opening']
+04:52:20 [w1] REJECT workday#49 a5 44s ['same_opening']
+04:52:36 [w0] ACCEPT evening#25 a3 46s eve-evening-test-run (run total 138, 1.21/min)
+04:52:56 [w1] REJECT workday#49 a6 36s ['same_opening']
+04:53:17 [w0] REJECT morning#26 a1 41s ['out_of_fiction:audience']
+04:53:44 [w1] ACCEPT workday#49 a7 48s wrk-the-ceo-s-questions (run total 139, 1.20/min)
+04:54:01 [w0] REJECT morning#26 a2 44s ['same_opening']
+04:54:28 [w1] ACCEPT workday#51 a1 44s wrk-three-pairs-of-eyes (run total 140, 1.20/min)
+04:54:37 [w0] ACCEPT morning#26 a3 36s mor-morning-espresso (run total 141, 1.21/min)
+04:55:07 [w1] ACCEPT workday#52 a1 39s wrk-watching-the-test (run total 142, 1.22/min)
+04:55:17 [w0] REJECT morning#27 a1 40s ['unknown_name:Five']
+04:55:45 [w1] REJECT workday#53 a1 39s ['same_opening']
+04:55:59 [w0] REJECT morning#27 a2 42s ['unknown_name:For', 'same_opening']
+04:56:28 [w1] REJECT workday#53 a2 42s ['plot_term:decision', 'same_opening']
+04:56:49 [w0] REJECT morning#27 a3 50s ['unknown_name:So', 'unknown_name:Imagine', 'unknown_name:And']
+04:57:18 [w1] REJECT workday#53 a3 50s ['same_opening']
+04:57:24 [w0] ACCEPT morning#27 a4 36s mor-overnight-results (run total 143, 1.20/min)
+04:58:00 [w1] REJECT workday#53 a4 42s ['same_opening']
+04:58:13 [w0] REJECT workday#54 a1 49s ['unknown_name:Fair', 'same_opening']
+04:58:44 [w1] REJECT workday#53 a5 44s ['unknown_name:COUNTRYMISMATCH', 'same_opening', 'arrival_cap']
+04:58:51 [w0] REJECT workday#54 a2 38s ['same_opening']
+04:59:28 [w1] REJECT workday#53 a6 44s ['same_opening']
+04:59:32 [w0] REJECT workday#54 a3 41s ['same_opening']
+05:00:07 [w1] REJECT workday#53 a7 39s ['out_of_fiction:chats', 'same_opening']
+05:00:17 [w0] REJECT workday#54 a4 45s ['unknown_name:English', 'unknown_name:For', 'same_opening']
+05:00:48 [w1] REJECT workday#53 a8 41s ['same_opening']
+05:00:48 [w1] SLOT FAILED workday#53 after 8 attempts
+05:00:52 [w0] REJECT workday#54 a5 35s ['same_opening']
+05:01:22 [w1] REJECT morning#28 a1 34s ['same_opening']
+05:01:28 [w0] REJECT workday#54 a6 35s ['unknown_name:Fair']
+05:02:04 [w1] REJECT morning#28 a2 42s ['out_of_fiction:chat', 'same_opening']
+05:02:09 [w0] REJECT workday#54 a7 42s ['unknown_name:COUNTRYMISMATCH', 'same_opening']
+05:02:44 [w1] REJECT morning#28 a3 40s ['same_opening']
+05:02:51 [w0] REJECT workday#54 a8 42s ['same_opening']
+05:02:51 [w0] SLOT FAILED workday#54 after 8 attempts
+05:03:28 [w1] ACCEPT morning#28 a4 44s mor-overnight-numbers (run total 144, 1.15/min)
+05:03:36 [w0] REJECT workday#55 a1 44s ['unknown_name:Enter', 'same_opening']
+05:04:07 [w1] REJECT morning#29 a1 39s ['out_of_fiction:audience']
+05:04:19 [w0] REJECT workday#55 a2 43s ['out_of_fiction:model']
+05:04:41 [w1] REJECT morning#29 a2 34s ['same_opening']
+05:04:58 [w0] REJECT workday#55 a3 39s ['out_of_fiction:chats', 'same_opening']
+05:05:19 [w1] REJECT morning#29 a3 38s ['same_opening']
+05:05:39 [w0] REJECT workday#55 a4 41s ['plot_term:revealing']
+05:06:00 [w1] REJECT morning#29 a4 41s ['unknown_name:For', 'same_opening']
+05:06:21 [w0] REJECT workday#55 a5 42s ['notebook_opened', 'same_opening']
+05:06:42 [w1] REJECT morning#29 a5 42s ['same_opening']
+05:06:59 [w0] ACCEPT workday#55 a6 39s wrk-history-lesson (run total 145, 1.13/min)
+05:07:13 [w1] REJECT morning#29 a6 31s ['same_opening']
+05:07:48 [w0] REJECT morning#30 a1 48s ['unknown_name:Really', 'unknown_name:Two']
+05:08:01 [w1] REJECT morning#29 a7 48s ['time_outside_phase:09:00']
+05:08:34 [w0] ACCEPT morning#30 a2 46s mor-for-whom (run total 146, 1.12/min)
+05:08:39 [w1] REJECT morning#29 a8 37s ['plot_term:announces', 'same_opening']
+05:08:39 [w1] SLOT FAILED morning#29 after 8 attempts
+05:08:39 run end: accepted=146 in 130.4 min (1.12/min); failed_slots=[('off_hours', 33), ('workday', 53), ('workday', 54), ('morning', 29)]; rejects={'party_member_acts': 7, 'offseat_cast': 9, 'unknown_name': 81, 'same_opening': 143, 'plot_term': 33, 'title_dup': 19, 'out_of_fiction': 19, 'arrival_cap': 12, 'notebook_opened': 5, 'time_outside_phase': 4, 'client_outcome': 1}

@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-recycling-riddle
+title: Recycling Riddle
+ambient: true
+prompt: Morning in the Kitchen. Theo, holding a dead cable, looks baffled by the four bin streams. Nora,
+  bright and brisk in her blue cardigan, tries to explain the difference between recyclable e-waste, non-recyclable
+  e-waste, and ordinary recycling one more time. Theo keeps interrupting with jokes. Is this cable dead,
+  or just resting?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.4

@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-the-unlabelled-jar
+title: The Unlabelled Jar
+ambient: true
+prompt: Just before lunch in the Kitchen. Nora has finished labelling the snack shelf and is frowning
+  at a mystery jar on the fridge's second shelf. Theo, who had been tapping at a nearby desk, leans in
+  to see what's caught her attention. He's quick to call it 'a treasure' and starts guessing what's inside.
+  Nora will not open it to check. Is the unmarked glass hiding someone's lunch, a forgotten experiment,
+  or something else? And whose job is it to find out?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

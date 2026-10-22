@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-night-watch
+title: Night Watch
+ambient: true
+prompt: Deep night on the dark Open Floor, silent except for the hum of the servers. Brody crosses from
+  his desk to the kitchen, his path taking him close to the Party Member's desk. He glances over, notes
+  the emergency light still on, the notebook closed as always, and walks on without a word. The Party
+  Member doesn't move or acknowledge him. In the kitchen, Brody makes coffee, the only sound the clink
+  of cup on saucer. Why does he never look directly at the Party Member?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- tech_lead
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

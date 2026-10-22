@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-dawn-patrol
+title: Dawn Patrol
+ambient: true
+prompt: First light on the Open Floor. Brody stands at the window, hands in pockets, gazing down at Tallow
+  Street waking up. He's been here longest, and you can see it in his eyes. Nora is at her station, sorting
+  keys by shape and size, bright and brisk. There's no one else in sight. She could call him over to look
+  at something any moment, but for now, they're just two silhouettes in the half-light. How long has he
+  been watching the street wake up?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- tech_lead
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

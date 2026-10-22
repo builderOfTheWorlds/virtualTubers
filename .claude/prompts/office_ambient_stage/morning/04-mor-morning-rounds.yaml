@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-morning-rounds
+title: Morning Rounds
+ambient: true
+prompt: Late morning in the Open Floor. Graham Ellery is making his rounds with a coffee, stopping at
+  each desk to check on progress and deliver a logistics metaphor. He has a folded index card in his pocket
+  but hasn't read from it yet. Anselm Brody is at the next desk over, tapping the latency graph on his
+  screen, listening in but not joining in. Could Anselm be drawn into a conversation about the dock? Or
+  would he just add a dry observation and go back to his own work?
+lore:
+- office
+- product
+day_phase: morning
+intensity: normal
+seats:
+- ceo
+- tech_lead
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0

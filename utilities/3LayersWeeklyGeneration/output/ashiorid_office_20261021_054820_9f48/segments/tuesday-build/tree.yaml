@@ -1,0 +1,203 @@
+tuesday-build:
+  node_id: tuesday-build
+  parent_id: null
+  order: 0
+  depth: 0
+  title: 'The Engineer and Tester grind through the pilot integration bug loop. Marketing '
+  summary: The Engineer and Tester grind through the pilot integration bug loop. Marketing
+    calls Corvane about the reference and gets a lukewarm maybe.
+  continuity_in: The Tech Lead warns about the velocity rule.
+  continuity_out: Marketing gets a lukewarm maybe from Corvane.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - tuesday-build-n0
+  - tuesday-build-n1
+  slots: null
+tuesday-build-n0:
+  node_id: tuesday-build-n0
+  parent_id: tuesday-build
+  order: 0
+  depth: 1
+  title: The Engineer and Tester grind through the pilot integration bug loop
+  summary: The Engineer and Tester work through a series of bugs in the pilot integration,
+    methodically fixing issues as they arise.
+  continuity_in: The Tech Lead warns about the velocity rule.
+  continuity_out: The pilot integration is nearing completion, with most critical
+    bugs resolved.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - tuesday-build-n0-n0
+  - tuesday-build-n0-n1
+  slots: null
+tuesday-build-n1:
+  node_id: tuesday-build-n1
+  parent_id: tuesday-build
+  order: 1
+  depth: 1
+  title: Marketing calls Corvane about the reference
+  summary: Marketing reaches out to Corvane to secure a reference for the product,
+    but receives a lukewarm response indicating they may provide one, but are not
+    enthusiastic about it.
+  continuity_in: Marketing identifies Corvane as a key reference for the product.
+  continuity_out: Marketing gets a lukewarm maybe from Corvane regarding providing
+    a reference.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: tuesday-build-n1-001
+    kind: ambient
+    prompt: Marketing makes the call to Corvane, hoping to secure a strong reference
+      for the product.
+    lore:
+    - company
+    - clients
+    participants:
+    - marketing
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-build-n1-002
+    kind: ambient
+    prompt: Corvane's response is lukewarm and noncommittal when asked about providing
+      a reference.
+    lore:
+    - clients
+    - company
+    participants:
+    - marketing
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-build-n1-003
+    kind: ambient
+    prompt: Marketing tries to gauge Corvane's willingness to provide a reference
+      by asking follow-up questions.
+    lore:
+    - company
+    - clients
+    participants:
+    - marketing
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-build-n1-004
+    kind: ambient
+    prompt: Corvane indicates they may provide a reference, but their lack of enthusiasm
+      is clear to the Marketing rep.
+    lore:
+    - clients
+    - company
+    participants:
+    - marketing
+    sensitivity: tone
+    depends_on: []
+tuesday-build-n0-n0:
+  node_id: tuesday-build-n0-n0
+  parent_id: tuesday-build-n0
+  order: 0
+  depth: 2
+  title: The Engineer and Tester grind through the pilot integration bug loop
+  summary: The Engineer and Tester work through a series of bugs in the pilot integration,
+    methodically fixing issues as they arise.
+  continuity_in: The Tech Lead warns about the velocity rule.
+  continuity_out: The pilot integration is nearing completion, with most critical
+    bugs resolved.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: tuesday-build-n0-n0-001
+    kind: ambient
+    prompt: The Engineer and Tester methodically work through a list of integration
+      bugs.
+    lore:
+    - office
+    - product
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-build-n0-n0-002
+    kind: ambient
+    prompt: Marketing calls Corvane to ask about being a reference for the product
+      launch.
+    lore:
+    - clients
+    - company
+    participants:
+    - marketing
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-build-n0-n0-003
+    kind: ambient
+    prompt: Corvane gives Marketing a lukewarm response about being a reference.
+    lore:
+    - clients
+    - company
+    participants:
+    - marketing
+    sensitivity: tone
+    depends_on: []
+  - slot_id: tuesday-build-n0-n0-004
+    kind: ambient
+    prompt: The Tech Lead cautions the team about maintaining velocity as they resolve
+      bugs.
+    lore:
+    - office
+    - org_chart
+    participants:
+    - tech_lead
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+tuesday-build-n0-n1:
+  node_id: tuesday-build-n0-n1
+  parent_id: tuesday-build-n0
+  order: 1
+  depth: 2
+  title: Marketing calls Corvane about the reference and gets a lukewarm maybe
+  summary: Marketing reaches out to Corvane for a reference, but receives an unenthusiastic
+    response that lacks strong support.
+  continuity_in: Marketing is seeking a reference from Corvane to help promote the
+    product.
+  continuity_out: Marketing is disappointed by the lukewarm response from Corvane,
+    but will continue seeking other references.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: tuesday-build-n0-n1-001
+    kind: ambient
+    prompt: The Engineer and Tester methodically work through a list of integration
+      bugs, fixing each one as they go.
+    lore:
+    - product
+    - office
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: tuesday-build-n0-n1-002
+    kind: ambient
+    prompt: Marketing calls Corvane for a reference, but gets a lukewarm response
+      that lacks enthusiasm or strong support.
+    lore:
+    - clients
+    - company
+    participants:
+    - marketing
+    sensitivity: tone
+    depends_on: []

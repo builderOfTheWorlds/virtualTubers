@@ -1,0 +1,230 @@
+wednesday-morning:
+  node_id: wednesday-morning
+  parent_id: null
+  order: 0
+  depth: 0
+  title: Corvane calls the CEO about the fraud that got through. The CEO's planned
+    direct
+  summary: Corvane calls the CEO about the fraud that got through. The CEO's planned
+    directive collapses into crisis management. The amber test from the previous night
+    is remembered.
+  continuity_in: The Party Member's notebook contains a new page of observations about
+    the fraud.
+  continuity_out: The CEO assigns the Engineer and Tester to investigate the fraud
+    miss.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - wednesday-morning-n0
+  - wednesday-morning-n1
+  slots: null
+wednesday-morning-n0:
+  node_id: wednesday-morning-n0
+  parent_id: wednesday-morning
+  order: 0
+  depth: 1
+  title: Corvane reports the fraud incident to the CEO
+  summary: Corvane calls the CEO to inform them about the fraud that got through despite
+    their systems. The CEO is caught off guard, as this was not part of their planned
+    agenda for the day.
+  continuity_in: The Party Member's notebook contains a new page of observations about
+    the fraud.
+  continuity_out: The CEO realizes the severity of the situation and starts formulating
+    a response.
+  target_words: 467
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: wednesday-morning-n0-001
+    kind: ambient
+    prompt: Corvane calls the CEO to report the fraud incident that slipped through
+      their systems.
+    lore:
+    - office
+    - company
+    participants:
+    - analyst
+    - ceo
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-morning-n0-002
+    kind: ambient
+    prompt: The CEO is caught off guard by the news of the fraud, as it was not part
+      of their planned agenda for the day.
+    lore:
+    - company
+    - org_chart
+    participants:
+    - ceo
+    sensitivity: tone
+    depends_on: []
+  - slot_id: wednesday-morning-n0-003
+    kind: ambient
+    prompt: The CEO starts formulating a response to the fraud incident, realizing
+      the severity of the situation.
+    lore:
+    - company
+    - office
+    participants:
+    - ceo
+    - analyst
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-morning-n0-004
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester
+wednesday-morning-n1:
+  node_id: wednesday-morning-n1
+  parent_id: wednesday-morning
+  order: 1
+  depth: 1
+  title: The CEO shifts focus to crisis management
+  summary: The CEO's planned directive is put on hold as they shift their focus to
+    managing the crisis caused by the fraud incident. They remember the amber test
+    from the previous night and its potential implications.
+  continuity_in: The CEO realizes the severity of the situation and starts formulating
+    a response.
+  continuity_out: The CEO assigns the Engineer and Tester to investigate the fraud
+    miss and report back with their findings.
+  target_words: 583
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - wednesday-morning-n1-n0
+  - wednesday-morning-n1-n1
+  slots: null
+wednesday-morning-n1-n0:
+  node_id: wednesday-morning-n1-n0
+  parent_id: wednesday-morning-n1
+  order: 0
+  depth: 2
+  title: The CEO's Planned Directive is Derailed
+  summary: The CEO's planned directive is put on hold as they shift their focus to
+    managing the crisis caused by the fraud incident. They realize the severity of
+    the situation and start formulating a response.
+  continuity_in: The CEO realizes the severity of the situation and starts formulating
+    a response.
+  continuity_out: The CEO remembers the amber test from the previous night and its
+    potential implications.
+  target_words: 233
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: wednesday-morning-n1-n0-001
+    kind: ambient
+    prompt: The CEO's office, usually a bastion of calm, is buzzing with urgent energy.
+      Papers are scattered across the desk, and the CEO is on the phone, their voice
+      tense.
+    lore:
+    - office
+    participants:
+    - ceo
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-morning-n1-n0-002
+    kind: ambient
+    prompt: The CEO slams the phone down, their mind racing. They need to act fast
+      to contain this crisis. They start jotting down notes, formulating a plan.
+    lore:
+    - office
+    - company
+    participants:
+    - ceo
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-morning-n1-n0-003
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester
+  - slot_id: wednesday-morning-n1-n0-004
+    kind: ambient
+    prompt: The CEO takes a deep breath, trying to calm their nerves. They know they
+      need to address the team, to keep morale from plummeting. They step out of their
+      office, ready to face the challenges ahead.
+    lore:
+    - office
+    - company
+    participants:
+    - ceo
+    sensitivity: none
+    depends_on: []
+wednesday-morning-n1-n1:
+  node_id: wednesday-morning-n1-n1
+  parent_id: wednesday-morning-n1
+  order: 1
+  depth: 2
+  title: The CEO Assigns the Engineer and Tester to Investigate
+  summary: The CEO assigns the Engineer and Tester to investigate the fraud miss and
+    report back with their findings. They are tasked with determining how the fraud
+    got through and what can be done to prevent similar incidents in the future.
+  continuity_in: The CEO remembers the amber test from the previous night and its
+    potential implications.
+  continuity_out: The Engineer and Tester begin their investigation into the fraud
+    miss.
+  target_words: 350
+  target_slots: 3
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: wednesday-morning-n1-n1-001
+    kind: ambient
+    prompt: The CEO calls an emergency meeting with the Engineer and Tester to discuss
+      the fraud incident.
+    lore:
+    - office
+    - company
+    participants:
+    - ceo
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-morning-n1-n1-002
+    kind: ambient
+    prompt: The Engineer and Tester begin their investigation into the fraud miss,
+      reviewing logs and data.
+    lore:
+    - product
+    - company
+    participants:
+    - engineer
+    - tester
+    sensitivity: none
+    depends_on: []
+  - slot_id: wednesday-morning-n1-n1-003
+    kind: spine
+    scene_ref: first-standup
+    participants:
+    - analyst
+    - ceo
+    - engineer
+    - marketing
+    - office_manager
+    - party_member
+    - tech_lead
+    - tester

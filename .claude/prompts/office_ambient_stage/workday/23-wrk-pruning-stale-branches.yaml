@@ -1,0 +1,23 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-pruning-stale-branches
+title: Pruning Stale Branches
+ambient: true
+prompt: Just before lunch on the Open Floor. Nora is seated at her station, methodically cleaning up the
+  git repository on her laptop, deleting merged branches one by one. She skips over the learned-scoring
+  branch, knowing it's still in use. Theo is nearby, perhaps passing by or at a neighboring desk, close
+  enough to overhear what she's doing. Will he be tempted to chime in with a question or comment about
+  the repository's maintenance?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- office_manager
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

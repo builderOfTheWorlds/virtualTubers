@@ -1,0 +1,198 @@
+thursday-off-hours:
+  node_id: thursday-off-hours
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The Party Member writes late into the night. The Office Manager leaves extra
+    cof
+  summary: The Party Member writes late into the night. The Office Manager leaves
+    extra coffee out for the morning. Nobody sleeps well.
+  continuity_in: The CEO stares at the countdown to Halvard, defeated.
+  continuity_out: The coffee machine is warm before anyone arrives.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - thursday-off-hours-n0
+  - thursday-off-hours-n1
+  slots: null
+thursday-off-hours-n0:
+  node_id: thursday-off-hours-n0
+  parent_id: thursday-off-hours
+  order: 0
+  depth: 1
+  title: The Party Member's Late Night Writing Session
+  summary: The Party Member works tirelessly through the night, determined to make
+    progress on the project despite the looming deadline and the CEO's defeatism.
+  continuity_in: The CEO stares at the countdown to Halvard, defeated.
+  continuity_out: The Party Member finally rests, leaving a stack of papers on the
+    desk.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - thursday-off-hours-n0-n0
+  - thursday-off-hours-n0-n1
+  slots: null
+thursday-off-hours-n1:
+  node_id: thursday-off-hours-n1
+  parent_id: thursday-off-hours
+  order: 1
+  depth: 1
+  title: The Office Manager's Thoughtful Gesture
+  summary: The Office Manager, noticing the Party Member's late night, leaves extra
+    coffee out for the morning to help the team cope with the lack of sleep and the
+    challenges ahead.
+  continuity_in: The Party Member finally rests, leaving a stack of papers on the
+    desk.
+  continuity_out: The coffee machine is warm before anyone arrives.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: thursday-off-hours-n1-001
+    kind: ambient
+    prompt: The Party Member writes late into the night, determined to finish their
+      work.
+    lore:
+    - office
+    - rituals
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-off-hours-n1-002
+    kind: ambient
+    prompt: The Office Manager notices the Party Member's late night and decides to
+      leave extra coffee out for the morning.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-off-hours-n1-003
+    kind: ambient
+    prompt: The Party Member finally rests, leaving a stack of papers on the desk.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-off-hours-n1-004
+    kind: ambient
+    prompt: The coffee machine is warm before anyone arrives in the morning, a thoughtful
+      gesture from the Office Manager.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+thursday-off-hours-n0-n0:
+  node_id: thursday-off-hours-n0-n0
+  parent_id: thursday-off-hours-n0
+  order: 0
+  depth: 2
+  title: The Party Member's Determination
+  summary: Despite the CEO's defeatism, the Party Member is determined to push forward
+    with the project, working late into the night to make progress.
+  continuity_in: The CEO stares at the countdown to Halvard, defeated.
+  continuity_out: The Party Member takes a short break, fueled by determination to
+    keep working.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: thursday-off-hours-n0-n0-001
+    kind: ambient
+    prompt: The Party Member types furiously, the clacking of keys filling the late
+      night silence of the office.
+    lore:
+    - office
+    - rituals
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-off-hours-n0-n0-002
+    kind: ambient
+    prompt: The Office Manager quietly places a fresh pot of coffee and some snacks
+      by the Party Member's desk for the morning.
+    lore:
+    - office
+    - rituals
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: thursday-off-hours-n0-n0-003
+    kind: ambient
+    prompt: The Party Member pauses for a moment, rubbing tired eyes, but their determination
+      remains strong.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: thursday-off-hours-n0-n0-004
+    kind: ambient
+    prompt: The office is still and quiet, the only sound the occasional rustle of
+      papers or clicking of a mouse as the Party Member works on.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+thursday-off-hours-n0-n1:
+  node_id: thursday-off-hours-n0-n1
+  parent_id: thursday-off-hours-n0
+  order: 1
+  depth: 2
+  title: The Office Manager's Thoughtfulness
+  summary: Seeing the Party Member's dedication, the Office Manager leaves extra coffee
+    out for the morning, anticipating the long hours ahead.
+  continuity_in: The Party Member takes a short break, fueled by determination to
+    keep working.
+  continuity_out: The coffee machine is warm before anyone arrives.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: thursday-off-hours-n0-n1-001
+    kind: ambient
+    prompt: The Party Member types furiously, the clicking of the keyboard filling
+      the late-night office.
+    lore:
+    - office
+    - rituals
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: thursday-off-hours-n0-n1-002
+    kind: ambient
+    prompt: The Office Manager notices the Party Member's dedication and decides to
+      leave extra coffee for the morning.
+    lore:
+    - office
+    - company
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: none
+    depends_on: []

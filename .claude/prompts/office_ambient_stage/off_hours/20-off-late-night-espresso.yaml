@@ -1,0 +1,20 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-late-night-espresso
+title: Late Night Espresso
+ambient: true
+prompt: Late one night in the darkened office, Nora brings Owen a double shot from the temperamental espresso
+  machine. She sets it by his elbow with a quiet clink. He looks up from his screen, where test results
+  scroll in red and green, thanks her in his flat way with a precise count of successful runs. The small
+  kindness hangs between them. What does she see in his numbers?
+lore: []
+day_phase: off_hours
+intensity: quiet
+seats:
+- tester
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.1

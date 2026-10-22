@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-year-three-s-echo
+title: Year Three's Echo
+ambient: true
+prompt: 08:05 on the Open Floor. Theo is at his keyboard, about to implement a quick tweak to speed up
+  the main job queue. Brody, one hand on the back of his chair, remarks that they already tried this approach
+  three years ago. Theo pauses, fingers hovering, and turns to face Brody, who offers nothing more. Is
+  it a caution, or a challenge? Will Brody explain, or will Theo have to ask?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- tech_lead
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-the-silent-observer
+title: The Silent Observer
+ambient: true
+prompt: Late evening in the empty office. Nora hums to herself as she washes the Party Member's unused
+  cup in the kitchen sink. The corner desk chair hasn't moved all day. She dries her hands on her apron
+  and straightens the pen and notebook with a sigh. Why does he stay so late, day after day, without ever
+  doing anything?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- office_manager
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.2

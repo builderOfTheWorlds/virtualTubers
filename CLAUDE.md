@@ -336,4 +336,51 @@ git push origin workingBranch
 
 ---
 
+## Mafober Deployment Environment
+
+Projects created or cloned into the managed projects root (`projects_root` in `config.yaml`) deploy to **mafober**, a Proxmox VE homelab host that also runs the shared Docker/Portainer stack for this machine.
+
+### Connection
+
+| Item | Value |
+|------|-------|
+| Hostname | `mafober` |
+| IP Address | `192.168.1.117` |
+| Proxmox Web UI | `https://192.168.1.117:8006` |
+| Portainer (Docker mgmt) | `https://192.168.1.120:9443` |
+| SSH / SFTP | port `22` on `192.168.1.117` |
+
+### Deploying a new project
+
+1. Create a ZFS dataset under `tank_0` for the project's persistent storage (`zfs create tank_0/utilities/<project>`) rather than relying on ephemeral CT storage or named Docker volumes.
+2. `chown` the new dataset to the UID/GID the container image expects (e.g. `1000:1000` for linuxserver images, `472:472` for Grafana-style images).
+3. Add an explicit bind mount for the dataset into CT 101 (the Portainer LXC): `pct set 101 -mp<N> /tank_0/utilities/<project>,mp=/tank_0/utilities/<project>`, then `pct restart 101`. Each ZFS dataset needs its own `mp` entry — mounting a parent dataset does not expose its children.
+4. Define the stack/container in Portainer (`https://192.168.1.120:9443`) pointing at the bind-mounted path.
+5. If the project should be scraped by Prometheus or shipped logs to Grafana, register it alongside the existing dashboards/exporters on the host.
+
+### Currently deployed on mafober
+
+- **Portainer** — Docker/stack management (CT 101)
+- **Plex** — media server
+- **qBittorrent** — torrent client
+- **Grafana** — dashboards
+- **Prometheus** — metrics
+- **node_exporter** / **zfs_exporter** — host-level metrics, run directly on the Proxmox host (not containerized)
+
+### More info
+
+Full hardware specs, ZFS layout, container configs, and troubleshooting lessons learned live in `mafober/mafober_summary.md` (a sibling project directory under the managed projects root). Check there first if these details aren't enough.
+
+---
+
+## Concluding a Conversation
+
+When the user explicitly instructs an agent to "conclude the conversation" (or an equivalent closing phrase), treat it as a three-step close-out sequence rather than just ending the reply:
+
+1. **Write the session backup now.** Don't wait for the `SessionEnd` hook to fire on its own — invoke the existing parser (`claudeBackupUtility/.claude/hooks/log_session.py`'s `parse_session()`, or run `sweep_stale_sessions.py`) against the current transcript so `conversation.md` and the tool-call files land in `claudeBackupUtility/logs/claude/<project>/` before the session actually ends.
+2. **Remind the user to close the panel — don't try to do it yourself.** No Claude Code tool can control the VS Code UI. End the final message with an explicit reminder (e.g. "You can close this panel now") instead of attempting the action.
+3. **Forward the finalized conversation to a processing API.** This is a placeholder for future work — no such endpoint exists yet (as of 2026-07-18). Once one is configured (URL + auth wired into `config.yaml`), POST the finalized transcript/log output to it here. Until then, skip this step silently rather than guessing a URL.
+
+---
+
 **Also read `PROJECT_CLAUDE.md` in this directory for project-specific instructions.**

@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-glass-box-at-dawn
+title: Glass Box at Dawn
+ambient: true
+prompt: Just before dawn in the Glass Box. Graham, the first to arrive, has made the first coffee and
+  sits with it steaming by his keyboard. The room is dark except for his desk lamp. Through the glass
+  he can see the Party Member's corner desk, the emergency light still on, the notebook closed, the chair
+  empty. It's too early for the others. Graham turns his back on the empty desk and opens his email. Why
+  does he come in so early?
+lore:
+- office
+day_phase: off_hours
+intensity: quiet
+seats:
+- ceo
+- party_member
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

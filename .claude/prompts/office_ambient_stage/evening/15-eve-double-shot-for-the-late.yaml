@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: eve-double-shot-for-the-late
+title: Double Shot for the Late Run
+ambient: true
+prompt: Evening in the Kitchen. The espresso machine hisses as Nora pours a double shot for Owen. She
+  slides it across the table with a nod to the clock above the Glass Box, ticking down to the last test
+  run. Owen takes it without a word, but his eyes lift to hers for a second. Nora's brisk kindness says
+  she knows the next hour will be long. Will Owen's flat, deadpan 'thanks' say enough back?
+lore:
+- office
+day_phase: evening
+intensity: normal
+seats:
+- tester
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: evening.1

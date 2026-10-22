@@ -1,0 +1,24 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-release-timing
+title: Release Timing
+ambient: true
+prompt: Early on the Open Floor, before the day fully starts. Graham has called a quick stand-up in the
+  Glass Box to discuss delivery timing for the upcoming release note to the banks. Brody leans against
+  the door frame, hands in pockets, watching. Julian is sitting back on the low sofa, phone in hand. Graham
+  wants an answer in hours; Brody wants to answer in days. Julian tries out a tagline that mentions speed.
+  Will they agree on a single number to share?
+lore:
+- office
+- rituals
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- tech_lead
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

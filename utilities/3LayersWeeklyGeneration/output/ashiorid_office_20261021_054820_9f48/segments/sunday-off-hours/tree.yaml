@@ -1,0 +1,193 @@
+sunday-off-hours:
+  node_id: sunday-off-hours
+  parent_id: null
+  order: 0
+  depth: 0
+  title: The office is quiet after midnight. The Party Member sits in the corner with
+    the
+  summary: The office is quiet after midnight. The Party Member sits in the corner
+    with the notebook open. The Office Manager does her final round, emptying bins
+    and wiping counters. She pauses by the Party Member's desk, then moves on without
+    a word. At home, the Engineer reviews the pilot branch, making mental notes for
+    the morning.
+  continuity_in: Midnight. The office lights are out.
+  continuity_out: The Office Manager leaves last, locking the door behind her. The
+    Party Member is still there.
+  target_words: 1050
+  target_slots: 10
+  kind: branch
+  forced: false
+  children:
+  - sunday-off-hours-n0
+  - sunday-off-hours-n1
+  slots: null
+sunday-off-hours-n0:
+  node_id: sunday-off-hours-n0
+  parent_id: sunday-off-hours
+  order: 0
+  depth: 1
+  title: The Quiet Office
+  summary: The office is quiet after midnight. The Party Member sits in the corner
+    with the notebook open.
+  continuity_in: Midnight. The office lights are out.
+  continuity_out: The Office Manager starts her final round.
+  target_words: 420
+  target_slots: 4
+  kind: leaf
+  forced: false
+  children: []
+  slots:
+  - slot_id: sunday-off-hours-n0-001
+    kind: ambient
+    prompt: The office is quiet after midnight. The Party Member sits in the corner
+      with the notebook open.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-off-hours-n0-002
+    kind: ambient
+    prompt: The Office Manager does her final round, emptying bins and wiping counters.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-off-hours-n0-003
+    kind: ambient
+    prompt: She pauses by the Party Member's desk, then moves on without a word.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: sunday-off-hours-n0-004
+    kind: ambient
+    prompt: At home, the Engineer reviews the pilot branch, making mental notes for
+      the morning.
+    lore:
+    - product
+    participants:
+    - engineer
+    sensitivity: none
+    depends_on: []
+sunday-off-hours-n1:
+  node_id: sunday-off-hours-n1
+  parent_id: sunday-off-hours
+  order: 1
+  depth: 1
+  title: The Office Manager's Last Round
+  summary: The Office Manager does her final round, emptying bins and wiping counters.
+    She pauses by the Party Member's desk, then moves on without a word. At home,
+    the Engineer reviews the pilot branch, making mental notes for the morning.
+  continuity_in: The Office Manager starts her final round.
+  continuity_out: The Office Manager leaves last, locking the door behind her. The
+    Party Member is still there.
+  target_words: 630
+  target_slots: 6
+  kind: branch
+  forced: false
+  children:
+  - sunday-off-hours-n1-n0
+  - sunday-off-hours-n1-n1
+  slots: null
+sunday-off-hours-n1-n0:
+  node_id: sunday-off-hours-n1-n0
+  parent_id: sunday-off-hours-n1
+  order: 0
+  depth: 2
+  title: The Office Manager's Final Tasks
+  summary: The Office Manager does her final round of the office, emptying bins and
+    wiping counters as she goes.
+  continuity_in: The Office Manager starts her final round for the night.
+  continuity_out: The Office Manager finishes her tasks and heads towards the exit.
+  target_words: 252
+  target_slots: 2
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: sunday-off-hours-n1-n0-001
+    kind: ambient
+    prompt: The office is quiet after midnight. The Party Member sits in the corner
+      with the notebook open.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-off-hours-n1-n0-002
+    kind: ambient
+    prompt: The Office Manager does her final round, emptying bins and wiping counters.
+      She pauses by the Party Member's desk, then moves on without a word.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: none
+    depends_on: []
+sunday-off-hours-n1-n1:
+  node_id: sunday-off-hours-n1-n1
+  parent_id: sunday-off-hours-n1
+  order: 1
+  depth: 2
+  title: A Moment of Tension
+  summary: The Office Manager pauses by the Party Member's desk, but says nothing
+    and continues on her way. Meanwhile, the Engineer reviews the pilot branch at
+    home.
+  continuity_in: The Office Manager reaches the Party Member's desk.
+  continuity_out: The Office Manager leaves the office, locking the door behind her.
+    The Party Member remains.
+  target_words: 378
+  target_slots: 4
+  kind: leaf
+  forced: true
+  children: []
+  slots:
+  - slot_id: sunday-off-hours-n1-n1-001
+    kind: ambient
+    prompt: The Office Manager pauses by the Party Member's desk, then moves on without
+      a word.
+    lore:
+    - office
+    participants:
+    - office_manager
+    - party_member
+    sensitivity: tone
+    depends_on: []
+  - slot_id: sunday-off-hours-n1-n1-002
+    kind: ambient
+    prompt: At home, the Engineer reviews the pilot branch, making mental notes for
+      the morning.
+    lore:
+    - product
+    participants:
+    - engineer
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-off-hours-n1-n1-003
+    kind: ambient
+    prompt: The office is quiet after midnight. The Party Member sits in the corner
+      with the notebook open.
+    lore:
+    - office
+    participants:
+    - party_member
+    sensitivity: none
+    depends_on: []
+  - slot_id: sunday-off-hours-n1-n1-004
+    kind: ambient
+    prompt: The Office Manager does her final round, emptying bins and wiping counters.
+    lore:
+    - office
+    participants:
+    - office_manager
+    sensitivity: none
+    depends_on: []

@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-flaky-or-faulty
+title: Flaky or Faulty?
+ambient: true
+prompt: Early afternoon on the Open Floor. Owen files a bug about the amount-outlier rule on new accounts,
+  saying it is too sensitive. Theo claims the rule is just 'flaky' and not actually broken. Owen deadpans
+  the percentage of false positives. Theo counters with a joke about being outnumbered by alarmists. Is
+  the rule too strict, or are there too many exceptions? And who gets to decide?
+lore:
+- office
+- product
+day_phase: workday
+intensity: normal
+seats:
+- tester
+- engineer
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.1

@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: off-night-shift-cleaning
+title: Night Shift Cleaning
+ambient: true
+prompt: Late night in the darkened Kitchen. The espresso machine clicks as it cools down from the day.
+  Nora is mopping the floor in smooth, straight lines, her keys jangling softly on her belt with each
+  stroke. The servers hum faintly through the closet wall. She pauses to empty the mop water and checks
+  the snack shelf labels one last time. Is the office ready for another day, or is there something else
+  she should do before clocking out?
+lore:
+- office
+- rituals
+day_phase: off_hours
+intensity: quiet
+seats:
+- office_manager
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: off_hours.0

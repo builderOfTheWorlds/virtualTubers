@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-the-number
+title: The Number
+ambient: true
+prompt: Late afternoon in the Glass Box. Graham has asked Owen for the test suite's pass rate, hoping
+  to leave with a good number for the board. Owen has given him the number, flat and deadpan, and now
+  watches as Graham turns it over, searching for the angle. The room is quiet but for the hum of the servers
+  through the wall. Is it good? Is it bad? Is it what they do next?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- ceo
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

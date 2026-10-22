@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-pitching-to-the-plant
+title: Pitching to the Plant
+ambient: true
+prompt: Late afternoon, and Julian is rehearsing a pitch to his desk plant in the Open Floor. He tries
+  it once fast, then again slower, scribbling notes between each attempt. Graham, tidying papers at the
+  door to the Glass Box, glances over with a hint of a smile. The plant is still. Is it listening? Is
+  Graham?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- marketing
+- ceo
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.2

@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: wrk-last-step
+title: Last Step
+ambient: true
+prompt: The Open Floor, just past lunchtime. Theo submitted a small change, Owen ran the tests and Brody
+  is reading through the diff. Theo is edgy, Owen flat, Brody deliberate. The commit graph hangs unaltered
+  on the wall. Is Brody waiting for something more than a green light from Owen?
+lore:
+- office
+day_phase: workday
+intensity: normal
+seats:
+- engineer
+- tech_lead
+- tester
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: workday.0

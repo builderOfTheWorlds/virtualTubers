@@ -1,0 +1,22 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-sticker-shock
+title: Sticker Shock
+ambient: true
+prompt: Early on the Open Floor. Theo is at his desk, rewriting an estimate on a sticky note, his crossed-out
+  first guess still showing. Julian, coffee cup in hand, is watching from the doorway of the Glass Box.
+  Both can hear the espresso machine rattling in the kitchen. The air is full of morning plans and the
+  usual banter is missing. Is the job bigger than it looked, or is Theo being cautious? And who will ask
+  why?
+lore:
+- office
+day_phase: morning
+intensity: normal
+seats:
+- engineer
+- marketing
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.1

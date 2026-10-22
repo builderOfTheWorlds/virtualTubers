@@ -1,0 +1,153 @@
+segment_id: wednesday-off-hours
+order: 12
+loop: 0
+hours: 6
+synopsis: Overnight, a burst of card fraud at Corvane slips past Fraud-Stop. The Party
+  Member notices and makes a note, but does not alert anyone else.
+continuity_in: The floor is dark and empty.
+continuity_out: The Party Member's notebook contains a new page of observations about
+  the fraud.
+carry_in: {}
+carry_out: {}
+slots:
+- slot_id: wednesday-off-hours-n0-001
+  kind: ambient
+  prompt: The Party Member sits alone at their desk, reviewing transaction logs from
+    the night.
+  lore:
+  - office
+  - product
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: wednesday-off-hours-n0
+- slot_id: wednesday-off-hours-n0-002
+  kind: ambient
+  prompt: The Party Member notices a pattern of suspicious transactions that slipped
+    through undetected.
+  lore:
+  - product
+  - clients
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: wednesday-off-hours-n0
+- slot_id: wednesday-off-hours-n0-003
+  kind: ambient
+  prompt: The Party Member makes careful notes about the fraudulent activity in their
+    notebook.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: wednesday-off-hours-n0
+- slot_id: wednesday-off-hours-n0-004
+  kind: ambient
+  prompt: The Party Member wonders if they should alert someone, but ultimately decides
+    to stay quiet for now.
+  lore:
+  - rumours
+  - company
+  participants:
+  - party_member
+  sensitivity: tone
+  depends_on: []
+  node_id: wednesday-off-hours-n0
+- slot_id: wednesday-off-hours-n1-n0-001
+  kind: ambient
+  prompt: The Party Member arrives at work and settles in at their desk, ready to
+    begin reviewing the previous day's card transactions and fraud detection logs.
+  lore:
+  - office
+  - rituals
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: wednesday-off-hours-n1-n0
+- slot_id: wednesday-off-hours-n1-n0-002
+  kind: ambient
+  prompt: As the Party Member methodically works through the transaction records,
+    they notice a cluster of suspicious charges that were not flagged by the fraud
+    detection system.
+  lore:
+  - product
+  - company
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: wednesday-off-hours-n1-n0
+- slot_id: wednesday-off-hours-n1-n1-001
+  kind: ambient
+  prompt: The Party Member pores over the transaction logs, flagging suspicious charges.
+  lore:
+  - office
+  - product
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: wednesday-off-hours-n1-n1
+- slot_id: wednesday-off-hours-n1-n1-002
+  kind: ambient
+  prompt: The Party Member jots down notes about the fraud in their notebook.
+  lore:
+  - office
+  - company
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: wednesday-off-hours-n1-n1
+- slot_id: wednesday-off-hours-n1-n1-003
+  kind: ambient
+  prompt: The Party Member's notebook now contains a detailed record of the undetected
+    fraud.
+  lore:
+  - office
+  participants:
+  - party_member
+  sensitivity: none
+  depends_on: []
+  node_id: wednesday-off-hours-n1-n1
+nodes:
+- node_id: wednesday-off-hours
+  parent_id: null
+  depth: 0
+  kind: branch
+  forced: false
+  target_slots: 10
+  slots: 0
+- node_id: wednesday-off-hours-n0
+  parent_id: wednesday-off-hours
+  depth: 1
+  kind: leaf
+  forced: false
+  target_slots: 4
+  slots: 4
+- node_id: wednesday-off-hours-n1
+  parent_id: wednesday-off-hours
+  depth: 1
+  kind: branch
+  forced: false
+  target_slots: 6
+  slots: 0
+- node_id: wednesday-off-hours-n1-n0
+  parent_id: wednesday-off-hours-n1
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 2
+  slots: 2
+- node_id: wednesday-off-hours-n1-n1
+  parent_id: wednesday-off-hours-n1
+  depth: 2
+  kind: leaf
+  forced: true
+  target_slots: 3
+  slots: 3

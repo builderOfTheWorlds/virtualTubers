@@ -1,0 +1,21 @@
+# Ambient office scene - a plot-free situation. No decisions, no reveals.
+# STAGED, not promoted. Seats/phase/intensity set by the author script.
+id: mor-plan-review
+title: Plan Review
+ambient: true
+prompt: Brody is by the latency graph with his coffee, carefully reading a plan Maren has printed out.
+  She watches his eyes and taps her pen on her notebook. He turns the pages slowly, considering each point
+  she's made and the order of them. The numbers are good but the 'for whom?' is missing. Is this for the
+  bank, for the user, for both? Brody finishes and Maren looks at him, ready to make her case.
+lore:
+- product
+day_phase: morning
+intensity: normal
+seats:
+- tech_lead
+- analyst
+source:
+  authored: generated
+  model: hermes3-70b
+  run_id: office_ambient_20261021_025816
+  batch: morning.0
